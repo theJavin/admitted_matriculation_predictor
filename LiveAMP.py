@@ -1,4 +1,3 @@
-test
 from setup import *
 import traceback
 db = Oracle('WFOCUSP')
