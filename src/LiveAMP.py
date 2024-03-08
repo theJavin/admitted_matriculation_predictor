@@ -1,7 +1,7 @@
 from setup import *
 import traceback
 db = Oracle('WFOCUSP')
-root_path = pathlib.Path("/home/scook/institutional_data_analytics/admitted_matriculation_projection/LiveAMP")
+root_path = pathlib.Path("/home/scook/institutional_data_analytics/admitted_matriculation_projection")
 
 def dt(date, format='sql'):
     try:
@@ -36,7 +36,7 @@ def get_desc(nm, alias=None):
 @dataclasses.dataclass
 class FLAGS(MyBaseClass):
     def __post_init__(self):
-        self.path = {'root': root_path / 'flags'}
+        self.path = {'root': root_path / 'resources/flags'}
         self.path['raw'] = self.path['root'] / 'raw'
         self.path['sheet'] = self.path['root'] / 'sheet'
         self.path['parq'] = self.path['root'] / 'parq'
@@ -171,7 +171,7 @@ class TERM(MyBaseClass):
         self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
         self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
         self.path = {'root': root_path}
-        self.path['data'] = self.path['root'] / f"data"
+        self.path['data'] = self.path['root'] / f"resources/data"
         self.path['adm']  = self.path['data'] / f"adm/{self.term_code}"
         self.path['reg']  = self.path['data'] / f"reg/{self.term_code}"
         self.path['flg']  = self.path['data'] / f"flg/{self.term_code}"

@@ -1,4 +1,3 @@
-test
 import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
 import pickle, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
