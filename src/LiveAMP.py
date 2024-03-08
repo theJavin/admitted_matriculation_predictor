@@ -44,7 +44,7 @@ class FLAGS(MyBaseClass):
 
     def raw_to_parq(self, overwrite=False):
         for src in self.path['raw'].iterdir():
-            src.replace(src.with_stem(src.stem.lower().replace(' ','_').replace('-','_')))
+            src.replace(src.with_name(src.name.lower().replace(' ','_').replace('-','_')))
         k = 0
         for src in sorted(self.path['raw'].glob('*flags*.xlsx'), reverse=True):
             book = pd.ExcelFile(src, engine='openpyxl')
