@@ -224,7 +224,8 @@ class TERM(MyBaseClass):
         return df
 
     def get_dst(self, cycle_day=None):
-        fn = self.path['root'] / f"distances.parq"
+        fn = self.path['root'] / 'resources/distances.parq'
+        print(fn)
         df = read(fn)
         if df is not None:
             return df
