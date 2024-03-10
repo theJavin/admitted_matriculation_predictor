@@ -180,6 +180,7 @@ class TERM(MyBaseClass):
             'perm': [
                 'id',
                 'current_date',
+                'styp_code',
                 # 'transfer_hours',
                 # 'inst_hours',
                 # 'overall_hours',
@@ -198,7 +199,6 @@ class TERM(MyBaseClass):
                 'gap_score',
                 ],
             'temp': [
-                'styp_code',
                 'app_date',
                 'term_code',
                 'ssb_last_accessed',
@@ -639,7 +639,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             *get_desc('stat'),
             f"A.zip",
             f"(select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as natn_code",
-            f"(select C.stvnatn_nation from stvnatn_nation C where C.stvnatn_code = (select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null)) as natn_desc",
+            f"(select C.stvnatn_nation from stvnatn C where C.stvnatn_code = (select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null)) as natn_desc",
             f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international",
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian",
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian",
