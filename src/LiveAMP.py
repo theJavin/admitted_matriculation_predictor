@@ -562,13 +562,33 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
 #     row_number() over (partition by A.pidm order by A.status desc, A.appl_no) as r
 # from {subqry(qry)} A where A.before = A.cycle_rel and (A.after < 0 or sysdate - {dt(self.cycle_date)} < 5)"""
         
-
+        stat_codes = join(['AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY'], "', '")
         def get_spraddr(nm):
-            if nm == 'zip':
-                sel = "to_number(substr(B.spraddr_zip, 0, 5) default null on conversion error)"
-            else:
-                sel = "B.spraddr_"+nm
-            return f"(select {sel} from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_atyp_code in ('PA','MA','BU','BI') order by B.spraddr_atyp_code desc, B.spraddr_seqno desc fetch first 1 row only) as {nm}"
+            sel = "to_number(substr(B.spraddr_zip, 0, 5) default null on conversion error)" if nm == "zip" else "B.spraddr_"+nm
+            return f"""
+(select B.{nm} from (
+    select
+        {sel} as {nm},
+        B.spraddr_seqno as s,
+        case
+            when B.spraddr_atyp_code = 'PA' then 6
+            when B.spraddr_atyp_code = 'PR' then 5
+            when B.spraddr_atyp_code = 'MA' then 4
+            when B.spraddr_atyp_code = 'BU' then 3
+            when B.spraddr_atyp_code = 'BI' then 2
+            --when B.spraddr_atyp_code = 'P1' then 1
+            --when B.spraddr_atyp_code = 'P2' then 0
+            end as r
+    from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_stat_code in ('{stat_codes}')
+) B where B.{nm} is not null and B.r is not null
+order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
+        
+        # def get_spraddr(nm):
+        #     if nm == 'zip':
+        #         sel = "to_number(substr(B.spraddr_zip, 0, 5) default null on conversion error)"
+        #     else:
+        #         sel = "B.spraddr_"+nm
+        #     return f"(select {sel} from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_atyp_code in ('PA','MA','BU','BI') order by B.spraddr_atyp_code desc, B.spraddr_seqno desc fetch first 1 row only) as {nm}"
 
         sel = join([
             f"A.*",
@@ -625,6 +645,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
             f"(select B.spbpers_sex from spbpers B where B.spbpers_pidm = A.pidm) as gender",
             *get_desc('lgcy'),
             f"case when A.lgcy_code is null or A.lgcy_code in ('N','O') then 0 else 1 end as legacy",
+            coal(f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international"),
             coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian"),
             coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian"),
             coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black"),
@@ -695,6 +716,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
         cycle_day, fn, df = self.prep(nm, self.cycle_day)
         if df is None:
             self.adm = self.get_adm(cycle_day)
+            self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109
             self.flg = self.get_flg(cycle_day)
             self.dst = self.get_dst(cycle_day)
             df =  (
