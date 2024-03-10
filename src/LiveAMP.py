@@ -179,7 +179,6 @@ class TERM(MyBaseClass):
         self.flg_col = {
             'perm': [
                 'id',
-                'styp_code',
                 'current_date',
                 # 'transfer_hours',
                 # 'inst_hours',
@@ -199,6 +198,7 @@ class TERM(MyBaseClass):
                 'gap_score',
                 ],
             'temp': [
+                'styp_code',
                 'app_date',
                 'term_code',
                 'ssb_last_accessed',
@@ -596,7 +596,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"{self.term_code} as term_code",
             get_spraddr("cnty_code"),
             get_spraddr("stat_code"),
-            get_spraddr("natn_code"),
+            # get_spraddr("natn_code"),
             get_spraddr("zip"),
             f"(select B.spbpers_lgcy_code from spbpers B where B.spbpers_pidm = A.pidm) as lgcy_code",
             f"(select B.spbpers_birth_date from spbpers B where B.spbpers_pidm = A.pidm) as birth_date",
@@ -604,10 +604,10 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
         ], C+N)
         qry = f"select {indent(sel)}{N}from {subqry(qry)} A"
         
-        def coal(x):
-            s = ' as '
-            y, z = x.split(s)
-            return f"coalesce({y}, 0){s}{z}"
+        # def coal(x):
+        #     s = ' as '
+        #     y, z = x.split(s)
+        #     return f"coalesce({y}, 0){s}{z}"
 
         sel = N+T+join([
             f"A.cycle_day",
@@ -632,27 +632,35 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             *get_desc('apdc'),
             *get_desc('camp'),
             f"case when A.camp_code = 'S' then 1 else 0 end as camp_main",
-            *get_desc('cnty'),
-            *get_desc('stat'),
-            f"A.zip",
-            f"A.natn_code",
-            f"(select B.stvnatn_nation from stvnatn B where B.stvnatn_code = A.natn_code) as natn_desc",
-            *get_desc('resd'),
-            f"case when A.resd_code = 'R' then 1 else 0 end as resd",
             *get_desc('coll'),
             *get_desc('dept'),
             *get_desc('majr'),
+            *get_desc('cnty'),
+            *get_desc('stat'),
+            f"A.zip",
+            f"(select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as natn_code",
+            f"(select C.stvnatn_nation from stvnatn_nation C where C.stvnatn_code = (select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null)) as natn_desc",
+            f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international",
+            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian",
+            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian",
+            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black",
+            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific",
+            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white",
+            f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic",
+
+            # coal(f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international"),
+            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian"),
+            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian"),
+            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black"),
+            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific"),
+            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white"),
+            # coal(f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic"),
+            # f"(select B.spbpers_ethn_cde-1 from spbpers B where B.spbpers_pidm = A.pidm) as race_hispanic",
             f"(select B.spbpers_sex from spbpers B where B.spbpers_pidm = A.pidm) as gender",
             *get_desc('lgcy'),
             f"case when A.lgcy_code is null or A.lgcy_code in ('N','O') then 0 else 1 end as legacy",
-            coal(f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international"),
-            coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian"),
-            coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian"),
-            coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black"),
-            coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific"),
-            coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white"),
-            coal(f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic"),
-            # f"(select B.spbpers_ethn_cde-1 from spbpers B where B.spbpers_pidm = A.pidm) as race_hispanic",
+            *get_desc('resd'),
+            f"case when A.resd_code = 'R' then 1 else 0 end as resd",
             f"A.hs_pctl"
         ], C+N)
         qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where A.r = 1 and A.levl_code = 'UG' and A.styp_code in ('N','R','T')"
