@@ -62,23 +62,17 @@ def listify(X):
         return [X]
     else:
         return list(X)
+
+def mysort(X, **kwargs):
+    if isinstance(X, dict):
+        return dict(sorted(X.items(), **kwargs))
+    else:
+        return sorted(listify(X), **kwargs)
     
-def setify(X):
-    return set(listify(X))
-
-def uniquify(X):
-    if isinstance(X, (list, tuple, set)):
-        return type(X)(dict.fromkeys(listify(X)))
-    else:
-        return X
-
-def sort(X):
-    if isinstance(X, (list, tuple, set)):
-        return type(X)(sorted(X))
-    elif isinstance(X, dict):
-        return dict(sorted(X.items()))
-    else:
-        return X
+def uniquify(X, sort=False, **kwargs):
+    if not isinstance(X, dict):
+        X = list(dict.fromkeys(listify(X)))
+    return mysort(X, **kwargs) if sort else X
 
 def instantiate(x):
     try:
