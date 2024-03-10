@@ -160,9 +160,9 @@ class TERM(MyBaseClass):
     show: typing.Dict = None
 
     def __post_init__(self):
-        # D = {'adm':False, 'reg':False, 'flg':False, 'raw':False}
-        # for x in ['overwrite','show']:
-        #     self[x] = D.copy() if self[x] is None else D.copy() | self[x]
+        D = {'adm':False, 'reg':False, 'flg':False, 'raw':False}
+        for x in ['overwrite','show']:
+            self[x] = D.copy() if self[x] is None else D.copy() | self[x]
         self.year = self.term_code // 100
         self.term = self.term_code % 100
         self.appl_term_code = [self.term_code-2, self.term_code] if self.term == 8 else [self.term_code]
@@ -280,111 +280,9 @@ class TERM(MyBaseClass):
         cycle_day = self.cycle_day if cycle_day is None else cycle_day
         fn = self.path[nm] / f"{nm}_{self.term_code}_{rjust(cycle_day,3,0)}.parq"
         df = read(fn, self.overwrite[nm])
-        # self.overwrite[nm] = False
         if df is None:
             print(f'{fn.name} not found - creating')
         return cycle_day, fn, df
-
-#     def get_reg(self, cycle_day=None):
-#         nm = 'reg'
-#         cycle_day, fn, df = self.prep(nm, cycle_day)
-#         if df is not None:
-#             return df
-#         try:
-#             db.head(f'opeir.registration_{self.term_desc}')
-#         except:
-#             return pd.DataFrame(columns=['current_date','cycle_day','term_code','pidm','id','levl_code','styp_code','crn','crse','credit_hr'])
-
-#         sel = join([
-#             # f"{self.get_cycle_day()} as cycle_day",
-#             # f"trunc(A.current_date) as cycle_date",
-#             f"{self.term_code} as term_code",
-#             # f"min(case when {self.get_cycle_day()} >= {cycle_day} then {self.get_cycle_day()} end) over (partition by A.pidm, A.crn) as before",
-#             # f"min({self.get_cycle_day()}) over (partition by A.pidm, A.crn) as after",
-#             f"A.pidm",
-#             # f"A.id",
-#             f"A.levl_code",
-#             f"A.styp_code",
-#             # f"A.crn",
-#             f"lower(A.subj_code) || A.crse_numb as crse",
-#             f"A.credit_hr",
-#         ], C+N)
-#         qry = f"""
-# select {indent(sel)}
-# from opeir.registration_{self.term_desc} A
-# where
-#     {self.get_cycle_day()} - {cycle_day} between 0 and 14
-#     and A.credit_hr > 0
-#     and A.subj_code <> 'INST'"""
-
-#         sel = join([
-#             f"A.cycle_day",
-#             # f"A.cycle_date",
-#             f"term_code",
-#             f"A.pidm",
-#             f"A.id",
-#             f"levl_code",
-#             f"styp_code",
-#             f"A.crn",
-#             f"A.crse",
-#             f"A.credit_hr",
-#         ], C+N)
-
-#         qry = f"""
-# select {indent(sel)}
-# from {subqry(qry)} A
-# where
-#     A.cycle_day = A.before
-#     and (A.after <= {cycle_day} or sysdate - {dt(self.cycle_date)} < 5)
-#     --and A.levl_code = 'UG'
-#     --and A.styp_code in ('N','R','T')"""
-
-        # return self.run(qry, fn, self.show[nm])
-
-
-#     def get_reg(self, cycle_day=None):
-#         nm = 'reg'
-#         cycle_day, fn, df = self.prep(nm, cycle_day)
-#         if df is not None:
-#             return df
-#         try:
-#             db.head(f'opeir.registration_{self.term_desc}')
-#         except:
-#             return pd.DataFrame(columns=['current_date','cycle_day','term_code','pidm','id','levl_code','styp_code','crn','crse','credit_hr'])
-
-#         sel = join([
-#             f"{cycle_day} as cycle_day",
-#             # f"trunc(A.current_date) as cycle_date",
-#             f"{self.term_code} as term_code",
-#             f"A.pidm",
-#             f"max(A.levl_code) as levl_code",
-#             f"max(A.styp_code) as styp_code",
-#             f"lower(A.subj_code) || A.crse_numb as crse",
-#             f"max(A.credit_hr) as credit_hr",
-#         ], C+N)
-#         qry = f"""
-# select {indent(sel)}
-# from opeir.registration_{self.term_desc} A
-# where
-#     {self.get_cycle_day()} - {cycle_day} between 0 and 14
-#     and A.credit_hr > 0
-#     and A.subj_code <> 'INST'
-# group by A.pidm, A.subj_code, A.crse_numb"""
-        
-#         qry = f"""
-# with A as {subqry(qry)}
-# select A.* from A
-# union all
-# select
-#     A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code,
-#     '_total' as crse,
-#     sum(A.credit_hr) as credit_hr
-# from A
-# group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
-
-#         return self.run(qry, fn, self.show[nm])
-
-
 
     def get_reg(self, cycle_day=None):
         nm = 'reg'
@@ -414,8 +312,7 @@ where
     and  {self.get_cycle_day('A.sfrstcr_add_date')} >= {cycle_day}  -- added before cycle_day
     and ({self.get_cycle_day('A.sfrstcr_rsts_date')} < {cycle_day} or A.sfrstcr_rsts_code in ('DC','DL','RD','RE','RW','WD','WF')) -- dropped after cycle_day or still enrolled
     and B.ssbsect_subj_code <> 'INST'
-group by A.sfrstcr_term_code, A.sfrstcr_pidm, B.ssbsect_subj_code, B.ssbsect_crse_numb
-"""
+group by A.sfrstcr_term_code, A.sfrstcr_pidm, B.ssbsect_subj_code, B.ssbsect_crse_numb"""
 
         qry = f"""
 with A as {subqry(qry)}
@@ -426,38 +323,7 @@ select
     '_total' as crse,
     sum(A.credit_hr) as credit_hr
 from A
-group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
-"""
-
-
-
-
-#         qry = f"""
-# select
-#     sfrstcr_term_code as term_code,
-#     sfrstcr_pidm as pidm,
-#     (select B.sgbstdn_levl_code from sgbstdn B where B.sgbstdn_pidm = A.sfrstcr_pidm and B.sgbstdn_term_code_eff <= A.sfrstcr_term_code order by B.sgbstdn_term_code_eff desc fetch first 1 rows only) as styp_code,
-#     (select B.sgbstdn_styp_code from sgbstdn B where B.sgbstdn_pidm = A.sfrstcr_pidm and B.sgbstdn_term_code_eff <= A.sfrstcr_term_code order by B.sgbstdn_term_code_eff desc fetch first 1 rows only) as levl_code,
-#     --lower(B.ssbsect_subj_code) as subj_code,
-#     --B.ssbsect_crse_numb as crse_numb,
-#     lower(B.ssbsect_subj_code) || B.ssbsect_crse_numb as crse,
-#     {self.get_cycle_day('A.sfrstcr_add_date')} as add_day,
-#     {self.get_cycle_day('A.sfrstcr_rsts_date')} as rsts_day,
-#     A.sfrstcr_rsts_code as rsts_code,
-#     B.ssbsect_credit_hrs as credit_hr
-# from sfrstcr A, ssbsect B
-# where
-#     A.sfrstcr_term_code = B.ssbsect_term_code
-#     and A.sfrstcr_crn = B.ssbsect_crn
-#     and A.sfrstcr_term_code = {self.term_code}
-#     and A.sfrstcr_ptrm_code not in ('28','R3')
-#     --and A.sfrstcr_credit_hr > 0
-#     and {self.get_cycle_day('A.sfrstcr_add_date')} >= {cycle_day}  -- added before cycle_day
-#     and (A.sfrstcr_rsts_code in ('DC','DL','RD','RE','RW','WD','WF') or {self.get_cycle_day('A.sfrstcr_rsts_date')} < {cycle_day})  -- still enrolled or dropped after cycle_day
-#     and B.ssbsect_subj_code <> 'INST'
-# """
-
-
+group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
         return self.run(qry, fn, self.show[nm])
 
 
@@ -486,15 +352,10 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
                 f"A.apdc_code",
                 f"A.camp_code",
                 f"A.saradap_resd_code as resd_code",
-                # f"A.gender",
-                # f"A.birth_date",
                 f"A.coll_code_1 as coll_code",
                 f"A.majr_code_1 as majr_code",
                 f"A.dept_code",
                 f"A.hs_percentile as hs_pctl",
-                # f"case{N+T}when {reject} then -1{N+T}when {accept} then 1{N+T}else 0 end as status",
-                # f"case{N+T}when max(case when {self.get_cycle_day()} >= {cycle_day} then A.current_date end) over (partition by A.pidm, A.appl_no) = A.current_date then 1{N+T}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
-                # f"case{N+T}when sum(case when {self.get_cycle_day()} between 0 and {cycle_day}-1 then 1 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1{N+T}when sysdate - {dt(self.cycle_date)} < 5 then 1{N+T}end as r2",  # check if appears in >= 50% of daily snapshots AFTER cycle_day
             ], C+N)
 
             qry = f"select {indent(sel)}{N}from opeir.admissions_{term_desc} A"
@@ -502,65 +363,13 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
             sel = join([
                 f"A.*",
                 f"case{N+T}when max(case when A.cycle_day >= {cycle_day} then A.cycle_date end) over (partition by A.pidm, A.appl_no) = A.cycle_date then 1{N+T}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
-                f"case{N+T}when sum(case when A.cycle_day <  {cycle_day} then 1 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1{N+T}when sysdate - {dt(self.cycle_date)} < 5 then 1{N+T}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
+                f"case{N+T}when sum(case when A.cycle_day <  {cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1{N+T}when sysdate - {dt(self.cycle_date)} < 5 then 1{N+T}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
             ], C+N)
 
             qry = f"select {indent(sel)}{N}from {subqry(qry)} A where cycle_day between 0 and {cycle_day} + 14 and {accept}"
             qry = f"select A.* from {subqry(qry)} A where A.r1 = 1 and A.r2 = 1"
             return qry
         qry = join([f(term_desc).strip() for term_desc in self.appl_term_desc], "\n\nunion all\n\n")
-        # qry = f"select A.*, row_number() over (partition by A.pidm order by A.appl_no desc) as r from {subqry(qry)} A"
-
-#  where A.status = 1 and A.r1 = 1 and A.r2 = 1"
-#     *
-# from 
-           
-
-#             f"case{N+T}when max(case when {self.get_cycle_day()} >= {cycle_day} then A.current_date end) over (partition by A.pidm, A.appl_no) = A.current_date then 1{N+T}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
-#             f"case{N+T}when sum(case when {self.get_cycle_day()} between 0 and {cycle_day}-1 then 1 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1{N+T}when sysdate - {dt(self.cycle_date)} < 5 then 1{N+T}end as r2",  # check if appears in >= 50% of daily snapshots AFTER cycle_day
-
-
-
-
-# where {self.get_cycle_day()} between 0 and {cycle_day}+14"""
-#             return f"select A.* from {subqry(qry)} A where A.r1 = 1 and A.r2 = 1 and {accept}"
-#             # return f"select A.* from {subqry(qry)} A where A.status = 1 and A.r1 = 1 and A.r2 = 1"
-
-        # qry = f"""select A.*, row_number() over (partition by A.pidm order by A.status desc, A.appl_no desc) as r from {subqry(frm)} A"""
-
-#         qry = f"""
-# select
-#     A.*,
-#     min(A.current_date) over (partition by A.pidm, A.appl_no) as first_date,
-#     min(case when {accept} then A.current_date end) over (partition by A.pidm, A.appl_no) as accept_date,
-#     case when max(case when cycle_day >= {cycle_day} then A.current_date end) over (partition by A.pidm, A.appl_no) = A.current_date then 1 end as q1,
-#     case when sum(case when cycle_day between 0 and {cycle_day}-1 then 1 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1
-#          when sysdate - {dt(self.cycle_date)} < 5 then 1 end as q2
-# from {subqry(qry)} A"""
-
-        # qry = f"""select A.*, row_number() over (partition by A.pidm order by A.status desc, A.appl_no) as r from {subqry(qry)} A"""
-
-# A.before = A.cycle_rel and (A.after < 0 or sysdate - {dt(self.cycle_date)} < 5)"""
-
-
-
-#         f = lambda term_desc: f"""
-# select {indent(sel)}
-# from opeir.admissions_{term_desc} A
-# where {self.get_cycle_day()} - {cycle_day} between -14 and 14"""
-        
-#         qry = f"""
-# select
-#     A.*,
-#     min(case when A.cycle_rel >= 0 then A.cycle_rel end) over (partition by A.pidm, A.appl_no) as before,
-#     max(case when A.cycle_rel <  0 then A.cycle_rel end) over (partition by A.pidm, A.appl_no) as after
-# from {subqry(qry)} A where A.cycle_rel between -14 and 14"""
-        
-#         qry = f"""
-# select
-#     A.*,
-#     row_number() over (partition by A.pidm order by A.status desc, A.appl_no) as r
-# from {subqry(qry)} A where A.before = A.cycle_rel and (A.after < 0 or sysdate - {dt(self.cycle_date)} < 5)"""
         
         stat_codes = join(['AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY'], "', '")
         def get_spraddr(nm):
@@ -582,13 +391,6 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code
     from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_stat_code in ('{stat_codes}')
 ) B where B.{nm} is not null and B.r is not null
 order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
-        
-        # def get_spraddr(nm):
-        #     if nm == 'zip':
-        #         sel = "to_number(substr(B.spraddr_zip, 0, 5) default null on conversion error)"
-        #     else:
-        #         sel = "B.spraddr_"+nm
-        #     return f"(select {sel} from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_atyp_code in ('PA','MA','BU','BI') order by B.spraddr_atyp_code desc, B.spraddr_seqno desc fetch first 1 row only) as {nm}"
 
         sel = join([
             f"A.*",
@@ -596,19 +398,13 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"{self.term_code} as term_code",
             get_spraddr("cnty_code"),
             get_spraddr("stat_code"),
-            # get_spraddr("natn_code"),
             get_spraddr("zip"),
+            f"(select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm order by gorvisa_seq_no desc fetch first 1 row only) as natn_code",
             f"(select B.spbpers_lgcy_code from spbpers B where B.spbpers_pidm = A.pidm) as lgcy_code",
             f"(select B.spbpers_birth_date from spbpers B where B.spbpers_pidm = A.pidm) as birth_date",
-            # f"case when A.coll_code = 'AE' then 'AN' when A.coll_code = 'EH' then 'ED' when A.coll_code = 'HS' then 'HL' when A.coll_code = 'ST' then 'SM' else A.coll_code end as coll_code",
         ], C+N)
         qry = f"select {indent(sel)}{N}from {subqry(qry)} A"
         
-        # def coal(x):
-        #     s = ' as '
-        #     y, z = x.split(s)
-        #     return f"coalesce({y}, 0){s}{z}"
-
         sel = N+T+join([
             f"A.cycle_day",
             f"{self.get_cycle_day('apdc_date')} as apdc_day",
@@ -627,19 +423,18 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             *get_desc('levl'),
             *get_desc('styp'),
             *get_desc('admt'),
-            # f"A.status",
             *get_desc('apst'),
             *get_desc('apdc'),
             *get_desc('camp'),
-            f"case when A.camp_code = 'S' then 1 else 0 end as camp_main",
+            # f"case when A.camp_code = 'S' then 1 end as camp_main",
             *get_desc('coll'),
             *get_desc('dept'),
             *get_desc('majr'),
             *get_desc('cnty'),
             *get_desc('stat'),
             f"A.zip",
-            f"(select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as natn_code",
-            f"(select C.stvnatn_nation from stvnatn C where C.stvnatn_code = (select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null)) as natn_desc",
+            f"A.natn_code",
+            f"(select B.stvnatn_nation from stvnatn B where B.stvnatn_code = A.natn_code) as natn_desc",
             f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international",
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian",
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian",
@@ -647,20 +442,11 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific",
             f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white",
             f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic",
-
-            # coal(f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international"),
-            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian"),
-            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian"),
-            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black"),
-            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific"),
-            # coal(f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white"),
-            # coal(f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic"),
-            # f"(select B.spbpers_ethn_cde-1 from spbpers B where B.spbpers_pidm = A.pidm) as race_hispanic",
             f"(select B.spbpers_sex from spbpers B where B.spbpers_pidm = A.pidm) as gender",
             *get_desc('lgcy'),
-            f"case when A.lgcy_code is null or A.lgcy_code in ('N','O') then 0 else 1 end as legacy",
+            # f"case when A.lgcy_code is null or A.lgcy_code in ('N','O') then null else 1 end as legacy",
             *get_desc('resd'),
-            f"case when A.resd_code = 'R' then 1 else 0 end as resd",
+            # f"case when A.resd_code = 'R' then 1 else 0 end as resd",
             f"A.hs_pctl"
         ], C+N)
         qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where A.r = 1 and A.levl_code = 'UG' and A.styp_code in ('N','R','T')"
@@ -718,7 +504,6 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
 
     def get_raw(self):
         self['reg'] = {k: self.get_reg(cycle_day) for k, cycle_day in {'end':0, 'cur':self.cycle_day}.items()}
-        # self['reg'] = {k: self.get_reg(cycle_day) for cycle_day in [0,self.cycle_day]]
         
         nm = 'raw'
         cycle_day, fn, df = self.prep(nm, self.cycle_day)
@@ -729,7 +514,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             self.dst = self.get_dst(cycle_day)
             df =  (
                 self.adm
-                .merge(self.flg, how='left', on=['id','term_code_entry','styp_code'], suffixes=['_x',''])
+                .merge(self.flg, how='left', on=['id','term_code_entry','styp_code'])
                 .merge(self.dst, how='left', on=['zip','camp_code'])
             )
             assert (df.groupby(['pidm','term_code']).size() == 1).all()

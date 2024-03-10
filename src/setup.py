@@ -171,10 +171,15 @@ def binarize(ser):
     assert isinstance(ser, pd.Series)
     s = set(ser.dropna())
     if s:
-        if s.issubset({'y','Y'}):
-            ser = ser.notnull().astype('boolean')
-        elif s.issubset({0,1}):
-            ser = ser.astype('boolean')
+        try:
+            ser = ser.str.lower()
+            if s.issubset({'y','n'}):
+                ser = (ser=='y').astype('boolean').fillna(False)
+            if s.issubset({'true','false'}):
+                ser = (ser=='true').astype('boolean').fillna(False)
+        except:
+            if s.issubset({0,1}):
+                ser = ser.astype('boolean').fillna(False)
     return ser
 
 @pd_ext
