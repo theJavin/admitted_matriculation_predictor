@@ -188,7 +188,7 @@ def rnd(ser, digits=0):
     return ser.round(digits).prep()
 
 @pd_ext
-def vc(df, by, dropna=False, **kwargs):
+def vc(df, by, dropna=False, digits=1, **kwargs):
     return df.groupby(by, dropna=dropna, **kwargs).size().to_frame('ct').assign(pct=lambda x: (x['ct']/df.shape[0]*100).rnd(digits))
 
 @pd_ext
