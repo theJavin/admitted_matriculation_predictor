@@ -74,6 +74,14 @@ def uniquify(X, sort=False, **kwargs):
         X = list(dict.fromkeys(listify(X)))
     return mysort(X, **kwargs) if sort else X
 
+def cartesian(dct):
+    """Creates the Cartesian product of a dictionary with list-like values"""
+    try:
+        D = {key: listify(val) for key, val in dct.items()}
+        return [dict(zip(D.keys(), x)) for x in it.product(*D.values())]
+    except:
+        return dict()
+
 def instantiate(x):
     try:
         return x()
