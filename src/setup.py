@@ -334,7 +334,7 @@ for func in [disp, to_numeric, prep, categorize, binarize, rnd, vc, missing, imp
 def pctl(p):
     p = round(p if p >= 1 else p*100)
     f = lambda x: x.quantile(p/100)
-    f.__name__ = f'{p}%'
+    f.__name__ = f'{p}%'.rjust(4)
     return f
 
 def IQR(x):
