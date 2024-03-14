@@ -63,6 +63,9 @@ def listify(X):
     else:
         return list(X)
 
+def setify(X):
+    return set(listify(X))
+
 def mysort(X, **kwargs):
     if isinstance(X, dict):
         return dict(sorted(X.items(), **kwargs))
