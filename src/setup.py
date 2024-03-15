@@ -134,6 +134,8 @@ def pd_ext(func):
                 pass
         return Y
     wrapper.__name__ = func.__name__
+    for cls in [pd.DataFrame, pd.Series]:
+        setattr(cls, wrapper.__name__, wrapper)
     return wrapper
 
 @pd_ext
@@ -230,9 +232,17 @@ def unmelt(self, level=-1, names=None):
         df.columns = listify(names)
     return df
 
-for func in [disp, to_numeric, prep, categorize, binarize, rnd, vc, missing, impute, unmelt]:
-    for cls in [pd.DataFrame, pd.Series]:
-        setattr(cls, func.__name__, func)
+@pd_ext
+def absmean(self, **kwargs):
+    return self.abs().mean(**kwargs)
+
+@pd_ext
+def absmedian(self, **kwargs):
+    return self.abs().median(**kwargs)
+
+# for func in [disp, to_numeric, prep, categorize, binarize, rnd, vc, missing, impute, unmelt]:
+#     for cls in [pd.DataFrame, pd.Series]:
+#         setattr(cls, func.__name__, func)
 
 # def missing(df):
 #     m = pd.DataFrame(df).isnull().sum().sort_values(ascending=False).to_frame('ct').query('ct>0')
