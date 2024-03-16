@@ -1,7 +1,8 @@
 import os, sys, time, copy, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
-import pickle, dataclasses, typing, collections, oracledb
+import joblib, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from IPython.core.display import HTML
+warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
 C = ","
 N = "\n"
@@ -28,7 +29,7 @@ def write(fn, obj, overwrite=False, **kwargs):
         mkdir(fn.parent)
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
-                pickle.dump(obj, f, **kwargs)
+                joblib.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
@@ -45,7 +46,7 @@ def read(fn, overwrite=False, **kwargs):
         fn.unlink(missing_ok=True)
     try:
         with open(fn, 'rb') as f:
-            return pickle.load(f, **kwargs)
+            return joblib.load(f, **kwargs)
     except:
         try:
             return pd.read_parquet(fn, **kwargs).prep()
@@ -143,21 +144,46 @@ def disp(df, max_rows=4, max_cols=200, **kwargs):
     display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
 
 @pd_ext
-def to_numeric(ser, dtype_backend='numpy_nullable', errors='ignore'):
+def prep_number(ser, dtype_backend='numpy_nullable'):
     assert isinstance(ser, pd.Series)
-    with warnings.catch_warnings():
-        warnings.simplefilter(action='ignore', category=(FutureWarning,UserWarning))
-        dt = str(ser.dtype).lower()
-        if 'geometry' not in dt and 'bool' not in dt and 'category' not in dt:
-            ser = pd.to_numeric(ser.astype('string').str.lower().str.strip().replace('',pd.NA), downcast='integer', errors=errors)
-            if pd.api.types.is_string_dtype(ser):
-                ser = pd.to_datetime(ser, errors=errors)
-            elif pd.api.types.is_integer_dtype(ser):
-                ser = ser.astype('Int64', errors=errors)
-        return ser.convert_dtypes(dtype_backend)
+    ser = ser.convert_dtypes(dtype_backend)
+    if pd.api.types.is_string_dtype(ser):
+        try:
+            ser = pd.to_datetime(ser)
+        except ValueError:
+            try:
+                ser = pd.to_numeric(ser, downcast='integer')
+            except ValueError:
+                pass
+    return ser.astype('Int64') if pd.api.types.is_integer_dtype(ser) else ser
 
 @pd_ext
-def prep(X, cap="casefold"):
+def prep_string(ser, cap="casefold"):
+    assert isinstance(ser, pd.Series)
+    ser = ser.prep_number()
+    return getattr(ser.str, cap)().replace('',pd.NA) if pd.api.types.is_string_dtype(ser) else ser
+    # return ser.apply(lambda x: prep(x, cap)).replace('',pd.NA) if pd.api.types.is_string_dtype(ser) else ser
+
+@pd_ext
+def prep_category(ser):
+    assert isinstance(ser, pd.Series)
+    ser = ser.prep_string()
+    return ser.astype('category') if pd.api.types.is_string_dtype(ser) else ser
+
+@pd_ext
+def prep_bool(ser):
+    assert isinstance(ser, pd.Series)
+    ser = ser.prep_string()
+    vals = ser.dropna().unique()
+    if len(vals) <= 2:
+        vals = set(vals)
+        for s in [['false','true'], ['n','y'], [0, 1]]:
+            if vals.issubset(s):
+                ser = (ser == s[1]).astype('boolean').fillna(False)
+    return ser
+
+@pd_ext
+def prep(X, cap='casefold'):
     if isinstance(X, str):
         if cap:
             X = getattr(X, cap)()
@@ -167,33 +193,14 @@ def prep(X, cap="casefold"):
     elif isinstance(X, dict):
         return {prep(k,cap):prep(v,cap) for k,v in X.items()}
     elif isinstance(X, pd.DataFrame):
-        rename_column = lambda x: prep(x, cap).replace(' ','_').replace('-','_') if isinstance(x, str) else x
-        X = X.rename(columns=rename_column).rename_axis(index=rename_column)
-        idx = pd.MultiIndex.from_frame(X[[]].reset_index().to_numeric())
-        return X.to_numeric().set_index(idx).rename_axis(X.index.names)
+        g = lambda x: prep(x, cap).replace(' ','_').replace('-','_') if isinstance(x, str) else x
+        X = X.rename(columns=g).rename_axis(index=g)
+        idx = pd.MultiIndex.from_frame(X[[]].reset_index().prep_number().prep_string())
+        return X.prep_number().prep_string().set_index(idx).rename_axis(X.index.names)
+    elif isinstance(X, pd.Series):
+        assert 1==2
     else:
-        raise Exception(f'prep undefined for {type(X)}')
-
-@pd_ext
-def categorize(ser):
-    assert isinstance(ser, pd.Series)
-    return ser.astype('category') if pd.api.types.is_string_dtype(ser) else ser
-
-@pd_ext
-def binarize(ser):
-    assert isinstance(ser, pd.Series)
-    s = set(ser.dropna())
-    if s:
-        try:
-            ser = ser.str.lower()
-            if s.issubset({'y','n'}):
-                ser = (ser=='y').astype('boolean').fillna(False)
-            if s.issubset({'true','false'}):
-                ser = (ser=='true').astype('boolean').fillna(False)
-        except:
-            if s.issubset({0,1}):
-                ser = ser.astype('boolean').fillna(False)
-    return ser
+        return X
 
 @pd_ext
 def rnd(ser, digits=0):
@@ -225,20 +232,20 @@ def impute(df, col, val=None, grp=None):
         func = lambda x: val
     return (df if grp is None else df.groupby(grp))[col].transform(lambda x: x.fillna(func(x)))
 
-@pd_ext
-def unmelt(self, level=-1, names=None):
-    df = self.unstack(level).droplevel(0,1).rename_axis(columns=None)
-    if names is not None:
-        df.columns = listify(names)
-    return df
+# @pd_ext
+# def unmelt(self, level=-1, names=None):
+#     df = self.unstack(level).droplevel(0,1).rename_axis(columns=None)
+#     if names is not None:
+#         df.columns = listify(names)
+#     return df
 
-@pd_ext
-def absmean(self, **kwargs):
-    return self.abs().mean(**kwargs)
+# @pd_ext
+# def absmean(self, **kwargs):
+#     return self.abs().mean(**kwargs)
 
-@pd_ext
-def absmedian(self, **kwargs):
-    return self.abs().median(**kwargs)
+# @pd_ext
+# def absmedian(self, **kwargs):
+#     return self.abs().median(**kwargs)
 
 # for func in [disp, to_numeric, prep, categorize, binarize, rnd, vc, missing, impute, unmelt]:
 #     for cls in [pd.DataFrame, pd.Series]:
@@ -355,11 +362,6 @@ def IQR(x):
 
 def ran(x):
     return pctl(100)(x)-pctl(0)(x)
-
-summary = ['count',pctl(0),pctl(25),pctl(50),pctl(75),pctl(100),IQR,ran]
-
-
-
 
 class MyBaseClass():
     def __contains__(self, key):

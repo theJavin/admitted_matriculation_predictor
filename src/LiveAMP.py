@@ -17,15 +17,15 @@ def dt(date, format='sql'):
     else:
         return date.strftime(format)
 
-def get_term(term_code, attr='desc'):
-    if attr in ['desc','start_date','end_date','fa_proc_yr','housing_start_date','housing_end_date']:
-        qry = f"select stvterm_{attr} from stvterm where stvterm_code = {term_code}"
-    elif attr in ['census_date']:
-        qry = f"select sobptrm_{attr} from sobptrm where sobptrm_term_code = {term_code} and sobptrm_ptrm_code = '1'"
-    else:
-        raise Exception(f'unknown term attr: {attr}')
-    x = db.execute(qry).squeeze()
-    return x.replace(' ','') if isinstance(x, str) else x
+# def get_term(term_code, attr='desc'):
+#     if attr in ['desc','start_date','end_date','fa_proc_yr','housing_start_date','housing_end_date']:
+#         qry = f"select stvterm_{attr} from stvterm where stvterm_code = {term_code}"
+#     elif attr in ['census_date']:
+#         qry = f"select sobptrm_{attr} from sobptrm where sobptrm_term_code = {term_code} and sobptrm_ptrm_code = '1'"
+#     else:
+#         raise Exception(f'unknown term attr: {attr}')
+#     x = db.execute(qry).squeeze()
+#     return x.replace(' ','') if isinstance(x, str) else x
 
 def get_desc(nm, alias=None):
     tbl = 'stv'+nm if alias is None else 'stv'+alias
@@ -37,10 +37,8 @@ def get_desc(nm, alias=None):
 class FLAGS(MyBaseClass):
     def __post_init__(self):
         self.path = {'root': root_path / 'resources/flags'}
-        self.path['raw'] = self.path['root'] / 'raw'
-        self.path['sheet'] = self.path['root'] / 'sheet'
-        self.path['parq'] = self.path['root'] / 'parq'
-        self.path['csv']  = self.path['root'] / 'csv'
+        for nm in ['raw','shee','parq','csv']:
+            self.path[nm]  = self.path['root'] / nm
 
     def raw_to_parq(self, overwrite=False):
         for src in self.path['raw'].iterdir():
@@ -159,23 +157,59 @@ class TERM(MyBaseClass):
     overwrite: typing.Dict = None
     show: typing.Dict = None
 
+    def get(self, nm, cycle_day=None):
+        cd = '' if cycle_day is None else '_'+rjust(cycle_day,3,0)
+        fn = self.path[nm] / f"{nm}{cd}.parq"
+        df = read(fn, self.overwrite[nm])
+        if df is None:
+            print(f'{fn.name} not found - creating')
+            # print(f'{fn} not found - creating')
+        return df, fn
+
     def __post_init__(self):
-        D = {'adm':False, 'reg':False, 'flg':False, 'raw':False}
-        for x in ['overwrite','show']:
-            self[x] = D.copy() if self[x] is None else D.copy() | self[x]
+        self.path = {'root': root_path / 'resources'}
+        for nm in ['dst','trm']:
+            self.path[nm]  = self.path['root']
+        for nm in ['adm','reg','flg','raw']:
+            self.path[nm]  = self.path['root'] / f'data/{nm}/{self.term_code}'
+            
+            # self.path['data'] / f"{nm}/{self.term_code}"
+        # self.path['adm']  = self.path['data'] / f"adm/{self.term_code}"
+        # self.path['reg']  = self.path['data'] / f"reg/{self.term_code}"
+        # self.path['flg']  = self.path['data'] / f"flg/{self.term_code}"
+        # self.path['raw']  = self.path['data'] / f"raw/{self.term_code}"
+        # for nm in ['dst','trm']:
+        #     self.path[nm]  = self.path['root'] / f"resources/{nm}.parq"
+        # self.path['dst']  = self.path['root'] / 'resources/distances.parq'
+        # self.path['trm']  = self.path['root'] / 'resources/term_info.parq'
+
+        D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False}
+        for nm in ['overwrite','show']:
+            self[nm] = D.copy() if self[nm] is None else D.copy() | self[nm]
+        self.overwrite['dst'] = False
+
         self.year = self.term_code // 100
-        self.term = self.term_code % 100
-        self.appl_term_code = [self.term_code-2, self.term_code] if self.term == 8 else [self.term_code]
-        self.appl_term_desc = [get_term(t,'desc') for t in self.appl_term_code]
-        self.term_desc = get_term(self.term_code, 'desc')
-        self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
+        # self.term = self.term_code % 100
+        self.appl_term_code = [self.term_code, self.term_code-2] if self.term_code % 100 == 8 else [self.term_code]
+        T = [self.get_trm().query("term_code==@t").squeeze() for t in self.appl_term_code]
+        self.appl_term_desc = [t['term_desc'] for t in T]
+        self.term_desc = T[0]['term_desc']
+        self.census_date = T[0]['census_date']
+        self.end_date = self.census_date + pd.Timedelta(days=7)
         self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
-        self.path = {'root': root_path}
-        self.path['data'] = self.path['root'] / f"resources/data"
-        self.path['adm']  = self.path['data'] / f"adm/{self.term_code}"
-        self.path['reg']  = self.path['data'] / f"reg/{self.term_code}"
-        self.path['flg']  = self.path['data'] / f"flg/{self.term_code}"
-        self.path['raw']  = self.path['data'] / f"raw/{self.term_code}"
+
+            
+        
+        # self.appl_term_code = [self.term_code-2, self.term_code] if self.term == 8 else [self.term_code]
+        # self.appl_term_desc = [get_term(t,'desc') for t in self.appl_term_code]
+        # self.term_desc = self.get_trm().query("term_code==@self.term_code")['term_desc']
+        # self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
+
+
+        # self.term_desc = get_term(self.term_code, 'desc')
+        # self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
+        # self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
+
         self.flg_col = {
             'perm': [
                 'id',
@@ -215,20 +249,40 @@ class TERM(MyBaseClass):
                 ],
         }
 
-    def run(self, qry, fn=None, show=False, binarize=False):
-        df = db.execute(qry, show=show)
-        if binarize:
-            df = df.binarize()
+    # def run(self, qry, fn=None, show=False, binarize=False):
+    def run(self, qry, fn=None, show=False):
+        # df = func(db.execute(qry, show=show))\
+        df = db.execute(qry, show=show).prep()
+        # if binarize:
+        #     df = df.binarize()
         if fn is not None:
             write(fn, df, overwrite=True)
         return df
 
-    def get_dst(self, cycle_day=None):
-        fn = self.path['root'] / 'resources/distances.parq'
-        df = read(fn)
+    def get_trm(self):
+        nm = 'trm'
+        df, fn = self.get(nm)
         if df is not None:
             return df
-        print(f'creating {fn.name}')
+        qry = f"""
+        select
+            A.stvterm_code as term_code,
+            replace(A.stvterm_desc, ' ', '') as term_desc,
+            A.stvterm_start_date as start_date,
+            A.stvterm_end_date as end_date,
+            A.stvterm_fa_proc_yr as fa_proc_yr,
+            A.stvterm_housing_start_date as housing_start_date,
+            A.stvterm_housing_end_date as housing_end_date,
+            B.sobptrm_census_date as census_date
+        from stvterm A, sobptrm B
+        where A.stvterm_code = B.sobptrm_term_code and B.sobptrm_ptrm_code='1'"""
+        return self.run(qry, fn, self.show[nm])
+
+    def get_dst(self):
+        nm = 'dst'
+        df, fn = self.get(nm)
+        if df is not None:
+            return df
         import zipcodes, openrouteservice
         client = openrouteservice.Client(key=os.environ.get('OPENROUTESERVICE_API_KEY1'))
         def get_distances(Z, eps=0):
@@ -275,17 +329,9 @@ class TERM(MyBaseClass):
     def cutoff(self, col='A.current_date', criteria="= 0"):
         return f'{self.get_cycle_day(col)} {criteria}'
     
-    def prep(self, nm, cycle_day=None):
-        cycle_day = self.cycle_day if cycle_day is None else cycle_day
-        fn = self.path[nm] / f"{nm}_{self.term_code}_{rjust(cycle_day,3,0)}.parq"
-        df = read(fn, self.overwrite[nm])
-        if df is None:
-            print(f'{fn.name} not found - creating')
-        return cycle_day, fn, df
-
-    def get_reg(self, cycle_day=None):
+    def get_reg(self, cycle_day):
         nm = 'reg'
-        cycle_day, fn, df = self.prep(nm, cycle_day)
+        df, fn = self.get(nm, cycle_day)
         if df is not None:
             return df
         try:
@@ -326,9 +372,9 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
         return self.run(qry, fn, self.show[nm])
 
 
-    def get_adm(self, cycle_day=None):
+    def get_adm(self, cycle_day):
         nm = 'adm'
-        cycle_day, fn, df = self.prep(nm, cycle_day)
+        df, fn = self.get(nm, cycle_day)
         if df is not None:
             return df
 
@@ -449,12 +495,12 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"A.hs_pctl"
         ], C+N)
         qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where A.r = 1 and A.levl_code = 'UG' and A.styp_code in ('N','R','T')"
-        return self.run(qry, fn, self.show[nm], binarize=True)
+        return self.run(qry, fn, self.show[nm])
 
 
-    def get_flg(self, cycle_day=None):
+    def get_flg(self, cycle_day):
         nm = 'flg'
-        cycle_day, fn, df = self.prep(nm, cycle_day)
+        df, fn = self.get(nm, cycle_day)
         if df is not None:
             return df
         F = []
@@ -483,11 +529,11 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             subset = ['id','term_code_entry','styp_code']
             df = (
                 pd.concat(F, ignore_index=True)
+                .prep()
                 .rename(columns={'current_date':'flg_date', 'term_code':'term_code_entry'})
                 .sort_values(by=[*subset,'app_date'])
                 .drop_duplicates(subset=subset, keep='last')
                 .copy()
-                .prep()
             )
         df['gap_score'] = np.where(df['styp_code']=='n', df['ftic_gap_score'].combine_first(df['t_gap_score']).combine_first(df['gap_score']), df['t_gap_score'].combine_first(df['ftic_gap_score']).combine_first(df['gap_score']))
         df['ssb'] = df['ssb_last_accessed'].notnull()
@@ -498,23 +544,24 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
         df['act_equiv'] = df[['act_new_comp_score','sat10_total_score']].max(axis=1)
         for k in ['reading', 'writing', 'math']:
             df[k] = ~df[k].isin(['not college ready', 'retest required', pd.NA])
-        return write(fn, df.drop(columns=self.flg_col['temp']+['cycle_day'], errors='ignore').dropna(axis=1, how='all').binarize())
+        return write(fn, df.drop(columns=self.flg_col['temp']+['cycle_day'], errors='ignore').dropna(axis=1, how='all'))
 
 
     def get_raw(self):
         self['reg'] = {k: self.get_reg(cycle_day) for k, cycle_day in {'end':0, 'cur':self.cycle_day}.items()}
         
         nm = 'raw'
-        cycle_day, fn, df = self.prep(nm, self.cycle_day)
+        df, fn = self.get(nm, self.cycle_day)
         if df is None:
-            self.adm = self.get_adm(cycle_day)
+            self.adm = self.get_adm(self.cycle_day)
             self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109
-            self.flg = self.get_flg(cycle_day)
-            self.dst = self.get_dst(cycle_day)
+            self.flg = self.get_flg(self.cycle_day)
+            self.dst = self.get_dst()
             df =  (
                 self.adm
                 .merge(self.flg, how='left', on=['id','term_code_entry','styp_code'])
                 .merge(self.dst, how='left', on=['zip','camp_code'])
+                .prep()
             )
             assert (df.groupby(['pidm','term_code']).size() == 1).all()
             write(fn, df)
