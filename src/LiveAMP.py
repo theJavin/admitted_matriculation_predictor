@@ -25,9 +25,9 @@ def get_desc(nm, alias=None):
 @dataclasses.dataclass
 class FLAGS(MyBaseClass):
     def __post_init__(self):
-        self.path = {'root': root_path / 'resources/flags'}
+        self.path = dict()
         for nm in ['raw','shee','parq','csv']:
-            self.path[nm]  = self.path['root'] / nm
+            self.path[nm] = root_path / f'resources/flags/{nm}'
 
     def raw_to_parq(self, overwrite=False):
         for src in self.path['raw'].iterdir():
@@ -147,12 +147,11 @@ class TERM(MyBaseClass):
     show: typing.Dict = None
 
     def __post_init__(self):
-        self.path = {'root': root_path / 'resources'}
+        self.path = dict()
         for nm in ['dst','trm']:
-            self.path[nm]  = self.path['root']
+            self.path[nm] = root_path / f'admitted_matriculation_predictor/src'
         for nm in ['adm','reg','flg','raw']:
-            self.path[nm]  = self.path['root'] / f'data/{nm}/{self.term_code}'
-
+            self.path[nm] = root_path /f'resources/data/{nm}/{self.term_code}'
         D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False}
         for nm in ['overwrite','show']:
             self[nm] = D.copy() if self[nm] is None else D.copy() | self[nm]
@@ -244,47 +243,48 @@ class TERM(MyBaseClass):
     def get_dst(self):
         nm = 'dst'
         fn, df = self.get(nm)
+        assert df is not None, f"Can't find distances file {fn.name}- you probably have the wrong path. If you absolutely must recreate it, the original code is below. But it has not been tested since originally written in December 2023. It will almost surely have bugs that will require signficant effort to correct. You should exhaust every option to find the existing distance file before trying to run it."
         if df is not None:
             return df
-        import zipcodes, openrouteservice
-        client = openrouteservice.Client(key=os.environ.get('OPENROUTESERVICE_API_KEY1'))
-        def get_distances(Z, eps=0):
-            theta = np.random.rand(len(Z))
-            Z = Z + eps * np.array([np.sin(theta), np.cos(theta)]).T
-            L = []
-            dk = 1000 // len(dst)
-            k = 0
-            while k < len(Z):
-                print(f'getting distances {rjust(k,5)} / {len(Z)} = {rjust(round(k/len(Z)*100),3)}%')
-                src = Z.iloc[k:k+dk]
-                X = pd.concat([dst,src]).values.tolist()
-                res = client.distance_matrix(X, units="mi", destinations=list(range(0,len(dst))), sources=list(range(len(dst),len(X))))
-                L.append(pd.DataFrame(res['durations'], index=src.index, columns=camp.keys()))
-                k += dk
-            return pd.concat(L)
+        # import zipcodes, openrouteservice
+        # client = openrouteservice.Client(key=os.environ.get('OPENROUTESERVICE_API_KEY1'))
+        # def get_distances(Z, eps=0):
+        #     theta = np.random.rand(len(Z))
+        #     Z = Z + eps * np.array([np.sin(theta), np.cos(theta)]).T
+        #     L = []
+        #     dk = 1000 // len(dst)
+        #     k = 0
+        #     while k < len(Z):
+        #         print(f'getting distances {rjust(k,5)} / {len(Z)} = {rjust(round(k/len(Z)*100),3)}%')
+        #         src = Z.iloc[k:k+dk]
+        #         X = pd.concat([dst,src]).values.tolist()
+        #         res = client.distance_matrix(X, units="mi", destinations=list(range(0,len(dst))), sources=list(range(len(dst),len(X))))
+        #         L.append(pd.DataFrame(res['durations'], index=src.index, columns=camp.keys()))
+        #         k += dk
+        #     return pd.concat(L)
 
-        Z = [[z['zip_code'],z['state'],z['long'],z['lat']] for z in zipcodes.list_all() if z['state'] not in ['PR','AS','MH','PW','MP','FM','GU','VI','AA','HI','AK','AP','AE']]
-        Z = pd.DataFrame(Z, columns=['zip','state','lon','lat']).prep().query('lat>20').set_index(['zip','state']).sort_index()
-        camp = {'s':76402, 'm':76036, 'w':76708, 'r':77807, 'l':76065}
-        dst = Z.loc[camp.values()]
-        try:
-            df = read(fn)
-        except:
-            df = get_distances(Z)
-        for k in range(20):
-            mask = df.isnull().any(axis=1)
-            if mask.sum() == 0:
-                break
-            df = df.combine_first(get_distances(Z.loc[mask], 0.02*k))
-        return write(fn, df.assign(o = 0).melt(ignore_index=False, var_name='camp_code', value_name='distance').prep())
+        # Z = [[z['zip_code'],z['state'],z['long'],z['lat']] for z in zipcodes.list_all() if z['state'] not in ['PR','AS','MH','PW','MP','FM','GU','VI','AA','HI','AK','AP','AE']]
+        # Z = pd.DataFrame(Z, columns=['zip','state','lon','lat']).prep().query('lat>20').set_index(['zip','state']).sort_index()
+        # camp = {'s':76402, 'm':76036, 'w':76708, 'r':77807, 'l':76065}
+        # dst = Z.loc[camp.values()]
+        # try:
+        #     df = read(fn)
+        # except:
+        #     df = get_distances(Z)
+        # for k in range(20):
+        #     mask = df.isnull().any(axis=1)
+        #     if mask.sum() == 0:
+        #         break
+        #     df = df.combine_first(get_distances(Z.loc[mask], 0.02*k))
+        # return write(fn, df.assign(o = 0).melt(ignore_index=False, var_name='camp_code', value_name='distance').prep())
     
-    def flg_fill(self):
-        F = dict()
-        for fn in sorted(self.path['flg'].iterdir()):
-            term_code = int(fn.stem[-6:])
-            if term_code >= 202006:
-                F[term_code] = read(fn).notnull().mean()*100
-        return pd.DataFrame(F).round().prep()
+    # def flg_fill(self):
+    #     F = dict()
+    #     for fn in sorted(self.path['flg'].iterdir()):
+    #         term_code = int(fn.stem[-6:])
+    #         if term_code >= 202006:
+    #             F[term_code] = read(fn).notnull().mean()*100
+    #     return pd.DataFrame(F).round().prep()
 
     def get_cycle_day(self, col='A.current_date'):
         return f"{dt(self.end_date)} - trunc({col})"

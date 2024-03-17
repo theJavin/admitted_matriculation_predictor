@@ -8,7 +8,6 @@ C = ","
 N = "\n"
 T = "    "
 
-
 def listify(X):
     if X is None or X is np.nan:
         return []
@@ -38,6 +37,19 @@ def cartesian(dct, sort=True):
         return [mysort(dict(zip(D.keys(), x))) for x in it.product(*D.values())]
     except:
         return dict()
+
+def nest(path, dct=dict(), val=None):
+    path = listify(path)
+    k = path.pop(-1)
+    a = dct
+    for p in path:
+        a.setdefault(p, dict())
+        a = a[p]
+    if val is None:
+        return a[k]
+    else:
+        a[k] = val
+        return dct
 
 def instantiate(x):
     try:
