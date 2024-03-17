@@ -1,5 +1,4 @@
 from setup import *
-import traceback
 db = Oracle('WFOCUSP')
 root_path = pathlib.Path("/home/scook/institutional_data_analytics/admitted_matriculation_projection")
 
@@ -16,16 +15,6 @@ def dt(date, format='sql'):
         return date.isoformat()
     else:
         return date.strftime(format)
-
-# def get_term(term_code, attr='desc'):
-#     if attr in ['desc','start_date','end_date','fa_proc_yr','housing_start_date','housing_end_date']:
-#         qry = f"select stvterm_{attr} from stvterm where stvterm_code = {term_code}"
-#     elif attr in ['census_date']:
-#         qry = f"select sobptrm_{attr} from sobptrm where sobptrm_term_code = {term_code} and sobptrm_ptrm_code = '1'"
-#     else:
-#         raise Exception(f'unknown term attr: {attr}')
-#     x = db.execute(qry).squeeze()
-#     return x.replace(' ','') if isinstance(x, str) else x
 
 def get_desc(nm, alias=None):
     tbl = 'stv'+nm if alias is None else 'stv'+alias
@@ -157,31 +146,12 @@ class TERM(MyBaseClass):
     overwrite: typing.Dict = None
     show: typing.Dict = None
 
-    def get(self, nm, cycle_day=None):
-        cd = '' if cycle_day is None else '_'+rjust(cycle_day,3,0)
-        fn = self.path[nm] / f"{nm}{cd}.parq"
-        df = read(fn, self.overwrite[nm])
-        if df is None:
-            print(f'{fn.name} not found - creating')
-            # print(f'{fn} not found - creating')
-        return df, fn
-
     def __post_init__(self):
         self.path = {'root': root_path / 'resources'}
         for nm in ['dst','trm']:
             self.path[nm]  = self.path['root']
         for nm in ['adm','reg','flg','raw']:
             self.path[nm]  = self.path['root'] / f'data/{nm}/{self.term_code}'
-            
-            # self.path['data'] / f"{nm}/{self.term_code}"
-        # self.path['adm']  = self.path['data'] / f"adm/{self.term_code}"
-        # self.path['reg']  = self.path['data'] / f"reg/{self.term_code}"
-        # self.path['flg']  = self.path['data'] / f"flg/{self.term_code}"
-        # self.path['raw']  = self.path['data'] / f"raw/{self.term_code}"
-        # for nm in ['dst','trm']:
-        #     self.path[nm]  = self.path['root'] / f"resources/{nm}.parq"
-        # self.path['dst']  = self.path['root'] / 'resources/distances.parq'
-        # self.path['trm']  = self.path['root'] / 'resources/term_info.parq'
 
         D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False}
         for nm in ['overwrite','show']:
@@ -197,18 +167,6 @@ class TERM(MyBaseClass):
         self.census_date = T[0]['census_date']
         self.end_date = self.census_date + pd.Timedelta(days=7)
         self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
-
-            
-        
-        # self.appl_term_code = [self.term_code-2, self.term_code] if self.term == 8 else [self.term_code]
-        # self.appl_term_desc = [get_term(t,'desc') for t in self.appl_term_code]
-        # self.term_desc = self.get_trm().query("term_code==@self.term_code")['term_desc']
-        # self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
-
-
-        # self.term_desc = get_term(self.term_code, 'desc')
-        # self.end_date = get_term(self.term_code, 'census_date') + pd.Timedelta(days=7)
-        # self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
 
         self.flg_col = {
             'perm': [
@@ -249,19 +207,24 @@ class TERM(MyBaseClass):
                 ],
         }
 
-    # def run(self, qry, fn=None, show=False, binarize=False):
-    def run(self, qry, fn=None, show=False):
-        # df = func(db.execute(qry, show=show))\
-        df = db.execute(qry, show=show).prep()
-        # if binarize:
-        #     df = df.binarize()
+    def get(self, nm, cycle_day=None):
+        cd = '' if cycle_day is None else '_'+rjust(cycle_day,3,0)
+        fn = self.path[nm] / f"{nm}{cd}.parq"
+        df = read(fn, self.overwrite[nm])
+        if df is None:
+            print(f'{fn.name} not found - creating')
+            # print(f'{fn} not found - creating')
+        return fn, df
+
+    def run(self, qry, fn=None, show=False, func=lambda x: x):
+        df = func(db.execute(qry, show=show).prep())
         if fn is not None:
             write(fn, df, overwrite=True)
         return df
 
     def get_trm(self):
         nm = 'trm'
-        df, fn = self.get(nm)
+        fn, df = self.get(nm)
         if df is not None:
             return df
         qry = f"""
@@ -280,7 +243,7 @@ class TERM(MyBaseClass):
 
     def get_dst(self):
         nm = 'dst'
-        df, fn = self.get(nm)
+        fn, df = self.get(nm)
         if df is not None:
             return df
         import zipcodes, openrouteservice
@@ -331,7 +294,7 @@ class TERM(MyBaseClass):
     
     def get_reg(self, cycle_day):
         nm = 'reg'
-        df, fn = self.get(nm, cycle_day)
+        fn, df = self.get(nm, cycle_day)
         if df is not None:
             return df
         try:
@@ -374,7 +337,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
 
     def get_adm(self, cycle_day):
         nm = 'adm'
-        df, fn = self.get(nm, cycle_day)
+        fn, df = self.get(nm, cycle_day)
         if df is not None:
             return df
 
@@ -480,18 +443,16 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"A.zip",
             f"A.natn_code",
             f"(select B.stvnatn_nation from stvnatn B where B.stvnatn_code = A.natn_code) as natn_desc",
-            f"(select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null) as international",
-            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN') as race_american_indian",
-            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS') as race_asian",
-            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL') as race_black",
-            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA') as race_pacific",
-            f"(select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH') as race_white",
-            f"(select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ) as race_hispanic",
+            f"coalesce((select distinct 1 from gorvisa B where B.gorvisa_pidm = A.pidm and B.gorvisa_vtyp_code is not null), 0) as international",
+            f"coalesce((select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='IN'), 0) as race_american_indian",
+            f"coalesce((select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='AS'), 0) as race_asian",
+            f"coalesce((select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='BL'), 0) as race_black",
+            f"coalesce((select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='HA'), 0) as race_pacific",
+            f"coalesce((select distinct 1 from gorprac B where B.gorprac_pidm = A.pidm and B.gorprac_race_cde='WH'), 0) as race_white",
+            f"coalesce((select distinct 1 from spbpers B where B.spbpers_pidm = A.pidm and B.spbpers_ethn_cde=2   ), 0) as race_hispanic",
             f"(select B.spbpers_sex from spbpers B where B.spbpers_pidm = A.pidm) as gender",
             *get_desc('lgcy'),
-            # f"case when A.lgcy_code is null or A.lgcy_code in ('N','O') then null else 1 end as legacy",
             *get_desc('resd'),
-            # f"case when A.resd_code = 'R' then 1 else 0 end as resd",
             f"A.hs_pctl"
         ], C+N)
         qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where A.r = 1 and A.levl_code = 'UG' and A.styp_code in ('N','R','T')"
@@ -500,7 +461,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
 
     def get_flg(self, cycle_day):
         nm = 'flg'
-        df, fn = self.get(nm, cycle_day)
+        fn, df = self.get(nm, cycle_day)
         if df is not None:
             return df
         F = []
@@ -551,7 +512,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
         self['reg'] = {k: self.get_reg(cycle_day) for k, cycle_day in {'end':0, 'cur':self.cycle_day}.items()}
         
         nm = 'raw'
-        df, fn = self.get(nm, self.cycle_day)
+        fn, df = self.get(nm, self.cycle_day)
         if df is None:
             self.adm = self.get_adm(self.cycle_day)
             self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109

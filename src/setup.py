@@ -8,53 +8,6 @@ C = ","
 N = "\n"
 T = "    "
 
-def delete(path):
-    if path.is_dir():
-        shutil.rmtree(path)
-    elif path.is_file():
-        path.unlink()
-
-def mkdir(path, overwrite=False):
-    if overwrite:
-        delete(path)
-    path.mkdir(exist_ok=True, parents=True)
-
-def write(fn, obj, overwrite=False, **kwargs):
-    fn = pathlib.Path(fn)
-    suf = ['.parq','.parquet','.pkl','.csv']
-    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
-    if overwrite:
-        fn.unlink(missing_ok=True)
-    if not fn.is_file():
-        mkdir(fn.parent)
-        if fn.suffix == '.pkl':
-            with open(fn, 'wb') as f:
-                joblib.dump(obj, f, **kwargs)
-        else:
-            obj = pd.DataFrame(obj).prep()
-            if fn.suffix in ['.parq','.parquet']:
-                obj.to_parquet(fn, **kwargs)
-            elif fn.suffix == '.csv':
-                obj.to_csv(fn, **kwargs)
-    return obj
-
-def read(fn, overwrite=False, **kwargs):
-    fn = pathlib.Path(fn)
-    suf = ['.parq','.parquet','.pkl','.csv']
-    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
-    if overwrite:
-        fn.unlink(missing_ok=True)
-    try:
-        with open(fn, 'rb') as f:
-            return joblib.load(f, **kwargs)
-    except:
-        try:
-            return pd.read_parquet(fn, **kwargs).prep()
-        except:
-            try:
-                return pd.read_csv(fn, **kwargs).prep()
-            except:
-                return None
 
 def listify(X):
     if X is None or X is np.nan:
@@ -162,7 +115,6 @@ def prep_string(ser, cap="casefold"):
     assert isinstance(ser, pd.Series)
     ser = ser.prep_number()
     return getattr(ser.str, cap)().replace('',pd.NA) if pd.api.types.is_string_dtype(ser) else ser
-    # return ser.apply(lambda x: prep(x, cap)).replace('',pd.NA) if pd.api.types.is_string_dtype(ser) else ser
 
 @pd_ext
 def prep_category(ser):
@@ -175,7 +127,7 @@ def prep_bool(ser):
     assert isinstance(ser, pd.Series)
     ser = ser.prep_string()
     vals = ser.dropna().unique()
-    if len(vals) <= 2:
+    if len(vals) in [1, 2]:
         vals = set(vals)
         for s in [['false','true'], ['n','y'], [0, 1]]:
             if vals.issubset(s):
@@ -239,117 +191,53 @@ def impute(df, col, val=None, grp=None):
 #         df.columns = listify(names)
 #     return df
 
-# @pd_ext
-# def absmean(self, **kwargs):
-#     return self.abs().mean(**kwargs)
+def delete(path):
+    if path.is_dir():
+        shutil.rmtree(path)
+    elif path.is_file():
+        path.unlink()
 
-# @pd_ext
-# def absmedian(self, **kwargs):
-#     return self.abs().median(**kwargs)
+def mkdir(path, overwrite=False):
+    if overwrite:
+        delete(path)
+    path.mkdir(exist_ok=True, parents=True)
 
-# for func in [disp, to_numeric, prep, categorize, binarize, rnd, vc, missing, impute, unmelt]:
-#     for cls in [pd.DataFrame, pd.Series]:
-#         setattr(cls, func.__name__, func)
+def write(fn, obj, overwrite=False, **kwargs):
+    fn = pathlib.Path(fn)
+    suf = ['.parq','.parquet','.pkl','.csv']
+    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
+    if overwrite:
+        fn.unlink(missing_ok=True)
+    if not fn.is_file():
+        mkdir(fn.parent)
+        if fn.suffix == '.pkl':
+            with open(fn, 'wb') as f:
+                joblib.dump(obj, f, **kwargs)
+        else:
+            obj = pd.DataFrame(obj).prep()
+            if fn.suffix in ['.parq','.parquet']:
+                obj.to_parquet(fn, **kwargs)
+            elif fn.suffix == '.csv':
+                obj.to_csv(fn, **kwargs)
+    return obj
 
-# def missing(df):
-#     m = pd.DataFrame(df).isnull().sum().sort_values(ascending=False).to_frame('ct').query('ct>0')
-#     m['pct'] = (m['ct'] / df.shape[0] * 100).round(1)
-#     return m
-# pd.DataFrame.missing = missing
-# pd.Series.missing = missing
-
-# # def to_numeric(ser, errors='ignore'):
-# #     dt = str(ser.dtype).lower()
-# #     if 'geometry' not in dt and 'bool' not in dt:
-# #         with warnings.catch_warnings(action='ignore'):
-# #             ser = pd.to_numeric(ser.astype('string').str.lower().str.strip().replace('',pd.NA),
-# #                                 errors=errors, downcast='integer', dtype_backend=DTYPE_BACKEND)
-# #             if pd.api.types.is_string_dtype(ser):
-# #                 ser = pd.to_datetime(ser, errors='ignore')
-# #             elif pd.api.types.is_integer_dtype(ser):
-# #                 ser = ser.astype('Int64', errors='ignore')
-# #     return ser.convert_dtypes(DTYPE_BACKEND)
-
-# def binarize(df):
-#     def f(ser):
-#         s = set(ser.dropna())
-#         if len(s) == 0:
-#             return ser
-#         if s.issubset({'y','Y'}):
-#             return ser.notnull().astype('boolean')
-#         elif s.issubset({0,1}):
-#             return ser.astype('boolean')
-#         else:
-#             return ser
-#     return df.apply(f)
-# pd.DataFrame.binarize = binarize
-
-# def categorize(df):
-#     def f(ser):
-#         if pd.api.types.is_string_dtype(ser):
-#             return ser.astype('category')
-#         else:
-#             return ser
-#     return df.apply(f)
-# pd.DataFrame.categorize = categorize
-
-# def to_numeric(df, errors='ignore'):
-#     with warnings.catch_warnings(action='ignore'):
-#         def f(ser):
-#             dt = str(ser.dtype).lower()
-#             if 'geometry' not in dt and 'bool' not in dt and 'category' not in dt:
-#                 ser = pd.to_numeric(ser.astype('string').str.lower().str.strip().replace('',pd.NA), errors=errors, downcast='integer', dtype_backend=DTYPE_BACKEND)
-#                 if pd.api.types.is_string_dtype(ser):
-#                     ser = pd.to_datetime(ser, errors='ignore')
-#                 elif pd.api.types.is_integer_dtype(ser):
-#                     ser = ser.astype('Int64', errors='ignore')
-#             return ser
-#         return df.apply(f).convert_dtypes(DTYPE_BACKEND)
-# pd.DataFrame.to_numeric = to_numeric
-
-# def unmelt(self, level=-1, names=None):
-#     df = self.unstack(level).droplevel(0,1).rename_axis(columns=None)
-#     if names is not None:
-#         df.columns = listify(names)
-#     return df
-# pd.DataFrame.unmelt = unmelt
-
-# def rindex(df, keys=None, keep=True, **kwargs):
-#     df = pd.DataFrame(df)
-#     keys = listify(keys)
-#     idx = pd.Index(df.index.names).drop(None, errors='ignore')
-#     rst = list(idx if keep else idx.intersection(keys))
-#     df = df.drop(columns=rst, errors='ignore').reset_index(rst, drop=False).reset_index(drop=True)
-#     return df.set_index(keys, **kwargs) if keys else df
-# pd.Series.rindex = rindex
-# pd.DataFrame.rindex = rindex
-
-# def grpby(df, by, keep=False, dropna=False, **kwargs):
-#     return df.rindex(by, keep).groupby(by, dropna=dropna, **kwargs)
-# pd.Series.grpby = grpby
-# pd.DataFrame.grpby = grpby
-
-# def vc(df, by, dropna=False, **kwargs):
-#     return df.grpby(by, dropna=dropna, **kwargs).size().to_frame('ct')
-# pd.Series.vc = vc
-# pd.DataFrame.vc = vc
-
-# def impute(df, col, val=None, grp=None):
-#     val = val if val is not None else 'median' if pd.api.types.is_numeric_dtype(df[col]) else 'mode'
-#     if val in ['median']:
-#         func = lambda x: x.median()
-#     elif val in ['mean','ave','avg','average']:
-#         func = lambda x: x.mean()
-#     elif val in ['mode','most_frequent']:
-#         func = lambda x: x.mode()[0]
-#     elif val in ['max']:
-#         func = lambda x: x.max()
-#     elif val in ['min']:
-#         func = lambda x: x.min()
-#     else:
-#         func = lambda x: val
-#     return (df if grp is None else df.groupby(grp))[col].transform(lambda x: x.fillna(func(x)))
-# pd.DataFrame.impute = impute
+def read(fn, overwrite=False, **kwargs):
+    fn = pathlib.Path(fn)
+    suf = ['.parq','.parquet','.pkl','.csv']
+    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
+    if overwrite:
+        fn.unlink(missing_ok=True)
+    try:
+        with open(fn, 'rb') as f:
+            return joblib.load(f, **kwargs)
+    except:
+        try:
+            return pd.read_parquet(fn, **kwargs).prep()
+        except:
+            try:
+                return pd.read_csv(fn, **kwargs).prep()
+            except:
+                return None
 
 def pctl(p):
     p = round(p if p >= 1 else p*100)
