@@ -1,5 +1,5 @@
 import os, sys, time, copy, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
-import joblib, dataclasses, typing, collections, oracledb
+import pickle, joblib, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from IPython.core.display import HTML
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
@@ -224,7 +224,7 @@ def write(fn, obj, overwrite=False, **kwargs):
         mkdir(fn.parent)
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
-                joblib.dump(obj, f, **kwargs)
+                pickle.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
@@ -241,7 +241,7 @@ def read(fn, overwrite=False, **kwargs):
         fn.unlink(missing_ok=True)
     try:
         with open(fn, 'rb') as f:
-            return joblib.load(f, **kwargs)
+            return pickle.load(f, **kwargs)
     except:
         try:
             return pd.read_parquet(fn, **kwargs).prep()

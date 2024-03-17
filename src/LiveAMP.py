@@ -515,7 +515,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
         fn, df = self.get(nm, self.cycle_day)
         if df is None:
             self.adm = self.get_adm(self.cycle_day)
-            self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109
+            self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109  # ad hoc fix to data error which I've requested to be fixed
             self.flg = self.get_flg(self.cycle_day)
             self.dst = self.get_dst()
             df =  (
