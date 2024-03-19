@@ -224,6 +224,7 @@ def write(fn, obj, overwrite=False, **kwargs):
         mkdir(fn.parent)
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
+                # joblib.dump(obj, f, **kwargs)
                 pickle.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
@@ -241,6 +242,7 @@ def read(fn, overwrite=False, **kwargs):
         fn.unlink(missing_ok=True)
     try:
         with open(fn, 'rb') as f:
+            # return joblib.load(f, **kwargs)
             return pickle.load(f, **kwargs)
     except:
         try:
