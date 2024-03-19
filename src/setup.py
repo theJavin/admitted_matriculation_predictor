@@ -1,7 +1,7 @@
 import os, sys, time, copy, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
 import pickle, joblib, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-from IPython.core.display import HTML
+from IPython.core.display import display, HTML
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
 C = ","
@@ -106,7 +106,9 @@ def pd_ext(func):
 
 @pd_ext
 def disp(df, max_rows=4, max_cols=200, **kwargs):
-    display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+    # display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+    print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
+
 
 @pd_ext
 def prep_number(ser, dtype_backend='numpy_nullable'):
@@ -224,8 +226,8 @@ def write(fn, obj, overwrite=False, **kwargs):
         mkdir(fn.parent)
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
-                # joblib.dump(obj, f, **kwargs)
-                pickle.dump(obj, f, **kwargs)
+                joblib.dump(obj, f, **kwargs)
+                # pickle.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
@@ -242,8 +244,8 @@ def read(fn, overwrite=False, **kwargs):
         fn.unlink(missing_ok=True)
     try:
         with open(fn, 'rb') as f:
-            # return joblib.load(f, **kwargs)
-            return pickle.load(f, **kwargs)
+            return joblib.load(f, **kwargs)
+            # return pickle.load(f, **kwargs)
     except:
         try:
             return pd.read_parquet(fn, **kwargs).prep()
