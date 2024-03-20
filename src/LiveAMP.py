@@ -164,7 +164,7 @@ class AMP(MyBaseClass):
 
 
     def predict(self, crse, styp_code, params, train_term):
-        print(ljust(crse,8), train_term, styp_code, 'creating')
+        print(ljust(crse,8), styp_code, train_term, 'creating')
         X = self.X.copy()
         if styp_code != 'all':
             X = X.query(f"styp_code=='{styp_code}'")
@@ -223,6 +223,7 @@ class AMP(MyBaseClass):
         def pivot(df, val):
             Y = (
                 df
+                .query(f"pred_term!=train_term")
                 .reset_index()
                 .pivot_table(columns='train_term', index=['crse','styp_code','pred_term'], values=val, aggfunc=['count',pctl(0),pctl(25),pctl(50),pctl(75),pctl(100)])
                 .rename_axis(columns=[val,'train_term'])
@@ -241,44 +242,56 @@ class AMP(MyBaseClass):
         L = len(self.crse) * len(styp_codes) * len(self.params_list)
         k = 0
         start_time = time.perf_counter()
+        self.optimal = dict()
         for crse in self.crse:
             for styp_code in listify(styp_codes):
-                for params in self.params_list:
+                for params_idx, params in enumerate(self.params_list):
+                    print("\n========================================================================================================\n")
+                    print(ljust(crse,8),styp_code,params_idx)
+                    new = False
                     for train_term in self.term_codes:
                         path = [crse,styp_code,str(params),train_term]
                         new = False
                         try:
                             y = nest(path, self.pred)
                         except:
-                            if not new:
-                                print(str(params))
                             y = self.predict(crse, styp_code, copy.deepcopy(params), train_term)
                             nest(path, self.pred, y)
                             new = True
                             self.dump()
                     path.pop(-1)
                     Y = nest(path, self.pred)
-                    # return path
-                    
-                    # return Y
+                    for key in ['details', 'summary']:
+                        Y[key] = pd.concat([y[key] for y in Y.values() if isinstance(y, dict) and key in y.keys()]).sort_index()
+                    Y['rslt'] = self.analyze(Y['summary'])
                     if new:
-                        for k in ['details', 'summary']:
-                            Y[k] = pd.concat([y[k] for y in Y.values() if isinstance(y, dict) and k in y.keys()]).sort_index()
-                        Y['rslt'] = self.analyze(Y['summary'])
                         self.dump()
                         k += 1
                     else:
                         L -= 1
-                    print(path)
-                    Y['rslt']['err_pct'].query("err_pct == ' 50%'").disp(100)
-                    Y['summary'].query(f"pred_term!=train_term & pred_term!={self.infer_term}")["err_pct"].abs().describe().to_frame().T.disp(200)
+                    Y['rslt']['err_pct'].query("err_pct == ' 50%'").round(decimals=2).disp(100)
+                    E = Y['summary'].query(f"pred_term!=train_term & pred_term!={self.infer_term}")["err_pct"].abs()
+                    E.describe().to_frame().T.round(decimals=2).disp(200)
+                    new = Y | {'params_idx':params_idx, 'params':params, 'score':E.median()}
+                    print(f"new score = {round(new['score'],2)}")
+                    path.pop(-1)
+                    try:
+                        old = nest(path, self.optimal)
+                        print(f"old score = {round(old['score'],2)}")
+                        if new['score'] < old['score']:
+                            print('replacing')
+                            nest(path, self.optimal, new)
+                        else:
+                            print('keeping')
+                    except:
+                        nest(path, self.optimal, new)
+                    
                     self.dump()
                     elapsed = (time.perf_counter() - start_time) / 60
                     complete = k / L if L > 0 else 1
                     rate = elapsed / k if k > 0 else 0
                     remaining = rate * (L - k)
                     print(f"{k} / {L} = {round(complete*100,1)}% complete, elapsed = {round(elapsed,1)} min, remaining = {round(remaining,1)} min @ {round(rate,1)} min per model")
-            print("\n========================================================================================================\n")
 
 
     # def main(self, styp_codes=('n','t','r')):

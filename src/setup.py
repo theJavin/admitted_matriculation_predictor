@@ -169,9 +169,9 @@ def prep(X, cap='casefold'):
         return X
 
 @pd_ext
-def rnd(ser, digits=0):
+def rnd(ser, decimals=0):
     assert isinstance(ser, pd.Series)
-    return ser.round(digits).prep()
+    return ser.round(decimals=decimals).prep()
 
 @pd_ext
 def vc(df, by, dropna=False, digits=1, **kwargs):
