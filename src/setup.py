@@ -226,8 +226,8 @@ def write(fn, obj, overwrite=False, **kwargs):
         mkdir(fn.parent)
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
-                joblib.dump(obj, f, **kwargs)
-                # pickle.dump(obj, f, **kwargs)
+                # joblib.dump(obj, f, **kwargs)
+                pickle.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
