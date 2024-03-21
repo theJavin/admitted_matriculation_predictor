@@ -26,7 +26,7 @@ def get_desc(nm, alias=None):
 class FLAGS(MyBaseClass):
     def __post_init__(self):
         self.path = dict()
-        for nm in ['raw','shee','parq','csv']:
+        for nm in ['raw','sheet','parq','csv']:
             self.path[nm] = root_path / f'resources/flags/{nm}'
 
     def raw_to_parq(self, overwrite=False):
@@ -116,10 +116,16 @@ class FLAGS(MyBaseClass):
                 print(dst)
                 L = []
                 for src in sorted(p.iterdir()):
+                    print(src)
                     df = read(src)
-                    col_repl['campus'] = 'camp_desc' if 'campus_code' in df else 'camp_code'
+                    try:
+                        col_repl['campus'] = 'camp_desc' if 'campus_code' in df else 'camp_code'
+                    except:
+                        df.disp(5)
+                        assert 1==2
                     L.append(df.dropna(axis=1, how='all').drop(columns=col_drop, errors='ignore').rename(columns=col_repl, errors='ignore'))
-                write(dst, pd.concat(L))
+                df = pd.concat(L)
+                write(dst, pd.concat(L).prep())
                 # delete(csv)
             # if not csv.is_file():
             #     print(csv)

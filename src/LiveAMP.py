@@ -1,4 +1,5 @@
 from term import *
+import requests
 import miceforest as mf
 from sklearn.compose import make_column_selector, ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, PowerTransformer, KBinsDiscretizer
@@ -43,7 +44,14 @@ class AMP(MyBaseClass):
         return write(self.rslt, self, overwrite=True)
 
     def __post_init__(self):
-        self.rslt = root_path / f"resources/rslt/{rjust(self.cycle_day,3,0)}/rslt.pkl"
+        self.path = root_path / f"resources/rslt/{rjust(self.cycle_day,3,0)}"
+        mkdir(self.path)
+        self.rslt = self.path / f"rslt.pkl"
+        self.summary = self.path / 'amp_summary.csv'
+        self.details = self.path / 'amp_details.csv'
+        # self.rslt = root_path / f"resources/rslt/{rjust(self.cycle_day,3,0)}
+
+        
         mkdir(self.rslt.parent)
         D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False, 'term':False, 'raw_df':False, 'reg_df':False, 'X':False, 'Y':False, 'pred':False}
         for x in ['overwrite','show']:
@@ -212,6 +220,8 @@ class AMP(MyBaseClass):
         for x in ['pred','true']:
             summary[x] = summary[x] * summary['mlt']
         summary.insert(2, 'err', summary['pred'] - summary['true'])
+        summary.insert(3, 'err_pct', summary['err'] / summary['true'] * 100)
+        # summary.insert(3, 'err_pct', (summary['err'] / summary['true']).clip(-1, 1) * 100)
         summary.insert(3, 'err_pct', (summary['err'] / summary['true']).clip(-1, 1) * 100)
         S = {'details':details, 'summary':summary.drop(columns='mlt').prep()}#, 'trf':trf, 'imp':imp}
         # S['summary'].disp(5)
@@ -261,17 +271,17 @@ class AMP(MyBaseClass):
                             self.dump()
                     path.pop(-1)
                     Y = nest(path, self.pred)
-                    for key in ['details', 'summary']:
-                        Y[key] = pd.concat([y[key] for y in Y.values() if isinstance(y, dict) and key in y.keys()]).sort_index()
-                    Y['rslt'] = self.analyze(Y['summary'])
                     if new:
+                        for key in ['details', 'summary']:
+                            Y[key] = pd.concat([y[key] for y in Y.values() if isinstance(y, dict) and key in y.keys()]).sort_index()
+                        Y['rslt'] = self.analyze(Y['summary'])
                         self.dump()
                         k += 1
                     else:
                         L -= 1
-                    Y['rslt']['err_pct'].query("err_pct == ' 50%'").round(decimals=2).disp(100)
+                    # Y['rslt']['err_pct'].query("err_pct == ' 50%'").round(decimals=2).disp(100)
                     E = Y['summary'].query(f"pred_term!=train_term & pred_term!={self.infer_term}")["err_pct"].abs()
-                    E.describe().to_frame().T.round(decimals=2).disp(200)
+                    # E.describe().to_frame().T.round(decimals=2).disp(200)
                     new = Y | {'params_idx':params_idx, 'params':params, 'score':E.median()}
                     print(f"new score = {round(new['score'],2)}")
                     path.pop(-1)
@@ -285,62 +295,29 @@ class AMP(MyBaseClass):
                             print('keeping')
                     except:
                         nest(path, self.optimal, new)
-                    
                     self.dump()
                     elapsed = (time.perf_counter() - start_time) / 60
                     complete = k / L if L > 0 else 1
                     rate = elapsed / k if k > 0 else 0
                     remaining = rate * (L - k)
                     print(f"{k} / {L} = {round(complete*100,1)}% complete, elapsed = {round(elapsed,1)} min, remaining = {round(remaining,1)} min @ {round(rate,1)} min per model")
-
-
-    # def main(self, styp_codes=('n','t','r')):
-    #     self.preprocess()
-    #     g = lambda Y: {k: pd.concat([y[k] for y in Y.values() if isinstance(y, dict) and k in y.keys()]).sort_index() for k in ['details','summary']}
-    #     start_time = time.perf_counter()
-    #     L = len(self.params_list)
-    #     k = 0
-    #     for params in self.params_list:
-    #         # print(str(params))
-    #         new = False
-    #         Y = []
-    #         for crse in self.crse:
-    #             for train_term in self.term_codes:
-    #                 for styp_code in listify(styp_codes):
-    #                     path = [str(params),crse,train_term,styp_code]
-    #                     try:
-    #                         y = nest(path, self.pred)
-    #                     except:
-    #                         if not new:
-    #                             print(str(params))
-    #                         y = self.predict(copy.deepcopy(params), crse, train_term, styp_code)
-    #                         nest(path, self.pred, y)
-    #                         new = True
-    #                         self.dump()
-    #                     Y.append(y)
-    #         P = self.pred[str(params)]
-    #         if new:
-    #             for key in ['details', 'summary']:
-    #                 P[key] = pd.concat([y[key] for y in Y])
-    #             P['rslt'] = self.analyze(P['summary'])
-    #             self.dump()
-    #             k += 1
-    #         else:
-    #             L -= 1
-    #         P['rslt']['err_pct'].query("err_pct == ' 50%'").disp(100)
-    #         P['summary'].query(f"train_term==202308 & pred_term!=202408")["err_pct"].abs().describe().to_frame().T.disp(200)
-    #         elapsed = (time.perf_counter() - start_time) / 60
-    #         complete = k / L if L > 0 else 1
-    #         rate = elapsed / k if k > 0 else 0
-    #         remaining = rate * (L - k)
-    #         print(f"{k} / {L} = {round(complete*100,1)}% complete, elapsed = {round(elapsed,1)} min, remaining = {round(remaining,1)} min @ {round(rate,1)} min per model")
-    #         print("\n========================================================================================================\n")
-    
+        for key in ['details', 'summary']:
+            A = pd.concat([S[key] for crse, C in self.optimal.items() for styp_code, S in C.items() if isinstance(S, dict) and key in S.keys()])
+            if key == 'summary':
+                B = A.copy().reset_index().assign(styp_code=A.reset_index()['styp_code'].replace({'n':'new first time','t':'transfer','r':'returning'}))
+                C = B.assign(styp_code='all').groupby(A.index.names)[['pred','true','err']].sum().reset_index()
+                C['err_pct'] = C['err'] / C['true'] * 100
+                A = pd.concat([B,C])
+            self.optimal[key] = A
+            write(self[key], self.optimal[key], index=False)
+        target_url = 'https://prod-121.westus.logic.azure.com:443/workflows/784fef9d36024a6abf605d1376865784/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Yrr4tE1SwYZ88SU9_ixG-WEdN1GFicqJwH_KiCZ70M'
+        with open(self.summary, 'rb') as target_file:
+            response = requests.post(target_url, files = {"amp_summary.csv": target_file})
 
 code_desc = lambda x: [x+'_code', x+'_desc']
 passthru = ['passthrough']
-passdrop = ['passthrough', 'drop']
-# passthru = passdrop
+# passdrop = ['passthrough', 'drop']
+passdrop = passthru
 bintrf = lambda n_bins: KBinsDiscretizer(n_bins=n_bins, encode='ordinal', strategy='uniform', subsample=None)
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 kwargs = {
@@ -393,11 +370,11 @@ kwargs = {
         'distance',
         'hs_qrtl',
     ],
-    # 'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    'cycle_day': 183,
+    'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
+    # 'cycle_day': 183,
     'crse': [
         'engl1301',
-        # 'biol1406',
+        'biol1406',
         # 'math1314',
         # 'biol2401',
         # 'math2412',
@@ -452,10 +429,10 @@ kwargs = {
         },
     'imp_grid': {
         'mmc': 10,
-        # 'datasets': 25,
-        'datasets': 1,
-        'iterations': 1,
-        'tune': False,
+        'datasets': 10,
+        # 'datasets': 1,
+        # 'iterations': 1,
+        # 'tune': False,
     },
     'overwrite': {
         # # 'trm':True,
@@ -480,9 +457,4 @@ if __name__ == "__main__":
     with contextlib.closing(Tee(self.rslt.with_suffix('.txt'), "w", channel="stdout")) as outputstream:
         print(pd.Timestamp.now())
         self.preprocess()
-        # self.params_list = self.params_list[102:103]
-        self.main(styp_codes='n')
-        # print(len(self.params_list))
-        # for x in self.params_list:
-        #     print(x)
-        # T = TERM(202008, cycle_day=184, show={'adm':True}).get_adm(184)
+        self.main()#styp_codes='n')

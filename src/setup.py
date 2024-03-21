@@ -113,8 +113,8 @@ def disp(df, max_rows=4, max_cols=200, **kwargs):
 @pd_ext
 def prep_number(ser, dtype_backend='numpy_nullable'):
     assert isinstance(ser, pd.Series)
-    ser = ser.convert_dtypes(dtype_backend)
-    if pd.api.types.is_string_dtype(ser):
+    if pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
+        ser = ser.astype('string')
         try:
             ser = pd.to_datetime(ser)
         except ValueError:
@@ -122,7 +122,7 @@ def prep_number(ser, dtype_backend='numpy_nullable'):
                 ser = pd.to_numeric(ser, downcast='integer')
             except ValueError:
                 pass
-    return ser.astype('Int64') if pd.api.types.is_integer_dtype(ser) else ser
+    return ser.astype('Int64') if pd.api.types.is_integer_dtype(ser) else ser.convert_dtypes(dtype_backend)
 
 @pd_ext
 def prep_string(ser, cap="casefold"):
@@ -216,7 +216,7 @@ def mkdir(path, overwrite=False):
         delete(path)
     path.mkdir(exist_ok=True, parents=True)
 
-def write(fn, obj, overwrite=False, **kwargs):
+def write(fn, obj, overwrite=False, protocol=5, **kwargs):
     fn = pathlib.Path(fn)
     suf = ['.parq','.parquet','.pkl','.csv']
     assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
@@ -227,7 +227,7 @@ def write(fn, obj, overwrite=False, **kwargs):
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
                 # joblib.dump(obj, f, **kwargs)
-                pickle.dump(obj, f, **kwargs)
+                pickle.dump(obj, f, protocol=protocol, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
@@ -244,8 +244,8 @@ def read(fn, overwrite=False, **kwargs):
         fn.unlink(missing_ok=True)
     try:
         with open(fn, 'rb') as f:
-            return joblib.load(f, **kwargs)
-            # return pickle.load(f, **kwargs)
+            # return joblib.load(f, **kwargs)
+            return pickle.load(f, **kwargs)
     except:
         try:
             return pd.read_parquet(fn, **kwargs).prep()
