@@ -93,11 +93,6 @@ def pd_ext(func):
                 Y = func(Y, *args, **kwargs)
             except:
                 Y = Y.apply(func, *args, **kwargs)
-        if isinstance(X, pd.Series):
-            try:
-                Y = Y.squeeze()
-            except:
-                pass
         return Y
     wrapper.__name__ = func.__name__
     for cls in [pd.DataFrame, pd.Series]:
@@ -106,8 +101,8 @@ def pd_ext(func):
 
 @pd_ext
 def disp(df, max_rows=4, max_cols=200, **kwargs):
-    # display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
-    print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
+    display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+    # print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
 
 
 @pd_ext
@@ -161,8 +156,8 @@ def prep(X, cap='casefold'):
     elif isinstance(X, pd.DataFrame):
         g = lambda x: prep(x, cap).replace(' ','_').replace('-','_') if isinstance(x, str) else x
         X = X.rename(columns=g).rename_axis(index=g)
-        idx = pd.MultiIndex.from_frame(X[[]].reset_index().prep_number().prep_string())
-        return X.prep_number().prep_string().set_index(idx).rename_axis(X.index.names)
+        idx = pd.MultiIndex.from_frame(X[[]].reset_index().prep_string())
+        return X.prep_string().set_index(idx).rename_axis(X.index.names)
     elif isinstance(X, pd.Series):
         assert 1==2
     else:

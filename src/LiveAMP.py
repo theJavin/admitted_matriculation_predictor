@@ -78,7 +78,7 @@ class AMP(MyBaseClass):
                 self[k] = dict()
 
         self.term_codes = [x for x in listify(self.term_codes) if x != self.infer_term]
-        self.crse = uniquify(['_total', *listify(self.crse)])
+        self.crse = sorted({'_total', *listify(self.crse)})
         self.mlt_grp = ['crse','levl_code','styp_code','term_code']
         self.trf_list = cartesian({k: sorted(setify(v), key=str) for k,v in self.trf_grid.items()})
         self.trf_list = [mysort({k:v for k,v in t.items() if v not in ['drop',None,'']}) for t in self.trf_list]
@@ -164,8 +164,9 @@ class AMP(MyBaseClass):
             A = agg(self.reg_df['end'])
             B = agg(Y['end'])
             M = (A / B).replace(np.inf, pd.NA).rename('mlt').reset_index().query(f"term_code != {self.infer_term}").prep()
-            N = M.assign(term_code=self.infer_term)
-            self.mlt = pd.concat([M, N], axis=0).set_index(self.mlt_grp)
+            M['mlt_term'] = M['term_code']
+            N = M.copy().assign(term_code=self.infer_term)
+            self.mlt = pd.concat([M, N], axis=0).set_index([*self.mlt_grp,'mlt_term'])
             Y = {k: y.squeeze().unstack().dropna(how='all', axis=1).fillna(0) for k, y in Y.items()}
             self.Y = Y['cur'].rename(columns=lambda x:x+'_cur').join(Y['end']>0).prep()
         self.dump()
@@ -179,7 +180,7 @@ class AMP(MyBaseClass):
         trf = ColumnTransformer([(c,t,["__"+c]) for c,t in params['trf'].items()], remainder='drop', verbose_feature_names_out=False)
         cols = uniquify(['_total_cur',crse+'_cur',crse])
         Z = trf.fit_transform(X).join(self.Y[cols]).prep().prep_bool().prep_category().sort_index()
-        y = Z[crse].copy().rename('true').to_frame()
+        y = Z[crse].copy().rename('actual').to_frame()
         Z.loc[Z.eval(f"term_code!={train_term}"), crse] = pd.NA
 
         iterations = params['imp'].pop('iterations')
@@ -207,25 +208,27 @@ class AMP(MyBaseClass):
         Z.loc[:, crse] = pd.NA
         P = imp.impute_new_data(Z)
         details = pd.concat([y
-                .assign(pred=P.complete_data(k)[crse], train_term=train_term, crse=crse, sim=k)
+                .assign(predict=P.complete_data(k)[crse], train_term=train_term, crse=crse, sim=k)
                 .set_index(['train_term','crse','sim'], append=True)
             for k in range(P.dataset_count())]).prep_bool()
+        return details
+    
+    def aggregate(self, details):
         agg = lambda x: pd.Series({
-            'pred': x['pred'].sum(min_count=1),
-            'true': x['true'].sum(min_count=1),
-            'mse_pct': ((1*x['pred'] - x['true'])**2).mean()*100,
-            'f1_inv_pct': (1-f1_score(x.dropna()['true'], x.dropna()['pred'], zero_division=np.nan))*100,
+            'predict': x['predict'].sum(min_count=1),
+            'actual': x['actual'].sum(min_count=1),
+            'mse_pct': ((1*x['predict'] - x['actual'])**2).mean()*100,
+            'f1_inv_pct': (1-f1_score(x.dropna()['actual'], x.dropna()['predict'], zero_division=np.nan))*100,
         })
-        summary = details.groupby([*self.mlt_grp,'train_term','sim']).apply(agg).join(self.mlt).rename_axis(index={'term_code':'pred_term'})
-        for x in ['pred','true']:
+        summary = details.groupby([*self.mlt_grp,'train_term','sim']).apply(agg).join(self.mlt)#.rename_axis(index={'term_code':'pred_term'})
+        for x in ['predict','actual']:
             summary[x] = summary[x] * summary['mlt']
-        summary.insert(2, 'err', summary['pred'] - summary['true'])
-        summary.insert(3, 'err_pct', summary['err'] / summary['true'] * 100)
-        # summary.insert(3, 'err_pct', (summary['err'] / summary['true']).clip(-1, 1) * 100)
-        summary.insert(3, 'err_pct', (summary['err'] / summary['true']).clip(-1, 1) * 100)
-        S = {'details':details, 'summary':summary.drop(columns='mlt').prep()}#, 'trf':trf, 'imp':imp}
+        summary.insert(2, 'error', summary['predict'] - summary['actual'])
+        summary.insert(3, 'error_pct', summary['error'] / summary['actual'] * 100)
+        return summary
+        # S = {'details':details, 'summary':summary.drop(columns='mlt').prep()}#, 'trf':trf, 'imp':imp}
         # S['summary'].disp(5)
-        return S
+        # return S
         # return S, True
 
 
@@ -233,16 +236,16 @@ class AMP(MyBaseClass):
         def pivot(df, val):
             Y = (
                 df
-                .query(f"pred_term!=train_term")
+                .query(f"term_code!=train_term")
                 .reset_index()
-                .pivot_table(columns='train_term', index=['crse','styp_code','pred_term'], values=val, aggfunc=['count',pctl(0),pctl(25),pctl(50),pctl(75),pctl(100)])
+                .pivot_table(columns='train_term', index=['crse','styp_code','term_code'], values=val, aggfunc=['count',pctl(0),pctl(25),pctl(50),pctl(75),pctl(100)])
                 .rename_axis(columns=[val,'train_term'])
                 .stack(0, future_stack=True)
                 .assign(abs_mean = lambda x: x.abs().mean(axis=1))
             )
             return Y
-        mask = df.eval(f"pred_term!={self.infer_term}")
-        return {stat: pivot(df[mask], stat) for stat in ["pred","err","err_pct","mse_pct","f1_inv_pct"]} | {"proj": pivot(df[~mask], "pred")}
+        mask = df.eval(f"term_code!={self.infer_term}")
+        return {stat: pivot(df[mask], stat) for stat in ["predict","error","error_pct","mse_pct","f1_inv_pct"]} | {"project": pivot(df[~mask], "predict")}
 
 
     def main(self, styp_codes=('n','t','r')):
@@ -260,59 +263,67 @@ class AMP(MyBaseClass):
                     print(ljust(crse,8),styp_code,params_idx)
                     new = False
                     for train_term in self.term_codes:
-                        path = [crse,styp_code,str(params),train_term]
-                        new = False
+                        path = [crse,styp_code,str(params),train_term,'details']
                         try:
-                            y = nest(path, self.pred)
+                            details = nest(path, self.pred)
                         except:
-                            y = self.predict(crse, styp_code, copy.deepcopy(params), train_term)
-                            nest(path, self.pred, y)
                             new = True
+                            nest(path[:-1], self.pred, dict())
+                            details = self.predict(crse, styp_code, copy.deepcopy(params), train_term)
+                            nest(path, self.pred, details)
+                        path[-1] = 'summary'
+                        try:
+                            summary = nest(path, self.pred)
+                        except:
+                            summary = self.aggregate(details)
+                            nest(path, self.pred, summary)
                             self.dump()
-                    path.pop(-1)
-                    Y = nest(path, self.pred)
+                    Y = nest(path[:-2], self.pred)
+                    for key in ['details', 'summary']:
+                        Y[key] = pd.concat([y[key] for y in Y.values() if isinstance(y, dict) and key in y.keys()]).sort_index()
+                    Y['rslt'] = self.analyze(Y['summary'])
                     if new:
-                        for key in ['details', 'summary']:
-                            Y[key] = pd.concat([y[key] for y in Y.values() if isinstance(y, dict) and key in y.keys()]).sort_index()
-                        Y['rslt'] = self.analyze(Y['summary'])
-                        self.dump()
+                        # self.dump()
                         k += 1
                     else:
                         L -= 1
-                    # Y['rslt']['err_pct'].query("err_pct == ' 50%'").round(decimals=2).disp(100)
-                    E = Y['summary'].query(f"pred_term!=train_term & pred_term!={self.infer_term}")["err_pct"].abs()
+                    # Y['rslt']['error_pct'].query("error_pct == ' 50%'").round(decimals=2).disp(100)
+                    E = Y['summary'].query(f"term_code!=train_term & term_code!={self.infer_term}")["error_pct"].abs()
                     # E.describe().to_frame().T.round(decimals=2).disp(200)
                     new = Y | {'params_idx':params_idx, 'params':params, 'score':E.median()}
-                    print(f"new score = {round(new['score'],2)}")
-                    path.pop(-1)
-                    try:
-                        old = nest(path, self.optimal)
-                        print(f"old score = {round(old['score'],2)}")
-                        if new['score'] < old['score']:
-                            print('replacing')
-                            nest(path, self.optimal, new)
-                        else:
-                            print('keeping')
-                    except:
-                        nest(path, self.optimal, new)
-                    self.dump()
+                    print(f"new score = {new['score']:.2f}")
+                    if pd.notnull(new['score']) and new['score'] < 30:
+                        try:
+                            old = nest(path[:-3], self.optimal)
+                            print(f"old score = {old['score']:.2f}")
+                            if new['score'] < old['score']:
+                                print('replacing')
+                                nest(path[:-3], self.optimal, new)
+                            else:
+                                print('keeping')
+                        except:
+                            nest(path[:-3], self.optimal, new)
                     elapsed = (time.perf_counter() - start_time) / 60
                     complete = k / L if L > 0 else 1
                     rate = elapsed / k if k > 0 else 0
                     remaining = rate * (L - k)
-                    print(f"{k} / {L} = {round(complete*100,1)}% complete, elapsed = {round(elapsed,1)} min, remaining = {round(remaining,1)} min @ {round(rate,1)} min per model")
+                    print(f"{k} / {L} = {complete*100:.2f}% complete, elapsed = {elapsed:.2f} min, remaining = {remaining:.2f} min @ {rate:.2f} min per model")
         for key in ['details', 'summary']:
             A = pd.concat([S[key] for crse, C in self.optimal.items() for styp_code, S in C.items() if isinstance(S, dict) and key in S.keys()])
             if key == 'summary':
                 B = A.copy().reset_index().assign(styp_code=A.reset_index()['styp_code'].replace({'n':'new first time','t':'transfer','r':'returning'}))
-                C = B.assign(styp_code='all').groupby(A.index.names)[['pred','true','err']].sum().reset_index()
-                C['err_pct'] = C['err'] / C['true'] * 100
+                C = B.assign(styp_code='all').groupby(A.index.names)[['predict','actual','error']].sum().reset_index()
+                C['error_pct'] = C['error'] / C['actual'] * 100
                 A = pd.concat([B,C])
             self.optimal[key] = A
             write(self[key], self.optimal[key], index=False)
+        self.dump()
+
+    def push(self):
         target_url = 'https://prod-121.westus.logic.azure.com:443/workflows/784fef9d36024a6abf605d1376865784/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Yrr4tE1SwYZ88SU9_ixG-WEdN1GFicqJwH_KiCZ70M'
         with open(self.summary, 'rb') as target_file:
             response = requests.post(target_url, files = {"amp_summary.csv": target_file})
+        print('file pushed')
 
 code_desc = lambda x: [x+'_code', x+'_desc']
 passthru = ['passthrough']
@@ -371,32 +382,31 @@ kwargs = {
         'hs_qrtl',
     ],
     'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    # 'cycle_day': 183,
+    'cycle_day': 179,
     'crse': [
-        'engl1301',
+        'agec2317',
+        'agri1100',
+        'agri1419',
+        'ansc1319',
+        'arts1301',
         'biol1406',
-        # 'math1314',
-        # 'biol2401',
-        # 'math2412',
-        # 'agri1419',
-        # 'psyc2301',
-        # 'ansc1319',
-        # 'comm1311',
-        # 'hist1301',
-        # 'govt2306',
-        # 'math1324',
-        # 'chem1411',
-        # 'univ0301',
-        # 'univ0204',
-        # 'univ0304',
-        # 'agri1100',
-        # 'comm1315',
-        # 'agec2317',
-        # 'govt2305',
-        # 'busi1301',
-        # 'arts1301',
-        # 'math1342',
-        # 'math2413',
+        'biol2401',
+        'busi1301',
+        'comm1311',
+        'comm1315',
+        'engl1301',
+        'govt2305',
+        'govt2306',
+        'hist1301',
+        'math1314',
+        'math1324',
+        'math1342',
+        'math2412',
+        'math2413',
+        'psyc2301',
+        'univ0204',
+        'univ0301',
+        'univ0304',
         ],
     'trf_grid': {
         'act_equiv': passthru,
@@ -452,9 +462,15 @@ kwargs = {
 
 
 if __name__ == "__main__":
+    @pd_ext
+    def disp(df, max_rows=4, max_cols=200, **kwargs):
+        display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+        print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
+
     from IPython.utils.io import Tee
     self = AMP(**kwargs)
     with contextlib.closing(Tee(self.rslt.with_suffix('.txt'), "w", channel="stdout")) as outputstream:
         print(pd.Timestamp.now())
         self.preprocess()
-        self.main()#styp_codes='n')
+        self.main()
+        self.push()
