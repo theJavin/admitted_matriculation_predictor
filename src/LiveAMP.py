@@ -308,18 +308,24 @@ class AMP(MyBaseClass):
                     rate = elapsed / k if k > 0 else 0
                     remaining = rate * (L - k)
                     print(f"{k} / {L} = {complete*100:.2f}% complete, elapsed = {elapsed:.2f} min, remaining = {remaining:.2f} min @ {rate:.2f} min per model")
-        for key in ['details', 'summary']:
-            A = pd.concat([S[key] for crse, C in self.optimal.items() for styp_code, S in C.items() if isinstance(S, dict) and key in S.keys()])
-            if key == 'summary':
-                B = A.copy().reset_index().assign(styp_code=A.reset_index()['styp_code'].replace({'n':'new first time','t':'transfer','r':'returning'}))
-                C = B.assign(styp_code='all').groupby(A.index.names)[['predict','actual','error']].sum().reset_index()
-                C['error_pct'] = C['error'] / C['actual'] * 100
-                A = pd.concat([B,C])
-            self.optimal[key] = A
-            write(self[key], self.optimal[key], index=False)
+            self.dump()
+        self.push()
+
+    def combine(self):
+        # for key in ['details', 'summary']:
+        key = 'summary'
+        A = pd.concat([S[key] for crse, C in self.optimal.items() for styp_code, S in C.items() if isinstance(S, dict) and key in S.keys()])
+        if key == 'summary':
+            B = A.copy().reset_index().assign(styp_code=A.reset_index()['styp_code'].replace({'n':'new first time','t':'transfer','r':'returning'}))
+            C = B.assign(styp_code='all').groupby(A.index.names)[['predict','actual','error']].sum().reset_index()
+            C['error_pct'] = C['error'] / C['actual'] * 100
+            A = pd.concat([B,C])
+        self.optimal[key] = A
+        write(self[key], self.optimal[key], index=False)
         self.dump()
 
     def push(self):
+        self.combine()
         target_url = 'https://prod-121.westus.logic.azure.com:443/workflows/784fef9d36024a6abf605d1376865784/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Yrr4tE1SwYZ88SU9_ixG-WEdN1GFicqJwH_KiCZ70M'
         with open(self.summary, 'rb') as target_file:
             response = requests.post(target_url, files = {"amp_summary.csv": target_file})

@@ -1,20 +1,22 @@
-import os, sys, time, copy, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
-import pickle, joblib, dataclasses, typing, collections, oracledb
+import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
+import pickle, joblib, json, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from IPython.core.display import display, HTML
+from copy import deepcopy
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
 C = ","
 N = "\n"
 T = "    "
 
-def listify(X):
+def listify(X, sort=False, **kwargs):
     if X is None or X is np.nan:
-        return []
+        X = []
     elif isinstance(X, (str,int,float,bool)) or callable(X):
-        return [X]
+        X = [X]
     else:
-        return list(X)
+        X = list(X)
+    return sorted(X, **kwargs) if sort else X
 
 def setify(X):
     return set(listify(X))
@@ -23,11 +25,16 @@ def mysort(X, **kwargs):
     if isinstance(X, dict):
         return dict(sorted(X.items(), **kwargs))
     else:
-        return sorted(listify(X), **kwargs)
+        return listify(X, True, **kwargs)
+        # return sorted(listify(X), **kwargs)
     
-def uniquify(X, sort=False, **kwargs):
+def uniquify(X, sort=True, **kwargs):
     if not isinstance(X, dict):
-        X = list(dict.fromkeys(listify(X)))
+        X = listify(dict.fromkeys(listify(X)))
+    return mysort(X, **kwargs) if sort else X
+
+def subdct(X, keys=None, sort=False, **kwargs):
+    X = X if keys is None else {k: X[k] for k in listify(keys)}
     return mysort(X, **kwargs) if sort else X
 
 def cartesian(dct, sort=True):
@@ -39,7 +46,7 @@ def cartesian(dct, sort=True):
         return dict()
 
 def nest(path, dct=dict(), val=None):
-    path = listify(path)
+    path = listify(path.values() if isinstance(path, dict) else path)
     k = path.pop(-1)
     a = dct
     for p in path:
