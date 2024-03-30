@@ -1,0 +1,23 @@
+2024-03-30 13:59:29.193523
+====================================================================================================
+transformed
+transformed, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.05 min; remaining = 0.90 min @ 0.05 min per model
+transformed, _allcrse, n, 202208; complete: 1 / 17 = 5.88%; elapsed = 0.05 min; remaining = 0.85 min @ 0.05 min per model
+transformed, _allcrse, n, 202308; complete: 1 / 16 = 6.25%; elapsed = 0.05 min; remaining = 0.80 min @ 0.05 min per model
+transformed, _allcrse, t, 202108; complete: 2 / 16 = 12.50%; elapsed = 0.07 min; remaining = 0.48 min @ 0.03 min per model
+transformed, _allcrse, t, 202208; complete: 2 / 15 = 13.33%; elapsed = 0.07 min; remaining = 0.45 min @ 0.03 min per model
+transformed, _allcrse, t, 202308; complete: 2 / 14 = 14.29%; elapsed = 0.07 min; remaining = 0.41 min @ 0.03 min per model
+transformed, biol1406, n, 202108; complete: 2 / 13 = 15.38%; elapsed = 0.07 min; remaining = 0.38 min @ 0.03 min per model
+transformed, biol1406, n, 202208; complete: 2 / 12 = 16.67%; elapsed = 0.07 min; remaining = 0.35 min @ 0.03 min per model
+transformed, biol1406, n, 202308; complete: 2 / 11 = 18.18%; elapsed = 0.07 min; remaining = 0.31 min @ 0.03 min per model
+transformed, biol1406, t, 202108; complete: 2 / 10 = 20.00%; elapsed = 0.07 min; remaining = 0.28 min @ 0.03 min per model
+transformed, biol1406, t, 202208; complete: 2 / 9 = 22.22%; elapsed = 0.07 min; remaining = 0.24 min @ 0.03 min per model
+transformed, biol1406, t, 202308; complete: 2 / 8 = 25.00%; elapsed = 0.07 min; remaining = 0.21 min @ 0.03 min per model
+transformed, math1314, n, 202108; complete: 2 / 7 = 28.57%; elapsed = 0.07 min; remaining = 0.17 min @ 0.03 min per model
+transformed, math1314, n, 202208; complete: 2 / 6 = 33.33%; elapsed = 0.07 min; remaining = 0.14 min @ 0.03 min per model
+transformed, math1314, n, 202308; complete: 2 / 5 = 40.00%; elapsed = 0.07 min; remaining = 0.10 min @ 0.03 min per model
+transformed, math1314, t, 202108; complete: 2 / 4 = 50.00%; elapsed = 0.07 min; remaining = 0.07 min @ 0.03 min per model
+transformed, math1314, t, 202208; complete: 2 / 3 = 66.67%; elapsed = 0.07 min; remaining = 0.03 min @ 0.03 min per model
+transformed, math1314, t, 202308; complete: 2 / 2 = 100.00%; elapsed = 0.07 min; remaining = 0.00 min @ 0.03 min per model
+====================================================================================================
+imputed

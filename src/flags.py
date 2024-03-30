@@ -49,7 +49,6 @@ class FLAGS(MyBaseClass):
                     delete(dst)
                 if not dst.is_file():
                     k = 0
-                    print(dst)
                     mkdir(dst.parent)
                     df = book.parse(sheet)
                     df.insert(0, 'current_date', date)

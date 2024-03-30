@@ -171,6 +171,10 @@ def prep(X, cap='casefold'):
         return X
 
 @pd_ext
+def addlevel(df, level, val):
+    return df.assign(**{level:val}).set_index(level, append=True)
+
+@pd_ext
 def rnd(ser, decimals=0):
     assert isinstance(ser, pd.Series)
     return ser.round(decimals=decimals).prep()

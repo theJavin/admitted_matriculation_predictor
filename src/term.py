@@ -72,8 +72,7 @@ class TERM(MyBaseClass):
         fn = self.path[nm] / f"{nm}{cd}.parq"
         df = read(fn, self.overwrite[nm])
         if df is None:
-            print(f'{fn.name} not found - creating')
-            # print(f'{fn} not found - creating')
+            print(join(fn.parts[-2:],'/') + ' not found - creating')
         return fn, df
 
     def run(self, qry, fn=None, show=False, func=lambda x: x):
@@ -185,7 +184,7 @@ select A.* from A
 union all
 select
     A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code,
-    '_total' as crse,
+    '_allcrse' as crse,
     sum(A.credit_hr) as credit_hr
 from A
 group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
