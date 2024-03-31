@@ -1,23 +1,141 @@
-2024-03-30 13:59:29.193523
+2024-03-30 14:12:57.501718
 ====================================================================================================
 transformed
-transformed, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.05 min; remaining = 0.90 min @ 0.05 min per model
-transformed, _allcrse, n, 202208; complete: 1 / 17 = 5.88%; elapsed = 0.05 min; remaining = 0.85 min @ 0.05 min per model
-transformed, _allcrse, n, 202308; complete: 1 / 16 = 6.25%; elapsed = 0.05 min; remaining = 0.80 min @ 0.05 min per model
-transformed, _allcrse, t, 202108; complete: 2 / 16 = 12.50%; elapsed = 0.07 min; remaining = 0.48 min @ 0.03 min per model
-transformed, _allcrse, t, 202208; complete: 2 / 15 = 13.33%; elapsed = 0.07 min; remaining = 0.45 min @ 0.03 min per model
-transformed, _allcrse, t, 202308; complete: 2 / 14 = 14.29%; elapsed = 0.07 min; remaining = 0.41 min @ 0.03 min per model
-transformed, biol1406, n, 202108; complete: 2 / 13 = 15.38%; elapsed = 0.07 min; remaining = 0.38 min @ 0.03 min per model
-transformed, biol1406, n, 202208; complete: 2 / 12 = 16.67%; elapsed = 0.07 min; remaining = 0.35 min @ 0.03 min per model
-transformed, biol1406, n, 202308; complete: 2 / 11 = 18.18%; elapsed = 0.07 min; remaining = 0.31 min @ 0.03 min per model
-transformed, biol1406, t, 202108; complete: 2 / 10 = 20.00%; elapsed = 0.07 min; remaining = 0.28 min @ 0.03 min per model
-transformed, biol1406, t, 202208; complete: 2 / 9 = 22.22%; elapsed = 0.07 min; remaining = 0.24 min @ 0.03 min per model
-transformed, biol1406, t, 202308; complete: 2 / 8 = 25.00%; elapsed = 0.07 min; remaining = 0.21 min @ 0.03 min per model
-transformed, math1314, n, 202108; complete: 2 / 7 = 28.57%; elapsed = 0.07 min; remaining = 0.17 min @ 0.03 min per model
-transformed, math1314, n, 202208; complete: 2 / 6 = 33.33%; elapsed = 0.07 min; remaining = 0.14 min @ 0.03 min per model
-transformed, math1314, n, 202308; complete: 2 / 5 = 40.00%; elapsed = 0.07 min; remaining = 0.10 min @ 0.03 min per model
-transformed, math1314, t, 202108; complete: 2 / 4 = 50.00%; elapsed = 0.07 min; remaining = 0.07 min @ 0.03 min per model
-transformed, math1314, t, 202208; complete: 2 / 3 = 66.67%; elapsed = 0.07 min; remaining = 0.03 min @ 0.03 min per model
-transformed, math1314, t, 202308; complete: 2 / 2 = 100.00%; elapsed = 0.07 min; remaining = 0.00 min @ 0.03 min per model
+transformed, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.11 min; remaining = 1.79 min @ 0.11 min per model
+transformed, _allcrse, n, 202208; complete: 1 / 17 = 5.88%; elapsed = 0.11 min; remaining = 1.69 min @ 0.11 min per model
+transformed, _allcrse, n, 202308; complete: 1 / 16 = 6.25%; elapsed = 0.11 min; remaining = 1.58 min @ 0.11 min per model
+transformed, _allcrse, t, 202108; complete: 2 / 16 = 12.50%; elapsed = 0.14 min; remaining = 0.98 min @ 0.07 min per model
+transformed, _allcrse, t, 202208; complete: 2 / 15 = 13.33%; elapsed = 0.14 min; remaining = 0.91 min @ 0.07 min per model
+transformed, _allcrse, t, 202308; complete: 2 / 14 = 14.29%; elapsed = 0.14 min; remaining = 0.84 min @ 0.07 min per model
+transformed, biol1406, n, 202108; complete: 2 / 13 = 15.38%; elapsed = 0.14 min; remaining = 0.77 min @ 0.07 min per model
+transformed, biol1406, n, 202208; complete: 2 / 12 = 16.67%; elapsed = 0.14 min; remaining = 0.70 min @ 0.07 min per model
+transformed, biol1406, n, 202308; complete: 2 / 11 = 18.18%; elapsed = 0.14 min; remaining = 0.63 min @ 0.07 min per model
+transformed, biol1406, t, 202108; complete: 2 / 10 = 20.00%; elapsed = 0.14 min; remaining = 0.56 min @ 0.07 min per model
+transformed, biol1406, t, 202208; complete: 2 / 9 = 22.22%; elapsed = 0.14 min; remaining = 0.49 min @ 0.07 min per model
+transformed, biol1406, t, 202308; complete: 2 / 8 = 25.00%; elapsed = 0.14 min; remaining = 0.42 min @ 0.07 min per model
+transformed, math1314, n, 202108; complete: 2 / 7 = 28.57%; elapsed = 0.14 min; remaining = 0.35 min @ 0.07 min per model
+transformed, math1314, n, 202208; complete: 2 / 6 = 33.33%; elapsed = 0.14 min; remaining = 0.28 min @ 0.07 min per model
+transformed, math1314, n, 202308; complete: 2 / 5 = 40.00%; elapsed = 0.14 min; remaining = 0.21 min @ 0.07 min per model
+transformed, math1314, t, 202108; complete: 2 / 4 = 50.00%; elapsed = 0.14 min; remaining = 0.14 min @ 0.07 min per model
+transformed, math1314, t, 202208; complete: 2 / 3 = 66.67%; elapsed = 0.14 min; remaining = 0.07 min @ 0.07 min per model
+transformed, math1314, t, 202308; complete: 2 / 2 = 100.00%; elapsed = 0.14 min; remaining = 0.00 min @ 0.07 min per model
 ====================================================================================================
 imputed
+imputed, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 12.79 min; remaining = 217.41 min @ 12.79 min per model
+imputed, _allcrse, n, 202208; complete: 1 / 17 = 5.88%; elapsed = 12.79 min; remaining = 204.62 min @ 12.79 min per model
+imputed, _allcrse, n, 202308; complete: 1 / 16 = 6.25%; elapsed = 12.79 min; remaining = 191.83 min @ 12.79 min per model
+imputed, _allcrse, t, 202108; complete: 2 / 16 = 12.50%; elapsed = 16.09 min; remaining = 112.62 min @ 8.04 min per model
+imputed, _allcrse, t, 202208; complete: 2 / 15 = 13.33%; elapsed = 16.09 min; remaining = 104.57 min @ 8.04 min per model
+imputed, _allcrse, t, 202308; complete: 2 / 14 = 14.29%; elapsed = 16.09 min; remaining = 96.53 min @ 8.04 min per model
+imputed, biol1406, n, 202108; complete: 2 / 13 = 15.38%; elapsed = 16.09 min; remaining = 88.49 min @ 8.04 min per model
+imputed, biol1406, n, 202208; complete: 2 / 12 = 16.67%; elapsed = 16.09 min; remaining = 80.44 min @ 8.04 min per model
+imputed, biol1406, n, 202308; complete: 2 / 11 = 18.18%; elapsed = 16.09 min; remaining = 72.40 min @ 8.04 min per model
+imputed, biol1406, t, 202108; complete: 2 / 10 = 20.00%; elapsed = 16.09 min; remaining = 64.35 min @ 8.04 min per model
+imputed, biol1406, t, 202208; complete: 2 / 9 = 22.22%; elapsed = 16.09 min; remaining = 56.31 min @ 8.04 min per model
+imputed, biol1406, t, 202308; complete: 2 / 8 = 25.00%; elapsed = 16.09 min; remaining = 48.27 min @ 8.04 min per model
+imputed, math1314, n, 202108; complete: 2 / 7 = 28.57%; elapsed = 16.09 min; remaining = 40.22 min @ 8.04 min per model
+imputed, math1314, n, 202208; complete: 2 / 6 = 33.33%; elapsed = 16.09 min; remaining = 32.18 min @ 8.04 min per model
+imputed, math1314, n, 202308; complete: 2 / 5 = 40.00%; elapsed = 16.09 min; remaining = 24.13 min @ 8.04 min per model
+imputed, math1314, t, 202108; complete: 2 / 4 = 50.00%; elapsed = 16.09 min; remaining = 16.09 min @ 8.04 min per model
+imputed, math1314, t, 202208; complete: 2 / 3 = 66.67%; elapsed = 16.09 min; remaining = 8.04 min @ 8.04 min per model
+imputed, math1314, t, 202308; complete: 2 / 2 = 100.00%; elapsed = 16.09 min; remaining = 0.00 min @ 8.04 min per model
+====================================================================================================
+predicted
+predicted, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 4.69 min; remaining = 79.67 min @ 4.69 min per model
+predicted, _allcrse, n, 202208; complete: 2 / 18 = 11.11%; elapsed = 9.56 min; remaining = 76.49 min @ 4.78 min per model
+predicted, _allcrse, n, 202308; complete: 3 / 18 = 16.67%; elapsed = 14.50 min; remaining = 72.51 min @ 4.83 min per model
+predicted, _allcrse, t, 202108; complete: 4 / 18 = 22.22%; elapsed = 15.47 min; remaining = 54.16 min @ 3.87 min per model
+predicted, _allcrse, t, 202208; complete: 5 / 18 = 27.78%; elapsed = 16.41 min; remaining = 42.67 min @ 3.28 min per model
+predicted, _allcrse, t, 202308; complete: 6 / 18 = 33.33%; elapsed = 17.39 min; remaining = 34.78 min @ 2.90 min per model
+predicted, biol1406, n, 202108; complete: 7 / 18 = 38.89%; elapsed = 22.18 min; remaining = 34.85 min @ 3.17 min per model
+predicted, biol1406, n, 202208; complete: 8 / 18 = 44.44%; elapsed = 26.79 min; remaining = 33.49 min @ 3.35 min per model
+predicted, biol1406, n, 202308; complete: 9 / 18 = 50.00%; elapsed = 31.66 min; remaining = 31.66 min @ 3.52 min per model
+predicted, biol1406, t, 202108; complete: 10 / 18 = 55.56%; elapsed = 32.77 min; remaining = 26.22 min @ 3.28 min per model
+predicted, biol1406, t, 202208; complete: 11 / 18 = 61.11%; elapsed = 33.74 min; remaining = 21.47 min @ 3.07 min per model
+predicted, biol1406, t, 202308; complete: 12 / 18 = 66.67%; elapsed = 34.76 min; remaining = 17.38 min @ 2.90 min per model
+predicted, math1314, n, 202108; complete: 13 / 18 = 72.22%; elapsed = 39.56 min; remaining = 15.22 min @ 3.04 min per model
+predicted, math1314, n, 202208; complete: 14 / 18 = 77.78%; elapsed = 44.61 min; remaining = 12.75 min @ 3.19 min per model
+predicted, math1314, n, 202308; complete: 15 / 18 = 83.33%; elapsed = 49.38 min; remaining = 9.88 min @ 3.29 min per model
+predicted, math1314, t, 202108; complete: 16 / 18 = 88.89%; elapsed = 50.41 min; remaining = 6.30 min @ 3.15 min per model
+predicted, math1314, t, 202208; complete: 17 / 18 = 94.44%; elapsed = 51.44 min; remaining = 3.03 min @ 3.03 min per model
+predicted, math1314, t, 202308; complete: 18 / 18 = 100.00%; elapsed = 52.48 min; remaining = 0.00 min @ 2.92 min per model
+====================================================================================================
+performance
+performance, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.00 min; remaining = 0.01 min @ 0.00 min per model
+performance, _allcrse, n, 202208; complete: 2 / 18 = 11.11%; elapsed = 0.00 min; remaining = 0.01 min @ 0.00 min per model
+performance, _allcrse, n, 202308; complete: 3 / 18 = 16.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, _allcrse, t, 202108; complete: 4 / 18 = 22.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, _allcrse, t, 202208; complete: 5 / 18 = 27.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, _allcrse, t, 202308; complete: 6 / 18 = 33.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, n, 202108; complete: 7 / 18 = 38.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, n, 202208; complete: 8 / 18 = 44.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, n, 202308; complete: 9 / 18 = 50.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, t, 202108; complete: 10 / 18 = 55.56%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, t, 202208; complete: 11 / 18 = 61.11%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, biol1406, t, 202308; complete: 12 / 18 = 66.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, n, 202108; complete: 13 / 18 = 72.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, n, 202208; complete: 14 / 18 = 77.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, n, 202308; complete: 15 / 18 = 83.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, t, 202108; complete: 16 / 18 = 88.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, t, 202208; complete: 17 / 18 = 94.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+performance, math1314, t, 202308; complete: 18 / 18 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+====================================================================================================
+optimal
+optimal, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, _allcrse, n, 202208; complete: 2 / 18 = 11.11%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, _allcrse, n, 202308; complete: 3 / 18 = 16.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, _allcrse, t, 202108; complete: 4 / 18 = 22.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, _allcrse, t, 202208; complete: 5 / 18 = 27.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, _allcrse, t, 202308; complete: 6 / 18 = 33.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, n, 202108; complete: 7 / 18 = 38.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, n, 202208; complete: 8 / 18 = 44.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, n, 202308; complete: 9 / 18 = 50.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, t, 202108; complete: 10 / 18 = 55.56%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, t, 202208; complete: 11 / 18 = 61.11%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, biol1406, t, 202308; complete: 12 / 18 = 66.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, n, 202108; complete: 13 / 18 = 72.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, n, 202208; complete: 14 / 18 = 77.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, n, 202308; complete: 15 / 18 = 83.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, t, 202108; complete: 16 / 18 = 88.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, t, 202208; complete: 17 / 18 = 94.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+optimal, math1314, t, 202308; complete: 18 / 18 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+====================================================================================================
+details
+details, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, _allcrse, n, 202208; complete: 2 / 18 = 11.11%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, _allcrse, n, 202308; complete: 3 / 18 = 16.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, _allcrse, t, 202108; complete: 4 / 18 = 22.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, _allcrse, t, 202208; complete: 5 / 18 = 27.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, _allcrse, t, 202308; complete: 6 / 18 = 33.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, n, 202108; complete: 7 / 18 = 38.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, n, 202208; complete: 8 / 18 = 44.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, n, 202308; complete: 9 / 18 = 50.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, t, 202108; complete: 10 / 18 = 55.56%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, t, 202208; complete: 11 / 18 = 61.11%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, biol1406, t, 202308; complete: 12 / 18 = 66.67%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, n, 202108; complete: 13 / 18 = 72.22%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, n, 202208; complete: 14 / 18 = 77.78%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, n, 202308; complete: 15 / 18 = 83.33%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, t, 202108; complete: 16 / 18 = 88.89%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, t, 202208; complete: 17 / 18 = 94.44%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+details, math1314, t, 202308; complete: 18 / 18 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.00 min per model
+====================================================================================================
+summary
+summary, _allcrse, n, 202108; complete: 1 / 18 = 5.56%; elapsed = 0.21 min; remaining = 3.62 min @ 0.21 min per model
+summary, _allcrse, n, 202208; complete: 2 / 18 = 11.11%; elapsed = 0.42 min; remaining = 3.39 min @ 0.21 min per model
+summary, _allcrse, n, 202308; complete: 3 / 18 = 16.67%; elapsed = 0.63 min; remaining = 3.17 min @ 0.21 min per model
+summary, _allcrse, t, 202108; complete: 4 / 18 = 22.22%; elapsed = 0.66 min; remaining = 2.32 min @ 0.17 min per model
+summary, _allcrse, t, 202208; complete: 5 / 18 = 27.78%; elapsed = 0.69 min; remaining = 1.80 min @ 0.14 min per model
+summary, _allcrse, t, 202308; complete: 6 / 18 = 33.33%; elapsed = 0.72 min; remaining = 1.45 min @ 0.12 min per model
+summary, biol1406, n, 202108; complete: 7 / 18 = 38.89%; elapsed = 0.94 min; remaining = 1.47 min @ 0.13 min per model
+summary, biol1406, n, 202208; complete: 8 / 18 = 44.44%; elapsed = 1.15 min; remaining = 1.43 min @ 0.14 min per model
+summary, biol1406, n, 202308; complete: 9 / 18 = 50.00%; elapsed = 1.35 min; remaining = 1.35 min @ 0.15 min per model
+summary, biol1406, t, 202108; complete: 10 / 18 = 55.56%; elapsed = 1.39 min; remaining = 1.11 min @ 0.14 min per model
+summary, biol1406, t, 202208; complete: 11 / 18 = 61.11%; elapsed = 1.42 min; remaining = 0.90 min @ 0.13 min per model
+summary, biol1406, t, 202308; complete: 12 / 18 = 66.67%; elapsed = 1.45 min; remaining = 0.72 min @ 0.12 min per model
+summary, math1314, n, 202108; complete: 13 / 18 = 72.22%; elapsed = 1.66 min; remaining = 0.64 min @ 0.13 min per model
+summary, math1314, n, 202208; complete: 14 / 18 = 77.78%; elapsed = 1.87 min; remaining = 0.53 min @ 0.13 min per model
+summary, math1314, n, 202308; complete: 15 / 18 = 83.33%; elapsed = 2.08 min; remaining = 0.42 min @ 0.14 min per model
+summary, math1314, t, 202108; complete: 16 / 18 = 88.89%; elapsed = 2.11 min; remaining = 0.26 min @ 0.13 min per model
+summary, math1314, t, 202208; complete: 17 / 18 = 94.44%; elapsed = 2.14 min; remaining = 0.13 min @ 0.13 min per model
+summary, math1314, t, 202308; complete: 18 / 18 = 100.00%; elapsed = 2.17 min; remaining = 0.00 min @ 0.12 min per model

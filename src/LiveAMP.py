@@ -65,21 +65,30 @@ class AMP(MyBaseClass):
         self.term_codes = [x for x in uniquify(self.term_codes) if x != self.infer_term]
 
         self.trf_list = cartesian({k: uniquify(v, key=str) for k,v in self.trf_grid.items()})
-        self.trf_list = [uniquify({k:v for k,v in t.items() if v not in ['drop',None,'']}) for t in self.trf_list]
+        self.trf_list = [{'trf': uniquify({k:v for k,v in t.items() if v not in ['drop',None,'']})} for t in self.trf_list]
+        # self.trf_list = [uniquify({k:v for k,v in t.items() if v not in ['drop',None,'']}) for t in self.trf_list}]
+
         imp_default = {'datasets':5, 'iterations':3, 'mmc':10, 'mmf':'mean_match_default', 'tune':True}
         self.imp_list = cartesian(self.imp_grid)
-        self.imp_list = [uniquify(imp_default|v) for v in self.imp_list]
+        self.imp_list = [{'imp': uniquify(imp_default|v)} for v in self.imp_list]
+        # self.imp_list = [uniquify(imp_default|v) for v in self.imp_list]
         clf_default = {'datasets':5, 'iterations':3, 'mmc':10, 'mmf':'mean_match_default', 'tune':True}
         self.clf_list = cartesian(self.clf_grid)
-        self.clf_list = [uniquify(clf_default | v) for v in self.clf_list]
-        self.params_list = mysort([uniquify({'clf':clf, 'imp':imp, 'trf':trf}) for clf, imp, trf in it.product(self.clf_list, self.imp_list, self.trf_list)], key=str)
+        self.clf_list = [{'clf': uniquify(clf_default | v)} for v in self.clf_list]
+        # self.clf_list = [uniquify(clf_default | v) for v in self.clf_list]
+        
+        # self.params_list = mysort([uniquify({'clf':clf, 'imp':imp, 'trf':trf}) for clf, imp, trf in it.product(self.clf_list, self.imp_list, self.trf_list)], key=str)
+        # self.imp_list = mysort([uniquify({'trf':trf}) for imp, trf in it.product(self.imp_list, self.trf_list)], key=str)
+        self.imp_list = mysort([uniquify(imp | trf) for imp, trf in it.product(self.imp_list, self.trf_list)], key=str)
+        self.clf_list = mysort([uniquify(clf | imp) for clf, imp in it.product(self.clf_list, self.imp_list)], key=str)
+        # self.imp_list = mysort([uniquify({'imp':imp, 'trf':trf}) for imp, trf in it.product(self.imp_list, self.trf_list)], key=str)
+        # self.params_list = mysort([uniquify({'clf':clf, **imp}) for clf, imp in it.product(self.clf_list, self.imp_list)], key=str)
 
 
     def get_filename(self, path, suffix='.pkl'):
         return (self.root / join(path.values() if isinstance(path, dict) else path, '/')).with_suffix(suffix)
 
     def get(self, path, val=None, **kwargs):
-        assert 'params' not in path
         if val is not None:
             nest(path, self.__dict__, val)
             write(self.get_filename(path, **kwargs), val, overwrite=True)
@@ -105,15 +114,18 @@ class AMP(MyBaseClass):
             A['term'] = {term_code: TERM(term_code=term_code, **opts).get_raw() for term_code in uniquify([*self.term_codes,self.infer_term])}
 
         if 'raw_df' not in A:
+            print('getting raw_df')
             with warnings.catch_warnings(action='ignore'):
                 A['raw_df'] = pd.concat([term.raw for term in A['term'].values()], ignore_index=True).dropna(axis=1, how='all').rename(columns=repl).prep()
 
         if 'reg_df' not in A:
+            print('getting reg_df')
             with warnings.catch_warnings(action='ignore'):
                 A['reg_df'] = {k: pd.concat([term.reg[k].query(f"crse in {self.crse}") for term in A['term'].values()]).rename(columns=repl).prep() for k in ['cur','end']}
 
         where = lambda x: x.query("levl_code == 'ug' and styp_code in ('n','r','t')").copy()
         if 'X' not in A:
+            print('getting X')
             R = A['raw_df'].copy()
             repl = {'ae':0, 'n1':1, 'n2':2, 'n3':3, 'n4':4, 'r1':1, 'r2':2, 'r3':3, 'r4':4}
             R['hs_qrtl'] = pd.cut(R['hs_pctl'], bins=[-1,25,50,75,90,101], labels=[4,3,2,1,0], right=False).combine_first(R['apdc_code'].map(repl))
@@ -156,6 +168,7 @@ class AMP(MyBaseClass):
             A['X'] = X.join(M).prep().prep_bool().set_index(self.attr, drop=False).rename(columns=lambda x:'__'+x)
 
         if 'Y' not in A:
+            print('getting Y')
             mlt_grp = ['crse','levl_code','styp_code','pred_code']
             Y = {k: A['X'][[]].join(y.set_index(['pidm','pred_code','crse'])['credit_hr']) for k, y in A['reg_df'].items()}
             agg = lambda y: where(y).groupby(mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum())
@@ -176,25 +189,25 @@ class AMP(MyBaseClass):
         assert not missing, f'missing {missing}'
 
 
-    def get_model(self, X, params, inspect=False):
-        params = params.copy()
-        iterations = params.pop('iterations')
-        datasets = params.pop('datasets')
-        tune = params.pop('tune')
-        mmc = params.pop('mmc')
-        mmf = params.pop('mmf')
+    def get_model(self, X, par, inspect=False):
+        par = par.copy()
+        iterations = par.pop('iterations')
+        datasets = par.pop('datasets')
+        tune = par.pop('tune')
+        mmc = par.pop('mmc')
+        mmf = par.pop('mmf')
         if mmc > 0 and mmf is not None:
-            params['mean_match_scheme'] = getattr(mf, mmf).copy()
-            params['mean_match_scheme'].set_mean_match_candidates(mmc)
+            par['mean_match_scheme'] = getattr(mf, mmf).copy()
+            par['mean_match_scheme'].set_mean_match_candidates(mmc)
         if tune:
             # print('tuning')
-            model = mf.ImputationKernel(X, datasets=1, **params)
+            model = mf.ImputationKernel(X, datasets=1, **par)
             model.mice(iterations=1)
             optimal_parameters, losses = model.tune_parameters(dataset=0, optimization_steps=5)
         else:
             # print('not tuning')
             optimal_parameters = None
-        model = mf.ImputationKernel(X, datasets=datasets, **params)
+        model = mf.ImputationKernel(X, datasets=datasets, **par)
         model.mice(iterations=iterations, variable_parameters=optimal_parameters)
         if inspect:
             model.inspect()
@@ -205,45 +218,51 @@ class AMP(MyBaseClass):
         path = path | {'nm':'transformed', 'crse':'_allcrse', 'train_code':'all'}
         A, b = self.get(path)
         if b:
-            for params in self.params_list:
-                params = subdct(params, ['trf'], True)
-                p = str(params)
+            L = self.trf_list
+            for k, par in enumerate(L):
+                p = str(par)
                 if p not in A:
-                    trf = ColumnTransformer([(c,t,["__"+c]) for c,t in params['trf'].items()], remainder='drop', verbose_feature_names_out=False)
+                    trf = ColumnTransformer([(c,t,["__"+c]) for c,t in par['trf'].items()], remainder='drop', verbose_feature_names_out=False)
                     A[p] = trf.fit_transform(self.X.query(f"styp_code == @path['styp_code']")).prep().prep_bool().prep_category().sort_index()
+                print(f"parameters {k+1} / {len(L)} = {(k+1)/len(L)*100:.2f}% complete")
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_imputed(self, path):
         path = path | {'nm':'imputed', 'crse':'_allcrse', 'train_code':'all'}
         A, b = self.get(path)
         if b:
-            for params in self.params_list:
-                p = str(subdct(params, ['imp','trf'], True))
+            L = self.imp_list
+            for k, par in enumerate(L):
+                p = str(par)
                 if p not in A:
-                    q = str(subdct(params, ['trf'], True))
-                    T = self.get_transformed(path)[0][q]
-                    imp = self.get_model(T, params['imp'])
+                    q = par.copy()
+                    q.pop('imp')
+                    T = self.get_transformed(path)[0][str(q)]
+                    imp = self.get_model(T, par['imp'])
                     A[p] = pd.concat([imp.complete_data(k).addlevel('imp', k) for k in range(imp.dataset_count())])
+                print(f"parameters {k+1} / {len(L)} = {(k+1)/len(L)*100:.2f}% complete")
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_predicted(self, path):
         path = path | {'nm':'predicted'}
         A, b = self.get(path)
         if b:
-            for params in self.params_list:
-                p = str(params)
+            L = self.clf_list
+            for k, par in enumerate(L):
+                p = str(par)
                 if p not in A:
-                    q = str(subdct(params, ['imp','trf'], True))
-                    I = self.get_imputed(path)[0][q]
+                    q = par.copy()
+                    q.pop('clf')
+                    I = self.get_imputed(path)[0][str(q)]
                     cols = uniquify(['_allcrse_cur', path['crse']+'_cur', path['crse']], False)
                     Z = I.join(self.Y[cols]).prep().prep_bool().prep_category().sort_index()
                     actual = Z[path['crse']].copy().rename('actual').to_frame()
                     Z.loc[Z.eval(f"pred_code!=@path['train_code']"), path['crse']] = pd.NA
-                    clf = self.get_model(Z, params['clf'])
+                    clf = self.get_model(Z, par['clf'])
                     Z.loc[:, path['crse']] = pd.NA
                     predicted = clf.impute_new_data(Z)
                     A[p] = pd.concat([actual
@@ -252,21 +271,24 @@ class AMP(MyBaseClass):
                                 .addlevel('train_code', path['train_code'])
                                 .addlevel('sim', k)
                             for k in range(predicted.dataset_count())]).prep_bool()[['predicted','actual']]
+                print(f"parameters {k+1} / {len(L)} = {(k+1)/len(L)*100:.2f}% complete")
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_performance(self, path):
         path = path | {'nm':'performance'}
         A, b = self.get(path)
         if b:
-            for params in self.params_list:
-                p = str(params)
+            L = self.clf_list
+            for k, par in enumerate(L):
+                p = str(par)
                 if p not in A:
                     P = self.get_predicted(path)[0][p]
                     A[p] = 100*(P['predicted'] == P['actual']).mean()
+                print(f"parameters {k+1} / {len(L)} = {(k+1)/len(L)*100:.2f}% complete")
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_optimal(self, path):
@@ -276,7 +298,7 @@ class AMP(MyBaseClass):
             P = self.get_performance(path)[0]
             A = min(P, key=P.get)
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_details(self, path):
@@ -286,7 +308,7 @@ class AMP(MyBaseClass):
             p = self.get_optimal(path)[0]
             A = self.get_predicted(path)[0][p]
             self.get(path, A)
-        return A, b
+        return A, b, path
 
 
     def get_summary(self, path):
@@ -313,27 +335,26 @@ class AMP(MyBaseClass):
                 }), include_groups=False)
             )
             self.get(path, A)
-        return A, b
+        return A, b, path
 
     def run(self, nm):
         progress = [len(self.crse) * len(self.styp_codes) * len(self.term_codes), 0]
         start_time = time.perf_counter()
-        w = 100
-        print("=" * w)
+        print("=" * 100)
         print(nm)
         for crse in self.crse:
             for styp_code in self.styp_codes:
                 for train_code in self.term_codes:
                     path = {'nm':nm, 'crse':crse, 'styp_code':styp_code, 'train_code':train_code}
-                    A, b = getattr(self, 'get_'+nm)(path)
+                    A, b, path = getattr(self, 'get_'+nm)(path)
                     progress[b] += (2*b-1)
                     elapsed = (time.perf_counter() - start_time) / 60
                     complete = progress[1] / progress[0] if progress[0] > 0 else 1
                     rate = elapsed / progress[1] if progress[1] > 0 else 0
                     remaining = rate * (progress[0] - progress[1])
                     msg = f"{join(path.values())}; complete: {progress[1]} / {progress[0]} = {complete*100:.2f}%; elapsed = {elapsed:.2f} min; remaining = {remaining:.2f} min @ {rate:.2f} min per model"
-                    # if b:
-                    print(msg)
+                    if b:
+                        print(msg)
 
 
     def push(self):
@@ -357,8 +378,8 @@ class AMP(MyBaseClass):
 
 code_desc = lambda x: [x+'_code', x+'_desc']
 passthru = ['passthrough']
-# passdrop = ['passthrough', 'drop']
-passdrop = passthru
+passdrop = ['passthrough', 'drop']
+# passdrop = passthru
 bintrf = lambda n_bins: KBinsDiscretizer(n_bins=n_bins, encode='ordinal', strategy='uniform', subsample=None)
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 
@@ -429,7 +450,7 @@ kwargs = {
         # # 'govt2305',
         # # 'govt2306',
         # # 'hist1301',
-        'math1314',
+        # 'math1314',
         # 'math1324',
         # 'math1342',
         # 'math2412',
@@ -470,16 +491,16 @@ kwargs = {
         'writing': passthru,
         },
     'imp_grid': {
-        # 'mmc': 10,
-        # 'datasets': 2,
-        # 'iterations': 1,
-        # 'tune': False,
+        # 'mmc': [5,10],
+        'datasets': 2,
+        'iterations': 1,
+        'tune': False,
     },
     'clf_grid': {
-        # 'mmc': 10,
-        # 'datasets': 2,
-        # 'iterations': 1,
-        # 'tune': False,
+        # 'mmc': [5,10],
+        'datasets': 2,
+        'iterations': 1,
+        'tune': False,
     },
 
     'overwrite': {
