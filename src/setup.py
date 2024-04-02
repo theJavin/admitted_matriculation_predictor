@@ -37,11 +37,17 @@ def subdct(X, keys=None, sort=False, **kwargs):
     X = X if keys is None else {k: X[k] for k in listify(keys)}
     return mysort(X, **kwargs) if sort else X
 
+# def pop(x, key):
+#     y = x.copy()
+#     y.pop(key)
+#     return y
+
 def cartesian(dct, sort=True):
     """Creates the Cartesian product of a dictionary with list-like values"""
     try:
         D = {key: listify(val) for key, val in dct.items()}
-        return [mysort(dict(zip(D.keys(), x))) for x in it.product(*D.values())]
+        D = [dict(zip(D.keys(), x)) for x in it.product(*D.values())]
+        return [mysort(x) for x in D] if sort else D
     except:
         return dict()
 

@@ -165,7 +165,7 @@ select
     A.sfrstcr_pidm as pidm,
     (select C.sgbstdn_levl_code from sgbstdn C where C.sgbstdn_pidm = A.sfrstcr_pidm and C.sgbstdn_term_code_eff <= A.sfrstcr_term_code order by C.sgbstdn_term_code_eff desc fetch first 1 rows only) as levl_code,
     (select C.sgbstdn_styp_code from sgbstdn C where C.sgbstdn_pidm = A.sfrstcr_pidm and C.sgbstdn_term_code_eff <= A.sfrstcr_term_code order by C.sgbstdn_term_code_eff desc fetch first 1 rows only) as styp_code,
-    lower(B.ssbsect_subj_code) || B.ssbsect_crse_numb as crse,
+    lower(B.ssbsect_subj_code) || B.ssbsect_crse_numb as crse_code,
     sum(B.ssbsect_credit_hrs) as credit_hr
 from sfrstcr A, ssbsect B
 where
@@ -184,7 +184,7 @@ select A.* from A
 union all
 select
     A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code,
-    '_allcrse' as crse,
+    '_allcrse' as crse_code,
     sum(A.credit_hr) as credit_hr
 from A
 group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
