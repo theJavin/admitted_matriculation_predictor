@@ -1,7 +1,7 @@
 import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
 import pickle, joblib, json, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-from IPython.core.display import display, HTML
+from IPython.core.display import display, HTML, clear_output
 from copy import deepcopy
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
@@ -240,6 +240,7 @@ def write(fn, obj, overwrite=False, protocol=5, **kwargs):
             with open(fn, 'wb') as f:
                 # joblib.dump(obj, f, **kwargs)
                 pickle.dump(obj, f, protocol=protocol, **kwargs)
+                # pickle.dump(obj, f, **kwargs)
         else:
             obj = pd.DataFrame(obj).prep()
             if fn.suffix in ['.parq','.parquet']:
