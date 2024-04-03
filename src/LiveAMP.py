@@ -55,10 +55,10 @@ class AMP(MyBaseClass):
             'mlt':['X','Y'],
             'transformed':'X',
             'imputed':'transformed',
-            'predicted':['Y','mlt','imputed'],
+            'predicted':['Y','imputed'],
             'optimal':'predicted',
             'details':'optimal',
-            'summary':'details',
+            'summary':['details','mlt'],
             'params':'predicted',
         }
         D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False, 
@@ -383,10 +383,10 @@ pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 passthru = ['passthrough']
 
 passdrop = ['passthrough', 'drop']
-passdrop = passthru
+# passdrop = passthru
 
 passpwr = ['passthrough', pwrtrf]
-passpwr = passthru
+# passpwr = passthru
 
 kwargs = {
     'term_codes': np.arange(2021,2024)*100+8,
@@ -438,31 +438,39 @@ kwargs = {
         'hs_qrtl',
     ],
     'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    # 'cycle_day': 168,
+    'cycle_day': 167,
     'crse_codes': [
         # 'agec2317',
         # 'agri1100',
         # 'agri1419',
         # 'ansc1319',
-        # 'arts1301',
+        'arts1301',
         'biol1406',
         # # 'biol2401',
-        # 'busi1301',
-        # 'comm1311',
-        # # 'comm1315',
-        # 'engl1301',
+        'busi1301',
+        'chem1311',
+        'chem1411',
+        'comm1311',
+        # 'comm1315',
+        'engl1301',
         # # 'govt2305',
         # # 'govt2306',
-        # # 'hist1301',
-        # 'math1314',
-        # 'math1324',
-        # 'math1342',
-        # 'math2412',
+        'hist1301',
+        'math1314',
+        'math1324',
+        'math1342',
+        'math2412',
         # 'math2413',
         # 'psyc2301',
         # 'univ0204',
-        # 'univ0301',
-        # 'univ0304',
+        # 'univ0200',
+        # 'univ0204',
+        'univ0301',
+        'univ0314',
+        'univ0324',
+        # 'univ0332',
+        'univ0342',
+        # 'univ1100',
         ],
     'trf_grid': {
         'act_equiv': passthru,
@@ -508,18 +516,18 @@ kwargs = {
         # 'raw':True,
         # 'terms': True,
         # 'raw_df': True,
-        # 'reg_df': True,
+        'reg_df': True,
         # 'X': True,
-        # 'Y': True,
-        # 'mlt': True,
+        'Y': True,
+        'mlt': True,
         ## 'inputs': True,
         # 'transformed': True,
         # 'imputed': True,
         # 'predicted': True,
-        # 'optimal': True,
-        # 'details': True,
-        # 'summary': True,
-        # 'params': True,
+        'optimal': True,
+        'details': True,
+        'summary': True,
+        'params': True,
         ## 'outputs': True,
     },
     'styp_codes': ['n','t','r'],
@@ -537,6 +545,6 @@ if __name__ == "__main__":
     kwargs['styp_codes'] = ['n','t']
     self = AMP(**kwargs)
     with contextlib.closing(Tee(self.root / 'log.txt', "w", channel="stdout")) as outputstream:
-        self.get_params()
         self.get_summary()
-        # self.push()
+        self.get_params()
+        self.push()
