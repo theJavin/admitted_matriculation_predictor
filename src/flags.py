@@ -115,7 +115,6 @@ class FLAGS(MyBaseClass):
                 print(dst)
                 L = []
                 for src in sorted(p.iterdir()):
-                    print(src)
                     df = read(src)
                     try:
                         col_repl['campus'] = 'camp_desc' if 'campus_code' in df else 'camp_code'

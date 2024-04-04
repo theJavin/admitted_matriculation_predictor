@@ -1,289 +1,32 @@
-2024-04-02 22:02:00.400706
-inputs, terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0060 min per iteration
-inputs, terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.01 min; remaining = 0.01 min @ 0.0070 min per iteration
-inputs, terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.02 min; remaining = 0.01 min @ 0.0075 min per iteration
-inputs, terms, 202408; complete: 4 / 4 = 100.00%; elapsed = 0.03 min; remaining = 0.00 min @ 0.0079 min per iteration
-inputs, raw_df; complete: 1 / 1 = 100.00%; elapsed = 0.05 min; remaining = 0.00 min @ 0.0463 min per iteration
-inputs, X; complete: 1 / 1 = 100.00%; elapsed = 0.09 min; remaining = 0.00 min @ 0.0935 min per iteration
-inputs, reg_df; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0022 min per iteration
-inputs, Y; complete: 1 / 1 = 100.00%; elapsed = 0.11 min; remaining = 0.00 min @ 0.1145 min per iteration
-predicted, n, 202108, chem1311, 5, 0, 0; complete: 70 / 1440 = 4.86%; elapsed = 1.16 min; remaining = 22.73 min @ 0.0166 min per iteration
-predicted, n, 202108, chem1311, 6, 0, 0; complete: 71 / 1440 = 4.93%; elapsed = 2.05 min; remaining = 39.52 min @ 0.0289 min per iteration
-predicted, n, 202108, chem1311, 7, 0, 0; complete: 72 / 1440 = 5.00%; elapsed = 2.94 min; remaining = 55.88 min @ 0.0409 min per iteration
-predicted, n, 202108, chem1311, 8, 0, 0; complete: 73 / 1440 = 5.07%; elapsed = 3.83 min; remaining = 71.78 min @ 0.0525 min per iteration
-predicted, n, 202108, chem1311, 9, 0, 0; complete: 74 / 1440 = 5.14%; elapsed = 4.72 min; remaining = 87.13 min @ 0.0638 min per iteration
-predicted, n, 202108, chem1311, 10, 0, 0; complete: 75 / 1440 = 5.21%; elapsed = 5.62 min; remaining = 102.24 min @ 0.0749 min per iteration
-predicted, n, 202108, chem1311, 11, 0, 0; complete: 76 / 1440 = 5.28%; elapsed = 6.51 min; remaining = 116.92 min @ 0.0857 min per iteration
-predicted, n, 202108, chem1311, 12, 0, 0; complete: 77 / 1440 = 5.35%; elapsed = 7.40 min; remaining = 131.01 min @ 0.0961 min per iteration
-predicted, n, 202108, chem1311, 13, 0, 0; complete: 78 / 1440 = 5.42%; elapsed = 8.28 min; remaining = 144.55 min @ 0.1061 min per iteration
-predicted, n, 202108, chem1311, 14, 0, 0; complete: 79 / 1440 = 5.49%; elapsed = 9.17 min; remaining = 157.95 min @ 0.1161 min per iteration
-predicted, n, 202108, chem1311, 15, 0, 0; complete: 80 / 1440 = 5.56%; elapsed = 10.06 min; remaining = 170.97 min @ 0.1257 min per iteration
-predicted, n, 202108, chem1411, 0, 0, 0; complete: 81 / 1440 = 5.62%; elapsed = 10.80 min; remaining = 181.14 min @ 0.1333 min per iteration
-predicted, n, 202108, chem1411, 1, 0, 0; complete: 82 / 1440 = 5.69%; elapsed = 11.52 min; remaining = 190.71 min @ 0.1404 min per iteration
-predicted, n, 202108, chem1411, 2, 0, 0; complete: 83 / 1440 = 5.76%; elapsed = 12.16 min; remaining = 198.88 min @ 0.1466 min per iteration
-predicted, n, 202108, chem1411, 3, 0, 0; complete: 84 / 1440 = 5.83%; elapsed = 12.88 min; remaining = 207.87 min @ 0.1533 min per iteration
-predicted, n, 202108, chem1411, 4, 0, 0; complete: 85 / 1440 = 5.90%; elapsed = 13.55 min; remaining = 216.01 min @ 0.1594 min per iteration
-predicted, n, 202108, chem1411, 5, 0, 0; complete: 86 / 1440 = 5.97%; elapsed = 14.21 min; remaining = 223.77 min @ 0.1653 min per iteration
-predicted, n, 202108, chem1411, 6, 0, 0; complete: 87 / 1440 = 6.04%; elapsed = 14.85 min; remaining = 230.90 min @ 0.1707 min per iteration
-predicted, n, 202108, chem1411, 7, 0, 0; complete: 88 / 1440 = 6.11%; elapsed = 15.55 min; remaining = 238.95 min @ 0.1767 min per iteration
-predicted, n, 202108, chem1411, 8, 0, 0; complete: 89 / 1440 = 6.18%; elapsed = 16.25 min; remaining = 246.74 min @ 0.1826 min per iteration
-predicted, n, 202108, chem1411, 9, 0, 0; complete: 90 / 1440 = 6.25%; elapsed = 16.90 min; remaining = 253.55 min @ 0.1878 min per iteration
-predicted, n, 202108, chem1411, 10, 0, 0; complete: 91 / 1440 = 6.32%; elapsed = 17.57 min; remaining = 260.48 min @ 0.1931 min per iteration
-predicted, n, 202108, chem1411, 11, 0, 0; complete: 92 / 1440 = 6.39%; elapsed = 18.29 min; remaining = 267.93 min @ 0.1988 min per iteration
-predicted, n, 202108, chem1411, 12, 0, 0; complete: 93 / 1440 = 6.46%; elapsed = 19.01 min; remaining = 275.33 min @ 0.2044 min per iteration
-predicted, n, 202108, chem1411, 13, 0, 0; complete: 94 / 1440 = 6.53%; elapsed = 19.68 min; remaining = 281.74 min @ 0.2093 min per iteration
-predicted, n, 202108, chem1411, 14, 0, 0; complete: 95 / 1440 = 6.60%; elapsed = 20.38 min; remaining = 288.56 min @ 0.2145 min per iteration
-predicted, n, 202108, chem1411, 15, 0, 0; complete: 96 / 1440 = 6.67%; elapsed = 21.03 min; remaining = 294.38 min @ 0.2190 min per iteration
-predicted, n, 202108, comm1311, 0, 0, 0; complete: 97 / 1440 = 6.74%; elapsed = 21.72 min; remaining = 300.73 min @ 0.2239 min per iteration
-predicted, n, 202108, comm1311, 1, 0, 0; complete: 98 / 1440 = 6.81%; elapsed = 22.42 min; remaining = 306.99 min @ 0.2288 min per iteration
-predicted, n, 202108, comm1311, 2, 0, 0; complete: 99 / 1440 = 6.88%; elapsed = 23.09 min; remaining = 312.81 min @ 0.2333 min per iteration
-predicted, n, 202108, comm1311, 3, 0, 0; complete: 100 / 1440 = 6.94%; elapsed = 23.79 min; remaining = 318.76 min @ 0.2379 min per iteration
-predicted, n, 202108, comm1311, 4, 0, 0; complete: 101 / 1440 = 7.01%; elapsed = 24.44 min; remaining = 324.03 min @ 0.2420 min per iteration
-predicted, n, 202108, comm1311, 5, 0, 0; complete: 102 / 1440 = 7.08%; elapsed = 25.15 min; remaining = 329.84 min @ 0.2465 min per iteration
-predicted, n, 202108, comm1311, 6, 0, 0; complete: 103 / 1440 = 7.15%; elapsed = 25.84 min; remaining = 335.42 min @ 0.2509 min per iteration
-predicted, n, 202108, comm1311, 7, 0, 0; complete: 104 / 1440 = 7.22%; elapsed = 26.54 min; remaining = 340.98 min @ 0.2552 min per iteration
-predicted, n, 202108, comm1311, 8, 0, 0; complete: 105 / 1440 = 7.29%; elapsed = 27.24 min; remaining = 346.39 min @ 0.2595 min per iteration
-predicted, n, 202108, comm1311, 9, 0, 0; complete: 106 / 1440 = 7.36%; elapsed = 27.97 min; remaining = 352.01 min @ 0.2639 min per iteration
-predicted, n, 202108, comm1311, 10, 0, 0; complete: 107 / 1440 = 7.43%; elapsed = 28.70 min; remaining = 357.60 min @ 0.2683 min per iteration
-predicted, n, 202108, comm1311, 11, 0, 0; complete: 108 / 1440 = 7.50%; elapsed = 29.35 min; remaining = 362.02 min @ 0.2718 min per iteration
-predicted, n, 202108, comm1311, 12, 0, 0; complete: 109 / 1440 = 7.57%; elapsed = 29.95 min; remaining = 365.78 min @ 0.2748 min per iteration
-predicted, n, 202108, comm1311, 13, 0, 0; complete: 110 / 1440 = 7.64%; elapsed = 30.61 min; remaining = 370.16 min @ 0.2783 min per iteration
-predicted, n, 202108, comm1311, 14, 0, 0; complete: 111 / 1440 = 7.71%; elapsed = 31.30 min; remaining = 374.81 min @ 0.2820 min per iteration
-predicted, n, 202108, comm1311, 15, 0, 0; complete: 112 / 1440 = 7.78%; elapsed = 31.99 min; remaining = 379.28 min @ 0.2856 min per iteration
-predicted, n, 202108, engl1301, 0, 0, 0; complete: 113 / 1440 = 7.85%; elapsed = 32.66 min; remaining = 383.51 min @ 0.2890 min per iteration
-predicted, n, 202108, engl1301, 1, 0, 0; complete: 114 / 1440 = 7.92%; elapsed = 33.36 min; remaining = 387.99 min @ 0.2926 min per iteration
-predicted, n, 202108, engl1301, 2, 0, 0; complete: 115 / 1440 = 7.99%; elapsed = 34.07 min; remaining = 392.51 min @ 0.2962 min per iteration
-predicted, n, 202108, engl1301, 3, 0, 0; complete: 116 / 1440 = 8.06%; elapsed = 34.73 min; remaining = 396.43 min @ 0.2994 min per iteration
-predicted, n, 202108, engl1301, 4, 0, 0; complete: 117 / 1440 = 8.12%; elapsed = 35.45 min; remaining = 400.85 min @ 0.3030 min per iteration
-predicted, n, 202108, engl1301, 5, 0, 0; complete: 118 / 1440 = 8.19%; elapsed = 36.15 min; remaining = 405.03 min @ 0.3064 min per iteration
-predicted, n, 202108, engl1301, 6, 0, 0; complete: 119 / 1440 = 8.26%; elapsed = 36.82 min; remaining = 408.72 min @ 0.3094 min per iteration
-predicted, n, 202108, engl1301, 7, 0, 0; complete: 120 / 1440 = 8.33%; elapsed = 37.56 min; remaining = 413.13 min @ 0.3130 min per iteration
-predicted, n, 202108, engl1301, 8, 0, 0; complete: 121 / 1440 = 8.40%; elapsed = 38.25 min; remaining = 416.93 min @ 0.3161 min per iteration
-predicted, n, 202108, engl1301, 9, 0, 0; complete: 122 / 1440 = 8.47%; elapsed = 38.94 min; remaining = 420.67 min @ 0.3192 min per iteration
-predicted, n, 202108, engl1301, 10, 0, 0; complete: 123 / 1440 = 8.54%; elapsed = 39.59 min; remaining = 423.88 min @ 0.3219 min per iteration
-predicted, n, 202108, engl1301, 11, 0, 0; complete: 124 / 1440 = 8.61%; elapsed = 40.31 min; remaining = 427.82 min @ 0.3251 min per iteration
-predicted, n, 202108, engl1301, 12, 0, 0; complete: 125 / 1440 = 8.68%; elapsed = 41.02 min; remaining = 431.56 min @ 0.3282 min per iteration
-predicted, n, 202108, engl1301, 13, 0, 0; complete: 126 / 1440 = 8.75%; elapsed = 41.74 min; remaining = 435.28 min @ 0.3313 min per iteration
-predicted, n, 202108, engl1301, 14, 0, 0; complete: 127 / 1440 = 8.82%; elapsed = 42.42 min; remaining = 438.60 min @ 0.3340 min per iteration
-predicted, n, 202108, engl1301, 15, 0, 0; complete: 128 / 1440 = 8.89%; elapsed = 43.05 min; remaining = 441.28 min @ 0.3363 min per iteration
-predicted, n, 202108, hist1301, 0, 0, 0; complete: 129 / 1440 = 8.96%; elapsed = 43.78 min; remaining = 444.96 min @ 0.3394 min per iteration
-predicted, n, 202108, hist1301, 1, 0, 0; complete: 130 / 1440 = 9.03%; elapsed = 44.46 min; remaining = 448.00 min @ 0.3420 min per iteration
-predicted, n, 202108, hist1301, 2, 0, 0; complete: 131 / 1440 = 9.10%; elapsed = 45.15 min; remaining = 451.17 min @ 0.3447 min per iteration
-predicted, n, 202108, hist1301, 3, 0, 0; complete: 132 / 1440 = 9.17%; elapsed = 45.90 min; remaining = 454.85 min @ 0.3477 min per iteration
-predicted, n, 202108, hist1301, 4, 0, 0; complete: 133 / 1440 = 9.24%; elapsed = 46.57 min; remaining = 457.69 min @ 0.3502 min per iteration
-predicted, n, 202108, hist1301, 5, 0, 0; complete: 134 / 1440 = 9.31%; elapsed = 47.28 min; remaining = 460.82 min @ 0.3529 min per iteration
-predicted, n, 202108, hist1301, 6, 0, 0; complete: 135 / 1440 = 9.38%; elapsed = 47.94 min; remaining = 463.45 min @ 0.3551 min per iteration
-predicted, n, 202108, hist1301, 7, 0, 0; complete: 136 / 1440 = 9.44%; elapsed = 48.60 min; remaining = 466.00 min @ 0.3574 min per iteration
-predicted, n, 202108, hist1301, 8, 0, 0; complete: 137 / 1440 = 9.51%; elapsed = 49.32 min; remaining = 469.08 min @ 0.3600 min per iteration
-predicted, n, 202108, hist1301, 9, 0, 0; complete: 138 / 1440 = 9.58%; elapsed = 49.99 min; remaining = 471.62 min @ 0.3622 min per iteration
-predicted, n, 202108, hist1301, 10, 0, 0; complete: 139 / 1440 = 9.65%; elapsed = 50.64 min; remaining = 474.02 min @ 0.3643 min per iteration
-predicted, n, 202108, hist1301, 11, 0, 0; complete: 140 / 1440 = 9.72%; elapsed = 51.40 min; remaining = 477.32 min @ 0.3672 min per iteration
-predicted, n, 202108, hist1301, 12, 0, 0; complete: 141 / 1440 = 9.79%; elapsed = 52.16 min; remaining = 480.50 min @ 0.3699 min per iteration
-predicted, n, 202108, hist1301, 13, 0, 0; complete: 142 / 1440 = 9.86%; elapsed = 52.84 min; remaining = 483.05 min @ 0.3721 min per iteration
-predicted, n, 202108, hist1301, 14, 0, 0; complete: 143 / 1440 = 9.93%; elapsed = 53.52 min; remaining = 485.42 min @ 0.3743 min per iteration
-predicted, n, 202108, hist1301, 15, 0, 0; complete: 144 / 1440 = 10.00%; elapsed = 54.20 min; remaining = 487.80 min @ 0.3764 min per iteration
-predicted, n, 202108, math1324, 0, 0, 0; complete: 161 / 1440 = 11.18%; elapsed = 54.88 min; remaining = 435.97 min @ 0.3409 min per iteration
-predicted, n, 202108, math1324, 1, 0, 0; complete: 162 / 1440 = 11.25%; elapsed = 55.56 min; remaining = 438.32 min @ 0.3430 min per iteration
-predicted, n, 202108, math1324, 2, 0, 0; complete: 163 / 1440 = 11.32%; elapsed = 56.31 min; remaining = 441.16 min @ 0.3455 min per iteration
-predicted, n, 202108, math1324, 3, 0, 0; complete: 164 / 1440 = 11.39%; elapsed = 57.01 min; remaining = 443.56 min @ 0.3476 min per iteration
-predicted, n, 202108, math1324, 4, 0, 0; complete: 165 / 1440 = 11.46%; elapsed = 57.74 min; remaining = 446.15 min @ 0.3499 min per iteration
-predicted, n, 202108, math1324, 5, 0, 0; complete: 166 / 1440 = 11.53%; elapsed = 58.46 min; remaining = 448.67 min @ 0.3522 min per iteration
-predicted, n, 202108, math1324, 6, 0, 0; complete: 167 / 1440 = 11.60%; elapsed = 59.26 min; remaining = 451.71 min @ 0.3548 min per iteration
-predicted, n, 202108, math1324, 7, 0, 0; complete: 168 / 1440 = 11.67%; elapsed = 59.92 min; remaining = 453.72 min @ 0.3567 min per iteration
-predicted, n, 202108, math1324, 8, 0, 0; complete: 169 / 1440 = 11.74%; elapsed = 60.64 min; remaining = 456.03 min @ 0.3588 min per iteration
-predicted, n, 202108, math1324, 9, 0, 0; complete: 170 / 1440 = 11.81%; elapsed = 61.37 min; remaining = 458.48 min @ 0.3610 min per iteration
-predicted, n, 202108, math1324, 10, 0, 0; complete: 171 / 1440 = 11.88%; elapsed = 62.11 min; remaining = 460.95 min @ 0.3632 min per iteration
-predicted, n, 202108, math1324, 11, 0, 0; complete: 172 / 1440 = 11.94%; elapsed = 62.78 min; remaining = 462.83 min @ 0.3650 min per iteration
-predicted, n, 202108, math1324, 12, 0, 0; complete: 173 / 1440 = 12.01%; elapsed = 63.52 min; remaining = 465.20 min @ 0.3672 min per iteration
-predicted, n, 202108, math1324, 13, 0, 0; complete: 174 / 1440 = 12.08%; elapsed = 64.26 min; remaining = 467.56 min @ 0.3693 min per iteration
-predicted, n, 202108, math1324, 14, 0, 0; complete: 175 / 1440 = 12.15%; elapsed = 64.97 min; remaining = 469.64 min @ 0.3713 min per iteration
-predicted, n, 202108, math1324, 15, 0, 0; complete: 176 / 1440 = 12.22%; elapsed = 65.65 min; remaining = 471.51 min @ 0.3730 min per iteration
-predicted, n, 202108, math1342, 0, 0, 0; complete: 177 / 1440 = 12.29%; elapsed = 66.33 min; remaining = 473.27 min @ 0.3747 min per iteration
-predicted, n, 202108, math1342, 1, 0, 0; complete: 178 / 1440 = 12.36%; elapsed = 67.03 min; remaining = 475.22 min @ 0.3766 min per iteration
-predicted, n, 202108, math1342, 2, 0, 0; complete: 179 / 1440 = 12.43%; elapsed = 67.71 min; remaining = 477.00 min @ 0.3783 min per iteration
-predicted, n, 202108, math1342, 3, 0, 0; complete: 180 / 1440 = 12.50%; elapsed = 68.36 min; remaining = 478.50 min @ 0.3798 min per iteration
-predicted, n, 202108, math1342, 4, 0, 0; complete: 181 / 1440 = 12.57%; elapsed = 69.02 min; remaining = 480.10 min @ 0.3813 min per iteration
-predicted, n, 202108, math1342, 5, 0, 0; complete: 182 / 1440 = 12.64%; elapsed = 69.69 min; remaining = 481.70 min @ 0.3829 min per iteration
-predicted, n, 202108, math1342, 6, 0, 0; complete: 183 / 1440 = 12.71%; elapsed = 70.37 min; remaining = 483.36 min @ 0.3845 min per iteration
-predicted, n, 202108, math1342, 7, 0, 0; complete: 184 / 1440 = 12.78%; elapsed = 71.07 min; remaining = 485.13 min @ 0.3862 min per iteration
-predicted, n, 202108, math1342, 8, 0, 0; complete: 185 / 1440 = 12.85%; elapsed = 71.78 min; remaining = 486.91 min @ 0.3880 min per iteration
-predicted, n, 202108, math1342, 9, 0, 0; complete: 186 / 1440 = 12.92%; elapsed = 72.46 min; remaining = 488.52 min @ 0.3896 min per iteration
-predicted, n, 202108, math1342, 10, 0, 0; complete: 187 / 1440 = 12.99%; elapsed = 73.18 min; remaining = 490.37 min @ 0.3914 min per iteration
-predicted, n, 202108, math1342, 11, 0, 0; complete: 188 / 1440 = 13.06%; elapsed = 73.89 min; remaining = 492.06 min @ 0.3930 min per iteration
-predicted, n, 202108, math1342, 12, 0, 0; complete: 189 / 1440 = 13.12%; elapsed = 74.63 min; remaining = 493.97 min @ 0.3949 min per iteration
-predicted, n, 202108, math1342, 13, 0, 0; complete: 190 / 1440 = 13.19%; elapsed = 75.24 min; remaining = 495.02 min @ 0.3960 min per iteration
-predicted, n, 202108, math1342, 14, 0, 0; complete: 191 / 1440 = 13.26%; elapsed = 75.95 min; remaining = 496.69 min @ 0.3977 min per iteration
-predicted, n, 202108, math1342, 15, 0, 0; complete: 192 / 1440 = 13.33%; elapsed = 76.63 min; remaining = 498.07 min @ 0.3991 min per iteration
-predicted, n, 202108, math2412, 0, 0, 0; complete: 193 / 1440 = 13.40%; elapsed = 77.36 min; remaining = 499.86 min @ 0.4009 min per iteration
-predicted, n, 202108, math2412, 1, 0, 0; complete: 194 / 1440 = 13.47%; elapsed = 78.06 min; remaining = 501.37 min @ 0.4024 min per iteration
-predicted, n, 202108, math2412, 2, 0, 0; complete: 195 / 1440 = 13.54%; elapsed = 78.71 min; remaining = 502.52 min @ 0.4036 min per iteration
-predicted, n, 202108, math2412, 3, 0, 0; complete: 196 / 1440 = 13.61%; elapsed = 79.37 min; remaining = 503.74 min @ 0.4049 min per iteration
-predicted, n, 202108, math2412, 4, 0, 0; complete: 197 / 1440 = 13.68%; elapsed = 80.02 min; remaining = 504.92 min @ 0.4062 min per iteration
-predicted, n, 202108, math2412, 5, 0, 0; complete: 198 / 1440 = 13.75%; elapsed = 80.69 min; remaining = 506.12 min @ 0.4075 min per iteration
-predicted, n, 202108, math2412, 6, 0, 0; complete: 199 / 1440 = 13.82%; elapsed = 81.42 min; remaining = 507.74 min @ 0.4091 min per iteration
-predicted, n, 202108, math2412, 7, 0, 0; complete: 200 / 1440 = 13.89%; elapsed = 82.16 min; remaining = 509.37 min @ 0.4108 min per iteration
-predicted, n, 202108, math2412, 8, 0, 0; complete: 201 / 1440 = 13.96%; elapsed = 82.80 min; remaining = 510.39 min @ 0.4119 min per iteration
-predicted, n, 202108, math2412, 9, 0, 0; complete: 202 / 1440 = 14.03%; elapsed = 83.46 min; remaining = 511.53 min @ 0.4132 min per iteration
-predicted, n, 202108, math2412, 10, 0, 0; complete: 203 / 1440 = 14.10%; elapsed = 84.19 min; remaining = 513.00 min @ 0.4147 min per iteration
-predicted, n, 202108, math2412, 11, 0, 0; complete: 204 / 1440 = 14.17%; elapsed = 84.80 min; remaining = 513.82 min @ 0.4157 min per iteration
-predicted, n, 202108, math2412, 12, 0, 0; complete: 205 / 1440 = 14.24%; elapsed = 85.49 min; remaining = 515.01 min @ 0.4170 min per iteration
-predicted, n, 202108, math2412, 13, 0, 0; complete: 206 / 1440 = 14.31%; elapsed = 86.17 min; remaining = 516.18 min @ 0.4183 min per iteration
-predicted, n, 202108, math2412, 14, 0, 0; complete: 207 / 1440 = 14.37%; elapsed = 86.86 min; remaining = 517.38 min @ 0.4196 min per iteration
-predicted, n, 202108, math2412, 15, 0, 0; complete: 208 / 1440 = 14.44%; elapsed = 87.53 min; remaining = 518.43 min @ 0.4208 min per iteration
-predicted, n, 202108, univ0301, 0, 0, 0; complete: 209 / 1440 = 14.51%; elapsed = 88.22 min; remaining = 519.61 min @ 0.4221 min per iteration
-predicted, n, 202108, univ0301, 1, 0, 0; complete: 210 / 1440 = 14.58%; elapsed = 88.86 min; remaining = 520.49 min @ 0.4232 min per iteration
-predicted, n, 202108, univ0301, 2, 0, 0; complete: 211 / 1440 = 14.65%; elapsed = 89.55 min; remaining = 521.58 min @ 0.4244 min per iteration
-predicted, n, 202108, univ0301, 3, 0, 0; complete: 212 / 1440 = 14.72%; elapsed = 90.25 min; remaining = 522.79 min @ 0.4257 min per iteration
-predicted, n, 202108, univ0301, 4, 0, 0; complete: 213 / 1440 = 14.79%; elapsed = 90.97 min; remaining = 524.01 min @ 0.4271 min per iteration
-predicted, n, 202108, univ0301, 5, 0, 0; complete: 214 / 1440 = 14.86%; elapsed = 91.66 min; remaining = 525.14 min @ 0.4283 min per iteration
-predicted, n, 202108, univ0301, 6, 0, 0; complete: 215 / 1440 = 14.93%; elapsed = 92.36 min; remaining = 526.24 min @ 0.4296 min per iteration
-predicted, n, 202108, univ0301, 7, 0, 0; complete: 216 / 1440 = 15.00%; elapsed = 93.05 min; remaining = 527.27 min @ 0.4308 min per iteration
-predicted, n, 202108, univ0301, 8, 0, 0; complete: 217 / 1440 = 15.07%; elapsed = 93.73 min; remaining = 528.23 min @ 0.4319 min per iteration
-predicted, n, 202108, univ0301, 9, 0, 0; complete: 218 / 1440 = 15.14%; elapsed = 94.44 min; remaining = 529.36 min @ 0.4332 min per iteration
-predicted, n, 202108, univ0301, 10, 0, 0; complete: 219 / 1440 = 15.21%; elapsed = 95.16 min; remaining = 530.56 min @ 0.4345 min per iteration
-predicted, n, 202108, univ0301, 11, 0, 0; complete: 220 / 1440 = 15.28%; elapsed = 95.89 min; remaining = 531.74 min @ 0.4358 min per iteration
-predicted, n, 202108, univ0301, 12, 0, 0; complete: 221 / 1440 = 15.35%; elapsed = 96.58 min; remaining = 532.70 min @ 0.4370 min per iteration
-predicted, n, 202108, univ0301, 13, 0, 0; complete: 222 / 1440 = 15.42%; elapsed = 97.25 min; remaining = 533.57 min @ 0.4381 min per iteration
-predicted, n, 202108, univ0301, 14, 0, 0; complete: 223 / 1440 = 15.49%; elapsed = 97.99 min; remaining = 534.79 min @ 0.4394 min per iteration
-predicted, n, 202108, univ0301, 15, 0, 0; complete: 224 / 1440 = 15.56%; elapsed = 98.68 min; remaining = 535.72 min @ 0.4406 min per iteration
-predicted, n, 202108, univ0304, 0, 0, 0; Traceback (most recent call last):
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 542, in <module>
-    self.get_summary()
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 356, in get_summary
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 322, in get_details
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 315, in get_optimal
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 306, in get_predicted
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 123, in run
-    A = func(path.copy())
-        ^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 287, in func
-    Z = imp.output.join(self['inputs']['Y'][cols]).prep().prep_bool().prep_category().sort_index()
-                        ~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/frame.py", line 4096, in __getitem__
-    indexer = self.columns._get_indexer_strict(key, "columns")[1]
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6200, in _get_indexer_strict
-    self._raise_if_missing(keyarr, indexer, axis_name)
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6252, in _raise_if_missing
-    raise KeyError(f"{not_found} not in index")
-KeyError: "['univ0304_cur', 'univ0304'] not in index"
-2024-04-03 07:28:48.084172
-inputs, terms, 202108; 202108/reg_166.parq not found - creating
-202108/raw_166.parq not found - creating
-202108/adm_166.parq not found - creating
-202108/flg_166.parq not found - creating
-202108 flags cycle day 170 >= 166 on 2021-03-24 00:00:00 missing columns: []
-202106 flags cycle day 170 >= 166 on 2021-03-24 00:00:00 missing columns: ['app_date']
-complete: 1 / 4 = 25.00%; elapsed = 0.45 min; remaining = 1.36 min @ 0.4545 min per iteration
-inputs, terms, 202208; 202208/reg_166.parq not found - creating
-202208/raw_166.parq not found - creating
-202208/adm_166.parq not found - creating
-202208/flg_166.parq not found - creating
-202208 flags cycle day 170 >= 166 on 2022-03-23 00:00:00 missing columns: ['gap_score']
-202206 flags cycle day 170 >= 166 on 2022-03-23 00:00:00 missing columns: ['gap_score']
-complete: 2 / 4 = 50.00%; elapsed = 0.85 min; remaining = 0.85 min @ 0.4254 min per iteration
-inputs, terms, 202308; 202308/reg_166.parq not found - creating
-202308/raw_166.parq not found - creating
-202308/adm_166.parq not found - creating
-202308/flg_166.parq not found - creating
-202308 flags cycle day 166 >= 166 on 2023-04-05 00:00:00 missing columns: ['gap_score']
-202306 flags cycle day 166 >= 166 on 2023-04-05 00:00:00 missing columns: ['gap_score']
-complete: 3 / 4 = 75.00%; elapsed = 1.28 min; remaining = 0.43 min @ 0.4279 min per iteration
-inputs, terms, 202408; 202408/reg_166.parq not found - creating
-202408/raw_166.parq not found - creating
-202408/adm_166.parq not found - creating
-202408/flg_166.parq not found - creating
-202408 flags cycle day 173 >= 166 on 2024-03-27 00:00:00 missing columns: ['fafsa_app', 'finaid_accepted', 'disb_req_complete', 'gap_score', 'ver_complete', 'selected_for_ver']
-202406 flags cycle day 173 >= 166 on 2024-03-27 00:00:00 missing columns: ['gap_score']
-2024-04-03 07:32:12.128846
-inputs, terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0063 min per iteration
-inputs, terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.01 min; remaining = 0.01 min @ 0.0073 min per iteration
-inputs, terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.02 min; remaining = 0.01 min @ 0.0077 min per iteration
-inputs, terms, 202408; complete: 4 / 4 = 100.00%; elapsed = 0.03 min; remaining = 0.00 min @ 0.0080 min per iteration
-inputs, raw_df; complete: 1 / 1 = 100.00%; elapsed = 0.05 min; remaining = 0.00 min @ 0.0472 min per iteration
-inputs, X; complete: 1 / 1 = 100.00%; elapsed = 0.10 min; remaining = 0.00 min @ 0.0996 min per iteration
-inputs, reg_df; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0030 min per iteration
-inputs, Y; complete: 1 / 1 = 100.00%; elapsed = 0.13 min; remaining = 0.00 min @ 0.1271 min per iteration
-predicted, n, 202108, univ0304, 0, 0, 0; Traceback (most recent call last):
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 542, in <module>
-    self.get_summary()
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 356, in get_summary
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 322, in get_details
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 315, in get_optimal
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in run
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 121, in <listcomp>
-    [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
-     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 306, in get_predicted
-    self.run(grid, func)
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 123, in run
-    A = func(path.copy())
-        ^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 287, in func
-    Z = imp.output.join(self['inputs']['Y'][cols]).prep().prep_bool().prep_category().sort_index()
-                        ~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/frame.py", line 4096, in __getitem__
-    indexer = self.columns._get_indexer_strict(key, "columns")[1]
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6200, in _get_indexer_strict
-    self._raise_if_missing(keyarr, indexer, axis_name)
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6252, in _raise_if_missing
-    raise KeyError(f"{not_found} not in index")
-KeyError: "['univ0304_cur', 'univ0304'] not in index"
-2024-04-03 07:42:59.198462
-inputs, terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0062 min per iteration
-inputs, terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.01 min; remaining = 0.01 min @ 0.0071 min per iteration
-inputs, terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.02 min; remaining = 0.01 min @ 0.0077 min per iteration
-inputs, terms, 202408; complete: 4 / 4 = 100.00%; elapsed = 0.03 min; remaining = 0.00 min @ 0.0080 min per iteration
-inputs, raw_df; complete: 1 / 1 = 100.00%; elapsed = 0.05 min; remaining = 0.00 min @ 0.0456 min per iteration
-inputs, X; complete: 1 / 1 = 100.00%; elapsed = 0.09 min; remaining = 0.00 min @ 0.0876 min per iteration
-inputs, reg_df; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0022 min per iteration
-inputs, Y; complete: 1 / 1 = 100.00%; elapsed = 0.11 min; remaining = 0.00 min @ 0.1098 min per iteration
-predicted, n, 202108, univ0314, 0, 0, 0; complete: 225 / 1632 = 13.79%; elapsed = 1.14 min; remaining = 7.11 min @ 0.0051 min per iteration
-predicted, n, 202108, univ0314, 1, 0, 0; complete: 226 / 1632 = 13.85%; elapsed = 1.82 min; remaining = 11.30 min @ 0.0080 min per iteration
-predicted, n, 202108, univ0314, 2, 0, 0; complete: 227 / 1632 = 13.91%; elapsed = 2.49 min; remaining = 15.41 min @ 0.0110 min per iteration
-predicted, n, 202108, univ0314, 3, 0, 0; complete: 228 / 1632 = 13.97%; elapsed = 3.19 min; remaining = 19.63 min @ 0.0140 min per iteration
-predicted, n, 202108, univ0314, 4, 0, 0; complete: 229 / 1632 = 14.03%; elapsed = 3.90 min; remaining = 23.89 min @ 0.0170 min per iteration
-predicted, n, 202108, univ0314, 5, 0, 0; complete: 230 / 1632 = 14.09%; elapsed = 4.63 min; remaining = 28.23 min @ 0.0201 min per iteration
-predicted, n, 202108, univ0314, 6, 0, 0; complete: 231 / 1632 = 14.15%; elapsed = 5.37 min; remaining = 32.59 min @ 0.0233 min per iteration
-predicted, n, 202108, univ0314, 7, 0, 0; complete: 232 / 1632 = 14.22%; elapsed = 6.05 min; remaining = 36.48 min @ 0.0261 min per iteration
-predicted, n, 202108, univ0314, 8, 0, 0; complete: 233 / 1632 = 14.28%; elapsed = 6.75 min; remaining = 40.53 min @ 0.0290 min per iteration
-predicted, n, 202108, univ0314, 9, 0, 0; complete: 234 / 1632 = 14.34%; elapsed = 7.44 min; remaining = 44.43 min @ 0.0318 min per iteration
-predicted, n, 202108, univ0314, 10, 0, 0; complete: 235 / 1632 = 14.40%; elapsed = 8.11 min; remaining = 48.22 min @ 0.0345 min per iteration
-predicted, n, 202108, univ0314, 11, 0, 0; complete: 236 / 1632 = 14.46%; elapsed = 8.84 min; remaining = 52.27 min @ 0.0374 min per iteration
-predicted, n, 202108, univ0314, 12, 0, 0; complete: 237 / 1632 = 14.52%; elapsed = 9.52 min; remaining = 56.01 min @ 0.0401 min per iteration
-predicted, n, 202108, univ0314, 13, 0, 0; complete: 238 / 1632 = 14.58%; elapsed = 10.18 min; remaining = 59.60 min @ 0.0428 min per iteration
-predicted, n, 202108, univ0314, 14, 0, 0; 
+2024-04-03 21:52:55.388854
+transformed, n, all, all, 1; complete: 2 / 32 = 6.25%; elapsed = 0.03 min; remaining = 0.38 min @ 0.0126 min per iteration
+transformed, n, all, all, 2; complete: 3 / 32 = 9.38%; elapsed = 0.04 min; remaining = 0.43 min @ 0.0147 min per iteration
+transformed, n, all, all, 3; complete: 4 / 32 = 12.50%; elapsed = 0.06 min; remaining = 0.43 min @ 0.0154 min per iteration
+transformed, n, all, all, 4; complete: 5 / 32 = 15.62%; elapsed = 0.08 min; remaining = 0.42 min @ 0.0157 min per iteration
+transformed, n, all, all, 5; complete: 6 / 32 = 18.75%; elapsed = 0.10 min; remaining = 0.44 min @ 0.0168 min per iteration
+transformed, n, all, all, 6; complete: 7 / 32 = 21.88%; elapsed = 0.12 min; remaining = 0.43 min @ 0.0170 min per iteration
+transformed, n, all, all, 7; complete: 8 / 32 = 25.00%; elapsed = 0.14 min; remaining = 0.41 min @ 0.0172 min per iteration
+transformed, n, all, all, 8; complete: 9 / 32 = 28.12%; elapsed = 0.16 min; remaining = 0.40 min @ 0.0173 min per iteration
+transformed, n, all, all, 9; complete: 10 / 32 = 31.25%; elapsed = 0.17 min; remaining = 0.38 min @ 0.0173 min per iteration
+transformed, n, all, all, 10; complete: 11 / 32 = 34.38%; elapsed = 0.20 min; remaining = 0.37 min @ 0.0178 min per iteration
+transformed, n, all, all, 11; complete: 12 / 32 = 37.50%; elapsed = 0.21 min; remaining = 0.36 min @ 0.0178 min per iteration
+transformed, n, all, all, 12; complete: 13 / 32 = 40.62%; elapsed = 0.23 min; remaining = 0.34 min @ 0.0179 min per iteration
+transformed, n, all, all, 13; complete: 14 / 32 = 43.75%; elapsed = 0.25 min; remaining = 0.32 min @ 0.0179 min per iteration
+transformed, n, all, all, 14; complete: 15 / 32 = 46.88%; elapsed = 0.27 min; remaining = 0.31 min @ 0.0180 min per iteration
+transformed, n, all, all, 15; complete: 16 / 32 = 50.00%; elapsed = 0.29 min; remaining = 0.29 min @ 0.0183 min per iteration
+transformed, t, all, all, 1; complete: 18 / 32 = 56.25%; elapsed = 0.30 min; remaining = 0.23 min @ 0.0166 min per iteration
+transformed, t, all, all, 2; complete: 19 / 32 = 59.38%; elapsed = 0.30 min; remaining = 0.21 min @ 0.0160 min per iteration
+transformed, t, all, all, 3; complete: 20 / 32 = 62.50%; elapsed = 0.31 min; remaining = 0.19 min @ 0.0155 min per iteration
+transformed, t, all, all, 4; complete: 21 / 32 = 65.62%; elapsed = 0.31 min; remaining = 0.16 min @ 0.0150 min per iteration
+transformed, t, all, all, 5; complete: 22 / 32 = 68.75%; elapsed = 0.32 min; remaining = 0.15 min @ 0.0145 min per iteration
+transformed, t, all, all, 6; complete: 23 / 32 = 71.88%; elapsed = 0.33 min; remaining = 0.13 min @ 0.0143 min per iteration
+transformed, t, all, all, 7; complete: 24 / 32 = 75.00%; elapsed = 0.33 min; remaining = 0.11 min @ 0.0140 min per iteration
+transformed, t, all, all, 8; complete: 25 / 32 = 78.12%; elapsed = 0.34 min; remaining = 0.10 min @ 0.0136 min per iteration
+transformed, t, all, all, 9; complete: 26 / 32 = 81.25%; elapsed = 0.35 min; remaining = 0.08 min @ 0.0133 min per iteration
+transformed, t, all, all, 10; complete: 27 / 32 = 84.38%; elapsed = 0.35 min; remaining = 0.06 min @ 0.0130 min per iteration
+transformed, t, all, all, 11; complete: 28 / 32 = 87.50%; elapsed = 0.36 min; remaining = 0.05 min @ 0.0127 min per iteration
+transformed, t, all, all, 12; complete: 29 / 32 = 90.62%; elapsed = 0.36 min; remaining = 0.04 min @ 0.0125 min per iteration
+transformed, t, all, all, 13; complete: 30 / 32 = 93.75%; elapsed = 0.37 min; remaining = 0.02 min @ 0.0123 min per iteration
+transformed, t, all, all, 14; complete: 31 / 32 = 96.88%; elapsed = 0.37 min; remaining = 0.01 min @ 0.0120 min per iteration
+transformed, t, all, all, 15; complete: 32 / 32 = 100.00%; elapsed = 0.38 min; remaining = 0.00 min @ 0.0118 min per iteration
+imputed, n, all, all, 1, 0; 
