@@ -1,5 +1,5 @@
 import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
-import pickle, joblib, json, dataclasses, typing, collections, oracledb
+import dill, joblib, json, dataclasses, typing, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from IPython.core.display import display, HTML, clear_output
 from copy import deepcopy
@@ -239,10 +239,9 @@ def write(fn, obj, overwrite=False, protocol=5, **kwargs):
         if fn.suffix == '.pkl':
             with open(fn, 'wb') as f:
                 # joblib.dump(obj, f, **kwargs)
-                pickle.dump(obj, f, protocol=protocol, **kwargs)
-                # pickle.dump(obj, f, **kwargs)
+                dill.dump(obj, f, protocol=protocol, **kwargs)
         else:
-            obj = pd.DataFrame(obj).prep()
+            obj = pd.DataFrame(obj)#.prep()
             if fn.suffix in ['.parq','.parquet']:
                 obj.to_parquet(fn, **kwargs)
             elif fn.suffix == '.csv':
@@ -258,7 +257,7 @@ def read(fn, overwrite=False, **kwargs):
     try:
         with open(fn, 'rb') as f:
             # return joblib.load(f, **kwargs)
-            return pickle.load(f, **kwargs)
+            return dill.load(f, **kwargs)
     except:
         try:
             return pd.read_parquet(fn, **kwargs).prep()

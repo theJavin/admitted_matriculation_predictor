@@ -42,6 +42,102 @@ class AMP(MyBaseClass):
 
 
 
+
+
+            # cols = uniquify(['_allcrse_cur', targ+'_cur', targ], False)
+            # Z = imp['output'].join(self['Y']['all'][cols]).sample(frac=1)#.prep().prep_bool().prep_category()
+            # X = Z.query(f"pred_code==@path['train_code'] & sim==0").copy()
+            
+            # grp = [targ, '__coll_code', '__remote']
+            # grp = [targ, '__remote']
+            # grp = targ
+            # splits = list(StratifiedShuffleSplit(n_splits=3).split(X, X.groupby(grp, observed=False).ngroup()))
+            # splits = list(StratifiedKFold(n_splits=5).split(X, X.groupby(grp, observed=False).ngroup()))
+            # splits = list(StratifiedKFold(n_splits=5).split(X, X.index.get_level_values('idx')))
+            
+            # Y = Z.pop(targ).rename('actual')
+            # y = X.pop(targ)
+            # if y.sum() > 3:
+            #     clf = lgb.LGBMClassifier(verbosity=-1)
+            #     grid = {
+            #         'learning_rate': (0.001, 0.5, 'uniform'),
+            #         'num_leaves': (4, 128),
+            #         # 'min_data_in_leaf':(50, 300),
+            #         # 'max_depth': (2, 75),
+            #         }
+            #     # clf = BayesSearchCV(clf, grid, cv=splits, scoring='f1', n_iter=1000)
+            #     # clf = BayesSearchCV(clf, grid, cv=3, scoring='f1', n_iter=1000)
+            #     # with warnings.catch_warnings(action='ignore'):
+            #     clf = HistGradientBoostingClassifier(categorical_features="from_dtype", early_stopping=True)
+            #     grid = {
+            #         'learning_rate': (0.001, 0.8, 'uniform'),
+            #         'max_leaf_nodes':(8, 64),
+            #         'l2_regularization':(0, 1, 'uniform')
+            #         }
+            #     clf = BayesSearchCV(clf, grid, cv=5, scoring='f1', n_iter=1000, return_train_score=True)
+            #     clf.fit(X, y, callback=DeadlineStopper(30))
+            #     predicted = clf.predict(Z)
+            #     print(clf.scoring, clf.best_score_, clf.best_params_)
+            #     rslt['clf'] = clf
+            #     rslt['score'] = clf.best_score_
+            # rslt['output'] = Y.to_frame().assign(predicted=predicted).addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code'])
+            # return rslt
+            # y = X.pop(targ).rename('actual').to_frame().addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code'])
+            
+            # X = Z
+            # y = X.pop(targ).rename('actual').to_frame().addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code'])
+            # Y = y.assign(predicted=clf.predict(X))
+            # func = lambda y: f1_score(y['actual'], y['predicted'], zero_division=np.nan)
+            # S = Y.groupby('pred_code').apply(func)
+            # S.disp(10)
+
+            # S = Y.groupby('pred_code').agg(lambda y: balanced_accuracy_score(y['actual'], y['predicted']))
+            # S = balanced_accuracy_score(Y['actual'], Y['predicted'])
+            # print(S)
+
+
+            # .query(f"pred_code in @self.term_codes")
+            # Z = imp['output'].join(self['Y']['all'][cols]).query(f"pred_code in @self.term_codes").prep().prep_bool().prep_category().sample(frac=1)
+            # actual = Z[path['crse_code']].copy().rename('actual').to_frame()
+            # Z.loc[Z.eval(f"pred_code!=@path['train_code']"), path['crse_code']] = pd.NA
+            # clf = self.get_model(Z, clf_par)
+            # clf.trf_idx = imp.trf_idx
+            # clf.trf_par = imp.trf_par
+            # clf.imp_idx = imp.imp_idx
+            # clf.imp_par = imp.imp_par
+            # clf.clf_idx = clf_idx
+            # clf.clf_par = clf_par
+            # clf.details = pd.concat([actual
+            # D = pd.concat([actual
+            #         .assign(predicted=clf.complete_data(k)[path['crse_code']],
+            #                 proba=clf.get_raw_prediction(path['crse_code'], k))
+            #         .addlevel('crse_code', path['crse_code'])
+            #         .addlevel('train_code', path['train_code'])
+            #         .addlevel('sim', k)
+            #     for k in range(clf.dataset_count())]).prep().prep_bool()[['proba','predicted','actual']]
+            # clf.imp = imp
+            # clf.idx = idx
+            # clf.par = par
+            # clf.details = Y
+            # clf.score = clf.best_score_
+
+            
+            # return {
+            #     'trf_idx': imp['trf_idx'],
+            #     'trf_par': imp['trf_par'],
+            #     'imp_idx': imp['imp_idx'],
+            #     'imp_par': imp['imp_par'],
+            #     'clf_idx': clf_idx,
+            #     'clf_par': clf_par,
+            #     # 'imp': imp,
+            #     # 'clf': clf,
+            #     # 'idx': idx,
+            #     # 'par': par,
+            #     'output': Y,
+            #     'score': clf.best_score_,
+            #     'clf': clf,
+            # }
+
             # A = {'str':T, 'par':[x for x in self.clf_imp_trf_list if stringify(x)==T][0]}
             # idx = [stringify(x) for x in self.clf_imp_trf_list].index(T)
             # A = {'idx':idx, 'str':T, 'par':self.clf_imp_trf_list[idx]}
