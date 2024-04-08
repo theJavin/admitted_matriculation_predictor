@@ -1,5 +1,15 @@
-2024-04-08 04:22:28.821489
-terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0053 min per iteration
-terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.03 min; remaining = 0.03 min @ 0.0132 min per iteration
-terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.05 min; remaining = 0.02 min @ 0.0163 min per iteration
-terms, 202408; 
+2024-04-08 04:31:45.090230
+terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0067 min per iteration
+terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.03 min; remaining = 0.03 min @ 0.0145 min per iteration
+terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.05 min; remaining = 0.02 min @ 0.0168 min per iteration
+terms, 202408; complete: 4 / 4 = 100.00%; elapsed = 0.07 min; remaining = 0.00 min @ 0.0185 min per iteration
+raw_df, all; complete: 1 / 1 = 100.00%; elapsed = 0.01 min; remaining = 0.00 min @ 0.0122 min per iteration
+reg_df, all; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0023 min per iteration
+X, all; complete: 1 / 1 = 100.00%; elapsed = 0.04 min; remaining = 0.00 min @ 0.0444 min per iteration
+Y, all; complete: 1 / 1 = 100.00%; elapsed = 0.01 min; remaining = 0.00 min @ 0.0145 min per iteration
+mlt, all; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0031 min per iteration
+transformed, n, all, all, 0; complete: 1 / 4 = 25.00%; elapsed = 0.02 min; remaining = 0.05 min @ 0.0154 min per iteration
+transformed, n, all, all, 1; complete: 2 / 4 = 50.00%; elapsed = 0.03 min; remaining = 0.03 min @ 0.0142 min per iteration
+transformed, n, all, all, 2; complete: 3 / 4 = 75.00%; elapsed = 0.04 min; remaining = 0.01 min @ 0.0138 min per iteration
+transformed, n, all, all, 3; complete: 4 / 4 = 100.00%; elapsed = 0.05 min; remaining = 0.00 min @ 0.0135 min per iteration
+imputed, n, all, all, 0, 0; 
