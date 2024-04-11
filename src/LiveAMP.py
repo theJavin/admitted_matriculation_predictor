@@ -1,16 +1,10 @@
 from term import *
-import requests, miceforest as mf
-# from flaml import AutoML
+import requests, miceforest as mf#, flaml as fl
 from sklearn.compose import make_column_selector, ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, PowerTransformer, KBinsDiscretizer
 from sklearn.pipeline import Pipeline, make_pipeline
-from sklearn.model_selection import StratifiedKFold
-# from sklearn.metrics import f1_score
-# from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, auc
-# from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
-# from skopt import BayesSearchCV
-# from skopt.callbacks import DeadlineStopper
 from sklearn import set_config
 set_config(transform_output="pandas")
 
@@ -46,6 +40,7 @@ class AMP(MyBaseClass):
     trf_grid: typing.Dict = None
     imp_grid: typing.Dict = None
     clf_grid: typing.Dict = None
+    n_splits: int = 3
     overwrite: typing.Dict = None
     show: typing.Dict = None
 
@@ -61,8 +56,10 @@ class AMP(MyBaseClass):
             'Y':['X','reg_df'],
             'mlt':['X','reg_df'],
             'transformed':'X',
+            'anonymized':'transformed',
             'imputed':'transformed',
-            'predicted':['Y','imputed'],
+            'targets':['imputed','Y'],
+            'predicted':'targets',
             'optimal':'predicted',
             'details':'optimal',
             'summary':['details','mlt'],
@@ -70,7 +67,7 @@ class AMP(MyBaseClass):
         }
         D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False, 
              'terms':False, 'raw_df':False, 'reg_df':False, 'X':False, 'Y':False, 'mlt':False, 'inputs':False,
-             'transformed':False, 'imputed':False, 'predicted':False, 'optimal':False,
+             'transformed':False, 'imputed':False, 'targets':False, 'predicted':False, 'optimal':False,
              'details':False, 'summary':False, 'params':False, 'outputs':False,
              }
         for x in ['overwrite','show']:
@@ -84,16 +81,20 @@ class AMP(MyBaseClass):
 
         self.crse_codes = uniquify(['_allcrse', *listify(self.crse_codes)])
         self.styp_codes = uniquify(self.styp_codes)
+        self.mlt_grp = ['crse_code','levl_code','styp_code','pred_code']
+        self.summary_grp = self.mlt_grp + ['train_code','mlt_code','imp']
         self.term_codes = [x for x in uniquify(self.term_codes) if x != self.pred_code]
 
         self.trf_list = cartesian({k: uniquify(v, key=str) for k,v in self.trf_grid.items()})
         self.trf_list = [uniquify({k:v for k,v in t.items() if v not in ['drop',None,'']}) for t in self.trf_list]
 
-        imp_default = {'datasets':10, 'iterations':5, 'tune':True, 'mmc':0, 'mmf':None}
+        # imp_default = {'datasets':10, 'iterations':3, 'tune':True, 'mmc':0, 'mmf':None}
+        imp_default = {'datasets':10, 'iterations':5, 'tune':False, 'mmc':0, 'mmf':None}
         self.imp_list = cartesian(self.imp_grid)
         self.imp_list = [uniquify(imp_default|v) for v in self.imp_list]
         
         clf_default = {'datasets':1, 'iterations':5, 'tune':False, 'mmc':0, 'mmf':None}
+        # clf_default = {'time_budget':5}
         self.clf_list = cartesian(self.clf_grid)
         self.clf_list = [uniquify(clf_default | v) for v in self.clf_list]
 
@@ -114,7 +115,7 @@ class AMP(MyBaseClass):
                 val = None
         return val
 
-    def run(self, grid, func):
+    def run(self, grid, func, **kwargs):
         start_time = time.perf_counter()
         I = cartesian(grid, sort=False)
         for i, path in enumerate(I):
@@ -123,15 +124,12 @@ class AMP(MyBaseClass):
                 [getattr(self,'get_'+attr)() for attr in listify(self.dependancy[path['nm']])]
                 print(join(path.values()), end="; ")
                 A = func(path.copy())
+                self.get(path, A, **kwargs)
                 elapsed = (time.perf_counter() - start_time) / 60
                 complete = (i+1) / len(I) if len(I) > 0 else 1
                 rate = elapsed / (i+1)
                 remaining = rate * (len(I) - (i+1))
-                self.get(path, A)
                 print(f"complete: {(i+1)} / {len(I)} = {complete*100:.2f}%; elapsed = {elapsed:.2f} min; remaining = {remaining:.2f} min @ {rate:.4f} min per iteration")
-            # else:
-            #     print(path)
-        # clear_output()
         return A
 
     def get_terms(self):
@@ -225,42 +223,26 @@ class AMP(MyBaseClass):
     def get_mlt(self):
         grid = {'nm':'mlt', 'styp_code':'all'}
         def func(path):
-            mlt_grp = ['crse_code','levl_code','styp_code','pred_code']
             Y = {k: self['X']['all'][[]].join(y)[['credit_hr']] for k, y in self['reg_df']['all'].items()}
-            agg = lambda y: y.query(f"pred_code != {self.pred_code}").groupby(mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum())#.rename('mlt')#.to_frame()
+            agg = lambda y: y.query(f"pred_code != {self.pred_code}").groupby(self.mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum())
             numer = agg(self['reg_df']['all']['end'])
             denom = agg(Y['end'])
-            M = (numer / denom).replace(np.inf, pd.NA).reset_index('pred_code').prep()#.squeeze()#.query(f"pred_code != {self.pred_code}")
-            M = M.rename(columns={'credit_hr':'actual_mlt'}).join(M.rename(columns={'credit_hr':'predicted_mlt', 'pred_code':'mlt_code'}))
-            A = pd.concat([M, M.assign(pred_code=self.pred_code)]).set_index(['pred_code','mlt_code'], append=True)
-            return A
-        self.run(grid, func)
+            A = (numer / denom).replace(np.inf, pd.NA).reset_index('pred_code').prep()
+            B = A.rename(columns={'pred_code':'train_code', 'credit_hr':'mlt_actual'})
+            C = A.rename(columns={'pred_code':'mlt_code'  , 'credit_hr':'mlt_predicted'})
+            D = B.join(C)
+            M = pd.concat([D.assign(pred_code=t) for t in [*A['pred_code'].unique(), self.pred_code]]).set_index(['pred_code','train_code','mlt_code'], append=True).filter(like='mlt_')
 
-    def get_model(self, X, par, inspect=False):
-        par = par.copy()
-        iterations = par.pop('iterations')
-        datasets = par.pop('datasets')
-        tune = par.pop('tune')
-        mmc = par.pop('mmc')
-        mmf = par.pop('mmf')
-        if mmc > 0 and mmf is not None:
-            par['mean_match_scheme'] = getattr(mf, mmf).copy()
-            par['mean_match_scheme'].set_mean_match_candidates(mmc)
-        if tune:
-            # print('tuning')
-            model = mf.ImputationKernel(X, datasets=1, **par)
-            model.mice(iterations=1)
-            optimal_parameters, losses = model.tune_parameters(dataset=0)#, optimization_steps=3)
-            # model.optimal_parameters = optimal_parameters
-            # model.optimal_parameter_losses = losses
-        else:
-            # print('not tuning')
-            optimal_parameters = None
-        model = mf.ImputationKernel(X, datasets=datasets, **par)
-        model.mice(iterations=iterations, variable_parameters=optimal_parameters)
-        if inspect:
-            model.inspect()
-        return model
+
+            # Y = {k: self['X']['all'][[]].join(y)[['credit_hr']] for k, y in self['reg_df']['all'].items()}
+            # agg = lambda y: y.query(f"pred_code != {self.pred_code}").groupby(self.mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum())#.rename('mlt')#.to_frame()
+            # numer = agg(self['reg_df']['all']['end'])
+            # denom = agg(Y['end'])
+            # M = (numer / denom).replace(np.inf, pd.NA).reset_index('pred_code').prep()
+            # M = M.rename(columns={'credit_hr':'actual_mlt'}).join(M.rename(columns={'credit_hr':'predicted_mlt', 'pred_code':'mlt_code'})).assign(train_code=lambda x:x['pred_code'])
+            # A = pd.concat([M, M.assign(pred_code=self.pred_code)]).reset_index().set_index([*self.mlt_grp,'train_code','mlt_code'])
+            return M
+        self.run(grid, func)
 
     def get_transformed(self):
         grid = {'nm':'transformed', 'styp_code':self.styp_codes, 'train_code':'all', 'crse_code':'all', 'trf_idx': range(len(self.trf_list))}
@@ -268,16 +250,56 @@ class AMP(MyBaseClass):
             trf_idx = path.pop('trf_idx')
             trf_par = self.trf_list[trf_idx]
             trf = ColumnTransformer([(c,t,["__"+c]) for c,t in trf_par.items()], remainder='drop', verbose_feature_names_out=False)
-            # trf.idx = idx
-            # trf.par = par
-            # trf.output = trf.fit_transform(self['X']['all'].query(f"styp_code == @path['styp_code']")).sample(frac=1).prep().prep_bool().prep_category()
             return {
                 'trf_idx': trf_idx,
                 'trf_par': trf_par,
-                'output': trf.fit_transform(self['X']['all'].query(f"styp_code == @path['styp_code']")).sample(frac=1).prep().prep_bool().prep_category(),
-                # 'trf': trf,
+                'output': trf.fit_transform(self['X']['all'].query(f"styp_code == @path['styp_code']")).prep().prep_bool().prep_category(),
             }            
         self.run(grid, func)
+
+
+    def get_anonymized(self):
+        A = [[len(par), i] for i, par in enumerate(self.trf_list) if set(par.values()) == {'passthrough'}]
+        trf_idx = sorted(A)[-1][-1]
+        grid = {'nm':'anonymized', 'styp_code':'n', 'train_code':'all', 'crse_code':self.crse_codes}
+        def func(path):
+            targ = path['crse_code']
+            cols = ['_allcrse_cur', targ+'_cur', targ]
+            grp = ['styp_code','pred_code','coll_code','coll_desc','camp_code','camp_desc']
+            X = (
+                self.get(path | {'nm':'transformed', 'crse_code':'all', 'trf_idx':trf_idx})['output']
+                .rename(columns=lambda x:x.strip('__'))
+                .drop(columns=[*grp, 'remote'], errors='ignore')
+                .join(self['Y']['all'].filter(cols))
+                .reset_index(grp)
+                .reset_index(drop=True)
+                .sample(frac=1).prep().prep_bool()#.prep_category()
+            )
+            return X
+        return self.run(grid, func, suffix='.parquet')
+        # write(self.root / 'amp.parquet', X)
+        # return X
+
+
+    def get_model(self, X, datasets=1, iterations=3, mmc=0, mmf=None, tune=False, inspect=False):
+        mean_match_scheme = None
+        if mmc > 0 and mmf is not None:
+            mean_match_scheme = getattr(mf, mmf).copy()
+            mean_match_scheme = mean_match_scheme.set_mean_match_candidates(mmc)
+        if tune:
+            # print('tuning')
+            model = mf.ImputationKernel(X, datasets=1, mean_match_scheme=mean_match_scheme)
+            model.mice(iterations=iterations)
+            optimal_parameters, losses = model.tune_parameters(dataset=0, optimization_steps=10)
+        else:
+            # print('not tuning')
+            optimal_parameters = None
+        model = mf.ImputationKernel(X, datasets=datasets, mean_match_scheme=mean_match_scheme)
+        model.mice(iterations=iterations, variable_parameters=optimal_parameters)
+        if inspect:
+            model.inspect()
+        return model
+
 
     def get_imputed(self):
         grid = {'nm':'imputed', 'styp_code':self.styp_codes, 'train_code':'all', 'crse_code':'all', 'trf_idx': range(len(self.trf_list)), 'imp_idx': range(len(self.imp_list))}
@@ -285,179 +307,98 @@ class AMP(MyBaseClass):
             imp_idx = path.pop('imp_idx')
             imp_par = self.imp_list[imp_idx]
             trf = self.get(path | {'nm':'transformed'})
-            imp = self.get_model(trf['output'], imp_par)
-            # imp.trf = trf
-            # imp.idx = idx
-            # imp.par = par
-            # imp.output = pd.concat([imp.complete_data(k).addlevel('sim', k) for k in range(imp.dataset_count())])
-            # Z = pd.concat([imp.complete_data(k).addlevel('sim', k) for k in range(imp.dataset_count())]).join(self['Y']['all']).sample(frac=1)
+            imp = self.get_model(trf['output'], **imp_par)
             return {
                 'trf_idx': trf['trf_idx'],
                 'trf_par': trf['trf_par'],
                 'imp_idx': imp_idx,
                 'imp_par': imp_par,
-                'output': pd.concat([imp.complete_data(k).addlevel('imp', k) for k in range(imp.dataset_count())]).join(self['Y']['all']).sample(frac=1),
-                # 'output': pd.concat([imp.complete_data(k).addlevel('sim', k) for k in range(imp.dataset_count())]),
-                # 'imp': imp,
+                'output': pd.concat([imp.complete_data(k).addlevel('imp', k) for k in range(imp.dataset_count())]),
             }
         self.run(grid, func)
+
+
+    def get_targets(self):
+        grid = {'nm':'targets', 'styp_code':self.styp_codes, 'train_code':'all', 'crse_code':'all', 'trf_idx': range(len(self.trf_list)), 'imp_idx': range(len(self.imp_list))}
+        def func(path):
+            imp = self.get(path | {'nm':'imputed'})
+            imp['output'] = imp['output'].filter(like='__').join(self['Y']['all']).sample(frac=1).prep().prep_bool().prep_category()
+            return imp
+        self.run(grid, func)
+
+
+    def summarize(self, Y):
+        repl = {'mlt_'+k:k for k in ['predicted','actual']} | {'mlt_code':'train_code'}
+        for k, v in repl.items():
+            if k not in Y:
+                Y[k] = Y[v]
+        S = Y.groupby(self.summary_grp, dropna=False).apply(lambda y: pd.Series({
+            'predicted': y['mlt_predicted'].sum(),
+            'actual': y['mlt_actual'].sum(),
+            'f1': (1-f1_score(y['actual'], y['predicted'], zero_division=np.nan))*100,
+            # 'acc_pct': (1-accuracy_score(y['actual'], y['predicted'])*100),
+            # 'bal_acc_pct': )1-balanced_accuracy_score(y['actual'], y['predicted'])*100),
+        }), include_groups=False)
+        S.insert(2, 'error', S['predicted'] - S['actual'])
+        S.insert(3, 'error_pct', S['error'] / S['actual'] * 100)
+        return S
+
+
+    def train(self, df, test_mask, targ, **kwargs):
+        Z = df.copy()
+        Z_train = Z.copy()
+        actual = Z[targ].copy().rename('actual').to_frame()
+        Z.loc[:,targ] = pd.NA
+        try:
+            Z_train.loc[test_mask, targ] = pd.NA
+        except:
+            Z_train.iloc[test_mask, Z_train.columns.get_loc(targ)] = pd.NA
+        with warnings.catch_warnings(action='ignore'):
+            model = self.get_model(Z_train, **kwargs)
+        predicted = model.impute_new_data(Z)
+        Y = (pd.concat([actual
+                .assign(
+                    proba=predicted.get_raw_prediction(targ, k),
+                    predicted=predicted.complete_data(k)[targ],
+                    )
+                .addlevel('crse_code', targ)
+                .addlevel('train_code', Z_train.query(f"{targ}.notnull()").index.get_level_values("pred_code")[0])
+                .addlevel('sim', k)
+            for k in range(model.dataset_count())])[['predicted','actual']].prep().prep_bool())
+        return {'model':model,
+                'Y':Y,
+                'f1': (1-f1_score(Y['actual'], Y['predicted'], zero_division=np.nan)) *100 ,
+                # 'acc': 1-accuracy_score_score(Y['actual'], Y['predicted']),
+                # 'bal_acc': 1-balanced_accuracy_score(Y['actual'], Y['predicted']),
+                }
+
 
     def get_predicted(self):
         grid = {'nm':'predicted', 'styp_code':self.styp_codes, 'train_code':self.term_codes, 'crse_code':self.crse_codes, 'trf_idx': range(len(self.trf_list)), 'imp_idx': range(len(self.imp_list)), 'clf_idx': range(len(self.clf_list))}
         def func(path):
             clf_idx = path.pop('clf_idx')
             clf_par = self.clf_list[clf_idx]
-            imp = self.get(path | {'nm':'imputed', 'train_code':'all', 'crse_code':'all'})
+            targ = path['crse_code']
+            df = self.get(path | {'nm':'targets', 'train_code':'all', 'crse_code':'all'})
+            Z = df['output']
+            cols = [*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ]
+            Z = Z.filter(cols).copy()
             clf = {
-                'trf_idx': imp['trf_idx'],
-                'trf_par': imp['trf_par'],
-                'imp_idx': imp['imp_idx'],
-                'imp_par': imp['imp_par'],
+                'trf_idx': feat['trf_idx'],
+                'trf_par': feat['trf_par'],
+                'imp_idx': feat['imp_idx'],
+                'imp_par': feat['imp_par'],
                 'clf_idx': clf_idx,
                 'clf_par': clf_par,
-                'score': 1.0,
+                'cv_score': 100,
+                'Z': Z,
             }
-            
-            targ = path['crse_code']
-            Z = imp['output']
-            cols = [*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ]
-            # Z = Z.filter(cols).copy()
-            # Y = Z[targ].rename('actual')
-            # Z_train = Z.query(f"pred_code==@path['train_code'] & sim==0")
-            # x = X.query(f"pred_code==@path['train_code'] & sim==0").copy()
-            # Y = X.pop(targ).rename('actual')
-            # y = x.pop(targ).rename('actual')
-            Z = Z.filter(cols).copy()
-            # Z_model = Z.copy()
-            actual = Z[targ].copy().rename('actual').to_frame()
-
-            Z_model = Z.query(f"pred_code==@path['train_code'] & imp==0").copy()
-
-            # Z_model.loc[Z_model.eval(f"pred_code!=@path['train_code']"), targ] = pd.NA
-            # Z_model[targ] = Z_model[targ].astype('boolean')
-            # if y.sum() > 3:
-            if Z_model[targ].sum() > 3:
-                splits = list(StratifiedKFold(n_splits=3).split(Z_model, Z_model[targ]))
-                clf['cv'] = []
-                for split in splits:
-                    Z_train = Z_model.copy()
-                    Z_train.iloc[split[1], Z_train.columns.get_loc(targ)] = pd.NA
-                    with warnings.catch_warnings(action='ignore'):
-                        model = self.get_model(Z_train, clf_par)
-                    Z_train.loc[:,targ] = pd.NA
-                    predicted = model.impute_new_data(Z_train)
-                    y_test = Z_model[targ].rename('actual').to_frame().assign(predicted=predicted.complete_data(0)[targ]).iloc[split[1]]
-                    # predicted.complete_data(0)[targ].rename('predicted').to_frame().assign(actual=Z_model[targ]).iloc[split[1]]
-                    # y_test = predicted.complete_data(0)[targ].rename('predicted').to_frame().assign(actual=Z_model[targ]).iloc[split[1]]
-                    # y_test = model.complete_data(0)[targ].rename('predicted').to_frame().assign(actual=Z_model[targ]).iloc[split[1]]
-                    clf['cv'].append(1-f1_score(y_test['actual'], y_test['predicted'], zero_division=np.nan))
-                clf['score'] = np.nanmean(clf['cv'])
-                print(clf['cv'], clf['score'])
-                #     # print(y.shape)
-                
-                
-                #     print(clf['cv'])
-                #     assert 1==2
-
-                #     print(split)
-                #     Z_train, actual = Z_model.iloc[split[0]], Z_model.iloc[split[1]]
-
-                #     Z_train.disp(2)
-                #     print(Z_train.shape)
-                #     actual.disp(2)
-                #     print(actual.shape)
-                #     # print(clf_par)
-                #     model = self.get_model(Z_train, clf_par)
-                #     model.complete_data(0).disp(8)
-                #     model.impute_new_data(Z_train)
-                #     predicted = model.complete_data(0)[targ]
-                #     Z_test = actual.copy()
-                #     Z_test[targ] = pd.NA
-                #     Z_test[targ] = Z_test[targ].astype('boolean')
-                #     model.impute_new_data(Z_test)
-                #     predicted = model.complete_data(0)[targ]
-                #     clf['cv'].append(f1_score(actual, predicted, zero_division=np.nan))
-                # clf['score'] = np.nanmean(clf['cv'])
-                # assert 1==2
-
-
-                
-                
-
-                # model = mf.ImputationKernel(Z_train, datasets=1)
-                # model.mice(iterations=5)
-                # optimal_parameters, losses = model.tune_parameters(dataset=0)
-                # model.mice(iterations=5, variable_parameters=optimal_parameters)
-                # y = pd.concat([y.assign(predicted=model.complete_data(k)[targ]).addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('sim', k)
-                #                for k in range(model.dataset_count())]).prep().prep_bool()[['predicted','actual']]
-                # Z[targ] = pd.NA
-                # Z[targ] = Z[targ].astype('boolean')
-                Z.loc[Z.eval(f"pred_code!=@path['train_code']"), targ] = pd.NA
-                with warnings.catch_warnings(action='ignore'):
-                    model = self.get_model(Z, clf_par)
-                Z.loc[:, targ] = pd.NA
-                predicted = model.impute_new_data(Z)
-                # y = pd.concat([predicted.complete_data(k)[targ].rename('predicted').to_frame().assign(actual=actual).addlevel('train_code', path['train_code']).addlevel('sim', k)
-                #     for k in range(model.dataset_count())]).prep().prep_bool()[['predicted','actual']]
-
-                y = pd.concat([actual.assign(predicted=predicted.complete_data(k)[targ]).addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('sim', k)
-                    for k in range(model.dataset_count())]).prep().prep_bool()[['predicted','actual']]
-
-
-                # y = pd.concat([y.assign(predicted=model.complete_data(k)[targ]).addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('sim', k)
-                #                for k in range(model.dataset_count())]).prep().prep_bool()[['predicted','actual']]
-
-                # model = self.get_model(Z_model, clf_par)
-                # predicted = model.impute_new_data(Z)
-                # y = pd.concat([y.assign(predicted=predicted.complete_data(k)[targ]).addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('sim', k)
-                #                for k in range(model.dataset_count())]).prep().prep_bool()[['predicted','actual']]
-
-                # T = y.query(f"pred_code!=@self.pred_code").groupby(['pred_code','sim']).sum()
-                # y.disp(2)
-                grp = ['crse_code','levl_code','styp_code','pred_code','train_code','imp','sim']
-                T = y.groupby(grp).sum()
-                T['error'] = T['predicted'] - T['actual']
-                T['error_pct'] = T['error'] / T['actual'] * 100
-                clf['scores'] = T
-                # clf['scores'] = (T['predicted'] - T['actual']) / T['predicted'] * 100
-                # clf['score'] = clf['scores'].mean()
-                # print(clf['score'].round(1))
-                # clf['scores'].round(1).disp(100)
-                clf['output'] = y
-                clf['model'] = model
-                clf['scores'].disp(1000)
-
-                # A = y.groupby('pred_code').sum().assign(error_pct=lambda x: (x['predicted']-x['actual'])/x['predicted']*100)
-                
-                # A['f1'] = y.groupby('pred_code').apply(lambda x: 1-f1_score(x['actual'], x['predicted']))
-                # A['acc'] = y.groupby('pred_code').apply(lambda x: 1-accuracy_score(x['actual'], x['predicted']))
-                # A['bal_acc'] = y.groupby('pred_code').apply(lambda x: 1-balanced_accuracy_score(x['actual'], x['predicted']))
-
-
-                # automl_settings = {
-                #     'time_budget':30,
-                #     'label': targ,
-                #     'task':"classification",
-                #     # 'metric':'f1',
-                #     'eval_method':'cv',
-                #     'n_splits':3,
-                #     'seed':42,
-                #     'verbose':0,
-                # }
-                # model = AutoML(**automl_settings)
-                # with warnings.catch_warnings(action='ignore'):
-                #     # model.fit(dataframe=Z_train, **automl_settings)
-                #     model.fit(x, y, **automl_settings)
-                # print(model.get_params()['metric'], model.best_loss, model.best_estimator)#, model.best_config)
-                # # predicted = model.predict(Z)
-                # predicted = model.predict(X).prep
-                # clf['score'] = model.best_loss
-                # clf['model'] = model
-                # clf['output'] = Y.to_frame().assign(predicted=predicted).addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code'])
-            # else:
-            #     predicted = Y.copy()
-            #     predicted[:] = False
-            # rslt['output'] = Y.to_frame().assign(predicted=predicted).addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code'])
+            Z_model = Z.query(f"pred_code==@path['train_code'] & imp==0")#.copy()
+            if Z_model[targ].sum() >= 20:
+                splits = StratifiedShuffleSplit(n_splits=self.n_splits, test_size=0.25).split(Z_model, Z_model[targ])
+                clf['cv'] = [self.train(Z, tst, targ, **clf_par) for trn, tst in splits]
+                clf['cv_score'] = np.nanmean([c['f1'] for c in clf['cv']])
+                print(clf['cv_score'].round(2))
             return clf
         self.run(grid, func)
 
@@ -466,10 +407,16 @@ class AMP(MyBaseClass):
         grid = {'nm':'optimal', 'styp_code':self.styp_codes, 'train_code':self.term_codes, 'crse_code':self.crse_codes}
         def func(path):
             C = self.get(path | {'nm':'predicted'})
-            if C is not None:
-                E = [clf for trf in C.values() for imp in trf.values() for clf in imp.values()]
-                return min(E, key=lambda clf: clf['score'])
-            else:
+            E = [clf for trf in C.values() for imp in trf.values() for clf in imp.values() if clf['cv_score'] < 100]
+            try:
+                clf = min(E, key=lambda clf: clf['cv_score'])
+                Z = clf['Z']
+                Z.vc('pred_code').disp(100)
+                opt = self.train(Z, Z.eval(f"pred_code!=@path['train_code']"), path['crse_code'], **clf['clf_par'])
+                opt['cv_score'] = clf['cv_score']
+                opt['clf'] = clf
+                return opt
+            except ValueError:
                 return dict()
         self.run(grid, func)
 
@@ -477,134 +424,54 @@ class AMP(MyBaseClass):
     def get_details(self):
         grid = {'nm':'details', 'styp_code':'all'}
         def func(path):
-            A = pd.concat([C['output'] for S in self['optimal'].values() for T in S.values() for C in T.values() if 'output' in C and C['score'] < 1])
+            A = pd.concat([C['Y'] for S in self['optimal'].values() for T in S.values() for C in T.values() if 'Y' in C and C['cv_score'] < 100])
             return A
         self.run(grid, func)
 
-
-    def summarize(self, D):
-        grp = ['crse_code','levl_code','styp_code','pred_code','train_code','imp','sim']
-        agg = lambda X: X.groupby(grp).apply(lambda x: pd.Series({
-            'predicted': x['predicted'].sum(),
-            'actual': x['actual'].sum(),
-            # 'acc_pct': accuracy_score(x['actual'], x['predicted']) * 100,
-            # 'bal_acc_pct': balanced_accuracy_score(x['actual'], x['predicted']) * 100,
-            'f1': 1-f1_score(x['actual'], x['predicted'], zero_division=np.nan),
-        }), include_groups=False)
-        P = [D.reset_index(grp).reset_index(drop=True)]
-        P = [q for p in P for q in [p, p.assign(styp_code='all')]]
-        P = [q for p in P for q in [p, p.query(f"pred_code!={self.pred_code}").assign(train_code='all')]]
-        with warnings.catch_warnings(action='ignore'):
-            S = pd.concat([agg(p).join(self.mlt['all']) for p in P])
-        mask = S.eval(f"train_code=='all'")
-        S.loc[mask, ['predicted','actual']] *= (1.0 / len(self.term_codes))
-        for k in ['predicted','actual']:
-            S[k] *= S[k+'_mlt']
-        S.insert(2, 'error', S['predicted'] - S['actual'])
-        S.insert(3, 'error_pct', S['error'] / S['actual'] * 100)
-        mask = S.eval(f"actual==0 or pred_code=={self.pred_code}")# or pred_code==train_code")
-        S.loc[mask, 'actual':] = pd.NA
-        S = S.reset_index()
-        S['levl_desc'] = S['levl_code'].map({'ug':'undergraduate', 'g':'graduate'})
-        S['styp_desc'] = S['styp_code'].map({'n':'new first time', 't':'transfer', 'r':'returning'})
-        for k in ['pred','train','mlt']:
-            S[k+'_desc'] = 'Fall ' + S[k+'_code'].astype('string').str[:4]
-        return S.set_index(['crse_code','levl_code','levl_desc','styp_code','styp_desc','pred_code','pred_desc','train_code','train_desc','mlt_code','mlt_desc','sim'])
-
-        # agg = lambda X: X.groupby(['crse_code','levl_code','styp_code','pred_code','train_code','imp','sim']).apply(lambda x: pd.Series({
-        #     'predicted': x['predicted'].sum(),
-        #     'actual': x['actual'].sum(),
-        #     # 'acc_pct': accuracy_score(x['actual'], x['predicted']) * 100,
-        #     'bal_acc_pct': balanced_accuracy_score(x['actual'], x['predicted']) * 100,
-        #     # 'f1_pct': f1_score(x['actual'], x['predicted'], zero_division=np.nan) * 100,
-        # }), include_groups=False)
-
-        # P = [R for Q in P for R in [Q, Q.assign(styp_code='all', styp_desc='all incoming')]]
-        # # P = [R for Q in P for R in [Q, Q.query(f"pred_code!={self.pred_code}").assign(train_code='all', train_desc=f'Fall {min(self.term_codes)}-{max(self.term_codes)}')]]
-        # P = [R for Q in P for R in [Q, Q.query(f"pred_code!={self.pred_code}").assign(train_code='all', train_desc=f'{min(self.term_codes)//100}-{max(self.term_codes)//100}')]]
-
-
-        # # P = D.reset_index(grp).reset_index(drop=True)
-        # with warnings.catch_warnings(action='ignore'):
-        #     S = agg(D).join(self.mlt['all'])
-        # for k in ['predicted','actual']:
-        #     S[k] *= S[k+'_mlt']
-        # S.insert(3, 'error', S['predicted'] - S['actual'])
-        # S.insert(4, 'error_pct', S['error'] / S['actual'] * 100)
-        # mask = S.eval(f"actual==0 or pred_code=={self.pred_code}")# or pred_code==train_code")
-        # S.loc[mask, 'actual':] = pd.NA
-        # S = S.reset_index()
-        # S['levl_desc'] = S['levl_code'].map({'ug':'undergraduate', 'g':'graduate'})
-        # S['styp_desc'] = S['styp_code'].map({'n':'new first time', 't':'tranafer', 'r':'returning'})
-        # for k in ['pred','train','mlt']:
-        #     S[k+'_desc'] = 'Fall ' + S[k+'_code'].astype('string').str[:4]
-        # S = S.set_index(['crse_code','levl_code','levl_desc','styp_code','styp_desc','pred_code','pred_desc','train_code','train_desc','mlt_code','mlt_desc','imp','sim'])
-
-        # P = D.query('pred_code != train_code').join(self['inputs']['mlt']).reset_index()
-        # P = D.join(self['inputs']['mlt']).reset_index()
-        # P = (D
-        #     .join(self['mlt']['all'].rename('actual_mlt'))
-        #     .join(self['mlt']['all'].rename('predicted_mlt').reset_index('pred_code', drop=True))
-        #     .reset_index()
-
-
-        # P = D.join(self['mlt']['all']).reset_index()
-        # for k in ['pred','train','mlt']:
-        #     P[k+'_desc'] = 'Fall ' + P[k+'_code'].astype('string').str[:4]
-        # grp = ['crse_code','levl_code','levl_desc','styp_code','styp_desc','pred_code','pred_desc','train_code','train_desc','mlt_code','mlt_desc','imp','sim']
-        # P = P[[*grp,'mlt','predicted','actual']]
-        # for k in ['predicted','actual']:
-        #     P[k+'_mlt'] = P[k] * P['mlt']
-        # agg = lambda X: X.groupby(grp).apply(lambda x: pd.Series({
-        #         'mlt': x['mlt'].mean(),
-        #         'predicted': x['predicted_mlt'].sum(),
-        #         'actual': x['actual_mlt'].sum(),
-        #         # 'acc_pct': accuracy_score(x['actual'], x['predicted']) * 100,
-        #         'bal_acc_pct': balanced_accuracy_score(x['actual'], x['predicted']) * 100,
-        #         # 'f1_pct': f1_score(x['actual'], x['predicted'], zero_division=np.nan) * 100,
-        #     }), include_groups=False)
-
-        # P = [P]
-        # P = [R for Q in P for R in [Q, Q.assign(styp_code='all', styp_desc='all incoming')]]
-        # # P = [R for Q in P for R in [Q, Q.query(f"pred_code!={self.pred_code}").assign(train_code='all', train_desc=f'Fall {min(self.term_codes)}-{max(self.term_codes)}')]]
-        # P = [R for Q in P for R in [Q, Q.query(f"pred_code!={self.pred_code}").assign(train_code='all', train_desc=f'{min(self.term_codes)//100}-{max(self.term_codes)//100}')]]
-        # with warnings.catch_warnings(action='ignore'):
-        #     S = pd.concat([agg(Q) for Q in P])
-        # mask = S.eval(f"train_code=='all'")
-        # S[mask] /= len(self.term_codes)
-        # S.insert(3, 'error', S['predicted'] - S['actual'])
-        # S.insert(4, 'error_pct', S['error'] / S['actual'] * 100)
-        # mask = S.eval(f"actual==0 or pred_code=={self.pred_code}")# or pred_code==train_code")
-        # S.loc[mask, 'actual':] = pd.NA
-        # return A
 
     def get_summary(self):
-        # grid = {'grp':'outputs', 'nm':'summary'}
         grid = {'nm':'summary', 'styp_code':'all'}
         def func(path):
-            D = self.get(path | {'nm':'details'})
-            A = self.summarize(D)
-            write(self.get_filename(path, suffix='.csv'), A.reset_index().prep_string(cap='upper'))
-            return A
+            Y = self.get(path | {'nm':'details'})
+            Y = Y.reset_index([k for k in Y.index.names if k not in self.summary_grp], drop=True).join(self.mlt['all']).reset_index().copy()
+            for k in ['predicted','actual']:
+                Y['mlt_'+k] = Y['mlt_'+k] * Y[k]
+            P = [Y]
+            P = [q for p in P for q in [p, p.assign(styp_code ='all')]]
+            P = [q for p in P for q in [p, p.assign(train_code='all')]]
+            with warnings.catch_warnings(action='ignore'):
+                S = pd.concat([self.summarize(p) for p in P])
+            S.loc[S.eval("train_code=='all'"), ['predicted','actual','error']] /= Y['train_code'].nunique()
+            S.loc[S.eval(f"actual==0 or pred_code=={self.pred_code}"), 'actual':] = pd.NA
+            S = S.reset_index()
+            S['levl_desc'] = S['levl_code'].map({'ug':'undergraduate', 'g':'graduate'})
+            S['styp_desc'] = S['styp_code'].map({'n':'new first time', 't':'transfer', 'r':'returning', 'all':'all incoming'})
+            for k in ['pred','train','mlt']:
+                S[k+'_desc'] = 'Fall ' + S[k+'_code'].astype('string').str[:4]
+            S.vc('pred_code').disp(100)
+            S = S.set_index(['crse_code','levl_code','levl_desc','styp_code','styp_desc','pred_code','pred_desc','train_code','train_desc','mlt_code','mlt_desc','imp'])
+            return S#.reset_index().prep_string(cap='upper')
         self.run(grid, func)
+        self.run(grid, func, suffix='.csv')
 
-    def get_params(self):
-        # grid = {'grp':'outputs', 'nm':'params'}
-        grid = {'nm':'params', 'styp_code':'all'}
-        def func(path):
-            A = pd.DataFrame([{
-                    'pred_code':pred_code, 'crse_code':crse_code, 'styp_code':styp_code, 'train_code':train_code,
-                    'trf_idx': clf['imp']['trf']['idx'],
-                    'imp_idx': clf['imp']['idx'],
-                    'clf_idx': clf['idx'],
-                    **{f'trf_{key}': stringify(val) for key, val in clf['imp']['trf']['par'].items()},
-                    **{f'imp_{key}': stringify(val) for key, val in clf['imp']['par'].items()},
-                    **{f'clf_{key}': stringify(val) for key, val in clf['par'].items()},
-                    'score': score,
-                } for styp_code, S in self.predicted.items() for train_code, T in S.items() for crse_code, C in T.items() for trf_idx, trf in C.items() for imp_idx, imp in trf.items() for clf_idx, clf in imp.items() for pred_code, score in clf['scores'].items()])
-            write(self.get_filename(path, suffix='.csv'), A)
-            return A
-        self.run(grid, func)
+
+    # def get_params(self):
+    #     grid = {'nm':'params', 'styp_code':'all'}
+    #     def func(path):
+    #         A = pd.DataFrame([{
+    #                 'pred_code':pred_code, 'crse_code':crse_code, 'styp_code':styp_code, 'train_code':train_code,
+    #                 'trf_idx': clf['imp']['trf']['idx'],
+    #                 'imp_idx': clf['imp']['idx'],
+    #                 'clf_idx': clf['idx'],
+    #                 **{f'trf_{key}': stringify(val) for key, val in clf['imp']['trf']['par'].items()},
+    #                 **{f'imp_{key}': stringify(val) for key, val in clf['imp']['par'].items()},
+    #                 **{f'clf_{key}': stringify(val) for key, val in clf['par'].items()},
+    #                 'score': score,
+    #             } for styp_code, S in self.predicted.items() for train_code, T in S.items() for crse_code, C in T.items() for trf_idx, trf in C.items() for imp_idx, imp in trf.items() for clf_idx, clf in imp.items() for pred_code, score in clf['scores'].items()])
+    #         write(self.get_filename(path, suffix='.csv'), A)
+    #         return A
+    #     self.run(grid, func)
+
 
     def push(self):
         target_url = 'https://prod-121.westus.logic.azure.com:443/workflows/784fef9d36024a6abf605d1376865784/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Yrr4tE1SwYZ88SU9_ixG-WEdN1GFicqJwH_KiCZ70M'
@@ -621,8 +488,8 @@ passthru = ['passthrough']
 passdrop = ['passthrough', 'drop']
 passpwr = ['passthrough', pwrtrf]
 
-# passdrop = passthru
-# passpwr = passthru
+passdrop = passthru
+passpwr = passthru
 
 kwargs = {
     # 'term_codes': np.arange(202308, 202408, 100),
@@ -675,109 +542,109 @@ kwargs = {
         'hs_qrtl',
     ],
     'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    # 'cycle_day': 162,
+    # 'cycle_day': 161,
     'crse_codes': [
         'agec2317',
         'ansc1119',
         'ansc1319',
         'anth2302',
         'anth2351',
-        # 'arts1301',
-        # 'arts1303',
-        # 'arts1304',
-        # 'arts3331',
-        # 'biol1305',
-        # 'biol1406',
-        # 'biol1407',
-        # 'biol2401',
-        # 'biol2402',
-        # 'busi1301',
-        # 'busi1307',
-        # 'chem1111',
-        # 'chem1112',
-        # 'chem1302',
-        # 'chem1311',
-        # 'chem1312',
-        # 'chem1407',
-        # 'chem1411',
-        # 'chem1412',
-        # 'comm1311',
-        # 'comm1315',
-        # 'comm2302',
-        # 'crij1301',
-        # 'dram1310',
-        # 'dram2361',
-        # 'dram4304',
-        # 'easc2310',
-        # 'econ1301',
-        # 'econ2301',
-        # 'engl1301',
-        # 'engl1302',
-        # 'engl2307',
-        # 'engl2320',
-        # 'engl2321',
-        # 'engl2326',
-        # 'engl2340',
-        # 'engl2350',
-        # 'engl2360',
-        # 'engl2362',
-        # 'engl2364',
-        # 'engl2366',
-        # 'engl2368',
-        # 'engr2303',
-        # 'envs1302',
-        # 'fina1360',
-        # 'geog1303',
-        # 'geog1320',
-        # 'geog1451',
-        # 'geog2301',
-        # 'geol1403',
-        # 'geol1404',
-        # 'geol1407',
-        # 'geol1408',
-        # 'govt2305',
-        # 'govt2306',
-        # 'hist1301',
-        # 'hist1302',
-        # 'hist2321',
-        # 'hist2322',
-        # 'huma1315',
-        # 'kine2315',
-        # 'math1314',
-        # 'math1316',
-        # 'math1324',
-        # 'math1332',
-        # 'math1342',
-        # 'math2412',
-        # 'math2413',
-        # 'musi1303',
-        # 'musi1310',
-        # 'musi1311',
-        # 'musi2350',
-        # 'musi3325',
-        # 'phil1301',
-        # 'phil1304',
-        # 'phil2303',
-        # 'phil3301',
-        # 'phys1302',
-        # 'phys1401',
-        # 'phys1402',
-        # 'phys1403',
-        # 'phys1410',
-        # 'phys1411',
-        # 'phys2425',
-        # 'phys2426',
-        # 'psyc2301',
-        # 'soci1301',
-        # 'soci1306',
-        # 'soci2303',
-        # 'univ0200',
-        # 'univ0204',
-        # 'univ0301',
-        # 'univ0314',
-        # 'univ0324',
-        # 'univ0332',
-        # 'univ0342',
+        'arts1301',
+        'arts1303',
+        'arts1304',
+        'arts3331',
+        'biol1305',
+        'biol1406',
+        'biol1407',
+        'biol2401',
+        'biol2402',
+        'busi1301',
+        'busi1307',
+        'chem1111',
+        'chem1112',
+        'chem1302',
+        'chem1311',
+        'chem1312',
+        'chem1407',
+        'chem1411',
+        'chem1412',
+        'comm1311',
+        'comm1315',
+        'comm2302',
+        'crij1301',
+        'dram1310',
+        'dram2361',
+        'dram4304',
+        'easc2310',
+        'econ1301',
+        'econ2301',
+        'engl1301',
+        'engl1302',
+        'engl2307',
+        'engl2320',
+        'engl2321',
+        'engl2326',
+        'engl2340',
+        'engl2350',
+        'engl2360',
+        'engl2362',
+        'engl2364',
+        'engl2366',
+        'engl2368',
+        'engr2303',
+        'envs1302',
+        'fina1360',
+        'geog1303',
+        'geog1320',
+        'geog1451',
+        'geog2301',
+        'geol1403',
+        'geol1404',
+        'geol1407',
+        'geol1408',
+        'govt2305',
+        'govt2306',
+        'hist1301',
+        'hist1302',
+        'hist2321',
+        'hist2322',
+        'huma1315',
+        'kine2315',
+        'math1314',
+        'math1316',
+        'math1324',
+        'math1332',
+        'math1342',
+        'math2412',
+        'math2413',
+        'musi1303',
+        'musi1310',
+        'musi1311',
+        'musi2350',
+        'musi3325',
+        'phil1301',
+        'phil1304',
+        'phil2303',
+        'phil3301',
+        'phys1302',
+        'phys1401',
+        'phys1402',
+        'phys1403',
+        'phys1410',
+        'phys1411',
+        'phys2425',
+        'phys2426',
+        'psyc2301',
+        'soci1301',
+        'soci1306',
+        'soci2303',
+        'univ0200',
+        'univ0204',
+        'univ0301',
+        'univ0314',
+        'univ0324',
+        'univ0332',
+        'univ0342',
         ],
     'trf_grid': {
         'act_equiv': passthru,
@@ -812,35 +679,34 @@ kwargs = {
         'writing': passthru,
         },
     'imp_grid': {
-        # 'datasets': 1,# 'iterations': 1, 'tune': False,
+        # 'datasets': 2, 'iterations': 1, 'tune': False,
     },
     'clf_grid': {
-        # 'datasets': 2, 'iterations': 1, 'tune': False,
+        # 'time_budget': 5,
     },
 
     'overwrite': {
-        # 'trm':True,
-        # 'reg':True,
-        # 'adm':True,
-        # 'flg':True,
-        # 'raw':True,
-        # 'terms': True,
-        # 'raw_df': True,
-        # 'reg_df': True,
-        # 'X': True,
-        # 'Y': True,
-        # 'mlt': True,
-        ## 'inputs': True,
-        # 'transformed': True,
-        # 'imputed': True,
+        # # 'trm':True,
+        # # 'reg':True,
+        # # 'adm':True,
+        # # 'flg':True,
+        # # 'raw':True,
+        # # 'terms': True,
+        # # 'raw_df': True,
+        # # 'X': True,
+        'reg_df': True,
+        'Y': True,
+        'mlt': True,
+        # 'targets': True,
+        # # 'transformed': True,
+        # # 'imputed': True,
         # 'predicted': True,
         # 'optimal': True,
-        # 'details': True,
-        # 'summary': True,
-        # 'params': True,
-        ## 'outputs': True,
+        'details': True,
+        'summary': True,
+        # # 'params': True,
     },
-    'styp_codes': ['n'],
+    'styp_codes': ['n','t','r'],
 }
 
 if __name__ == "__main__":
@@ -862,6 +728,7 @@ if __name__ == "__main__":
         self.get_mlt()
         self.get_transformed()
         self.get_imputed()
+        self.get_targets()
         self.get_predicted()
         self.get_optimal()
         self.get_details()

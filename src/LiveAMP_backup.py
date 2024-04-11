@@ -41,8 +41,182 @@ class AMP(MyBaseClass):
     inspect: bool = False
 
 
+            # Y = self.get(path | {'nm':'details'}).reset_index(self.summary_grp).reset_index(drop=True)
+            # with warnings.catch_warnings(action='ignore'):
+            #     S = self.summarize(Y).join(self.mlt['all'])
+            # S.disp(100)
+            # for k in ['predicted','actual']:
+            #     S[k] *= S[k+'_mlt']
+            # S = [S]
+            # S = [t for s in S for t in [s, s.reset_index().assign(styp_code ='all').groupby([*self.summary_grp,'mlt_code']).sum()]]
+            # S = [t for s in S for t in [s, s.reset_index().assign(train_code='all').groupby([*self.summary_grp,'mlt_code']).mean().query(f"pred_code!={self.pred_code}")]]
+            # S = pd.concat(S)
+            # S['error'] = S['predicted'] - S['actual']
+            # S['error_pct'] = S['error'] / S['actual'] * 100
+            # S.loc[S.eval(f"actual==0 or pred_code=={self.pred_code}"), 'actual':] = pd.NA
+            # S = S.reset_index()
+            # S['levl_desc'] = S['levl_code'].map({'ug':'undergraduate', 'g':'graduate'})
+            # S['styp_desc'] = S['styp_code'].map({'n':'new first time', 't':'transfer', 'r':'returning', 'all':'all incoming'})
+            # for k in ['pred','train','mlt']:
+            #     S[k+'_desc'] = 'Fall ' + S[k+'_code'].astype('string').str[:4]
+            # A = S.set_index(['crse_code','levl_code','levl_desc','styp_code','styp_desc','pred_code','pred_desc','train_code','train_desc','mlt_code','mlt_desc','imp'])
+            # return A#.reset_index().prep_string(cap='upper')
 
 
+            # S['error'] = S['predicted'] - S['actual']
+                # S = self.summarize(Y).join(self.mlt['all'])
+            # S.disp(100)
+            # for k in ['predicted','actual']:
+            #     S[k] *= S[k+'_mlt']
+            # S = pd.concat(S)
+            # S['error'] = S['predicted'] - S['actual']
+            # S['error_pct'] = S['error'] / S['actual'] * 100
+
+            # mlt_grp = ['crse_code','levl_code','styp_code','pred_code']
+            # Y = {k: self['X']['all'][[]].join(y)[['credit_hr']] for k, y in self['reg_df']['all'].items()}
+            # agg = lambda y: y.query(f"pred_code != {self.pred_code}").groupby(mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum())#.rename('mlt')#.to_frame()
+            # numer = agg(self['reg_df']['all']['end'])
+            # denom = agg(Y['end'])
+            # M = (numer / denom).replace(np.inf, pd.NA).reset_index('pred_code').prep()#.squeeze()#.query(f"pred_code != {self.pred_code}")
+            # M = M.rename(columns={'credit_hr':'actual_mlt'}).join(M.rename(columns={'credit_hr':'predicted_mlt', 'pred_code':'mlt_code'}))
+            # A = pd.concat([M, M.assign(pred_code=self.pred_code)]).set_index(['pred_code','mlt_code'], append=True)
+
+
+    # def train(self, df_trn, df_pred, targ, thresh=99, max_iter=3, **kwargs):
+    #     kwargs = {'label':targ, 'task':'classification', 'verbose':0, 'seed':0, 'time_budget':5, 'estimator_list':["lgbm","xgboost","catboost"]} | kwargs
+    #     if 'starting_points' in kwargs:
+    #         kwargs.pop('starting_points')
+    #     # model = fl.AutoML(**kwargs)
+    #     for k in range(max_iter):
+    #         model = fl.AutoML(**kwargs)
+    #         model.fit(dataframe=df_trn, **kwargs)
+    #         Y = df_pred[targ].rename('actual').to_frame().assign(predicted=model.predict(df_pred)).prep().prep_bool()
+    #         f1 = (1-f1_score(Y['actual'], Y['predicted'], zero_division=np.nan))*100
+    #         print(f1)
+    #         if f1 < thresh:
+    #             break
+    #         kwargs['starting_points'] = deepcopy(model.best_config_per_estimator)
+    #         kwargs['seed'] += 1
+    #         print(k+1, end=', ')
+    #     return {'model':model, 'f1': f1, 'Y':Y.addlevel('crse_code', targ).addlevel('train_code', df_trn.index.get_level_values('pred_code')[0])}
+
+
+                # clf['cv'] = [self.train(Z_model.iloc[trn], Z_model.iloc[tst], targ, **clf_par) for trn, tst in splits]
+                # clf['cv'] = [self.train(Z_model.iloc[trn], Z_model.iloc[tst], targ, **clf_par) for trn, tst in splits]
+                # clf['cv'] = [self,train(Z_model, trn, tst, targ, **clf_par) for trn, tst in splits]
+                # clf['cv'] = [train(Z_model.iloc[trn], Z_model.iloc[tst], **clf_par) for trn, test in splits]
+                # grp = Z_model.groupby(targ).cumcount() % self.n_splits
+                # clf['cv'] = [train(Z_model, grp!=k, **clf_par) for k in range(self.n_splits)]
+                # clf['cv'] = [run(Z_model, grp!=k)['f1'] for k in range(self.n_splits)]
+                # clf['cv_score'] = np.nanmean(clf['cv'])
+                # print(clf['cv_score'].round(2), [f"{c['model'].best_estimator}: {c['f1']:.2f}" for c in clf['cv']])
+                # rslt = train(Z, Z.eval(f"pred_code==@path['train_code']"), time_budget=clf_par['time_budget']*5)
+                # clf['output'] = rslt['Y']
+                # clf['scores'] = self.summarize(rslt['Y']).groupby('pred_code').mean()
+                # clf['model'] = rslt['model']
+
+
+
+    # def get_predicted(self, n_splits=3):
+    #     grid = {'nm':'predicted', 'styp_code':self.styp_codes, 'train_code':self.term_codes, 'crse_code':self.crse_codes, 'trf_idx': range(len(self.trf_list)), 'imp_idx': range(len(self.imp_list)), 'clf_idx': range(len(self.clf_list))}
+    #     def func(path):
+    #         clf_idx = path.pop('clf_idx')
+    #         clf_par = self.clf_list[clf_idx]
+    #         feat = self.get(path | {'nm':'targets', 'train_code':'all', 'crse_code':'all'})
+    #         clf = {
+    #             'trf_idx': feat['trf_idx'],
+    #             'trf_par': feat['trf_par'],
+    #             'imp_idx': feat['imp_idx'],
+    #             'imp_par': feat['imp_par'],
+    #             'clf_idx': clf_idx,
+    #             'clf_par': clf_par,
+    #             'cv_score': 999,
+    #         }
+                    
+    #         def train(df, trn, tst, thresh=99, max_iter=3, **kwargs):
+    #             kwargs = {'label':targ, 'task':'classification', 'verbose':0, 'seed':0, 'time_budget':5, 'estimator_list':["lgbm","xgboost","catboost"]} | kwargs
+    #             if 'starting_points' in kwargs:
+    #                 kwargs.pop('starting_points')
+    #             # model = fl.AutoML(**kwargs)
+    #             for k in range(max_iter):
+    #                 model = fl.AutoML(**kwargs)
+    #                 model.fit(dataframe=df.iloc[trn], **kwargs)
+    #                 X = df.iloc[tst]
+    #                 Y = X[targ].rename('actual').to_frame().assign(predicted=model.predict(X)).prep().prep_bool()
+    #                 f1 = (1-f1_score(Y['actual'], Y['predicted'], zero_division=np.nan))*100
+    #                 if f1 < thresh:
+    #                     break
+    #                 kwargs['starting_points'] = deepcopy(model.best_config_per_estimator)
+    #                 kwargs['seed'] += 1
+    #                 print(k+1, end=', ')
+    #             return {'model':model, 'f1': f1, 'Y':Y.addlevel('crse_code', targ).addlevel('train_code', path['train_code'])}
+
+    #         targ = path['crse_code']
+    #         Z = feat['output']
+    #         cols = [*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ]
+    #         Z = Z.filter(cols)#.copy()
+    #         Z_model = Z.query(f"pred_code==@path['train_code'] & imp==0")#.copy()
+    #         if Z_model[targ].sum() >= 20:
+    #             splits = StratifiedShuffleSplit(n_splits=self.n_splits, test_size=0.25).split(Z_model, Z_model[targ])
+    #             clf['cv'] = [train(Z_model, trn, tst, **clf_par) for trn, tst in splits]
+    #             # clf['cv'] = [train(Z_model.iloc[trn], Z_model.iloc[tst], **clf_par) for trn, test in splits]
+    #             # grp = Z_model.groupby(targ).cumcount() % self.n_splits
+
+    #             # clf['cv'] = [train(Z_model, grp!=k, **clf_par) for k in range(self.n_splits)]
+    #             clf['cv_score'] = np.nanmean([c['f1'] for c in clf['cv']])
+    #             # clf['cv'] = [run(Z_model, grp!=k)['f1'] for k in range(self.n_splits)]
+    #             # clf['cv_score'] = np.nanmean(clf['cv'])
+    #             print(clf['cv_score'].round(2), [f"{c['model'].best_estimator}: {c['f1']:.2f}" for c in clf['cv']])
+    #             # rslt = train(Z, Z.eval(f"pred_code==@path['train_code']"), time_budget=clf_par['time_budget']*5)
+    #             # clf['output'] = rslt['Y']
+    #             # clf['scores'] = self.summarize(rslt['Y']).groupby('pred_code').mean()
+    #             # clf['model'] = rslt['model']
+    #         return clf
+    #     self.run(grid, func)
+
+            # def run(df, train_mask):
+            #     df = df.copy()
+            #     actual = df[targ].copy().rename('actual').to_frame()
+            #     df.loc[~train_mask, targ] = pd.NA
+            #     with warnings.catch_warnings(action='ignore'):
+            #         model = self.get_model(df, clf_par)
+            #     df.loc[:,targ] = pd.NA
+            #     predicted = model.impute_new_data(df)
+            #     Y = (
+            #             pd.concat([actual
+            #                     .assign(predicted=predicted.complete_data(k)[targ])
+            #                     .addlevel('crse_code', targ)
+            #                     .addlevel('train_code', path['train_code'])
+            #                     .addlevel('sim', k)
+                                
+            #                 for k in range(model.dataset_count())])
+            #             [['predicted','actual']]
+            #             .prep()
+            #             .prep_bool()
+            #     )
+                        
+                # return {'model':model,
+                #         'Y':Y,
+                #         'f1': (1-f1_score(Y['actual'], Y['predicted'], zero_division=np.nan)) *100 ,
+                #         # 'acc': 1-accuracy_score_score(Y['actual'], Y['predicted']),
+                #         # 'bal_acc': 1-balanced_accuracy_score(Y['actual'], Y['predicted']),
+                #         }
+
+            # def train(df, train_mask, thresh=99, **kwargs):
+            #     kwargs = {'label':targ, 'task':'classification', 'verbose':0, 'seed':0, 'time_budget':5, 'estimator_list':["lgbm","xgboost","catboost"]} | kwargs
+            #     if 'starting_points' in kwargs:
+            #         kwargs.pop('starting_points')
+            #     model = fl.AutoML(**kwargs)
+            #     for k in range(100):
+            #         model.fit(dataframe=df.loc[train_mask], **kwargs)
+            #         Y = df[targ].rename('actual').to_frame().assign(predicted=model.predict(df)).prep().prep_bool()
+            #         f1 = (1-f1_score(Y['actual'], Y['predicted'], zero_division=np.nan))*100
+            #         if f1 < thresh:
+            #             break
+            #         kwargs['starting_points'] = deepcopy(model.best_config_per_estimator)
+            #         kwargs['seed'] += 1
+            #         print(k+2, end=', ')
+            #     return {'model':model, 'f1': f1, 'Y':Y.addlevel('crse_code', targ).addlevel('train_code', path['train_code'])}
 
             # cols = uniquify(['_allcrse_cur', targ+'_cur', targ], False)
             # Z = imp['output'].join(self['Y']['all'][cols]).sample(frac=1)#.prep().prep_bool().prep_category()
