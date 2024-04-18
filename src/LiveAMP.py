@@ -209,8 +209,7 @@ class AMP(MyBaseClass):
     def get_optimal(self, path, **kwargs):
         dct = self.get(path | {'nm': 'summary'})
         A = [C for trf_hash, T in dct.items() for imp_hash, I in T.items() for clf_hash, C in I.items()]
-        a = min(A, key=lambda x: x['score']['agg'])
-        return a
+        return min(A, key=lambda x: x['score']['agg'])
 
 
     def run(self):
@@ -230,7 +229,9 @@ class AMP(MyBaseClass):
             # print(dct['score'])
         for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes}, sort=False):
             dct = self.get(path | {'nm':'optimal'})
+            print(dct['path'])
             dct['summary'].disp(100)
+            
 
 code_desc = lambda x: [x+'_code', x+'_desc']
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
@@ -420,22 +421,22 @@ kwargs = {
         # 'univ0342',
         ],
     'overwrite': {
-        'trm',
-        'adm',
-        'flg',
-        'raw',
-        'reg',
-        'terms',
-        'raw_df',
-        'reg_df',
-        'X',
-        'Y',
-        'mlt',
-        'X_proc',
-        'Z_proc',
-        'Y_pred',
-        'summary',
-        'optimal',
+        # 'trm',
+        # 'adm',
+        # 'flg',
+        # 'raw',
+        # 'reg',
+        # 'terms',
+        # 'raw_df',
+        # 'reg_df',
+        # 'X',
+        # 'Y',
+        # 'mlt',
+        # 'X_proc',
+        # 'Z_proc',
+        # 'Y_pred',
+        # 'summary',
+        # 'optimal',
     },
     'clf_grid': {
         'task': 'classification',
