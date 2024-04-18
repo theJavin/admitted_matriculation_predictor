@@ -1,28 +1,41 @@
 from flags import *
 
+def dt(date, format='sql'):
+    try:
+        date = pd.to_datetime(date).date()
+    except:
+        return f"trunc({date})"
+    format = format.lower()
+    if format == 'sql':
+        d = date.strftime('%d-%b-%y')
+        return f"trunc(to_date('{d}'))"
+    elif format == 'iso':
+        return date.isoformat()
+    else:
+        return date.strftime(format)
+
+def get_desc(nm, alias=None):
+    tbl = 'stv'+nm if alias is None else 'stv'+alias
+    return [f"A.{nm}_code", f"(select B.{tbl}_desc from {tbl} B where B.{tbl}_code = A.{nm}_code) as {nm}_desc"]
+
 @dataclasses.dataclass
 class TERM(MyBaseClass):
-    term_code: int = 202308
     cycle_day: int = 0
-    overwrite: typing.Dict = None
-    show: typing.Dict = None
+    term_code: int = 202308
+    root_path: str = root_path
+    show: set = dataclasses.field(default_factory=set)
 
     def __post_init__(self):
-        self.path = dict()
+        self.dependence = {'adm':'raw', 'flg':'raw', 'dst':'raw'}
+        super().__post_init__()
         for nm in ['dst','trm']:
-            self.path[nm] = root_path / f'admitted_matriculation_predictor/src'
-        for nm in ['adm','reg','flg','raw']:
-            self.path[nm] = root_path /f'resources/data/{nm}/{self.term_code}'
-        D = {'trm':False, 'adm':False, 'reg':False, 'flg':False, 'raw':False}
-        for nm in ['overwrite','show']:
-            self[nm] = D.copy() if self[nm] is None else D.copy() | self[nm]
-        self.overwrite['dst'] = False
-
+            self.path[nm] = self.root_path / f"admitted_matriculation_predictor/src/{nm}"
+        for nm in ['adm','reg','flg','raw','term']:
+            self.path[nm] = self.root_path / f"resources/data/{nm}/{self.term_code}/{nm}_{self.term_code}_{rjust(self.cycle_day,3,0)}"
         self.year = self.term_code // 100
-        # self.term = self.term_code % 100
-        self.appl_term_code = [self.term_code, self.term_code-2] if self.term_code % 100 == 8 else [self.term_code]
-        T = [self.get_trm().query("term_code==@t").squeeze() for t in self.appl_term_code]
-        self.appl_term_desc = [t['term_desc'] for t in T]
+        self.appl_term_codes = [self.term_code, self.term_code-2] if self.term_code % 100 == 8 else [self.term_code]
+        T = [self.get('trm').query("term_code==@t").squeeze() for t in self.appl_term_codes]
+        self.appl_term_descs = [t['term_desc'] for t in T]
         self.term_desc = T[0]['term_desc']
         self.census_date = T[0]['census_date']
         self.end_date = self.census_date + pd.Timedelta(days=7)
@@ -67,100 +80,32 @@ class TERM(MyBaseClass):
                 ],
         }
 
-    def get(self, nm, cycle_day=None):
-        cd = '' if cycle_day is None else '_'+rjust(cycle_day,3,0)
-        fn = self.path[nm] / f"{nm}{cd}.parq"
-        df = read(fn, self.overwrite[nm])
-        if df is None:
-            print(join(fn.parts[-2:],'/') + ' not found - creating')
-        return fn, df
-
-    def run(self, qry, fn=None, show=False, func=lambda x: x):
-        df = func(db.execute(qry, show=show).prep())
-        if fn is not None:
-            write(fn, df, overwrite=True)
-        return df
-
-    def get_trm(self):
-        nm = 'trm'
-        fn, df = self.get(nm)
-        if df is not None:
-            return df
-        qry = f"""
-        select
-            A.stvterm_code as term_code,
-            replace(A.stvterm_desc, ' ', '') as term_desc,
-            A.stvterm_start_date as start_date,
-            A.stvterm_end_date as end_date,
-            A.stvterm_fa_proc_yr as fa_proc_yr,
-            A.stvterm_housing_start_date as housing_start_date,
-            A.stvterm_housing_end_date as housing_end_date,
-            B.sobptrm_census_date as census_date
-        from stvterm A, sobptrm B
-        where A.stvterm_code = B.sobptrm_term_code and B.sobptrm_ptrm_code='1'"""
-        return self.run(qry, fn, self.show[nm])
-
-    def get_dst(self):
-        nm = 'dst'
-        fn, df = self.get(nm)
-        assert df is not None, f"Can't find distances file {fn.name}- you probably have the wrong path. If you absolutely must recreate it, the original code is below. But it has not been tested since originally written in December 2023. It will almost surely have bugs that will require signficant effort to correct. You should exhaust every option to find the existing distance file before trying to run it."
-        if df is not None:
-            return df
-        # import zipcodes, openrouteservice
-        # client = openrouteservice.Client(key=os.environ.get('OPENROUTESERVICE_API_KEY1'))
-        # def get_distances(Z, eps=0):
-        #     theta = np.random.rand(len(Z))
-        #     Z = Z + eps * np.array([np.sin(theta), np.cos(theta)]).T
-        #     L = []
-        #     dk = 1000 // len(dst)
-        #     k = 0
-        #     while k < len(Z):
-        #         print(f'getting distances {rjust(k,5)} / {len(Z)} = {rjust(round(k/len(Z)*100),3)}%')
-        #         src = Z.iloc[k:k+dk]
-        #         X = pd.concat([dst,src]).values.tolist()
-        #         res = client.distance_matrix(X, units="mi", destinations=list(range(0,len(dst))), sources=list(range(len(dst),len(X))))
-        #         L.append(pd.DataFrame(res['durations'], index=src.index, columns=camp.keys()))
-        #         k += dk
-        #     return pd.concat(L)
-
-        # Z = [[z['zip_code'],z['state'],z['long'],z['lat']] for z in zipcodes.list_all() if z['state'] not in ['PR','AS','MH','PW','MP','FM','GU','VI','AA','HI','AK','AP','AE']]
-        # Z = pd.DataFrame(Z, columns=['zip','state','lon','lat']).prep().query('lat>20').set_index(['zip','state']).sort_index()
-        # camp = {'s':76402, 'm':76036, 'w':76708, 'r':77807, 'l':76065}
-        # dst = Z.loc[camp.values()]
-        # try:
-        #     df = read(fn)
-        # except:
-        #     df = get_distances(Z)
-        # for k in range(20):
-        #     mask = df.isnull().any(axis=1)
-        #     if mask.sum() == 0:
-        #         break
-        #     df = df.combine_first(get_distances(Z.loc[mask], 0.02*k))
-        # return write(fn, df.assign(o = 0).melt(ignore_index=False, var_name='camp_code', value_name='distance').prep())
-    
-    # def flg_fill(self):
-    #     F = dict()
-    #     for fn in sorted(self.path['flg'].iterdir()):
-    #         term_code = int(fn.stem[-6:])
-    #         if term_code >= 202006:
-    #             F[term_code] = read(fn).notnull().mean()*100
-    #     return pd.DataFrame(F).round().prep()
-
     def get_cycle_day(self, col='A.current_date'):
         return f"{dt(self.end_date)} - trunc({col})"
-    
+
     def cutoff(self, col='A.current_date', criteria="= 0"):
         return f'{self.get_cycle_day(col)} {criteria}'
-    
-    def get_reg(self, cycle_day):
-        nm = 'reg'
-        fn, df = self.get(nm, cycle_day)
-        if df is not None:
-            return df
 
+    def get_trm(self, path, **kwargs):
         qry = f"""
 select
-    {cycle_day} as cycle_day,
+    A.stvterm_code as term_code,
+    replace(A.stvterm_desc, ' ', '') as term_desc,
+    A.stvterm_start_date as start_date,
+    A.stvterm_end_date as end_date,
+    A.stvterm_fa_proc_yr as fa_proc_yr,
+    A.stvterm_housing_start_date as housing_start_date,
+    A.stvterm_housing_end_date as housing_end_date,
+    B.sobptrm_census_date as census_date
+from stvterm A, sobptrm B
+where A.stvterm_code = B.sobptrm_term_code and B.sobptrm_ptrm_code='1'"""
+        return db.execute(qry, listify(path)[0] in self.show)
+
+
+    def get_reg(self, path, **kwargs):
+        qry = f"""
+select
+    {self.cycle_day} as cycle_day,
     A.sfrstcr_term_code as term_code,
     A.sfrstcr_pidm as pidm,
     (select C.sgbstdn_levl_code from sgbstdn C where C.sgbstdn_pidm = A.sfrstcr_pidm and C.sgbstdn_term_code_eff <= A.sfrstcr_term_code order by C.sgbstdn_term_code_eff desc fetch first 1 rows only) as levl_code,
@@ -173,8 +118,8 @@ where
     and A.sfrstcr_crn = B.ssbsect_crn
     and A.sfrstcr_term_code = {self.term_code}
     and A.sfrstcr_ptrm_code not in ('28','R3')
-    and  {self.get_cycle_day('A.sfrstcr_add_date')} >= {cycle_day}  -- added before cycle_day
-    and ({self.get_cycle_day('A.sfrstcr_rsts_date')} < {cycle_day} or A.sfrstcr_rsts_code in ('DC','DL','RD','RE','RW','WD','WF')) -- dropped after cycle_day or still enrolled
+    and  {self.get_cycle_day('A.sfrstcr_add_date')} >= {self.cycle_day}  -- added before cycle_day
+    and ({self.get_cycle_day('A.sfrstcr_rsts_date')} < {self.cycle_day} or A.sfrstcr_rsts_code in ('DC','DL','RD','RE','RW','WD','WF')) -- dropped after cycle_day or still enrolled
     and B.ssbsect_subj_code <> 'INST'
 group by A.sfrstcr_term_code, A.sfrstcr_pidm, B.ssbsect_subj_code, B.ssbsect_crse_numb"""
 
@@ -188,15 +133,10 @@ select
     sum(A.credit_hr) as credit_hr
 from A
 group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
-        return self.run(qry, fn, self.show[nm])
+        return db.execute(qry, listify(path)[0] in self.show)
+    
 
-
-    def get_adm(self, cycle_day):
-        nm = 'adm'
-        fn, df = self.get(nm, cycle_day)
-        if df is not None:
-            return df
-
+    def get_adm(self, path, **kwargs):
         def f(term_desc):
             accept = "A.apst_code = 'D' and A.apdc_code in (select stvapdc_code from stvapdc where stvapdc_inst_acc_ind is not null)"
             reject = "(A.apst_code in ('X', 'W')) or (A.apst_code = 'D' and (substr(A.apdc_code,1,1) in ('D','W') or A.apdc_code = 'RJ'))"
@@ -220,20 +160,20 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
                 f"A.majr_code_1 as majr_code",
                 f"A.dept_code",
                 f"A.hs_percentile as hs_pctl",
-            ], C+N)
+            ], ',\n')
 
-            qry = f"select {indent(sel)}{N}from opeir.admissions_{term_desc} A"
+            qry = f"select {indent(sel)}\nfrom opeir.admissions_{term_desc} A"
             
             sel = join([
                 f"A.*",
-                f"case{N+T}when max(case when A.cycle_day >= {cycle_day} then A.cycle_date end) over (partition by A.pidm, A.appl_no) = A.cycle_date then 1{N+T}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
-                f"case{N+T}when sum(case when A.cycle_day <  {cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= {cycle_day}/2 then 1{N+T}when sysdate - {dt(self.cycle_date)} < 5 then 1{N+T}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
-            ], C+N)
+                f"case\n{tab}when max(case when A.cycle_day >= {self.cycle_day} then A.cycle_date end) over (partition by A.pidm, A.appl_no) = A.cycle_date then 1\n{tab}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
+                f"case\n{tab}when sum(case when A.cycle_day <  {self.cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= {self.cycle_day}/2 then 1\n{tab}when sysdate - {dt(self.cycle_date)} < 5 then 1\n{tab}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
+            ], ',\n')
 
-            qry = f"select {indent(sel)}{N}from {subqry(qry)} A where cycle_day between 0 and {cycle_day} + 14 and {accept}"
+            qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where cycle_day between 0 and {self.cycle_day} + 14 and {accept}"
             qry = f"select A.* from {subqry(qry)} A where A.r1 = 1 and A.r2 = 1"
             return qry
-        qry = join([f(term_desc).strip() for term_desc in self.appl_term_desc], "\n\nunion all\n\n")
+        qry = join([f(term_desc).strip() for term_desc in self.appl_term_descs], "\n\nunion all\n\n")
         
         stat_codes = join(['AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY'], "', '")
         def get_spraddr(nm):
@@ -253,8 +193,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
             --when B.spraddr_atyp_code = 'P2' then 0
             end as r
     from spraddr B where B.spraddr_pidm = A.pidm and B.spraddr_stat_code in ('{stat_codes}')
-) B where B.{nm} is not null and B.r is not null
-order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
+) B where B.{nm} is not null and B.r is not null order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
 
         sel = join([
             f"A.*",
@@ -266,10 +205,10 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             f"(select B.gorvisa_natn_code_issue from gorvisa B where B.gorvisa_pidm = A.pidm order by gorvisa_seq_no desc fetch first 1 row only) as natn_code",
             f"(select B.spbpers_lgcy_code from spbpers B where B.spbpers_pidm = A.pidm) as lgcy_code",
             f"(select B.spbpers_birth_date from spbpers B where B.spbpers_pidm = A.pidm) as birth_date",
-        ], C+N)
-        qry = f"select {indent(sel)}{N}from {subqry(qry)} A"
+        ], ',\n')
+        qry = f"select {indent(sel)}\nfrom {subqry(qry)} A"
         
-        sel = N+T+join([
+        sel = join([
             f"A.cycle_day",
             f"{self.get_cycle_day('apdc_date')} as apdc_day",
             f"{self.get_cycle_day('appl_date')} as appl_day",
@@ -310,22 +249,18 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
             *get_desc('lgcy'),
             *get_desc('resd'),
             f"A.hs_pctl"
-        ], C+N)
+        ], ',\n')
         qry = f"select {indent(sel)}\nfrom {subqry(qry)} A where A.r = 1 and A.levl_code = 'UG' and A.styp_code in ('N','R','T')"
-        return self.run(qry, fn, self.show[nm])
+        return db.execute(qry, listify(path)[0] in self.show)
 
 
-    def get_flg(self, cycle_day):
-        nm = 'flg'
-        fn, df = self.get(nm, cycle_day)
-        if df is not None:
-            return df
+    def get_flg(self, path, **kwargs):
         F = []
-        for term_code in self.appl_term_code:
+        for term_code in self.appl_term_codes:
             raw = FLAGS().path['parq'] / f"flg_{term_code}.parq"
             df = read(raw, columns=['current_date'])
             df['cycle_day'] = (self.end_date - df['current_date']).dt.days
-            flg_day  = df.query(f'cycle_day>={cycle_day}')['cycle_day'].min()
+            flg_day  = df.query(f'cycle_day>={self.cycle_day}')['cycle_day'].min()
             flg_date = df.query(f'cycle_day==@flg_day')['current_date'].min()
             filters = [('current_date','==',flg_date)]
             L = []
@@ -340,7 +275,7 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
                         x = L[0][[]].assign(**{c:pd.NA})
                     L.append(x)
                 df = pd.concat(L, axis=1)
-            print(f'{term_code} flags cycle day {flg_day} >= {cycle_day} on {flg_date} missing columns: {missing}')
+            # print(f'{term_code} flags cycle day {flg_day} >= {self.cycle_day} on {flg_date} missing columns: {missing}')
             F.append(df)
         with warnings.catch_warnings(action='ignore'):
             subset = ['id','term_code_entry','styp_code']
@@ -361,29 +296,26 @@ order by B.r desc, B.s desc fetch first 1 row only) as {nm}""".strip()
         df['act_equiv'] = df[['act_new_comp_score','sat10_total_score']].max(axis=1)
         for k in ['reading', 'writing', 'math']:
             df[k] = ~df[k].isin(['not college ready', 'retest required', pd.NA])
-        return write(fn, df.drop(columns=self.flg_col['temp']+['cycle_day'], errors='ignore').dropna(axis=1, how='all'))
+        return df.drop(columns=self.flg_col['temp']+['cycle_day'], errors='ignore').dropna(axis=1, how='all')
+        # return write(fn, df.drop(columns=self.flg_col['temp']+['cycle_day'], errors='ignore').dropna(axis=1, how='all'))
 
+    def get_dst(self, path, **kwargs):
+        raise Exception(f"Can't find distances file {fn.name}- you probably have the wrong path. If you absolutely must recreate it, the original code is below. But it has not been tested since originally written in December 2023. It will almost surely have bugs that will require signficant effort to correct. You should exhaust every option to find the existing distance file before trying to run it.")
 
-    def get_raw(self):
-        self['reg'] = {k: self.get_reg(cycle_day) for k, cycle_day in {'end':0, 'cur':self.cycle_day}.items()}
-        
-        nm = 'raw'
-        fn, df = self.get(nm, self.cycle_day)
-        if df is None:
-            self.adm = self.get_adm(self.cycle_day)
-            self.adm.loc[self.adm.eval('pidm==1121725'), 'zip'] = 76109  # ad hoc fix to data error which I've requested to be fixed
-            self.flg = self.get_flg(self.cycle_day)
-            self.dst = self.get_dst()
-            df =  (
-                self.adm
-                .merge(self.flg, how='left', on=['id','term_code_entry','styp_code'])
-                .merge(self.dst, how='left', on=['zip','camp_code'])
-                .prep()
-            )
-            assert (df.groupby(['pidm','term_code']).size() == 1).all()
-            write(fn, df)
-        self[nm] = df
+    def get_raw(self, path, **kwargs):
+        df =  (
+            self.get('adm')
+            .merge(self.get('flg'), how='left', on=['id','term_code_entry','styp_code'])
+            .merge(self.get('dst'), how='left', on=['zip','camp_code'])
+            .prep()
+        )
+        assert (df.groupby(['pidm','term_code']).size() == 1).all()
+        return df
+    
+    def run(self):
+        self.get('adm')
+        self.get('flg')
+        self.get('dst')
+        self.get('raw')
+        self.get('reg')
         return self
-
-if __name__ == "__main__":
-    TERM().get_raw()

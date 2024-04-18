@@ -2,24 +2,6 @@ from setup import *
 db = Oracle('WFOCUSP')
 root_path = pathlib.Path("/home/scook/institutional_data_analytics/admitted_matriculation_projection")
 
-def dt(date, format='sql'):
-    try:
-        date = pd.to_datetime(date).date()
-    except:
-        return f"trunc({date})"
-    format = format.lower()
-    if format == 'sql':
-        d = date.strftime('%d-%b-%y')
-        return f"trunc(to_date('{d}'))"
-    elif format == 'iso':
-        return date.isoformat()
-    else:
-        return date.strftime(format)
-
-def get_desc(nm, alias=None):
-    tbl = 'stv'+nm if alias is None else 'stv'+alias
-    return [f"A.{nm}_code", f"(select B.{tbl}_desc from {tbl} B where B.{tbl}_code = A.{nm}_code) as {nm}_desc"]
-
 #################################### FLAGS ####################################
 
 @dataclasses.dataclass

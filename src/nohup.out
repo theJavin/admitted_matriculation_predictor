@@ -1,15 +1,65 @@
-2024-04-08 04:31:45.090230
-terms, 202108; complete: 1 / 4 = 25.00%; elapsed = 0.01 min; remaining = 0.02 min @ 0.0067 min per iteration
-terms, 202208; complete: 2 / 4 = 50.00%; elapsed = 0.03 min; remaining = 0.03 min @ 0.0145 min per iteration
-terms, 202308; complete: 3 / 4 = 75.00%; elapsed = 0.05 min; remaining = 0.02 min @ 0.0168 min per iteration
-terms, 202408; complete: 4 / 4 = 100.00%; elapsed = 0.07 min; remaining = 0.00 min @ 0.0185 min per iteration
-raw_df, all; complete: 1 / 1 = 100.00%; elapsed = 0.01 min; remaining = 0.00 min @ 0.0122 min per iteration
-reg_df, all; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0023 min per iteration
-X, all; complete: 1 / 1 = 100.00%; elapsed = 0.04 min; remaining = 0.00 min @ 0.0444 min per iteration
-Y, all; complete: 1 / 1 = 100.00%; elapsed = 0.01 min; remaining = 0.00 min @ 0.0145 min per iteration
-mlt, all; complete: 1 / 1 = 100.00%; elapsed = 0.00 min; remaining = 0.00 min @ 0.0031 min per iteration
-transformed, n, all, all, 0; complete: 1 / 4 = 25.00%; elapsed = 0.02 min; remaining = 0.05 min @ 0.0154 min per iteration
-transformed, n, all, all, 1; complete: 2 / 4 = 50.00%; elapsed = 0.03 min; remaining = 0.03 min @ 0.0142 min per iteration
-transformed, n, all, all, 2; complete: 3 / 4 = 75.00%; elapsed = 0.04 min; remaining = 0.01 min @ 0.0138 min per iteration
-transformed, n, all, all, 3; complete: 4 / 4 = 100.00%; elapsed = 0.05 min; remaining = 0.00 min @ 0.0135 min per iteration
-imputed, n, all, all, 0, 0; 
+2024-04-18 16:00:04.311582
+creating terms: 
+creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 151}: 
+creating trm: 0.22 sec
+creating adm: 21.15 sec
+creating flg: 1.02 sec
+creating raw: 0.23 sec
+creating reg: 3.02 sec
+26.74 sec
+creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 0}: 
+creating trm: 0.07 sec
+creating adm: 21.61 sec
+creating flg: 1.17 sec
+creating raw: 0.26 sec
+creating reg: 4.61 sec
+29.40 sec
+creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 151}: 
+creating trm: 0.11 sec
+creating adm: 21.52 sec
+creating flg: 1.59 sec
+creating raw: 0.38 sec
+creating reg: 1.43 sec
+26.46 sec
+creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 0}: 
+creating trm: 0.07 sec
+creating adm: 15.40 sec
+creating flg: 1.51 sec
+creating raw: 0.40 sec
+creating reg: 2.07 sec
+21.32 sec
+creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 151}: 
+creating trm: 0.12 sec
+creating adm: 20.50 sec
+creating flg: 1.42 sec
+creating raw: 0.26 sec
+creating reg: 2.02 sec
+25.87 sec
+creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 0}: 
+creating trm: 0.10 sec
+creating adm: 19.26 sec
+creating flg: 1.64 sec
+creating raw: 0.38 sec
+creating reg: 3.58 sec
+26.92 sec
+creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 151}: 
+creating trm: 0.06 sec
+creating adm: 10.55 sec
+creating flg: 1.01 sec
+creating raw: 0.32 sec
+creating reg: 3.20 sec
+16.98 sec
+creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 0}: 
+creating trm: 0.07 sec
+creating adm: 6.98 sec
+creating flg: 1.40 sec
+creating raw: 0.03 sec
+creating reg: 2.95 sec
+11.94 sec
+185.63 sec
+creating raw_df: 1.32 sec
+creating reg_df: 0.16 sec
+creating X: 3.72 sec
+creating Y: 0.84 sec
+creating mlt: 0.10 sec
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '53c7', 'imp_hash': 'c519', 'clf_hash': 'all'}: 

@@ -1,19 +1,19 @@
-import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, itertools as it
-import dill, joblib, json, dataclasses, typing, collections, oracledb
+import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, codetiming, itertools as it
+import dill, joblib, json, dataclasses, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-from IPython.core.display import display, HTML, clear_output
+from IPython.display import display, HTML, clear_output
 from copy import deepcopy
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
-C = ","
-N = "\n"
-T = "    "
+tab = '    '
 
 def listify(X, sort=False, **kwargs):
     if X is None or X is np.nan:
         X = []
     elif isinstance(X, (str,int,float,bool)) or callable(X):
         X = [X]
+    elif isinstance(X, dict):
+        X = list(X.values())
     else:
         X = list(X)
     return sorted(X, **kwargs) if sort else X
@@ -26,21 +26,23 @@ def mysort(X, **kwargs):
         return dict(sorted(X.items(), **kwargs))
     else:
         return listify(X, True, **kwargs)
-        # return sorted(listify(X), **kwargs)
     
 def uniquify(X, sort=True, **kwargs):
     if not isinstance(X, dict):
-        X = listify(dict.fromkeys(listify(X)))
+        X = listify(dict.fromkeys(listify(X)).keys())
     return mysort(X, **kwargs) if sort else X
 
-def subdct(X, keys=None, sort=False, **kwargs):
-    X = X if keys is None else {k: X[k] for k in listify(keys)}
-    return mysort(X, **kwargs) if sort else X
+def intersection(*args, sort=False, **kwargs):
+    L = [listify(x) for x in listify(args)]
+    y = [x for x in L[0] if x in set(L[0]).intersection(*L)]
+    return sorted(y, **kwargs) if sort else y
 
-# def pop(x, key):
-#     y = x.copy()
-#     y.pop(key)
-#     return y
+def append(dct, key, val):
+    return dct.setdefault(key,[]).append(val)
+
+# def subdct(X, keys=None, sort=False, **kwargs):
+#     X = X if keys is None else {k: X[k] for k in listify(keys)}
+#     return mysort(X, **kwargs) if sort else X
 
 def cartesian(dct, sort=True):
     """Creates the Cartesian product of a dictionary with list-like values"""
@@ -51,24 +53,12 @@ def cartesian(dct, sort=True):
     except:
         return dict()
 
-def nest(path, dct=dict(), val=None):
-    path = listify(path.values() if isinstance(path, dict) else path)
-    k = path.pop(-1)
-    a = dct
-    for p in path:
-        a.setdefault(p, dict())
-        a = a[p]
-    if val is None:
-        return a[k]
-    else:
-        a[k] = val
-        return dct
 
-def instantiate(x):
-    try:
-        return x()
-    except:
-        return x
+# def instantiate(x):
+#     try:
+#         return x()
+#     except:
+#         return x
 
 def rjust(x, width, fillchar=' '):
     return str(x).rjust(width,str(fillchar))
@@ -80,7 +70,7 @@ def join(x, sep=', ', pre='', post=''):
     return f"{pre}{str(sep).join(map(str,listify(x)))}{post}"
 
 def indent(qry, lev=1):
-    return (N+qry.strip()).replace(N,N+T*lev) if lev>0 else qry
+    return ('\n'+qry.strip()).replace('\n','\n'+tab*lev) if lev>=0 else qry
 
 def isnum(x):
     return str(x).isnumeric()
@@ -92,8 +82,19 @@ def mkqry(qry):
     return qry.strip() if isqry(qry) else f"select * from {qry}"
 
 def subqry(qry, lev=1):
-    NT = N+T*(lev-1)
-    return "(" + (N+qry.strip()).replace(N,NT+T) + NT + ")" if lev>0 else qry
+    return "(" + indent(qry.strip(), lev) + indent(")", lev-1)# if lev>0 else qry
+
+def pctl(p):
+    p = round(p if p >= 1 else p*100)
+    f = lambda x: x.quantile(p/100)
+    f.__name__ = f'{p}%'.rjust(4)
+    return f
+
+def IQR(x):
+    return pctl(75)(x)-pctl(25)(x)
+
+def ran(x):
+    return pctl(100)(x)-pctl(0)(x)
 
 ### pandas helpers ###
 def pd_ext(func):
@@ -190,6 +191,24 @@ def vc(df, by, dropna=False, digits=1, **kwargs):
     return df.groupby(by, dropna=dropna, observed=False, **kwargs).size().to_frame('ct').assign(pct=lambda x: (x['ct']/df.shape[0]*100).rnd(digits))
 
 @pd_ext
+def rindex(df, level=None, bare=False, **kwargs):
+    level = level if level is None else intersection(level, df.index.names)
+    df = df.reset_index(level, **kwargs)
+    return df.reset_index(drop=True) if bare else df
+
+@pd_ext
+def sindex(df, level, **kwargs):
+    return df.set_index(intersection(listify(level), df.columns), **kwargs)
+
+@pd_ext
+def rsindex(df, level, **kwargs):
+    return df.rindex(level, True).sindex(level, **kwargs)
+
+@pd_ext
+def grpby(df, by, **kwargs):
+    return df.groupby(intersection(listify(by), df.columns.union(df.index.names)), **kwargs)
+
+@pd_ext
 def missing(df, digits=1):
     return df.isnull().sum().sort_values(ascending=False).to_frame('ct').query('ct>0').assign(pct=lambda x: (x['ct']/df.shape[0]*100).rnd(digits))
 
@@ -217,82 +236,129 @@ def impute(df, col, val=None, grp=None):
 #         df.columns = listify(names)
 #     return df
 
-def delete(path):
-    if path.is_dir():
-        shutil.rmtree(path)
-    elif path.is_file():
-        path.unlink()
+def delete(path=None):
+    if path is not None:
+        path = pathlib.Path(path)
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.is_file():
+            path.unlink()
 
-def mkdir(path, overwrite=False):
-    if overwrite:
-        delete(path)
-    path.mkdir(exist_ok=True, parents=True)
+def mkdir(path=None, overwrite=False):
+    if path is not None:
+        path = pathlib.Path(path)
+        if overwrite:
+            delete(path)
+        path.mkdir(exist_ok=True, parents=True)
 
-def write(fn, obj, overwrite=False, protocol=5, **kwargs):
-    fn = pathlib.Path(fn)
-    suf = ['.parq','.parquet','.pkl','.csv']
-    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
-    if overwrite:
-        fn.unlink(missing_ok=True)
-    if not fn.is_file():
-        mkdir(fn.parent)
-        if fn.suffix == '.pkl':
-            with open(fn, 'wb') as f:
-                # joblib.dump(obj, f, **kwargs)
-                dill.dump(obj, f, protocol=protocol, **kwargs)
-        else:
-            obj = pd.DataFrame(obj)#.prep()
-            if fn.suffix in ['.parq','.parquet']:
-                obj.to_parquet(fn, **kwargs)
-            elif fn.suffix == '.csv':
-                obj.to_csv(fn, **kwargs)
+def write(path=None, obj=None, overwrite=False, protocol=5, **kwargs):
+    if path is not None:
+        path = pathlib.Path(path)
+        if overwrite:
+            delete(path)
+        if not path.is_file() and obj is not None:
+            mkdir(path.parent)
+            if path.suffix == '.pkl':
+                with open(path, 'wb') as f:
+                    # joblib.dump(obj, f, **kwargs)
+                    dill.dump(obj, f, protocol=protocol, **kwargs)
+            else:
+                obj = pd.DataFrame(obj)
+                if path.suffix in ['.parq','.parquet']:
+                    obj.to_parquet(path, **kwargs)
+                elif path.suffix == '.csv':
+                    obj.to_csv(path, **kwargs)
     return obj
 
-def read(fn, overwrite=False, **kwargs):
-    fn = pathlib.Path(fn)
-    suf = ['.parq','.parquet','.pkl','.csv']
-    assert fn.suffix in suf, f'Unknown suffix {fn.suffix} - must be one of {suf}'
-    if overwrite:
-        fn.unlink(missing_ok=True)
-    try:
-        with open(fn, 'rb') as f:
-            # return joblib.load(f, **kwargs)
-            return dill.load(f, **kwargs)
-    except:
+def read(path=None, overwrite=False, **kwargs):
+    if path is not None:
+        path = pathlib.Path(path)
+        if overwrite:
+            delete(path)
         try:
-            return pd.read_parquet(fn, **kwargs).prep()
+            with open(path, 'rb') as f:
+                # return joblib.load(f, **kwargs)
+                return dill.load(f, **kwargs)
         except:
             try:
-                return pd.read_csv(fn, **kwargs).prep()
+                return pd.read_parquet(path, **kwargs).prep()
             except:
-                return None
+                try:
+                    return pd.read_csv(path, **kwargs).prep()
+                except:
+                    pass
+    return None
 
-def pctl(p):
-    p = round(p if p >= 1 else p*100)
-    f = lambda x: x.quantile(p/100)
-    f.__name__ = f'{p}%'.rjust(4)
-    return f
 
-def IQR(x):
-    return pctl(75)(x)-pctl(25)(x)
+def nest(path, dct=dict(), val=None):
+    path = listify(path.values() if isinstance(path, dict) else path)
+    k = path.pop(-1)
+    a = dct
+    for p in path:
+        a.setdefault(p, dict())
+        a = a[p]
+    if val is None:
+        return a[k] if k in a else None
+    else:
+        a[k] = val
+        return dct
 
-def ran(x):
-    return pctl(100)(x)-pctl(0)(x)
 
+@dataclasses.dataclass
 class MyBaseClass():
+    root_path: str = pathlib.Path("/home/scook/institutional_data_analytics")
+    overwrite: set = dataclasses.field(default_factory=set)
+    dependence: dict = dataclasses.field(default_factory=dict)
+    path: dict = dataclasses.field(default_factory=dict)
+
     def __contains__(self, key):
         return key in self.__dict__
     def __getitem__(self, key):
         return self.__dict__[key]
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
     def __delitem__(self, key):
         if key in self:
             del self.__dict__[key]
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
+
+    def __post_init__(self):
+        self.root_path = pathlib.Path(self.root_path)
+        l = 0
+        while l < len(self.overwrite):
+            l = len(self.overwrite)
+            self.overwrite |= {y for x in self.overwrite for y in setify(self.dependence[x] if x in self.dependence else {})}
+    
+    def get(self, path, val=None, fn=None, **kwargs):
+        L = listify(path)
+        nm = L.pop(0)
+        fn = fn if fn is not None else (self.path[nm] / join(L,'/')).with_suffix('.pkl') if nm in self.path else None
+        if nm in self.overwrite:
+            nest(path, self.__dict__, None)
+            delete(fn)
+            self.overwrite.discard(nm)
+        
+        if val is None:
+            val = nest(path, self.__dict__)
+            if val is None:
+                val = read(fn)
+                if val is None:
+                    # print(f"creating {path}")#, end=": ")
+                    print(f"creating {path}", end=": ")
+                    with codetiming.Timer(text="{:0.2f} sec"):
+                        val = getattr(self,'get_'+nm)(path, **kwargs)
+                else:
+                    # print(f"read {path} from {fn}")
+                    fn = None
+                self.get(path, val, fn, **kwargs)
+        else:
+            nest(path, self.__dict__, val)
+            write(fn, val, nm in self.overwrite)
+        return val
+
 
 @dataclasses.dataclass
 class Oracle(MyBaseClass):
-    database: str = 'WFOCUST'
+    database: str = 'WFOCUSP'
     timeout_default: int = 60000
 
     def execute(self, qry, show=False, timeout=None, **opts):
