@@ -9,6 +9,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import set_config
 set_config(transform_output="pandas")
 
+hasher = lambda t, d=2: hashlib.shake_128(str(t).encode()).hexdigest(d)
+
 @dataclasses.dataclass
 class AMP(MyBaseClass):
     cycle_day: int = 0
@@ -32,7 +34,10 @@ class AMP(MyBaseClass):
         self.root_path = root_path / f"resources/rslt/{rjust(self.cycle_day,3,0)}/{self.impute_yearly}"
         self.dependence = {
             'adm':'raw', 'flg':'raw', 'dst':'raw', 'raw':'terms', 'reg':'terms', 'terms':{'raw_df','reg_df'}, 'raw_df':'X', 'reg_df':{'Y','mlt'}, 
-            'X':{'Y','mlt','X_proc'}, 'Y':'Z_proc', 'X_proc':'Z_proc', 'Z_proc':'Y_pred', 'Y_pred':'summary', 'summary':'optimal'}
+            'X':{'Y','mlt','X_proc'}, 'X_proc':'Z_proc', 'Y':'Z_proc', #'Z_proc':'Y_pred',
+            'Y_pred':'summary', 'summary':'optimal',
+            
+            }
         super().__post_init__()
         for nm in ['terms','raw_df','reg_df','X','Y','mlt','X_proc','Z_proc','Y_pred','summary','optimal']:
             self.path[nm] = self.root_path / nm
@@ -46,11 +51,13 @@ class AMP(MyBaseClass):
             self[k] = uniquify(self[k])
         if self.proj_code in self.train_codes:
             self.train_codes.remove(self.proj_code)
-        for k in ['trf','imp','clf']:
-            self[k+'_list'] = cartesian({k: uniquify(v, key=str) for k,v in self[k+'_grid'].items()})
-            if k == 'trf':
-                self[k+'_list'] = [ColumnTransformer([(c,t,["__"+c]) for c,t in trf.items() if t not in ['drop',None,'']], remainder='drop', verbose_feature_names_out=False) for trf in self[k+'_list']]
-            self[k+'_dict'] = {hashlib.shake_128(str(trf).encode()).hexdigest(2): trf for trf in self[k+'_list']}
+        for nm in ['trf','imp','clf']:
+            self[nm+'_list'] = cartesian({k: uniquify(v, key=str) for k,v in self[nm+'_grid'].items()})
+            if nm == 'trf':
+                self[nm+'_list'] = [ColumnTransformer([(c,t,["__"+c]) for c,t in trf.items() if t not in ['drop',None,'']], remainder='drop', verbose_feature_names_out=False) for trf in self[nm+'_list']]
+                self[nm+'_dict'] = {hasher(t.transformers): t for t in self[nm+'_list']}
+            else:
+                self[nm+'_dict'] = {hasher(t): t for t in self[nm+'_list']}
 
     def where(self, df):
         return df.rename(columns={'term_code':'pred_code', 'term_desc':'pred_desc'}).query(f"levl_code=='ug' & styp_code in ('n','r','t')").copy()
@@ -147,32 +154,40 @@ class AMP(MyBaseClass):
         iterations = imp_par.pop('iterations')
         tune = imp_par.pop('tune')
         if tune:
+            print('tuning')
             ds = imp_par.pop('datasets')
             imp = mf.ImputationKernel(X_trf, datasets=1, **imp_par)
-            imp.mice(1)
-            imp_par['variable_parameters'], losses = imp.tune_parameters(dataset=0)
+            # imp.mice(1)
+            imp.mice(iterations)
+            variable_parameters, losses = imp.tune_parameters(dataset=0)
             imp_par['datasets'] = ds
+        else:
+            variable_parameters = None
         imp = mf.ImputationKernel(X_trf, **imp_par)
-        imp.mice(iterations)
-        X_proc = pd.concat([imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())])
-        return {'path': path, 'X_proc': X_proc, 'trf_str': str(trf).replace('\n','').replace(' ','')}
+        imp.mice(iterations, variable_parameters=variable_parameters)
+        # X_proc = pd.concat([imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())])
+        X_proc = [imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())]
+        return {'path': path, 'X_proc': X_proc, 'trf_str': str(trf).replace('\n','').replace(' ',''), 'imp_str': str(self.imp_dict[path['imp_hash']])}
 
     def get_Z_proc(self, path, **kwargs):
         dct = self.get(path | {'nm':'X_proc'})
-        dct['Z_proc'] = dct['X_proc'].join(self.get('Y')).sample(frac=1).prep().prep_bool().prep_category()
+        dct['Z_proc'] = [X.join(self.get('Y')).sample(frac=1).prep().prep_bool().prep_category() for X in dct['X_proc']]
         return dct
 
     def get_Y_pred(self, path, **kwargs):
-        dct = self.get(path | {'nm':'Z_proc', 'crse_code':'all', 'train_code':'all', 'clf_hash':'all'})
+        dct = deepcopy(self.get(path | {'nm':'Z_proc', 'crse_code':'all', 'train_code':'all', 'clf_hash':'all'})) | {'Y_pred':[], 'train_score': []}
         targ = path['crse_code']
         df = dct['Z_proc']
-        if df.query(f"pred_code==@path['train_code'] & imp==0")[targ].sum() < 10:
+        # if df.query(f"pred_code==@path['train_code'] & imp==0")[targ].sum() < 10:
+        if df[0].query(f"pred_code==@path['train_code']")[targ].sum() < 10:
             return dct
         clf_par = self.clf_dict[path['clf_hash']]
         clf_par['seed'] = self.random_state
-        cols = uniquify([*df.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ])
-        df = df.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep().prep_category()
-        for imp, Z in df.groupby('imp'):
+        # df = df.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep().prep_category()
+        # for imp, Z in df.groupby('imp'):
+        for imp, Z in enumerate(df):
+            cols = uniquify([*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ])
+            Z = Z.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep().prep_category()
             trn_mask = Z.eval(f"pred_code==@path['train_code']")
             clf = fl.AutoML(**clf_par)
             with warnings.catch_warnings(action='ignore'):
@@ -182,24 +197,28 @@ class AMP(MyBaseClass):
                 .assign(predicted=clf.predict(Z.drop(columns=targ)))
                 .assign(proba=clf.predict_proba(Z.drop(columns=targ))[:,1])
             )
-            append(dct, 'Y_pred', Y)
-            append(dct, 'train_score', clf.best_result['val_loss'] * 100)
+            dct['Y_pred'].append(Y)
+            dct['train_score'].append(clf.best_result['val_loss'] * 100)
         return dct
 
     def get_summary(self, path, **kwargs):
-        dct = self.get(path | {'nm':'Y_pred'})
+        dct = deepcopy(self.get(path | {'nm':'Y_pred'}))
         if 'Y_pred' not in dct:
             return dct
+        print({k:len(v) for k,v in dct.items() if 'score' in k or 'projection' in k})
+        M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze()
+        print(M.index)
+        dct |= {'holdout_score':[], '2024_projection_raw':[]} | {f'2024_projection_{pred_code}':[] for pred_code in M.index}
         for Y in dct['Y_pred']:
             trn_mask = Y.eval(f"pred_code==@path['train_code']")
             proj_mask = Y.eval(f"pred_code==@self.proj_code")
             holdout_mask = ~(trn_mask | proj_mask)
             proj = Y[proj_mask]['predicted'].sum()
-            M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze()
-            append(dct, 'holdout_score', (1 - f1_score(Y[holdout_mask]['actual'], Y[holdout_mask]['predicted'])) * 100)
-            append(dct, '2024_projection_raw', proj)
+            dct['holdout_score'].append((1 - f1_score(Y[holdout_mask]['actual'], Y[holdout_mask]['predicted'])) * 100)
+            dct['2024_projection_raw'].append(proj)
             for k, v in M.items():
-                append(dct, f'2024_projection_{k}', proj * v)
+                dct[f'2024_projection_{k}'].append(proj * v)
+        print({k:len(v) for k,v in dct.items() if 'score' in k or 'projection' in k})
         dct['rslt'] = pd.DataFrame({k:v for k,v in dct.items() if 'score' in k or 'projection' in k})
         dct['summary'] = dct['rslt'].describe().T
         dct['score'] = {'train': dct['rslt']['train_score'].median(), 'holdout': dct['rslt']['holdout_score'].median()}
@@ -225,12 +244,17 @@ class AMP(MyBaseClass):
             dct = self.get(qath | {'nm':'Z_proc'})
             dct = self.get(path | {'nm':'Y_pred'})
             dct = self.get(path | {'nm':'summary'})
-            # dct['summary'].disp(100)
-            # print(dct['score'])
-        for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes}, sort=False):
-            dct = self.get(path | {'nm':'optimal'})
-            print(dct['path'])
+            print(path)
+            print(dct['trf_str'])
+            print(dct['imp_str'])
+            print(dct['score'])
             dct['summary'].disp(100)
+            
+        # for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes}, sort=False):
+        #     dct = self.get(path | {'nm':'optimal'})
+        #     print(dct['path'])
+        #     dct['summary'].disp(100)
+        return dct
             
 
 code_desc = lambda x: [x+'_code', x+'_desc']
@@ -239,8 +263,8 @@ passthru = ['passthrough']
 passdrop = ['passthrough', 'drop']
 passpwr = ['passthrough', pwrtrf]
 
-# passdrop = ['passthrough']
-# passpwr = [pwrtrf]
+passdrop = ['passthrough']
+# passpwr = ['passthrough']
 
 kwargs = {
     'fill': {
@@ -328,7 +352,7 @@ kwargs = {
         # 'arts1304',
         # 'arts3331',
         # 'biol1305',
-        # 'biol1406',
+        'biol1406',
         # 'biol1407',
         # 'biol2401',
         # 'biol2402',
@@ -384,7 +408,7 @@ kwargs = {
         # 'hist2322',
         # 'huma1315',
         # 'kine2315',
-        # 'math1314',
+        'math1314',
         # 'math1316',
         # 'math1324',
         # 'math1332',
@@ -428,8 +452,8 @@ kwargs = {
         # 'reg',
         # 'terms',
         # 'raw_df',
-        # 'reg_df',
         # 'X',
+        # 'reg_df',
         # 'Y',
         # 'mlt',
         # 'X_proc',
@@ -444,7 +468,7 @@ kwargs = {
         'metric': 'f1',
         'split_type': 'stratified',
         # 'early_stop': 10,
-        'time_budget': 5,
+        'time_budget': 8,
         # "ensemble": True,
         # "ensemble": {
         #     "final_estimator": LogisticRegression(),
@@ -452,14 +476,15 @@ kwargs = {
         # },
     },
     'imp_grid': {
-        'datasets': 30,
-        'iterations': 10,
+        'datasets': 20,
+        'iterations': 6,
         # 'datasets': 2,
         # 'iterations': 3,
-        'tune': False,
+        # 'tune': False,
+        'tune': [False, True],
     },
-    'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    # 'cycle_day': 152,
+    # 'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
+    'cycle_day': 151,
     'styp_codes':'n',
     'n_splits': 3,
     'random_state': 42,

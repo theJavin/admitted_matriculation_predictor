@@ -1,65 +1,19 @@
-2024-04-18 16:00:04.311582
+2024-04-19 02:15:44.706036
 creating terms: 
 creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 151}: 
-creating trm: 0.22 sec
-creating adm: 21.15 sec
-creating flg: 1.02 sec
-creating raw: 0.23 sec
-creating reg: 3.02 sec
-26.74 sec
+0.09 sec
 creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 0}: 
-creating trm: 0.07 sec
-creating adm: 21.61 sec
-creating flg: 1.17 sec
-creating raw: 0.26 sec
-creating reg: 4.61 sec
-29.40 sec
+0.11 sec
 creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 151}: 
-creating trm: 0.11 sec
-creating adm: 21.52 sec
-creating flg: 1.59 sec
-creating raw: 0.38 sec
-creating reg: 1.43 sec
-26.46 sec
+0.08 sec
 creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 0}: 
-creating trm: 0.07 sec
-creating adm: 15.40 sec
-creating flg: 1.51 sec
-creating raw: 0.40 sec
-creating reg: 2.07 sec
-21.32 sec
+0.13 sec
 creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 151}: 
-creating trm: 0.12 sec
-creating adm: 20.50 sec
-creating flg: 1.42 sec
-creating raw: 0.26 sec
-creating reg: 2.02 sec
-25.87 sec
+0.10 sec
 creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 0}: 
-creating trm: 0.10 sec
-creating adm: 19.26 sec
-creating flg: 1.64 sec
-creating raw: 0.38 sec
-creating reg: 3.58 sec
-26.92 sec
+0.11 sec
 creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 151}: 
-creating trm: 0.06 sec
-creating adm: 10.55 sec
-creating flg: 1.01 sec
-creating raw: 0.32 sec
-creating reg: 3.20 sec
-16.98 sec
+0.13 sec
 creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 0}: 
-creating trm: 0.07 sec
-creating adm: 6.98 sec
-creating flg: 1.40 sec
-creating raw: 0.03 sec
-creating reg: 2.95 sec
-11.94 sec
-185.63 sec
-creating raw_df: 1.32 sec
-creating reg_df: 0.16 sec
-creating X: 3.72 sec
-creating Y: 0.84 sec
-creating mlt: 0.10 sec
-creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '53c7', 'imp_hash': 'c519', 'clf_hash': 'all'}: 
+0.04 sec
+0.78 sec
