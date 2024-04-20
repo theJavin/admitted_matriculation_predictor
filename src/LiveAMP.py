@@ -40,7 +40,7 @@ class AMP(MyBaseClass):
             self.path[nm] = self.root_path / nm
         for k in self.overwrite:
             delete(self.root_path / k)
-        self.mlt_grp = ['crse_code','levl_code','styp_code','pred_code','hack_code','train_code','mlt_code','trf_hash','clf_hash','imp']
+        # self.mlt_grp = ['crse_code','levl_code','styp_code','train_code','trf_hash','imp_hash','clf_hash','sim','pred_code']
         self.crse_codes = ['_allcrse', *listify(self.crse_codes)]
         self.proj_code = listify(self.proj_code)[0]
         self.pred_codes = [*listify(self.pred_codes), *listify(self.train_codes), self.proj_code]
@@ -135,7 +135,7 @@ class AMP(MyBaseClass):
         return Y['cur'].rename(columns=lambda x:x+'_cur').join(Y['end']>0).prep_bool()
 
     def get_mlt(self, path, **kwargs):
-        agg = lambda y: y.query(f"pred_code!=@self.proj_code").grpby(self.mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum()).rename('mlt')
+        agg = lambda y: y.query(f"pred_code!={self.proj_code}").groupby(['crse_code','levl_code','styp_code','pred_code'])['credit_hr'].agg(lambda x: (x>0).sum()).rename('mlt')
         N = self.get('reg_df')['end']
         D = self.get('X')[[]].join(N)[['credit_hr']]
         N = agg(N)
@@ -157,7 +157,7 @@ class AMP(MyBaseClass):
         imp_par = imp_par.copy()
         tune = imp_par.pop('tune')
         if tune:
-            print('tuning')
+            # print('tuning')
             ds = imp_par.pop('datasets')
             imp = mf.ImputationKernel(X_trf, datasets=1, **imp_par)
             imp.mice(iterations)
@@ -167,13 +167,13 @@ class AMP(MyBaseClass):
             variable_parameters = None
         imp = mf.ImputationKernel(X_trf, **imp_par)
         imp.mice(iterations, variable_parameters=variable_parameters)
-        X_proc = [imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())]
+        X_proc = [imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp_hash', path['imp_hash']).addlevel('sim', k) for k in range(imp.dataset_count())]
         # imp.plot_mean_convergence(wspace=0.3, hspace=0.4)
         # plt.show()
         return {'path': path, 'X_proc': X_proc, 'trf_str': trf_str, 'imp_str': imp_str}
 
     def get_Z_proc(self, path, **kwargs):
-        print(path)
+        # print(path)
         dct = self.get(path | {'nm':'X_proc'})
         dct['Z_proc'] = [X.join(self.get('Y')).sample(frac=1).prep_category() for X in dct['X_proc']]
         return dct
@@ -186,13 +186,13 @@ class AMP(MyBaseClass):
         clf_str, clf_par = self.clf_dct[path['clf_hash']]
         clf_par |= {'split_type':'stratified', 'task':'classification', 'verbose':0, 'log_file_name': self.root_path / 'log.txt'}
         dct |= {'clf_str': clf_str, 'Y_pred':[], 'train_score': []}
-        for imp, Z in enumerate(dct['Z_proc']):
+        for sim, Z in enumerate(dct['Z_proc']):
             cols = uniquify([*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ])
-            Z = Z.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep_category()
-            trn_mask = Z.eval(f"pred_code==@path['train_code']")
+            Z = Z.filter(cols).copy().addlevel('crse_code', path['crse_code']).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep_category()
+            Z_trn = Z.query(f"pred_code==@path['train_code']").copy()
             clf = fl.AutoML(**clf_par)
             with warnings.catch_warnings(action='ignore'):
-                clf.fit(Z[trn_mask].drop(columns=targ), Z[trn_mask][targ], **clf_par)
+                clf.fit(Z_trn.drop(columns=targ), Z_trn[targ], **clf_par)
                 Y = (
                     Z[targ].rename('actual').to_frame()
                     .assign(predicted=clf.predict(Z.drop(columns=targ)))
@@ -218,32 +218,56 @@ class AMP(MyBaseClass):
         dct = deepcopy(self.get(path | {'nm':'Y_pred'}))
         if 'Y_pred' not in dct:
             return dct
-        M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze()
-        dct |= {'holdout_score':[], '2024_projection_raw':[]} | {f'2024_projection_{pred_code}':[] for pred_code in M.index}
-        for Y in dct['Y_pred']:
+        M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze().rename(f'{self.proj_code}_projection')
+        dct |= {'summary':[]}
+        for Y, ts in zip(dct['Y_pred'], dct['train_score']):
+            S = Y.groupby(['crse_code','levl_code','styp_code','pred_code','train_code','trf_hash','imp_hash','clf_hash','sim']).apply(lambda y: pd.Series({
+                'train_score': ts,
+                'test_score': (1 - f1_score(y['actual'], y['predicted'])) * 100,
+                'actual': y['actual'].sum(),
+                'predicted': y['predicted'].sum(),
+                })).prep()
+            S.insert(0, 'overall_score', S['train_score'] + S['test_score'])
+            S['error'] = S['predicted'] - S['actual']
+            S['error_pct'] = S['error'] / S['actual'] * 100
+            proj_mask = S.eval(f"pred_code==@self.proj_code")
+            
+            S = S.join(M*S.loc[proj_mask, 'predicted'].squeeze())[~proj_mask]
+            S.loc[proj_mask, [c for c in S.columns if 'score' in c or 'error' in c]] = pd.NA
+            dct['summary'].append(S)
+            # S.disp(100)
+        dct['summary'] = pd.concat(dct['summary']).sort_index()
+        # dct['summary'].disp(100)
+        return dct
+
+
+
+        # M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze()
+        # dct |= {'holdout_score':[], '2024_projection_raw':[]} | {f'2024_projection_{pred_code}':[] for pred_code in M.index}
+        # for Y in dct['Y_pred']:
             # A = Y.groupby('train_code')
             # H = A.agg(lambda y: (1 - f1_score(y['actual'], y['predicted'])) * 100)
 
 
-            trn_mask = Y.eval(f"pred_code==@path['train_code']")
-            proj_mask = Y.eval(f"pred_code==@self.proj_code")
-            holdout_mask = ~(trn_mask | proj_mask)
-            proj = Y[proj_mask]['predicted'].sum()
-            dct['holdout_score'].append((1 - f1_score(Y[holdout_mask]['actual'], Y[holdout_mask]['predicted'])) * 100)
-            dct['2024_projection_raw'].append(proj)
-            for k, v in M.items():
-                dct[f'2024_projection_{k}'].append(proj * v)
-        print({k:len(v) for k,v in dct.items() if 'score' in k or 'projection' in k})
-        dct['rslt'] = pd.DataFrame({k:v for k,v in dct.items() if 'score' in k or 'projection' in k})
-        dct['summary'] = dct['rslt'].describe().T
-        dct['score'] = {'train': dct['rslt']['train_score'].median(), 'holdout': dct['rslt']['holdout_score'].median()}
-        dct['score']['agg'] = sum(dct['score'].values())
-        return dct
+        #     trn_mask = Y.eval(f"pred_code==@path['train_code']")
+        #     proj_mask = Y.eval(f"pred_code==@self.proj_code")
+        #     holdout_mask = ~(trn_mask | proj_mask)
+        #     proj = Y[proj_mask]['predicted'].sum()
+        #     dct['holdout_score'].append((1 - f1_score(Y[holdout_mask]['actual'], Y[holdout_mask]['predicted'])) * 100)
+        #     dct['2024_projection_raw'].append(proj)
+        #     for k, v in M.items():
+        #         dct[f'2024_projection_{k}'].append(proj * v)
+        # print({k:len(v) for k,v in dct.items() if 'score' in k or 'projection' in k})
+        # dct['rslt'] = pd.DataFrame({k:v for k,v in dct.items() if 'score' in k or 'projection' in k})
+        # dct['summary'] = dct['rslt'].describe().T
+        # dct['score'] = {'train': dct['rslt']['train_score'].median(), 'holdout': dct['rslt']['holdout_score'].median()}
+        # dct['score']['agg'] = sum(dct['score'].values())
+        # return dct
     
-    def get_optimal(self, path, **kwargs):
-        dct = self.get(path | {'nm': 'summary'})
-        A = [C for trf_hash, T in dct.items() for imp_hash, I in T.items() for clf_hash, C in I.items()]
-        return min(A, key=lambda x: x['score']['agg'])
+    # def get_optimal(self, path, **kwargs):
+    #     dct = self.get(path | {'nm': 'summary'})
+    #     A = [C for trf_hash, T in dct.items() for imp_hash, I in T.items() for clf_hash, C in I.items()]
+    #     return min(A, key=lambda x: x['score']['agg'])
 
 
     def run(self):
@@ -253,25 +277,28 @@ class AMP(MyBaseClass):
         self.get('X')
         self.get('Y')
         self.get('mlt')
+        summary = []
         for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes, 'trf_hash': self.trf_dct.keys(), 'imp_hash': self.imp_dct.keys(), 'clf_hash': self.clf_dct.keys()}, sort=False):
             qath = path | {'crse_code':'all', 'train_code':'all', 'clf_hash':'all'}
             dct = self.get(qath | {'nm':'X_proc'})
             dct = self.get(qath | {'nm':'Z_proc'})
             dct = self.get(path | {'nm':'Y_pred'})
             dct = self.get(path | {'nm':'summary'})
+            summary.append(dct['summary'])
             print(path)
             print(dct['trf_str'])
             print(dct['imp_str'])
             print(dct['clf_str'])
-            print(dct['score'])
+            # print(dct['score'])
             # dct['rslt'].disp(100)
-            dct['summary'].disp(100)
+            # dct['summary'].disp(100)
+        return pd.concat(summary)
             
         # for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes}, sort=False):
         #     dct = self.get(path | {'nm':'optimal'})
         #     print(dct['path'])
         #     dct['summary'].disp(100)
-        return dct
+        # return dct
             
 
 code_desc = lambda x: [x+'_code', x+'_desc']
@@ -476,7 +503,7 @@ kwargs = {
         # 'X_proc',
         # 'Z_proc',
         # 'Y_pred',
-        # 'summary',
+        'summary',
         # 'optimal',
     },
     'clf_grid': {
