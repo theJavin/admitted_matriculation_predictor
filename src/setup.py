@@ -1,4 +1,4 @@
-import os, sys, time, datetime, pathlib, contextlib, dotenv, shutil, warnings, codetiming, itertools as it
+import os, sys, time, datetime, pathlib, contextlib, io, dotenv, shutil, warnings, codetiming, itertools as it
 import dill, joblib, json, dataclasses, collections, oracledb
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from IPython.display import display, HTML, clear_output
@@ -140,12 +140,6 @@ def prep_string(ser, cap="casefold"):
     return getattr(ser.str, cap)().replace('',pd.NA) if pd.api.types.is_string_dtype(ser) else ser
 
 @pd_ext
-def prep_category(ser):
-    assert isinstance(ser, pd.Series)
-    ser = ser.prep_string()
-    return ser.astype('category') if pd.api.types.is_string_dtype(ser) else ser
-
-@pd_ext
 def prep_bool(ser):
     assert isinstance(ser, pd.Series)
     ser = ser.prep_string()
@@ -156,6 +150,13 @@ def prep_bool(ser):
             if vals.issubset(s):
                 ser = (ser == s[1]).astype('boolean').fillna(False)
     return ser
+
+@pd_ext
+def prep_category(ser):
+    assert isinstance(ser, pd.Series)
+    # ser = ser.prep_string()
+    ser = ser.prep_bool()
+    return ser.astype('category') if pd.api.types.is_string_dtype(ser) else ser
 
 @pd_ext
 def prep(X, cap='casefold'):

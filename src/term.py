@@ -52,7 +52,7 @@ class TERM(MyBaseClass):
                 # 'inst_gpa',
                 # 'overall_gpa',
                 'fafsa_app',
-                # 'finaid_offered',
+                'finaid_offered',
                 'finaid_accepted',
                 # 'finaid_declined',
                 'disb_req_complete',
@@ -275,7 +275,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
                         x = L[0][[]].assign(**{c:pd.NA})
                     L.append(x)
                 df = pd.concat(L, axis=1)
-            # print(f'{term_code} flags cycle day {flg_day} >= {self.cycle_day} on {flg_date} missing columns: {missing}')
+            print(f'{term_code} flags cycle day {flg_day} >= {self.cycle_day} on {flg_date} missing columns: {missing}')
             F.append(df)
         with warnings.catch_warnings(action='ignore'):
             subset = ['id','term_code_entry','styp_code']

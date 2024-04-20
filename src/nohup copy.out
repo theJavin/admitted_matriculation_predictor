@@ -1,0 +1,524 @@
+2024-04-19 02:15:44.706036
+creating terms: 
+creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 151}: 
+0.09 sec
+creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 0}: 
+0.11 sec
+creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 151}: 
+0.08 sec
+creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 0}: 
+0.13 sec
+creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 151}: 
+0.10 sec
+creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 0}: 
+0.11 sec
+creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 151}: 
+0.13 sec
+creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 0}: 
+0.04 sec
+0.78 sec
+creating raw_df: 0.86 sec
+creating reg_df: 0.11 sec
+creating X: 2.68 sec
+creating Y: 1.05 sec
+creating mlt: 0.21 sec
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'all'}: 194.28 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'all'}: 21.64 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 194.89 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.36 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 10.439626986550113, 'holdout': 25.564243902676473, 'agg': 36.00387088922659}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |         std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.4306 |   0.0898178 |   10.2614 |   10.3606 |   10.4396 |   10.4744 |   10.6571 |
+|  1 | holdout_score          |      20 |   25.5468 |   0.396551  |   24.959  |   25.3125 |   25.5642 |   25.683  |   26.5959 |
+|  2 | 2024_projection_raw    |      20 | 2467.7    | 227.697     | 2018      | 2303.75   | 2496.5    | 2598.25   | 2784      |
+|  3 | 2024_projection_202108 |      20 | 2908.85   | 268.402     | 2378.75   | 2715.59   | 2942.79   | 3062.73   | 3281.69   |
+|  4 | 2024_projection_202208 |      20 | 2858.93   | 263.797     | 2337.94   | 2668.99   | 2892.3    | 3010.18   | 3225.38   |
+|  5 | 2024_projection_202308 |      20 | 2726.18   | 251.547     | 2229.38   | 2545.06   | 2758      | 2870.41   | 3075.61   |
++----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: tuning
+362.32 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: 21.15 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 194.33 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.04 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 10.423648768254544, 'holdout': 25.471876370752778, 'agg': 35.89552513900732}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.4095 |   0.125235 |   10.1468 |   10.3111 |   10.4236 |   10.486  |   10.6236 |
+|  1 | holdout_score          |      20 |   25.4878 |   0.2767   |   25.0562 |   25.2869 |   25.4719 |   25.6561 |   26.1835 |
+|  2 | 2024_projection_raw    |      20 | 2507.45   | 247.232    | 2111      | 2302.25   | 2575      | 2737.5    | 2784      |
+|  3 | 2024_projection_202108 |      20 | 2955.7    | 291.429    | 2488.38   | 2713.82   | 3035.33   | 3226.88   | 3281.69   |
+|  4 | 2024_projection_202208 |      20 | 2904.99   | 286.428    | 2445.68   | 2667.25   | 2983.25   | 3171.51   | 3225.38   |
+|  5 | 2024_projection_202308 |      20 | 2770.1    | 273.128    | 2332.12   | 2543.4    | 2844.72   | 3024.24   | 3075.61   |
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'all'}: 195.49 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'all'}: 19.90 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 194.83 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.03 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 10.408495038751546, 'holdout': 25.5341581737543, 'agg': 35.942653212505846}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |        min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.3219 |   0.271766 |    9.51189 |   10.3462 |   10.4085 |   10.4383 |   10.631  |
+|  1 | holdout_score          |      20 |   25.5458 |   0.497194 |   24.6641  |   25.2703 |   25.5342 |   25.7602 |   26.3465 |
+|  2 | 2024_projection_raw    |      20 | 2529.25   | 227.465    | 2038       | 2391.75   | 2542.5    | 2757.75   | 2775      |
+|  3 | 2024_projection_202108 |      20 | 2981.4    | 268.128    | 2402.33    | 2819.32   | 2997.02   | 3250.75   | 3271.08   |
+|  4 | 2024_projection_202208 |      20 | 2930.24   | 263.528    | 2361.11    | 2770.94   | 2945.59   | 3194.97   | 3214.96   |
+|  5 | 2024_projection_202308 |      20 | 2794.18   | 251.291    | 2251.47    | 2642.28   | 2808.82   | 3046.61   | 3065.67   |
++----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: tuning
+364.91 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: 19.86 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 196.10 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.07 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 10.381496780144207, 'holdout': 25.374456311525034, 'agg': 35.75595309166924}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.3907 |   0.120488 |   10.1179 |   10.3343 |   10.3815 |   10.4563 |   10.6338 |
+|  1 | holdout_score          |      20 |   25.4392 |   0.430534 |   24.8354 |   25.0636 |   25.3745 |   25.748  |   26.2529 |
+|  2 | 2024_projection_raw    |      20 | 2484.5    | 237.184    | 2098      | 2289.75   | 2450      | 2681.25   | 2780      |
+|  3 | 2024_projection_202108 |      20 | 2928.65   | 279.585    | 2473.06   | 2699.08   | 2887.98   | 3160.57   | 3276.97   |
+|  4 | 2024_projection_202208 |      20 | 2878.4    | 274.787    | 2430.62   | 2652.77   | 2838.43   | 3106.34   | 3220.75   |
+|  5 | 2024_projection_202308 |      20 | 2744.74   | 262.028    | 2317.76   | 2529.59   | 2706.63   | 2962.1    | 3071.19   |
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'all'}: 194.64 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'all'}: 20.34 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 195.16 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.06 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 10.408776546138668, 'holdout': 25.497593486697905, 'agg': 35.90637003283658}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.373  |   0.351642 |    8.9441 |   10.3863 |   10.4088 |   10.4831 |   10.6699 |
+|  1 | holdout_score          |      20 |   25.4893 |   0.526308 |   24.7112 |   25.0609 |   25.4976 |   25.7514 |   26.5368 |
+|  2 | 2024_projection_raw    |      20 | 2551.2    | 290.774    | 1673      | 2386.5    | 2686.5    | 2756.25   | 2780      |
+|  3 | 2024_projection_202108 |      20 | 3007.27   | 342.755    | 1972.08   | 2813.13   | 3166.76   | 3248.98   | 3276.97   |
+|  4 | 2024_projection_202208 |      20 | 2955.67   | 336.874    | 1938.24   | 2764.86   | 3112.42   | 3193.23   | 3220.75   |
+|  5 | 2024_projection_202308 |      20 | 2818.43   | 321.231    | 1848.24   | 2636.48   | 2967.9    | 3044.96   | 3071.19   |
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: tuning
+363.44 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: 19.74 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 195.21 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.04 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 10.3937290087942, 'holdout': 25.512628200296163, 'agg': 35.90635720909036}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |        min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.3726 |   0.183512 |    9.81366 |   10.3342 |   10.3937 |   10.4862 |   10.6006 |
+|  1 | holdout_score          |      20 |   25.4822 |   0.502483 |   24.5765  |   25.2945 |   25.5126 |   25.7063 |   26.3659 |
+|  2 | 2024_projection_raw    |      20 | 2585.6    | 245.952    | 2028       | 2443.25   | 2703.5    | 2778      | 2786      |
+|  3 | 2024_projection_202108 |      20 | 3047.82   | 289.921    | 2390.54    | 2880.02   | 3186.8    | 3274.62   | 3284.05   |
+|  4 | 2024_projection_202208 |      20 | 2995.53   | 284.946    | 2349.52    | 2830.61   | 3132.12   | 3218.43   | 3227.7    |
+|  5 | 2024_projection_202308 |      20 | 2856.43   | 271.715    | 2240.43    | 2699.17   | 2986.68   | 3068.99   | 3077.82   |
++----+------------------------+---------+-----------+------------+------------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'all'}: 203.88 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'all'}: 26.04 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 198.28 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.06 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 10.423934964019123, 'holdout': 25.400172439197306, 'agg': 35.82410740321643}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |        std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.4068 |   0.089964 |   10.2093 |   10.3628 |   10.4239 |   10.4843 |   10.513  |
+|  1 | holdout_score          |      20 |   25.4602 |   0.451375 |   24.7917 |   25.2001 |   25.4002 |   25.6298 |   26.8434 |
+|  2 | 2024_projection_raw    |      20 | 2441.9    | 262.768    | 1736      | 2288.75   | 2465      | 2609.75   | 2780      |
+|  3 | 2024_projection_202108 |      20 | 2878.43   | 309.743    | 2046.34   | 2697.9    | 2905.66   | 3076.29   | 3276.97   |
+|  4 | 2024_projection_202208 |      20 | 2829.04   | 304.428    | 2011.23   | 2651.61   | 2855.81   | 3023.51   | 3220.75   |
+|  5 | 2024_projection_202308 |      20 | 2697.68   | 290.292    | 1917.84   | 2528.49   | 2723.2    | 2883.11   | 3071.19   |
++----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: tuning
+364.75 sec
+creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'all'}: 20.45 sec
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 197.44 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.94 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 10.458670514582135, 'holdout': 25.338064184132413, 'agg': 35.796734698714545}
+<IPython.core.display.HTML object>
++----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
+|    | index                  |   count |      mean |         std |       min |       25% |       50% |       75% |       max |
+|----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------|
+|  0 | train_score            |      20 |   10.4479 |   0.0914729 |   10.3311 |   10.3673 |   10.4587 |   10.4937 |   10.6457 |
+|  1 | holdout_score          |      20 |   25.4071 |   0.382796  |   24.8472 |   25.0694 |   25.3381 |   25.6725 |   26.0856 |
+|  2 | 2024_projection_raw    |      20 | 2497.25   | 231.968     | 2167      | 2261      | 2497      | 2707.75   | 2785      |
+|  3 | 2024_projection_202108 |      20 | 2943.68   | 273.436     | 2554.39   | 2665.19   | 2943.38   | 3191.81   | 3282.87   |
+|  4 | 2024_projection_202208 |      20 | 2893.17   | 268.744     | 2510.56   | 2619.46   | 2892.88   | 3137.04   | 3226.54   |
+|  5 | 2024_projection_202308 |      20 | 2758.83   | 256.266     | 2393.99   | 2497.83   | 2758.55   | 2991.38   | 3076.72   |
++----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 198.57 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.01 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 44.14191821771635, 'holdout': 52.461662631154155, 'agg': 96.60358084887051}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |      std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.4653 |  1.09819 |  42.5074 |  43.8033 |  44.1419 |  45.3261 |  46.5381 |
+|  1 | holdout_score          |      20 |  52.4878 |  1.40021 |  48.3421 |  51.8816 |  52.4617 |  53.2901 |  54.5624 |
+|  2 | 2024_projection_raw    |      20 | 436.35   | 63.3472  | 387      | 403.75   | 411      | 439.75   | 641      |
+|  3 | 2024_projection_202108 |      20 | 516.031  | 74.915   | 457.67   | 477.478  | 486.052  | 520.052  | 758.052  |
+|  4 | 2024_projection_202208 |      20 | 477.307  | 69.2932  | 423.325  | 441.647  | 449.578  | 481.026  | 701.166  |
+|  5 | 2024_projection_202308 |      20 | 472.596  | 68.6093  | 419.147  | 437.288  | 445.141  | 476.279  | 694.246  |
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 196.41 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+4.18 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 44.85007322737577, 'holdout': 52.38330049854477, 'agg': 97.23337372592054}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.6698 |  1.07703  |  41.178  |  44.2013 |  44.8501 |  45.3458 |  46.1058 |
+|  1 | holdout_score          |      20 |  52.2738 |  0.813406 |  50.3001 |  51.9223 |  52.3833 |  52.618  |  53.5691 |
+|  2 | 2024_projection_raw    |      20 | 411.05   | 14.2662   | 392      | 401.75   | 409.5    | 418      | 455      |
+|  3 | 2024_projection_202108 |      20 | 486.111  | 16.8713   | 463.583  | 475.113  | 484.278  | 494.33   | 538.087  |
+|  4 | 2024_projection_202208 |      20 | 449.632  | 15.6052   | 428.794  | 439.459  | 447.937  | 457.235  | 497.708  |
+|  5 | 2024_projection_202308 |      20 | 445.195  | 15.4512   | 424.562  | 435.122  | 443.516  | 452.722  | 492.796  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 199.33 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.05 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 44.881254915673026, 'holdout': 53.07573510178573, 'agg': 97.95699001745876}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |      std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.7343 |  1.03865 |  42.6703 |  43.7966 |  44.8813 |  45.5503 |  46.3412 |
+|  1 | holdout_score          |      20 |  53.4834 |  3.26462 |  48.4058 |  51.9821 |  53.0757 |  54.0661 |  62.4818 |
+|  2 | 2024_projection_raw    |      20 | 454.65   | 75.0721  | 390      | 410.75   | 423.5    | 478.5    | 664      |
+|  3 | 2024_projection_202108 |      20 | 537.673  | 88.7809  | 461.217  | 485.757  | 500.835  | 565.878  | 785.252  |
+|  4 | 2024_projection_202208 |      20 | 497.325  | 82.1186  | 426.606  | 449.304  | 463.251  | 523.413  | 726.325  |
+|  5 | 2024_projection_202308 |      20 | 492.416  | 81.3081  | 422.396  | 444.87   | 458.679  | 518.248  | 719.157  |
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 199.88 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.10 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 44.30210339215262, 'holdout': 52.60031388441901, 'agg': 96.90241727657163}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.188  |  0.952614 |  41.2015 |  43.9094 |  44.3021 |  44.808  |  45.4239 |
+|  1 | holdout_score          |      20 |  52.5558 |  2.19825  |  48.2819 |  51.9162 |  52.6003 |  53.3362 |  58.6354 |
+|  2 | 2024_projection_raw    |      20 | 460      | 83.3528   | 403      | 409.5    | 415      | 458.25   | 651      |
+|  3 | 2024_projection_202108 |      20 | 544      | 98.5737   | 476.591  | 484.278  | 490.783  | 541.93   | 769.878  |
+|  4 | 2024_projection_202208 |      20 | 503.177  | 91.1765   | 440.827  | 447.937  | 453.953  | 501.263  | 712.105  |
+|  5 | 2024_projection_202308 |      20 | 498.211  | 90.2766   | 436.476  | 443.516  | 449.473  | 496.315  | 705.077  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 200.08 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.96 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 44.485284866802154, 'holdout': 52.423714813450175, 'agg': 96.90899968025232}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |      std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.0421 |  1.14523 |  40.985  |  43.884  |  44.4853 |  44.7221 |  45.0688 |
+|  1 | holdout_score          |      20 |  52.2294 |  1.92723 |  48.4211 |  51.6722 |  52.4237 |  52.7591 |  57.9902 |
+|  2 | 2024_projection_raw    |      20 | 443.6    | 70.4537  | 397      | 407.5    | 414.5    | 432.5    | 632      |
+|  3 | 2024_projection_202108 |      20 | 524.605  | 83.3192  | 469.496  | 481.913  | 490.191  | 511.478  | 747.409  |
+|  4 | 2024_projection_202208 |      20 | 485.238  | 77.0667  | 434.264  | 445.749  | 453.406  | 473.096  | 691.321  |
+|  5 | 2024_projection_202308 |      20 | 480.449  | 76.3061  | 429.978  | 441.35   | 448.931  | 468.427  | 684.498  |
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 195.99 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.07 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 44.62530620337046, 'holdout': 52.24163380851279, 'agg': 96.86694001188324}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.4653 |   1.13485 |  41.6142 |  43.7595 |  44.6253 |  45.4055 |  46.342  |
+|  1 | holdout_score          |      20 |  53.0152 |   4.20984 |  48.4742 |  51.7187 |  52.2416 |  53.0391 |  69.6581 |
+|  2 | 2024_projection_raw    |      20 | 439.15   |  87.1359  | 352      | 404      | 405.5    | 420.5    | 677      |
+|  3 | 2024_projection_202108 |      20 | 519.343  | 103.048   | 416.278  | 477.774  | 479.548  | 497.287  | 800.626  |
+|  4 | 2024_projection_202208 |      20 | 480.37   |  95.3147  | 385.04   | 441.921  | 443.561  | 459.969  | 740.545  |
+|  5 | 2024_projection_202308 |      20 | 475.629  |  94.374   | 381.24   | 437.559  | 439.184  | 455.43   | 733.236  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 196.14 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.98 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 44.5245972330604, 'holdout': 52.71339350807935, 'agg': 97.23799074113975}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |      std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  43.8001 |  1.68285 |  39.5034 |  42.6418 |  44.5246 |  44.9766 |  46.1638 |
+|  1 | holdout_score          |      20 |  53.2228 |  1.51683 |  51.2934 |  52.3612 |  52.7134 |  53.6226 |  56.8789 |
+|  2 | 2024_projection_raw    |      20 | 440.75   | 61.3153  | 391      | 406.25   | 414      | 441.5    | 582      |
+|  3 | 2024_projection_202108 |      20 | 521.235  | 72.512   | 462.4    | 480.435  | 489.6    | 522.122  | 688.278  |
+|  4 | 2024_projection_202208 |      20 | 482.12   | 67.0705  | 427.7    | 444.382  | 452.859  | 482.94   | 636.628  |
+|  5 | 2024_projection_202308 |      20 | 477.362  | 66.4086  | 423.479  | 439.996  | 448.39   | 478.174  | 630.345  |
++----+------------------------+---------+----------+----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 196.79 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.99 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'biol1406', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 44.192254932986145, 'holdout': 52.32918242805152, 'agg': 96.52143736103767}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  44.3262 |   1.33585 |  41.8388 |  43.52   |  44.1923 |  45.1029 |  46.8331 |
+|  1 | holdout_score          |      20 |  52.417  |   2.2512  |  47.3094 |  51.8724 |  52.3292 |  52.8527 |  58.6381 |
+|  2 | 2024_projection_raw    |      20 | 454.1    |  85.0473  | 397      | 405      | 411.5    | 458.75   | 679      |
+|  3 | 2024_projection_202108 |      20 | 537.023  | 100.578   | 469.496  | 478.957  | 486.643  | 542.522  | 802.991  |
+|  4 | 2024_projection_202208 |      20 | 496.723  |  93.0301  | 434.264  | 443.014  | 450.125  | 501.81   | 742.733  |
+|  5 | 2024_projection_202308 |      20 | 491.821  |  92.1119  | 429.978  | 438.642  | 445.682  | 496.857  | 735.403  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 195.35 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.02 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 63.795268764458726, 'holdout': 67.84053754906172, 'agg': 131.63580631352045}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |       max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------|
+|  0 | train_score            |      20 |  63.6899 |   1.11386 |  60.7154 |  63.0582 |  63.7953 |  64.2866 |   66.189  |
+|  1 | holdout_score          |      20 |  67.7416 |   1.59767 |  65.2666 |  66.6915 |  67.8405 |  69.1126 |   70.7257 |
+|  2 | 2024_projection_raw    |      20 | 690      | 104.934   | 457      | 633      | 713      | 744.5    |  891      |
+|  3 | 2024_projection_202108 |      20 | 814.527  | 123.872   | 539.476  | 747.24   | 841.678  | 878.862  | 1051.8    |
+|  4 | 2024_projection_202208 |      20 | 779.184  | 118.497   | 516.068  | 714.816  | 805.156  | 840.728  | 1006.16   |
+|  5 | 2024_projection_202308 |      20 | 753.594  | 114.605   | 499.12   | 691.341  | 778.714  | 813.118  |  973.12   |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 196.76 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.02 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '6be4', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 63.29982862698007, 'holdout': 67.25886932503924, 'agg': 130.55869795201932}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------+
+|    | index                  |   count |     mean |        std |      min |      25% |      50% |      75% |       max |
+|----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------|
+|  0 | train_score            |      20 |  63.5204 |   1.36763  |  60.7292 |  62.6073 |  63.2998 |  64.6009 |   66.0142 |
+|  1 | holdout_score          |      20 |  67.369  |   0.848077 |  65.7186 |  66.9275 |  67.2589 |  67.9126 |   69.4102 |
+|  2 | 2024_projection_raw    |      20 | 651.9    | 134.074    | 511      | 537.75   | 616      | 738.25   | 1031      |
+|  3 | 2024_projection_202108 |      20 | 769.551  | 158.271    | 603.222  | 634.8    | 727.172  | 871.484  | 1217.07   |
+|  4 | 2024_projection_202208 |      20 | 736.159  | 151.403    | 577.048  | 607.255  | 695.619  | 833.67   | 1164.26   |
+|  5 | 2024_projection_202308 |      20 | 711.983  | 146.431    | 558.097  | 587.312  | 672.774  | 806.291  | 1126.02   |
++----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 199.86 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.79 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 64.00899075709926, 'holdout': 67.45803955824546, 'agg': 131.46703031534472}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+------------+---------+----------+---------+----------+----------+
+|    | index                  |   count |     mean |        std |     min |      25% |     50% |      75% |      max |
+|----+------------------------+---------+----------+------------+---------+----------+---------+----------+----------|
+|  0 | train_score            |      20 |  64.0002 |   0.886199 |  61.98  |  63.3762 |  64.009 |  64.484  |  65.7903 |
+|  1 | holdout_score          |      20 |  68.0476 |   1.78948  |  65.016 |  67.014  |  67.458 |  69.0635 |  71.7514 |
+|  2 | 2024_projection_raw    |      20 | 641      | 100.153    | 442     | 580.75   | 665     | 727.25   | 772      |
+|  3 | 2024_projection_202108 |      20 | 756.683  | 118.227    | 521.769 | 685.56   | 785.015 | 858.499  | 911.325  |
+|  4 | 2024_projection_202208 |      20 | 723.85   | 113.097    | 499.129 | 655.813  | 750.952 | 821.248  | 871.782  |
+|  5 | 2024_projection_202308 |      20 | 700.078  | 109.383    | 482.737 | 634.275  | 726.29  | 794.278  | 843.152  |
++----+------------------------+---------+----------+------------+---------+----------+---------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 196.15 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.04 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '0c5c', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__birth_day']),('coll_code','passthrough',['__coll_code']),('di...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 63.42747295411306, 'holdout': 67.21864067187808, 'agg': 130.64611362599112}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  63.614  |   1.02933 |  61.6271 |  62.9964 |  63.4275 |  64.5546 |  65.049  |
+|  1 | holdout_score          |      20 |  67.0938 |   1.05963 |  64.9795 |  66.4072 |  67.2186 |  67.8509 |  68.5772 |
+|  2 | 2024_projection_raw    |      20 | 632.6    | 118.276   | 430      | 530      | 647.5    | 724      | 805      |
+|  3 | 2024_projection_202108 |      20 | 746.767  | 139.622   | 507.604  | 625.651  | 764.357  | 854.663  | 950.281  |
+|  4 | 2024_projection_202208 |      20 | 714.365  | 133.564   | 485.578  | 598.503  | 731.19   | 817.578  | 909.048  |
+|  5 | 2024_projection_202308 |      20 | 690.904  | 129.177   | 469.631  | 578.848  | 707.177  | 790.728  | 879.194  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 199.98 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+1.85 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 63.58482386049148, 'holdout': 68.00394545393397, 'agg': 131.58876931442546}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------+
+|    | index                  |   count |     mean |        std |      min |      25% |      50% |      75% |       max |
+|----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------|
+|  0 | train_score            |      20 |  63.6841 |   0.897812 |  62.0944 |  63.2384 |  63.5848 |  64.39   |   65.3682 |
+|  1 | holdout_score          |      20 |  68.0598 |   1.62847  |  65.483  |  67.2442 |  68.0039 |  68.4841 |   72.1311 |
+|  2 | 2024_projection_raw    |      20 | 653.4    | 113.61     | 511      | 547.5    | 657      | 733.5    |  898      |
+|  3 | 2024_projection_202108 |      20 | 771.321  | 134.114    | 603.222  | 646.309  | 775.571  | 865.877  | 1060.07   |
+|  4 | 2024_projection_202208 |      20 | 737.853  | 128.295    | 577.048  | 618.265  | 741.918  | 828.306  | 1014.07   |
+|  5 | 2024_projection_202308 |      20 | 713.621  | 124.081    | 558.097  | 597.961  | 717.553  | 801.104  |  980.765  |
++----+------------------------+---------+----------+------------+----------+----------+----------+----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 197.27 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.00 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8dec', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 63.020214092039765, 'holdout': 67.51763289008977, 'agg': 130.53784698212954}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |       max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------|
+|  0 | train_score            |      20 |  63.1734 |   0.72924 |  62.2904 |  62.6039 |  63.0202 |  63.3773 |   64.8207 |
+|  1 | holdout_score          |      20 |  67.5928 |   1.73397 |  65.1376 |  66.1365 |  67.5176 |  68.8924 |   71.4873 |
+|  2 | 2024_projection_raw    |      20 | 685.2    | 123.021   | 453      | 596.75   | 686.5    | 765.25   |  930      |
+|  3 | 2024_projection_202108 |      20 | 808.86   | 145.223   | 534.754  | 704.447  | 810.395  | 903.357  | 1097.84   |
+|  4 | 2024_projection_202208 |      20 | 773.763  | 138.921   | 511.551  | 673.881  | 775.231  | 864.16   | 1050.2    |
+|  5 | 2024_projection_202308 |      20 | 748.352  | 134.359   | 494.751  | 651.75   | 749.772  | 835.78   | 1015.71   |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: 199.95 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.03 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'c894', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': False}
+{'train': 63.715907442944264, 'holdout': 67.6816590833717, 'agg': 131.39756652631596}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |       max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------|
+|  0 | train_score            |      20 |  63.9746 |   1.15382 |  61.4935 |  63.3161 |  63.7159 |  64.6379 |   66.1733 |
+|  1 | holdout_score          |      20 |  67.8943 |   1.33211 |  65.3784 |  67.222  |  67.6817 |  68.9919 |   71.2018 |
+|  2 | 2024_projection_raw    |      20 | 682.5    | 102.044   | 489      | 623.75   | 683.5    | 723.5    |  923      |
+|  3 | 2024_projection_202108 |      20 | 805.673  | 120.46    | 577.251  | 736.32   | 806.854  | 854.072  | 1089.58   |
+|  4 | 2024_projection_202208 |      20 | 770.714  | 115.233   | 552.204  | 704.371  | 771.844  | 817.014  | 1042.3    |
+|  5 | 2024_projection_202308 |      20 | 745.403  | 111.449   | 534.069  | 681.238  | 746.495  | 790.182  | 1008.07   |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+-----------+
+creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: 198.15 sec
+creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}: {'train_score': 20}
+Index([202108, 202208, 202308], dtype='Int64', name='pred_code')
+{'train_score': 20, 'holdout_score': 20, '2024_projection_raw': 20, '2024_projection_202108': 20, '2024_projection_202208': 20, '2024_projection_202308': 20}
+2.00 sec
+{'nm': '', 'styp_code': 'n', 'crse_code': 'math1314', 'train_code': 202308, 'trf_hash': '8975', 'imp_hash': 'a8a6', 'clf_hash': 'd83b'}
+ColumnTransformer(transformers=[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance','passthrough',['__distance']),('gap_score','passthrough',['__gap_score']...('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])],verbose_feature_names_out=False)
+{'datasets': 20, 'iterations': 6, 'tune': True}
+{'train': 63.787332071782416, 'holdout': 67.99381609607457, 'agg': 131.781148167857}
+<IPython.core.display.HTML object>
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+
+|    | index                  |   count |     mean |       std |      min |      25% |      50% |      75% |      max |
+|----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------|
+|  0 | train_score            |      20 |  63.7396 |   1.03169 |  62.0532 |  62.9563 |  63.7873 |  64.415  |  65.9565 |
+|  1 | holdout_score          |      20 |  68.1579 |   1.48461 |  65.6228 |  67.4391 |  67.9938 |  68.7916 |  71.5659 |
+|  2 | 2024_projection_raw    |      20 | 665.95   | 100.052   | 495      | 590.75   | 680      | 735      | 805      |
+|  3 | 2024_projection_202108 |      20 | 786.136  | 118.109   | 584.334  | 697.365  | 802.722  | 867.648  | 950.281  |
+|  4 | 2024_projection_202208 |      20 | 752.025  | 112.984   | 558.98   | 667.105  | 767.891  | 830      | 909.048  |
+|  5 | 2024_projection_202308 |      20 | 727.328  | 109.274   | 540.622  | 645.197  | 742.673  | 802.742  | 879.194  |
++----+------------------------+---------+----------+-----------+----------+----------+----------+----------+----------+

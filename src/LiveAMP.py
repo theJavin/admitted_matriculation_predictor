@@ -5,11 +5,9 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, PowerTransforme
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, auc
-from sklearn.linear_model import LogisticRegression
+# from sklearn.linear_model import LogisticRegression
 from sklearn import set_config
 set_config(transform_output="pandas")
-
-hasher = lambda t, d=2: hashlib.shake_128(str(t).encode()).hexdigest(d)
 
 @dataclasses.dataclass
 class AMP(MyBaseClass):
@@ -27,7 +25,6 @@ class AMP(MyBaseClass):
     imp_grid: dict = dataclasses.field(default_factory=dict)
     clf_grid: dict = dataclasses.field(default_factory=dict)
     impute_yearly: bool = False
-    n_splits: int = 3
     random_state: int = 42
 
     def __post_init__(self):
@@ -51,13 +48,19 @@ class AMP(MyBaseClass):
             self[k] = uniquify(self[k])
         if self.proj_code in self.train_codes:
             self.train_codes.remove(self.proj_code)
+
+        self.imp_grid |= {'random_state': self.random_state}
+        self.clf_grid |= {'seed': self.random_state}
+        formatter = lambda x: str(x).replace('\n','').replace(' ','')
+        hasher = lambda x, d=2: hashlib.shake_128(str(x).encode()).hexdigest(d)
         for nm in ['trf','imp','clf']:
-            self[nm+'_list'] = cartesian({k: uniquify(v, key=str) for k,v in self[nm+'_grid'].items()})
+            self[nm+'_list'] = cartesian(self[nm+'_grid'])
             if nm == 'trf':
                 self[nm+'_list'] = [ColumnTransformer([(c,t,["__"+c]) for c,t in trf.items() if t not in ['drop',None,'']], remainder='drop', verbose_feature_names_out=False) for trf in self[nm+'_list']]
-                self[nm+'_dict'] = {hasher(t.transformers): t for t in self[nm+'_list']}
+                dct = {formatter(x.transformers): x for x in self[nm+'_list']}
             else:
-                self[nm+'_dict'] = {hasher(t): t for t in self[nm+'_list']}
+                dct = {formatter(x): x for x in self[nm+'_list']}
+            self[nm+'_dct'] = {hasher(k): [k, v] for k,v in dct.items()}
 
     def where(self, df):
         return df.rename(columns={'term_code':'pred_code', 'term_desc':'pred_desc'}).query(f"levl_code=='ug' & styp_code in ('n','r','t')").copy()
@@ -100,7 +103,7 @@ class AMP(MyBaseClass):
         })
         majr = ['majr_desc','dept_code','dept_desc','coll_code','coll_desc']
         S = R.sort_values('cycle_date').drop_duplicates(subset='majr_code', keep='last')[['majr_code',*majr]]
-        X = R.drop(columns=majr).merge(S, on='majr_code', how='left').prep().prep_bool()
+        X = R.drop(columns=majr).merge(S, on='majr_code', how='left').prep_bool()
         checks = [
             'cycle_day >= 0',
             'apdc_day >= cycle_day',
@@ -123,13 +126,13 @@ class AMP(MyBaseClass):
         for k, v in self.fill.items():
             X[k] = X.impute(k, *listify(v))
         M = X.isnull().rename(columns=lambda x:x+'_missing')
-        X = X.join(M).prep().prep_bool().set_index(self.attr, drop=False).rename(columns=lambda x:'__'+x)
+        X = X.join(M).prep_bool().set_index(self.attr, drop=False).rename(columns=lambda x:'__'+x)
         return X
 
     def get_Y(self, path, **kwargs):
         Y = {k: self.get('X')[[]].join(y)['credit_hr'].unstack().dropna(how='all', axis=1).fillna(0) for k, y in self.get('reg_df').items()}
         Y = {k: y.assign(**{c:0 for c in self.crse_codes if c not in y.columns})[self.crse_codes] for k, y in Y.items()}
-        return Y['cur'].rename(columns=lambda x:x+'_cur').join(Y['end']>0).prep()
+        return Y['cur'].rename(columns=lambda x:x+'_cur').join(Y['end']>0).prep_bool()
 
     def get_mlt(self, path, **kwargs):
         agg = lambda y: y.query(f"pred_code!=@self.proj_code").grpby(self.mlt_grp)['credit_hr'].agg(lambda x: (x>0).sum()).rename('mlt')
@@ -147,17 +150,16 @@ class AMP(MyBaseClass):
     def get_X_proc(self, path, **kwargs):
         X = self.get('X')
         mask = X.eval(f"styp_code==@path['styp_code']")
-        trf = self.trf_dict[path['trf_hash']]
-        X_trf = trf.fit_transform(X[mask]).sample(frac=1).prep().prep_bool().prep_category()
-        imp_par = self.imp_dict[path['imp_hash']].copy()
-        imp_par['random_state'] = self.random_state
+        trf_str, trf = self.trf_dct[path['trf_hash']]
+        imp_str, imp_par = self.imp_dct[path['imp_hash']].copy()
+        X_trf = trf.fit_transform(X[mask].copy()).sample(frac=1).prep_category()
         iterations = imp_par.pop('iterations')
+        imp_par = imp_par.copy()
         tune = imp_par.pop('tune')
         if tune:
             print('tuning')
             ds = imp_par.pop('datasets')
             imp = mf.ImputationKernel(X_trf, datasets=1, **imp_par)
-            # imp.mice(1)
             imp.mice(iterations)
             variable_parameters, losses = imp.tune_parameters(dataset=0)
             imp_par['datasets'] = ds
@@ -165,51 +167,64 @@ class AMP(MyBaseClass):
             variable_parameters = None
         imp = mf.ImputationKernel(X_trf, **imp_par)
         imp.mice(iterations, variable_parameters=variable_parameters)
-        # X_proc = pd.concat([imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())])
         X_proc = [imp.complete_data(k).addlevel('trf_hash', path['trf_hash']).addlevel('imp', k) for k in range(imp.dataset_count())]
-        return {'path': path, 'X_proc': X_proc, 'trf_str': str(trf).replace('\n','').replace(' ',''), 'imp_str': str(self.imp_dict[path['imp_hash']])}
+        # imp.plot_mean_convergence(wspace=0.3, hspace=0.4)
+        # plt.show()
+        return {'path': path, 'X_proc': X_proc, 'trf_str': trf_str, 'imp_str': imp_str}
 
     def get_Z_proc(self, path, **kwargs):
+        print(path)
         dct = self.get(path | {'nm':'X_proc'})
-        dct['Z_proc'] = [X.join(self.get('Y')).sample(frac=1).prep().prep_bool().prep_category() for X in dct['X_proc']]
+        dct['Z_proc'] = [X.join(self.get('Y')).sample(frac=1).prep_category() for X in dct['X_proc']]
         return dct
 
     def get_Y_pred(self, path, **kwargs):
-        dct = deepcopy(self.get(path | {'nm':'Z_proc', 'crse_code':'all', 'train_code':'all', 'clf_hash':'all'})) | {'Y_pred':[], 'train_score': []}
+        dct = deepcopy(self.get(path | {'nm':'Z_proc', 'crse_code':'all', 'train_code':'all', 'clf_hash':'all'})) 
         targ = path['crse_code']
-        df = dct['Z_proc']
-        # if df.query(f"pred_code==@path['train_code'] & imp==0")[targ].sum() < 10:
-        if df[0].query(f"pred_code==@path['train_code']")[targ].sum() < 10:
+        if dct['Z_proc'][0].query(f"pred_code==@path['train_code']")[targ].sum() < 10:
             return dct
-        clf_par = self.clf_dict[path['clf_hash']]
-        clf_par['seed'] = self.random_state
-        # df = df.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep().prep_category()
-        # for imp, Z in df.groupby('imp'):
-        for imp, Z in enumerate(df):
+        clf_str, clf_par = self.clf_dct[path['clf_hash']]
+        clf_par |= {'split_type':'stratified', 'task':'classification', 'verbose':0, 'log_file_name': self.root_path / 'log.txt'}
+        dct |= {'clf_str': clf_str, 'Y_pred':[], 'train_score': []}
+        for imp, Z in enumerate(dct['Z_proc']):
             cols = uniquify([*Z.filter(like='__').columns, '_allcrse_cur', targ+'_cur', targ])
-            Z = Z.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep().prep_category()
+            Z = Z.filter(cols).copy().addlevel('crse_code', targ).addlevel('train_code', path['train_code']).addlevel('clf_hash', path['clf_hash']).prep_category()
             trn_mask = Z.eval(f"pred_code==@path['train_code']")
             clf = fl.AutoML(**clf_par)
             with warnings.catch_warnings(action='ignore'):
-                clf.fit(Z[trn_mask].drop(columns=targ), Z[trn_mask][targ], eval_method='cv', n_splits=self.n_splits, **clf_par)
-            Y = (
-                Z[targ].rename('actual').to_frame()
-                .assign(predicted=clf.predict(Z.drop(columns=targ)))
-                .assign(proba=clf.predict_proba(Z.drop(columns=targ))[:,1])
-            )
+                clf.fit(Z[trn_mask].drop(columns=targ), Z[trn_mask][targ], **clf_par)
+                Y = (
+                    Z[targ].rename('actual').to_frame()
+                    .assign(predicted=clf.predict(Z.drop(columns=targ)))
+                    .assign(proba=clf.predict_proba(Z.drop(columns=targ))[:,1])
+                    .prep_category()
+                )
             dct['Y_pred'].append(Y)
             dct['train_score'].append(clf.best_result['val_loss'] * 100)
+            # try:
+            #     plt.barh(clf.model.estimator.feature_name_, clf.model.estimator.feature_importances_)
+            #     plt.show()
+            # except:
+            #     pass
+            # time_history, best_valid_loss_history, valid_loss_history, config_history, metric_history = fl.automl.data.get_output_from_log(filename=clf_par['log_file_name'], time_budget=np.inf)
+            # plt.title("Learning Curve")
+            # plt.xlabel("Wall Clock Time (s)")
+            # plt.ylabel("Validation Accuracy")
+            # plt.step(time_history, 1 - np.array(best_valid_loss_history), where="post")
+            # plt.show()
         return dct
 
     def get_summary(self, path, **kwargs):
         dct = deepcopy(self.get(path | {'nm':'Y_pred'}))
         if 'Y_pred' not in dct:
             return dct
-        print({k:len(v) for k,v in dct.items() if 'score' in k or 'projection' in k})
         M = self.get('mlt').query(f"styp_code==@path['styp_code'] & crse_code==@path['crse_code']").rsindex('pred_code').squeeze()
-        print(M.index)
         dct |= {'holdout_score':[], '2024_projection_raw':[]} | {f'2024_projection_{pred_code}':[] for pred_code in M.index}
         for Y in dct['Y_pred']:
+            # A = Y.groupby('train_code')
+            # H = A.agg(lambda y: (1 - f1_score(y['actual'], y['predicted'])) * 100)
+
+
             trn_mask = Y.eval(f"pred_code==@path['train_code']")
             proj_mask = Y.eval(f"pred_code==@self.proj_code")
             holdout_mask = ~(trn_mask | proj_mask)
@@ -238,7 +253,7 @@ class AMP(MyBaseClass):
         self.get('X')
         self.get('Y')
         self.get('mlt')
-        for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes, 'trf_hash': self.trf_dict.keys(), 'imp_hash': self.imp_dict.keys(), 'clf_hash': self.clf_dict.keys()}, sort=False):
+        for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes, 'trf_hash': self.trf_dct.keys(), 'imp_hash': self.imp_dct.keys(), 'clf_hash': self.clf_dct.keys()}, sort=False):
             qath = path | {'crse_code':'all', 'train_code':'all', 'clf_hash':'all'}
             dct = self.get(qath | {'nm':'X_proc'})
             dct = self.get(qath | {'nm':'Z_proc'})
@@ -247,7 +262,9 @@ class AMP(MyBaseClass):
             print(path)
             print(dct['trf_str'])
             print(dct['imp_str'])
+            print(dct['clf_str'])
             print(dct['score'])
+            # dct['rslt'].disp(100)
             dct['summary'].disp(100)
             
         # for path in cartesian({'nm': '', 'styp_code': self.styp_codes, 'crse_code': self.crse_codes, 'train_code': self.train_codes}, sort=False):
@@ -258,13 +275,13 @@ class AMP(MyBaseClass):
             
 
 code_desc = lambda x: [x+'_code', x+'_desc']
-pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
+pwr = [make_pipeline(StandardScaler(), PowerTransformer())]
 passthru = ['passthrough']
-passdrop = ['passthrough', 'drop']
-passpwr = ['passthrough', pwrtrf]
+passdrop = [*passthru, 'drop']
+passpwr = [*passthru, *pwr]
 
-passdrop = ['passthrough']
-# passpwr = ['passthrough']
+# passdrop = ['passthrough']
+# passpwr = ['passthrough', ]
 
 kwargs = {
     'fill': {
@@ -297,8 +314,8 @@ kwargs = {
         *code_desc('dept'),
         *code_desc('majr'),
         *code_desc('cnty'),
-        *code_desc('stat'),
-        *code_desc('natn'),
+        # *code_desc('stat'),
+        # *code_desc('natn'),
         *code_desc('resd'),
         *code_desc('lgcy'),
         'international',
@@ -317,10 +334,10 @@ kwargs = {
         'apdc_day': passthru,
         # 'appl_day': passthru,
         # 'birth_day': passpwr,
-        'birth_day': passpwr,
+        'birth_day': passthru,
         # 'camp_code': passdrop,
-        'coll_code': passdrop,
-        'distance': passpwr,
+        'coll_code': passthru,
+        'distance': pwr,
         # 'fafsa_app': passthru,
         # 'finaid_accepted': passthru,
         'gap_score': passthru,
@@ -352,7 +369,7 @@ kwargs = {
         # 'arts1304',
         # 'arts3331',
         # 'biol1305',
-        'biol1406',
+        # 'biol1406',
         # 'biol1407',
         # 'biol2401',
         # 'biol2402',
@@ -408,7 +425,7 @@ kwargs = {
         # 'hist2322',
         # 'huma1315',
         # 'kine2315',
-        'math1314',
+        # 'math1314',
         # 'math1316',
         # 'math1324',
         # 'math1332',
@@ -463,32 +480,27 @@ kwargs = {
         # 'optimal',
     },
     'clf_grid': {
-        'task': 'classification',
-        'verbose': 0,
         'metric': 'f1',
-        'split_type': 'stratified',
-        # 'early_stop': 10,
-        'time_budget': 8,
-        # "ensemble": True,
-        # "ensemble": {
-        #     "final_estimator": LogisticRegression(),
-            # "passthrough": False,
-        # },
+        'early_stop': True,
+        'time_budget': 60,
+        'estimator_list': [['lgbm', 'xgboost']],#, 'extra_tree']],#, 'rf' 'xgb_limitdepth'],
+        'ensemble': [False, True],
+        'eval_method': 'cv',
+        'n_splits': 5,
     },
     'imp_grid': {
-        'datasets': 20,
-        'iterations': 6,
+        'datasets': 30,
         # 'datasets': 2,
-        # 'iterations': 3,
-        # 'tune': False,
-        'tune': [False, True],
+        'iterations': 3,
+        # 'tune': True,
+        # 'tune': [False, True],
+        'tune': True,
     },
-    # 'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
-    'cycle_day': 151,
+    'cycle_day': (TERM(term_code=202408).cycle_date-pd.Timestamp.now()).days+1,
+    # 'cycle_day': 150,
     'styp_codes':'n',
-    'n_splits': 3,
     'random_state': 42,
-    'train_codes': 202308,
+    'train_codes': [202108, 202208, 202308],
 }
 
 if __name__ == "__main__":
@@ -496,7 +508,7 @@ if __name__ == "__main__":
 
     @pd_ext
     def disp(df, max_rows=4, max_cols=200, **kwargs):
-        display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+        # display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
         print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
 
     from IPython.utils.io import Tee
