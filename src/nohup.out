@@ -1,136 +1,710 @@
-2024-04-20 12:26:15.536909
-creating terms: 
-creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 149}: 
-0.10 sec
-creating {'nm': 'term', 'term_code': 202108, 'cycle_day': 0}: 
-0.14 sec
-creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 149}: 
-0.08 sec
-creating {'nm': 'term', 'term_code': 202208, 'cycle_day': 0}: 
-0.11 sec
-creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 149}: 
-0.09 sec
-creating {'nm': 'term', 'term_code': 202308, 'cycle_day': 0}: 
-0.12 sec
-creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 149}: 
-0.12 sec
-creating {'nm': 'term', 'term_code': 202408, 'cycle_day': 0}: 
-0.04 sec
-0.78 sec
-creating raw_df: 0.83 sec
-creating reg_df: 0.10 sec
-creating X: 1.63 sec
-creating Y: 0.26 sec
-creating mlt: 0.08 sec
-creating {'nm': 'X_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'all'}: tuning
-1295.66 sec
-creating {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'all'}: {'nm': 'Z_proc', 'styp_code': 'n', 'crse_code': 'all', 'train_code': 'all', 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'all'}
-12.63 sec
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: 1842.98 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-2.21 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':False,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 20.33382628222905, 'holdout': 13.836801126506847, 'agg': 34.170627408735896}
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |       std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   20.299  |  0.226978 |   19.7555 |   20.1571 |   20.3338 |   20.4446 |   20.7606 |
-|  1 | holdout_score          |      30 |   13.8421 |  0.20453  |   13.4312 |   13.6929 |   13.8368 |   14.0164 |   14.1795 |
-|  2 | 2024_projection_raw    |      30 | 2795.33   | 45.5187   | 2642      | 2779.25   | 2810      | 2825.25   | 2855      |
-|  3 | 2024_projection_202108 |      30 | 3271.65   | 53.2751   | 3092.19   | 3252.83   | 3288.82   | 3306.67   | 3341.49   |
-|  4 | 2024_projection_202208 |      30 | 3212.66   | 52.3145   | 3036.44   | 3194.18   | 3229.52   | 3247.05   | 3281.24   |
-|  5 | 2024_projection_202308 |      30 | 3068.05   | 49.9596   | 2899.76   | 3050.4    | 3084.15   | 3100.88   | 3133.54   |
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: 1938.47 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-2.17 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202108, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':True,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 20.35022135285392, 'holdout': 13.595692351786248, 'agg': 33.94591370464017}
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |       std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   20.3209 |  0.243905 |   19.7555 |   20.1693 |   20.3502 |   20.4858 |   20.7606 |
-|  1 | holdout_score          |      30 |   13.6354 |  0.174762 |   13.319  |   13.5458 |   13.5957 |   13.7303 |   14.0501 |
-|  2 | 2024_projection_raw    |      30 | 2806.6    | 32.9897   | 2670      | 2792.25   | 2811      | 2826.75   | 2843      |
-|  3 | 2024_projection_202108 |      30 | 3284.84   | 38.611    | 3124.96   | 3268.05   | 3289.99   | 3308.42   | 3327.44   |
-|  4 | 2024_projection_202208 |      30 | 3225.61   | 37.9149   | 3068.62   | 3209.12   | 3230.67   | 3248.77   | 3267.45   |
-|  5 | 2024_projection_202308 |      30 | 3080.41   | 36.2082   | 2930.49   | 3064.66   | 3085.24   | 3102.53   | 3120.37   |
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: 1826.64 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-3.29 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':False,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 15.997651919008069, 'holdout': 15.217260550525891, 'agg': 31.21491246953396}
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |       std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   16.0035 |  0.201578 |   15.5714 |   15.8774 |   15.9977 |   16.1426 |   16.4442 |
-|  1 | holdout_score          |      30 |   15.229  |  0.142291 |   14.9166 |   15.1386 |   15.2173 |   15.322  |   15.5491 |
-|  2 | 2024_projection_raw    |      30 | 2800      | 35.5431   | 2712      | 2778.25   | 2809      | 2827      | 2853      |
-|  3 | 2024_projection_202108 |      30 | 3277.12   | 41.5996   | 3174.12   | 3251.66   | 3287.65   | 3308.72   | 3339.15   |
-|  4 | 2024_projection_202208 |      30 | 3218.03   | 40.8495   | 3116.89   | 3193.03   | 3228.37   | 3249.06   | 3278.94   |
-|  5 | 2024_projection_202308 |      30 | 3073.17   | 39.0107   | 2976.59   | 3049.3    | 3083.05   | 3102.8    | 3131.34   |
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: 1937.69 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-2.14 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202208, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':True,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 16.012656227543367, 'holdout': 15.137394674132143, 'agg': 31.15005090167551}
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |       std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   16.0003 |  0.21065  |   15.43   |   15.8863 |   16.0127 |   16.1011 |   16.3823 |
-|  1 | holdout_score          |      30 |   15.1384 |  0.096965 |   14.9689 |   15.0744 |   15.1374 |   15.2085 |   15.3053 |
-|  2 | 2024_projection_raw    |      30 | 2806.87   | 24.9534   | 2756      | 2789.25   | 2806.5    | 2817      | 2884      |
-|  3 | 2024_projection_202108 |      30 | 3285.15   | 29.2054   | 3225.62   | 3264.53   | 3284.72   | 3297.01   | 3375.43   |
-|  4 | 2024_projection_202208 |      30 | 3225.92   | 28.6788   | 3167.46   | 3205.67   | 3225.5    | 3237.57   | 3314.57   |
-|  5 | 2024_projection_202308 |      30 | 3080.71   | 27.3879   | 3024.88   | 3061.37   | 3080.3    | 3091.83   | 3165.37   |
-+----+------------------------+---------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: 1822.53 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-2.21 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': 'c244'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':False,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 10.274621854781037, 'holdout': 20.857223321078948, 'agg': 31.131845175859986}
-+----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |        std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   10.2786 |   0.066778 |   10.1727 |   10.2152 |   10.2746 |   10.3179 |   10.4427 |
-|  1 | holdout_score          |      30 |   20.936  |   0.360718 |   20.4562 |   20.7398 |   20.8572 |   21.0976 |   22.3567 |
-|  2 | 2024_projection_raw    |      30 | 2348.43   | 239.852    | 1933      | 2151.5    | 2282      | 2518.25   | 2835      |
-|  3 | 2024_projection_202108 |      30 | 2748.6    | 280.722    | 2262.38   | 2518.11   | 2670.85   | 2947.36   | 3318.08   |
-|  4 | 2024_projection_202208 |      30 | 2699.04   | 275.66     | 2221.59   | 2472.71   | 2622.69   | 2894.21   | 3258.25   |
-|  5 | 2024_projection_202308 |      30 | 2577.55   | 263.252    | 2121.59   | 2361.4    | 2504.63   | 2763.93   | 3111.59   |
-+----+------------------------+---------+-----------+------------+-----------+-----------+-----------+-----------+-----------+
-creating {'nm': 'Y_pred', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: 1950.24 sec
-creating {'nm': 'summary', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}: {'train_score': 30, 'holdout_score': 30, '2024_projection_raw': 30, '2024_projection_202108': 30, '2024_projection_202208': 30, '2024_projection_202308': 30}
-2.17 sec
-{'nm': '', 'styp_code': 'n', 'crse_code': '_allcrse', 'train_code': 202308, 'trf_hash': 'fa15', 'imp_hash': '36d5', 'clf_hash': '1d1f'}
-[('act_equiv','passthrough',['__act_equiv']),('act_equiv_missing','passthrough',['__act_equiv_missing']),('apdc_day','passthrough',['__apdc_day']),('birth_day','passthrough',['__birth_day']),('coll_code','passthrough',['__coll_code']),('distance',Pipeline(steps=[('standardscaler',StandardScaler()),('powertransformer',PowerTransformer())]),['__distance']),('gap_score','passthrough',['__gap_score']),('gender','passthrough',['__gender']),('hs_qrtl','passthrough',['__hs_qrtl']),('international','passthrough',['__international']),('lgcy','passthrough',['__lgcy']),('math','passthrough',['__math']),('oriented','passthrough',['__oriented']),('race_american_indian','passthrough',['__race_american_indian']),('race_asian','passthrough',['__race_asian']),('race_black','passthrough',['__race_black']),('race_hispanic','passthrough',['__race_hispanic']),('race_pacific','passthrough',['__race_pacific']),('race_white','passthrough',['__race_white']),('reading','passthrough',['__reading']),('remote','passthrough',['__remote']),('resd','passthrough',['__resd']),('schlship_app','passthrough',['__schlship_app']),('ssb','passthrough',['__ssb']),('waiver','passthrough',['__waiver']),('writing','passthrough',['__writing'])]
-{'datasets':30,'iterations':3,'random_state':42,'tune':True}
-{'early_stop':True,'ensemble':True,'estimator_list':['lgbm','xgboost'],'eval_method':'cv','metric':'f1','n_splits':5,'seed':42,'time_budget':60}
-{'train': 10.27941667907599, 'holdout': 21.13078782000393, 'agg': 31.41020449907992}
-+----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
-|    | index                  |   count |      mean |         std |       min |       25% |       50% |       75% |       max |
-|----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------|
-|  0 | train_score            |      30 |   10.2785 |   0.0733593 |   10.1727 |   10.2152 |   10.2794 |   10.3176 |   10.5078 |
-|  1 | holdout_score          |      30 |   21.1427 |   0.307736  |   20.4513 |   20.9476 |   21.1308 |   21.3261 |   21.7253 |
-|  2 | 2024_projection_raw    |      30 | 2323.87   | 222.082     | 2006      | 2126.5    | 2290.5    | 2512.5    | 2795      |
-|  3 | 2024_projection_202108 |      30 | 2719.85   | 259.925     | 2347.82   | 2488.85   | 2680.8    | 2940.63   | 3271.26   |
-|  4 | 2024_projection_202208 |      30 | 2670.81   | 255.238     | 2305.49   | 2443.98   | 2632.46   | 2887.61   | 3212.28   |
-|  5 | 2024_projection_202308 |      30 | 2550.59   | 243.749     | 2201.71   | 2333.96   | 2513.96   | 2757.62   | 3067.68   |
-+----+------------------------+---------+-----------+-------------+-----------+-----------+-----------+-----------+-----------+
+2024-04-28 13:09:51.767980
+creating Y_pred/n/_allcrse/202108/fa15/2474/1946.pkl: 
+0 -9.22015915119363
+0.5 18.432360742705555
+0.25 1.538461538461533
+0.125 -3.225464190981431
+0.1875 -3.0212201591511945
+0.21875 0.22281167108753053
+0.203125 -0.6233421750663104
+0.2109375 0.1644562334217392
+0.20703125 2.6684350132625934
+0.205078125 -0.96551724137931
+0.2060546875 -1.8938992042440317
+0.20654296875 1.0981432360742671
+0.2109375 0.1644562334217392
+Elapsed time: 763.6586 seconds
+creating Y_pred/n/_allcrse/202208/fa15/2474/1946.pkl: 
+0 -10.654076462459694
+0.5 16.324274527867356
+0.25 -1.287425149700594
+0.375 3.4868724090280967
+0.3125 1.561492399815756
+0.28125 -2.1142330723169067
+0.296875 0.45140488254260536
+0.2890625 -0.48134500230307964
+0.29296875 -0.3938277291570813
+0.294921875 1.5730078304928563
+0.2939453125 -1.2229387379088075
+0.29443359375 -0.6034085674804235
+0.29296875 0.3938277291570813
+Elapsed time: 771.5899 seconds
+creating Y_pred/n/_allcrse/202308/fa15/2474/1946.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.5175859312549935
+0.125 0.199840127897688
+0.0625 -0.3257394084732246
+0.09375 -0.3117505995203884
+0.109375 0.10191846522782377
+0.1015625 0.35171862509992824
+0.09765625 0.19584332533972848
+0.095703125 -0.027977617905672325
+0.095703125 0.027977617905672325
+Elapsed time: 746.6555 seconds
+creating Y_pred/n/agec2317/202108/fa15/2474/1946.pkl: 
+0 -11.911764705882355
+0.5 2.35294117647058
+0.25 -24.411764705882355
+0.375 -12.705882352941178
+0.4375 -31.823529411764707
+0.46875 24.676470588235276
+0.453125 -7.617647058823518
+0.4609375 -0.47058823529412264
+0.46484375 0.2941176470588225
+0.462890625 6.882352941176473
+0.4619140625 -1.2352941176470567
+0.46240234375 8.323529411764707
+0.46484375 0.2941176470588225
+Elapsed time: 760.6637 seconds
+creating Y_pred/n/agec2317/202208/fa15/2474/1946.pkl: 
+0 -23.224999999999994
+0.5 6.5749999999999975
+0.25 10.349999999999993
+0.125 -21.599999999999998
+0.1875 -15.150000000000007
+0.21875 13.3
+0.203125 -22.075
+0.2109375 -19.900000000000006
+0.21484375 5.424999999999991
+0.212890625 -12.375000000000004
+0.2138671875 3.325
+0.21337890625 -31.999999999999996
+0.2138671875 3.325
+Elapsed time: 761.0132 seconds
+creating Y_pred/n/agec2317/202308/fa15/2474/1946.pkl: 
+0 -32.62135922330096
+0.5 21.89320388349514
+0.25 -17.038834951456305
+0.375 1.0922330097087318
+0.3125 -21.917475728155345
+0.34375 24.320388349514577
+0.328125 -8.276699029126222
+0.3359375 -2.7184466019417486
+0.33984375 16.237864077669894
+0.337890625 -24.247572815533978
+0.3388671875 -1.383495145631064
+0.33935546875 -14.61165048543689
+0.375 1.0922330097087318
+Elapsed time: 756.2328 seconds
+creating Y_pred/n/ansc1319/202108/fa15/2474/1946.pkl: Elapsed time: 8.8045 seconds
+creating Y_pred/n/ansc1319/202208/fa15/2474/1946.pkl: Elapsed time: 9.3293 seconds
+creating Y_pred/n/ansc1319/202308/fa15/2474/1946.pkl: 
+0 15.712290502793302
+-0.5 -2.402234636871514
+-0.25 22.667597765363112
+-0.375 -31.047486033519554
+-0.3125 -5.027932960893855
+-0.28125 -38.589385474860336
+-0.265625 20.991620111731834
+-0.2734375 1.2569832402234526
+-0.27734375 -18.086592178770957
+-0.275390625 -22.821229050279324
+-0.2744140625 5.279329608938532
+-0.27490234375 -70.32122905027933
+-0.2734375 1.2569832402234526
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 763.1776 seconds
+creating Y_pred/n/arts1301/202108/fa15/2474/1946.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 -100.0
+0.984375 2518.3333333333335
+0.9765625 1472.0833333333333
+0.97265625 -100.0
+0.974609375 1073.3333333333335
+0.9736328125 -100.0
+0.97412109375 -100.0
+0 100.0
+Elapsed time: 756.8414 seconds
+creating Y_pred/n/arts1301/202208/fa15/2474/1946.pkl: 
+0 -74.1891891891892
+0.5 -78.37837837837837
+0.75 -78.37837837837837
+0.875 -78.37837837837837
+0.9375 907.1621621621621
+0.90625 -78.37837837837837
+0.921875 -37.16216216216216
+0.9296875 50.67567567567568
+0.92578125 22.297297297297302
+0.923828125 44.86486486486487
+0.9228515625 286.4864864864865
+0.92236328125 -44.324324324324316
+0.92578125 22.297297297297302
+Elapsed time: 764.1733 seconds
+creating Y_pred/n/arts1301/202308/fa15/2474/1946.pkl: 
+0 -66.9158878504673
+0.5 -18.31775700934579
+0.75 -15.514018691588783
+0.875 122.75700934579436
+0.8125 35.23364485981306
+0.78125 22.52336448598131
+0.765625 80.14018691588785
+0.7578125 -2.0560747663551426
+0.76171875 -4.018691588785039
+0.763671875 -7.9906542056074725
+0.7646484375 -1.5420560747663625
+0.76513671875 -15.981308411214945
+0.7646484375 1.5420560747663625
+Elapsed time: 766.8032 seconds
+creating Y_pred/n/arts1303/202108/fa15/2474/1946.pkl: Elapsed time: 8.4106 seconds
+creating Y_pred/n/arts1303/202208/fa15/2474/1946.pkl: 2024-04-28 15:20:32.069608
+creating Y_pred/n/_allcrse/202308/fa15/2474/1946.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.25 0.3197442046362964
+2024-04-28 15:24:51.250253
+creating Y_pred/n/_allcrse/202308/fa15/2474/37b4.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.125 0.199840127897688
+0.125 0.199840127897688
+2024-04-28 15:28:26.339594
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:29:04.366152
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:29:40.632687
+creating Y_pred/n/_allcrse/202308/fa15/2474/37b4.pkl: 
+0 -0.7334132693844864
+2024-04-28 15:30:48.624617
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:31:45.704040
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:33:33.191249
+creating Y_pred/n/_allcrse/202308/fa15/2474/8ab7.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.125 0.199840127897688
+0.0625 -0.5595523581135131
+0.09375 -0.3117505995203884
+0.109375 0.10191846522782377
+0.109375 0.10191846522782377
+Elapsed time: 749.6064 seconds
+creating Y_pred/n/agec2317/202308/fa15/2474/8ab7.pkl: 
+0 -32.62135922330096
+0.5 26.699029126213603
+0.25 -5.679611650485428
+0.375 1.0922330097087318
+0.3125 -21.917475728155345
+0.34375 24.320388349514577
+0.328125 -8.276699029126222
+0.3359375 -2.7184466019417486
+0.33984375 7.742718446601926
+0.337890625 -24.247572815533978
+0.3388671875 -1.383495145631064
+0.33935546875 7.37864077669903
+0.339111328125 7.961165048543695
+0.3389892578125 54.077669902912604
+0.33892822265625 10.266990291262147
+0.375 1.0922330097087318
+Elapsed time: 873.1346 seconds
+creating Y_pred/n/ansc1319/202308/fa15/2474/8ab7.pkl: 
+0 15.712290502793302
+-0.5 -14.399441340782126
+-0.25 22.667597765363112
+-0.375 -30.209497206703915
+-0.3125 -15.265363128491616
+-0.28125 -10.837988826815648
+-0.265625 19.90223463687151
+-0.2734375 -1.0474860335195513
+-0.26953125 -27.988826815642454
+-0.267578125 -7.48603351955307
+-0.2666015625 -21.424581005586585
+-0.26611328125 12.081005586592175
+-0.266357421875 -56.243016759776545
+-0.2662353515625 -14.608938547486039
+-0.26617431640625 1.2988826815642396
+-0.2734375 1.0474860335195513
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 870.9435 seconds
+creating Y_pred/n/arts1301/202308/fa15/2474/8ab7.pkl: 
+0 -66.9158878504673
+0.5 -18.31775700934579
+0.75 5.841121495327095
+0.625 2.616822429906529
+0.5625 -12.102803738317757
+0.59375 -8.41121495327103
+0.609375 -12.009345794392523
+0.6171875 -5.046728971962622
+0.62109375 -8.41121495327103
+0.623046875 -2.5233644859813165
+0.6240234375 -4.626168224299065
+0.62451171875 11.682242990654213
+0.624267578125 -31.63551401869158
+0.6243896484375 -6.542056074766355
+0.62445068359375 -8.03738317757009
+0.623046875 2.5233644859813165
+Elapsed time: 867.3057 seconds
+creating Y_pred/n/arts1303/202308/fa15/2474/8ab7.pkl: 
+0 -63.1578947368421
+0.5 -63.1578947368421
+0.75 -63.1578947368421
+0.875 -63.1578947368421
+0.9375 -63.1578947368421
+0.96875 -3.421052631578936
+0.984375 625.5263157894736
+0.9765625 429.2105263157895
+0.97265625 -0.7894736842105177
+0.974609375 -1.0526315789473606
+0.9755859375 -1.3157894736842146
+0.97607421875 -0.7894736842105177
+0.976318359375 80.78947368421055
+0.9761962890625 -8.157894736842108
+0.97625732421875 -4.73684210526315
+0.97265625 0.7894736842105177
+Elapsed time: 866.7163 seconds
+creating Y_pred/n/arts1304/202308/fa15/2474/8ab7.pkl: Elapsed time: 0.0009 seconds
+Traceback (most recent call last):
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 584, in <module>
+    run_amp()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 570, in run_amp
+    self.get_Y_pred()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 312, in get_Y_pred
+    return self.get(func, f"Y_pred/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/setup.py", line 323, in get
+    func()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 249, in func
+    y = self.Z[cols]
+        ~~~~~~^^^^^^
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/frame.py", line 4096, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6200, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6252, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['arts1304_cur', 'arts1304'] not in index"
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 251
+    assert y.query(f"pred_code=={self.train_code}")[self.crse_code].sum() >= 10:
+                                                                               ^
+SyntaxError: invalid syntax
+2024-04-28 17:57:55.020070
+creating Y_pred/n/arts1304/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.7561 seconds
+creating Y_pred/n/arts3331/202308/fa15/2474/8ab7.pkl: Elapsed time: 9.2077 seconds
+creating Y_pred/n/biol1305/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.4165 seconds
+creating Y_pred/n/biol1406/202308/fa15/2474/8ab7.pkl: 
+0 -21.6328125
+0.5 24.8046875
+0.25 13.164062499999996
+0.125 -11.312499999999993
+0.1875 14.414062499999991
+0.15625 -0.046874999999990674
+0.15625 0.046874999999990674
+Elapsed time: 736.1819 seconds
+creating Y_pred/n/biol1407/202308/fa15/2474/8ab7.pkl: 
+0 -73.52941176470588
+0.5 -73.52941176470588
+0.75 -6.764705882352939
+0.875 2.0588235294117796
+0.8125 -1.3235294117647123
+0.84375 49.117647058823536
+0.828125 29.852941176470594
+0.8203125 -11.029411764705888
+0.82421875 -22.941176470588243
+0.826171875 -9.705882352941176
+0.8271484375 -31.76470588235294
+0.82763671875 30.000000000000004
+0.827392578125 20.58823529411764
+0.8272705078125 936.1764705882352
+0.82720947265625 3.9705882352941257
+0.8125 1.3235294117647123
+Elapsed time: 872.8138 seconds
+creating Y_pred/n/biol2401/202308/fa15/2474/8ab7.pkl: 
+0 -9.78603603603604
+0.5 24.222972972972954
+0.25 10.70945945945947
+0.125 10.70945945945947
+0.0625 -2.9054054054054035
+0.09375 21.069819819819813
+0.078125 5.889639639639643
+0.0703125 -6.4076576576576505
+0.07421875 20.84459459459458
+0.072265625 -4.380630630630633
+0.0732421875 20.84459459459458
+0.07275390625 -6.385135135135145
+0.072998046875 20.84459459459458
+0.0728759765625 20.84459459459458
+0.07281494140625 9.808558558558556
+0.0625 2.9054054054054035
+Elapsed time: 873.6574 seconds
+creating Y_pred/n/biol2402/202308/fa15/2474/8ab7.pkl: 
+0 -27.27272727272727
+0.5 -81.81818181818181
+0.75 -81.81818181818181
+0.875 140.0
+0.8125 7.954545454545459
+0.78125 185.0
+0.765625 295.68181818181813
+0.7578125 -80.9090909090909
+0.76171875 -81.81818181818181
+0.763671875 -74.77272727272728
+0.7646484375 -81.81818181818181
+0.76513671875 -13.636363636363635
+0.765380859375 -81.81818181818181
+0.7655029296875 182.72727272727275
+0.76544189453125 418.6363636363636
+0.8125 7.954545454545459
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 866.2069 seconds
+creating Y_pred/n/busi1301/202308/fa15/2474/8ab7.pkl: 
+0 -31.15720524017467
+0.5 25.458515283842797
+0.25 -20.8296943231441
+0.375 28.51528384279476
+0.3125 24.148471615720535
+0.28125 25.458515283842797
+0.265625 32.139737991266394
+0.2578125 24.148471615720535
+0.25390625 23.7117903930131
+0.251953125 20.218340611353725
+0.2509765625 25.458515283842797
+0.25048828125 33.755458515283856
+0.250244140625 5.283842794759819
+0.2501220703125 -13.668122270742366
+0.25018310546875 -12.598253275109172
+0.250244140625 5.283842794759819
+Elapsed time: 865.9715 seconds
+creating Y_pred/n/busi1307/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 77.77777777777777
+0.953125 -100.0
+0.9609375 -100.0
+0.96484375 -100.0
+0.966796875 -100.0
+0.9677734375 -100.0
+0.96826171875 -100.0
+0.968505859375 -33.333333333333336
+0.9686279296875 -100.0
+0.96868896484375 -12.777777777777777
+0.96868896484375 12.777777777777777
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 872.4023 seconds
+creating Y_pred/n/chem1111/202308/fa15/2474/8ab7.pkl: 
+0 -60.60439560439561
+0.5 198.6813186813187
+0.25 -47.08791208791209
+0.375 -9.010989010989013
+0.4375 -10.494505494505491
+0.46875 14.890109890109882
+0.453125 2.912087912087924
+0.4453125 -18.131868131868135
+0.44921875 83.40659340659342
+0.447265625 35.60439560439561
+0.4462890625 -11.043956043956038
+0.44677734375 -1.0439560439560513
+0.447021484375 -34.23076923076923
+0.4471435546875 -25.879120879120876
+0.44720458984375 8.571428571428562
+0.44677734375 1.0439560439560513
+Elapsed time: 866.4650 seconds
+creating Y_pred/n/chem1112/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.7419 seconds
+creating Y_pred/n/chem1302/202308/fa15/2474/8ab7.pkl: 
+0 -31.351351351351354
+0.5 -5.000000000000004
+0.75 14.5945945945946
+0.625 -0.9459459459459474
+0.6875 4.18918918918918
+0.65625 6.486486486486487
+0.640625 0.8108108108108025
+0.6328125 -0.9459459459459474
+0.63671875 5.810810810810807
+0.634765625 5.405405405405395
+0.6337890625 29.594594594594593
+0.63330078125 -2.0270270270270285
+0.633544921875 -3.7837837837837784
+0.6336669921875 12.567567567567561
+0.63360595703125 9.32432432432433
+0.640625 0.8108108108108025
+Elapsed time: 876.2112 seconds
+creating Y_pred/n/chem1311/202308/fa15/2474/8ab7.pkl: 
+0 -46.7741935483871
+0.5 -17.956989247311828
+0.75 31.236559139784937
+0.625 10.967741935483865
+0.5625 65.3225806451613
+0.53125 -11.18279569892474
+0.546875 -32.31182795698925
+0.5546875 16.88172043010754
+0.55078125 -18.870967741935484
+0.552734375 -17.52688172043011
+0.5537109375 -35.64516129032258
+0.55419921875 -2.4193548387096753
+0.554443359375 -41.4516129032258
+0.5545654296875 -4.892473118279572
+0.55462646484375 -12.258064516129041
+0.55419921875 2.4193548387096753
+Elapsed time: 863.4619 seconds
+creating Y_pred/n/chem1312/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.1117 seconds
+creating Y_pred/n/chem1407/202308/fa15/2474/8ab7.pkl: 
+0 -3.125
+0.5 -12.5
+0.75 -12.5
+0.875 -12.5
+0.9375 -12.5
+0.96875 -12.5
+0.984375 -12.5
+0.9921875 -12.5
+0.99609375 -12.5
+0.998046875 7931.874999999999
+0.9970703125 -12.5
+0.99755859375 -12.5
+0.997802734375 7000.624999999999
+0.9976806640625 -12.5
+0.99774169921875 -12.5
+0 3.125
+Elapsed time: 864.2888 seconds
+creating Y_pred/n/chem1411/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.3639 seconds
+creating Y_pred/n/chem1412/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.8981 seconds
+creating Y_pred/n/comm1311/202308/fa15/2474/8ab7.pkl: 
+0 -65.08042895442358
+0.5 -11.05898123324397
+0.75 99.47721179624665
+0.625 13.257372654155496
+0.5625 -1.1394101876675555
+0.59375 27.42627345844504
+0.578125 27.98927613941018
+0.5703125 -7.0509383378016155
+0.57421875 -1.0455764075066987
+0.576171875 5.9785522788203815
+0.5751953125 19.758713136729213
+0.57470703125 7.13136729222521
+0.574462890625 17.171581769437005
+0.5743408203125 -4.383378016085793
+0.57440185546875 15.415549597855227
+0.57421875 1.0455764075066987
+Elapsed time: 867.2419 seconds
+creating Y_pred/n/comm1315/202308/fa15/2474/8ab7.pkl: 
+0 -42.47104247104247
+0.5 -18.976833976833984
+0.75 87.35521235521236
+0.625 39.652509652509636
+0.5625 6.891891891891899
+0.53125 6.756756756756754
+0.515625 9.555984555984566
+0.5078125 11.447876447876437
+0.50390625 39.633204633204635
+0.501953125 -63.841698841698836
+0.5029296875 -33.4942084942085
+0.50341796875 4.092664092664111
+0.503173828125 36.94980694980694
+0.5030517578125 -0.6949806949806958
+0.50311279296875 17.992277992278005
+0.5030517578125 0.6949806949806958
+Elapsed time: 865.1421 seconds
+creating Y_pred/n/comm2302/202308/fa15/2474/8ab7.pkl: 
+0 -70.22388059701493
+0.5 -38.80597014925373
+0.75 11.940298507462677
+0.625 -65.44776119402985
+0.6875 -64.17910447761194
+0.71875 -59.4776119402985
+0.734375 -55.223880597014926
+0.7421875 -65.67164179104478
+0.74609375 1.4925373134328401
+0.744140625 -65.44776119402985
+0.7451171875 -47.76119402985075
+0.74560546875 -64.25373134328358
+0.745849609375 -12.313432835820892
+0.7459716796875 0.746268656716409
+0.74591064453125 -66.71641791044776
+0.7459716796875 0.746268656716409
+Elapsed time: 864.1983 seconds
+creating Y_pred/n/crij1301/202308/fa15/2474/8ab7.pkl: 
+0 -9.476744186046515
+0.5 -21.86046511627907
+0.75 129.59302325581393
+0.625 11.33720930232558
+0.5625 142.38372093023256
+0.53125 -26.56976744186047
+0.546875 141.22093023255812
+0.5390625 46.395348837209305
+0.53515625 11.220930232558146
+0.533203125 -18.837209302325586
+0.5341796875 -16.686046511627907
+0.53466796875 -17.151162790697672
+0.534912109375 -27.209302325581397
+0.5350341796875 -24.476744186046506
+0.53509521484375 -11.511627906976752
+0 9.476744186046515
+Elapsed time: 870.2009 seconds
+creating Y_pred/n/dram1310/202308/fa15/2474/8ab7.pkl: 
+0 -64.81481481481481
+0.5 -26.481481481481474
+0.75 -1.1111111111111183
+0.875 86.4814814814815
+0.8125 -33.79629629629629
+0.84375 17.59259259259258
+0.828125 58.98148148148148
+0.8203125 -31.1111111111111
+0.82421875 4.166666666666674
+0.822265625 -11.944444444444446
+0.8232421875 81.38888888888889
+0.82275390625 -28.055555555555557
+0.822998046875 12.870370370370377
+0.8228759765625 -20.185185185185183
+0.82293701171875 112.5
+0.75 1.1111111111111183
+Elapsed time: 863.6035 seconds
+creating Y_pred/n/dram2361/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -30.555555555555557
+0.9375 252.22222222222223
+0.90625 -10.555555555555552
+0.921875 229.99999999999997
+0.9140625 258.33333333333337
+0.91015625 -100.0
+0.912109375 -18.333333333333336
+0.9130859375 540.0
+0.91259765625 312.7777777777777
+0.912353515625 18.333333333333336
+0.9122314453125 27.222222222222214
+0.91217041015625 -100.0
+0.90625 10.555555555555552
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 862.4691 seconds
+creating Y_pred/n/dram4304/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.2673 seconds
+creating Y_pred/n/easc2310/202308/fa15/2474/8ab7.pkl: 
+0 -43.75
+0.5 -43.75
+0.75 -43.75
+0.875 -43.75
+0.9375 0.0
+0.9375 0.0
