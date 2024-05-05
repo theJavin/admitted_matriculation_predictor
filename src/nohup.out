@@ -2,4 +2,12 @@ python: can't open file '/home/scook/institutional_data_analytics/admitted_matri
 2024-05-05 10:50:47.612768
 creating X.pkl: 
 creating reg/134/202108.parq: Elapsed time: 5.5424 seconds
-creating adm/134/202108.parq: 
+creating adm/134/202108.parq: Elapsed time: 26.2057 seconds
+creating flg/134/202108.parq: Elapsed time: 1.1508 seconds
+creating raw/134/202108.parq: Elapsed time: 0.3843 seconds
+creating reg/134/202208.parq: Elapsed time: 2.2943 seconds
+creating adm/134/202208.parq: Elapsed time: 20.6790 seconds
+creating flg/134/202208.parq: Elapsed time: 1.4483 seconds
+creating raw/134/202208.parq: Elapsed time: 0.4576 seconds
+creating reg/134/202308.parq: Elapsed time: 1.8669 seconds
+creating adm/134/202308.parq: 
