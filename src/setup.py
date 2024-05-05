@@ -114,7 +114,8 @@ def pd_ext(func):
                 Y = func(Y, *args, **kwargs)
             except:
                 Y = Y.apply(func, *args, **kwargs)
-        return Y.squeeze() if isinstance(X, pd.Series) else Y
+        # return Y.squeeze() if isinstance(X, pd.Series) else Y
+        return Y
     wrapper.__name__ = func.__name__
     for cls in [pd.DataFrame, pd.Series]:
         setattr(cls, wrapper.__name__, wrapper)
@@ -123,7 +124,6 @@ def pd_ext(func):
 @pd_ext
 def disp(df, max_rows=1, max_cols=200, **kwargs):
     display(HTML(pd.DataFrame(df).to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
-    return df
 
 @pd_ext
 def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
@@ -148,7 +148,8 @@ def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
                 ser = (ser == L[1]).astype('boolean').fillna(False)
     if cat and pd.api.types.is_string_dtype(ser):
         ser = ser.astype('category')
-    return ser.convert_dtypes(dtype_backend)
+    with warnings.catch_warnings(action='ignore'):
+        return ser.convert_dtypes(dtype_backend)
 
 @pd_ext
 def prep(X, cap='casefold', bool=False, cat=False):
@@ -169,10 +170,14 @@ def prep(X, cap='casefold', bool=False, cat=False):
     else:
         return X
 
+# @pd_ext
+# def addlevels(df, level, val):
+#     df[level] = val
+#     return df.prep().set_index(level, append=True)
+
 @pd_ext
-def addlevel(df, level, val):
-    df[level] = val
-    return df.prep().set_index(level, append=True)
+def addlevels(df, dct):
+    return df.assign(**dct).prep().set_index(list(dct.keys()), append=True)
 
 @pd_ext
 def vc(df, by, dropna=False, digits=1, **kwargs):
@@ -232,7 +237,7 @@ def mkdir(path, overwrite=False):
         delete(path)
     path.mkdir(exist_ok=True, parents=True)
 
-def write(path, obj, overwrite=False, protocol=5, **kwargs):
+def write(path, obj, overwrite=False, **kwargs):
     path = pathlib.Path(path)
     if overwrite:
         delete(path)
@@ -245,7 +250,7 @@ def write(path, obj, overwrite=False, protocol=5, **kwargs):
                 obj.to_csv(path, **kwargs)
             case '.pkl':
                 with open(path, 'wb') as f:
-                    dill.dump(obj, f, protocol=protocol, **kwargs)
+                    dill.dump(obj, f, **kwargs)
             case _:
                 raise Exception("unknown sufffix", path.suffix)
     return obj
@@ -306,7 +311,6 @@ class MyBaseClass():
         nm = fn.split('/')[0].split('.')[0]
         overwrite = nm in self.overwrite
         path = (self.root_path if path is None else path) / fn
-        
         if nm in self:
             if overwrite:
                 del self[nm]
@@ -320,11 +324,11 @@ class MyBaseClass():
             with Timer():
                 print('creating', fn, end=": ")
                 self.path = path
-                func()
-                if path.suffix == '.pkl':
-                    self.dump(path)
-                else:
-                    write(path, self[nm])
+                if func() != 'fail':
+                    if path.suffix == '.pkl':
+                        self.dump(path)
+                    else:
+                        write(path, self[nm])
         return self
 
 

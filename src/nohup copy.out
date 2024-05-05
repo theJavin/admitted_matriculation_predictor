@@ -1,0 +1,1600 @@
+2024-04-28 13:09:51.767980
+creating Y_pred/n/_allcrse/202108/fa15/2474/1946.pkl: 
+0 -9.22015915119363
+0.5 18.432360742705555
+0.25 1.538461538461533
+0.125 -3.225464190981431
+0.1875 -3.0212201591511945
+0.21875 0.22281167108753053
+0.203125 -0.6233421750663104
+0.2109375 0.1644562334217392
+0.20703125 2.6684350132625934
+0.205078125 -0.96551724137931
+0.2060546875 -1.8938992042440317
+0.20654296875 1.0981432360742671
+0.2109375 0.1644562334217392
+Elapsed time: 763.6586 seconds
+creating Y_pred/n/_allcrse/202208/fa15/2474/1946.pkl: 
+0 -10.654076462459694
+0.5 16.324274527867356
+0.25 -1.287425149700594
+0.375 3.4868724090280967
+0.3125 1.561492399815756
+0.28125 -2.1142330723169067
+0.296875 0.45140488254260536
+0.2890625 -0.48134500230307964
+0.29296875 -0.3938277291570813
+0.294921875 1.5730078304928563
+0.2939453125 -1.2229387379088075
+0.29443359375 -0.6034085674804235
+0.29296875 0.3938277291570813
+Elapsed time: 771.5899 seconds
+creating Y_pred/n/_allcrse/202308/fa15/2474/1946.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.5175859312549935
+0.125 0.199840127897688
+0.0625 -0.3257394084732246
+0.09375 -0.3117505995203884
+0.109375 0.10191846522782377
+0.1015625 0.35171862509992824
+0.09765625 0.19584332533972848
+0.095703125 -0.027977617905672325
+0.095703125 0.027977617905672325
+Elapsed time: 746.6555 seconds
+creating Y_pred/n/agec2317/202108/fa15/2474/1946.pkl: 
+0 -11.911764705882355
+0.5 2.35294117647058
+0.25 -24.411764705882355
+0.375 -12.705882352941178
+0.4375 -31.823529411764707
+0.46875 24.676470588235276
+0.453125 -7.617647058823518
+0.4609375 -0.47058823529412264
+0.46484375 0.2941176470588225
+0.462890625 6.882352941176473
+0.4619140625 -1.2352941176470567
+0.46240234375 8.323529411764707
+0.46484375 0.2941176470588225
+Elapsed time: 760.6637 seconds
+creating Y_pred/n/agec2317/202208/fa15/2474/1946.pkl: 
+0 -23.224999999999994
+0.5 6.5749999999999975
+0.25 10.349999999999993
+0.125 -21.599999999999998
+0.1875 -15.150000000000007
+0.21875 13.3
+0.203125 -22.075
+0.2109375 -19.900000000000006
+0.21484375 5.424999999999991
+0.212890625 -12.375000000000004
+0.2138671875 3.325
+0.21337890625 -31.999999999999996
+0.2138671875 3.325
+Elapsed time: 761.0132 seconds
+creating Y_pred/n/agec2317/202308/fa15/2474/1946.pkl: 
+0 -32.62135922330096
+0.5 21.89320388349514
+0.25 -17.038834951456305
+0.375 1.0922330097087318
+0.3125 -21.917475728155345
+0.34375 24.320388349514577
+0.328125 -8.276699029126222
+0.3359375 -2.7184466019417486
+0.33984375 16.237864077669894
+0.337890625 -24.247572815533978
+0.3388671875 -1.383495145631064
+0.33935546875 -14.61165048543689
+0.375 1.0922330097087318
+Elapsed time: 756.2328 seconds
+creating Y_pred/n/ansc1319/202108/fa15/2474/1946.pkl: Elapsed time: 8.8045 seconds
+creating Y_pred/n/ansc1319/202208/fa15/2474/1946.pkl: Elapsed time: 9.3293 seconds
+creating Y_pred/n/ansc1319/202308/fa15/2474/1946.pkl: 
+0 15.712290502793302
+-0.5 -2.402234636871514
+-0.25 22.667597765363112
+-0.375 -31.047486033519554
+-0.3125 -5.027932960893855
+-0.28125 -38.589385474860336
+-0.265625 20.991620111731834
+-0.2734375 1.2569832402234526
+-0.27734375 -18.086592178770957
+-0.275390625 -22.821229050279324
+-0.2744140625 5.279329608938532
+-0.27490234375 -70.32122905027933
+-0.2734375 1.2569832402234526
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 763.1776 seconds
+creating Y_pred/n/arts1301/202108/fa15/2474/1946.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 -100.0
+0.984375 2518.3333333333335
+0.9765625 1472.0833333333333
+0.97265625 -100.0
+0.974609375 1073.3333333333335
+0.9736328125 -100.0
+0.97412109375 -100.0
+0 100.0
+Elapsed time: 756.8414 seconds
+creating Y_pred/n/arts1301/202208/fa15/2474/1946.pkl: 
+0 -74.1891891891892
+0.5 -78.37837837837837
+0.75 -78.37837837837837
+0.875 -78.37837837837837
+0.9375 907.1621621621621
+0.90625 -78.37837837837837
+0.921875 -37.16216216216216
+0.9296875 50.67567567567568
+0.92578125 22.297297297297302
+0.923828125 44.86486486486487
+0.9228515625 286.4864864864865
+0.92236328125 -44.324324324324316
+0.92578125 22.297297297297302
+Elapsed time: 764.1733 seconds
+creating Y_pred/n/arts1301/202308/fa15/2474/1946.pkl: 
+0 -66.9158878504673
+0.5 -18.31775700934579
+0.75 -15.514018691588783
+0.875 122.75700934579436
+0.8125 35.23364485981306
+0.78125 22.52336448598131
+0.765625 80.14018691588785
+0.7578125 -2.0560747663551426
+0.76171875 -4.018691588785039
+0.763671875 -7.9906542056074725
+0.7646484375 -1.5420560747663625
+0.76513671875 -15.981308411214945
+0.7646484375 1.5420560747663625
+Elapsed time: 766.8032 seconds
+creating Y_pred/n/arts1303/202108/fa15/2474/1946.pkl: Elapsed time: 8.4106 seconds
+creating Y_pred/n/arts1303/202208/fa15/2474/1946.pkl: 2024-04-28 15:20:32.069608
+creating Y_pred/n/_allcrse/202308/fa15/2474/1946.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.25 0.3197442046362964
+2024-04-28 15:24:51.250253
+creating Y_pred/n/_allcrse/202308/fa15/2474/37b4.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.125 0.199840127897688
+0.125 0.199840127897688
+2024-04-28 15:28:26.339594
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:29:04.366152
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:29:40.632687
+creating Y_pred/n/_allcrse/202308/fa15/2474/37b4.pkl: 
+0 -0.7334132693844864
+2024-04-28 15:30:48.624617
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:31:45.704040
+creating Y_pred/n/_allcrse/202308/fa15/2474/4e93.pkl: /home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/dtypes/cast.py:378: RuntimeWarning: invalid value encountered in cast
+  new_result = trans(result).astype(dtype)
+2024-04-28 15:33:33.191249
+creating Y_pred/n/_allcrse/202308/fa15/2474/8ab7.pkl: 
+0 -0.7334132693844864
+0.5 4.786171063149491
+0.25 0.3197442046362964
+0.125 0.199840127897688
+0.0625 -0.5595523581135131
+0.09375 -0.3117505995203884
+0.109375 0.10191846522782377
+0.109375 0.10191846522782377
+Elapsed time: 749.6064 seconds
+creating Y_pred/n/agec2317/202308/fa15/2474/8ab7.pkl: 
+0 -32.62135922330096
+0.5 26.699029126213603
+0.25 -5.679611650485428
+0.375 1.0922330097087318
+0.3125 -21.917475728155345
+0.34375 24.320388349514577
+0.328125 -8.276699029126222
+0.3359375 -2.7184466019417486
+0.33984375 7.742718446601926
+0.337890625 -24.247572815533978
+0.3388671875 -1.383495145631064
+0.33935546875 7.37864077669903
+0.339111328125 7.961165048543695
+0.3389892578125 54.077669902912604
+0.33892822265625 10.266990291262147
+0.375 1.0922330097087318
+Elapsed time: 873.1346 seconds
+creating Y_pred/n/ansc1319/202308/fa15/2474/8ab7.pkl: 
+0 15.712290502793302
+-0.5 -14.399441340782126
+-0.25 22.667597765363112
+-0.375 -30.209497206703915
+-0.3125 -15.265363128491616
+-0.28125 -10.837988826815648
+-0.265625 19.90223463687151
+-0.2734375 -1.0474860335195513
+-0.26953125 -27.988826815642454
+-0.267578125 -7.48603351955307
+-0.2666015625 -21.424581005586585
+-0.26611328125 12.081005586592175
+-0.266357421875 -56.243016759776545
+-0.2662353515625 -14.608938547486039
+-0.26617431640625 1.2988826815642396
+-0.2734375 1.0474860335195513
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 870.9435 seconds
+creating Y_pred/n/arts1301/202308/fa15/2474/8ab7.pkl: 
+0 -66.9158878504673
+0.5 -18.31775700934579
+0.75 5.841121495327095
+0.625 2.616822429906529
+0.5625 -12.102803738317757
+0.59375 -8.41121495327103
+0.609375 -12.009345794392523
+0.6171875 -5.046728971962622
+0.62109375 -8.41121495327103
+0.623046875 -2.5233644859813165
+0.6240234375 -4.626168224299065
+0.62451171875 11.682242990654213
+0.624267578125 -31.63551401869158
+0.6243896484375 -6.542056074766355
+0.62445068359375 -8.03738317757009
+0.623046875 2.5233644859813165
+Elapsed time: 867.3057 seconds
+creating Y_pred/n/arts1303/202308/fa15/2474/8ab7.pkl: 
+0 -63.1578947368421
+0.5 -63.1578947368421
+0.75 -63.1578947368421
+0.875 -63.1578947368421
+0.9375 -63.1578947368421
+0.96875 -3.421052631578936
+0.984375 625.5263157894736
+0.9765625 429.2105263157895
+0.97265625 -0.7894736842105177
+0.974609375 -1.0526315789473606
+0.9755859375 -1.3157894736842146
+0.97607421875 -0.7894736842105177
+0.976318359375 80.78947368421055
+0.9761962890625 -8.157894736842108
+0.97625732421875 -4.73684210526315
+0.97265625 0.7894736842105177
+Elapsed time: 866.7163 seconds
+creating Y_pred/n/arts1304/202308/fa15/2474/8ab7.pkl: Elapsed time: 0.0009 seconds
+Traceback (most recent call last):
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 584, in <module>
+    run_amp()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 570, in run_amp
+    self.get_Y_pred()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 312, in get_Y_pred
+    return self.get(func, f"Y_pred/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/setup.py", line 323, in get
+    func()
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 249, in func
+    y = self.Z[cols]
+        ~~~~~~^^^^^^
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/frame.py", line 4096, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6200, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6252, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['arts1304_cur', 'arts1304'] not in index"
+  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 251
+    assert y.query(f"pred_code=={self.train_code}")[self.crse_code].sum() >= 10:
+                                                                               ^
+SyntaxError: invalid syntax
+2024-04-28 17:57:55.020070
+creating Y_pred/n/arts1304/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.7561 seconds
+creating Y_pred/n/arts3331/202308/fa15/2474/8ab7.pkl: Elapsed time: 9.2077 seconds
+creating Y_pred/n/biol1305/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.4165 seconds
+creating Y_pred/n/biol1406/202308/fa15/2474/8ab7.pkl: 
+0 -21.6328125
+0.5 24.8046875
+0.25 13.164062499999996
+0.125 -11.312499999999993
+0.1875 14.414062499999991
+0.15625 -0.046874999999990674
+0.15625 0.046874999999990674
+Elapsed time: 736.1819 seconds
+creating Y_pred/n/biol1407/202308/fa15/2474/8ab7.pkl: 
+0 -73.52941176470588
+0.5 -73.52941176470588
+0.75 -6.764705882352939
+0.875 2.0588235294117796
+0.8125 -1.3235294117647123
+0.84375 49.117647058823536
+0.828125 29.852941176470594
+0.8203125 -11.029411764705888
+0.82421875 -22.941176470588243
+0.826171875 -9.705882352941176
+0.8271484375 -31.76470588235294
+0.82763671875 30.000000000000004
+0.827392578125 20.58823529411764
+0.8272705078125 936.1764705882352
+0.82720947265625 3.9705882352941257
+0.8125 1.3235294117647123
+Elapsed time: 872.8138 seconds
+creating Y_pred/n/biol2401/202308/fa15/2474/8ab7.pkl: 
+0 -9.78603603603604
+0.5 24.222972972972954
+0.25 10.70945945945947
+0.125 10.70945945945947
+0.0625 -2.9054054054054035
+0.09375 21.069819819819813
+0.078125 5.889639639639643
+0.0703125 -6.4076576576576505
+0.07421875 20.84459459459458
+0.072265625 -4.380630630630633
+0.0732421875 20.84459459459458
+0.07275390625 -6.385135135135145
+0.072998046875 20.84459459459458
+0.0728759765625 20.84459459459458
+0.07281494140625 9.808558558558556
+0.0625 2.9054054054054035
+Elapsed time: 873.6574 seconds
+creating Y_pred/n/biol2402/202308/fa15/2474/8ab7.pkl: 
+0 -27.27272727272727
+0.5 -81.81818181818181
+0.75 -81.81818181818181
+0.875 140.0
+0.8125 7.954545454545459
+0.78125 185.0
+0.765625 295.68181818181813
+0.7578125 -80.9090909090909
+0.76171875 -81.81818181818181
+0.763671875 -74.77272727272728
+0.7646484375 -81.81818181818181
+0.76513671875 -13.636363636363635
+0.765380859375 -81.81818181818181
+0.7655029296875 182.72727272727275
+0.76544189453125 418.6363636363636
+0.8125 7.954545454545459
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 866.2069 seconds
+creating Y_pred/n/busi1301/202308/fa15/2474/8ab7.pkl: 
+0 -31.15720524017467
+0.5 25.458515283842797
+0.25 -20.8296943231441
+0.375 28.51528384279476
+0.3125 24.148471615720535
+0.28125 25.458515283842797
+0.265625 32.139737991266394
+0.2578125 24.148471615720535
+0.25390625 23.7117903930131
+0.251953125 20.218340611353725
+0.2509765625 25.458515283842797
+0.25048828125 33.755458515283856
+0.250244140625 5.283842794759819
+0.2501220703125 -13.668122270742366
+0.25018310546875 -12.598253275109172
+0.250244140625 5.283842794759819
+Elapsed time: 865.9715 seconds
+creating Y_pred/n/busi1307/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 77.77777777777777
+0.953125 -100.0
+0.9609375 -100.0
+0.96484375 -100.0
+0.966796875 -100.0
+0.9677734375 -100.0
+0.96826171875 -100.0
+0.968505859375 -33.333333333333336
+0.9686279296875 -100.0
+0.96868896484375 -12.777777777777777
+0.96868896484375 12.777777777777777
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 872.4023 seconds
+creating Y_pred/n/chem1111/202308/fa15/2474/8ab7.pkl: 
+0 -60.60439560439561
+0.5 198.6813186813187
+0.25 -47.08791208791209
+0.375 -9.010989010989013
+0.4375 -10.494505494505491
+0.46875 14.890109890109882
+0.453125 2.912087912087924
+0.4453125 -18.131868131868135
+0.44921875 83.40659340659342
+0.447265625 35.60439560439561
+0.4462890625 -11.043956043956038
+0.44677734375 -1.0439560439560513
+0.447021484375 -34.23076923076923
+0.4471435546875 -25.879120879120876
+0.44720458984375 8.571428571428562
+0.44677734375 1.0439560439560513
+Elapsed time: 866.4650 seconds
+creating Y_pred/n/chem1112/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.7419 seconds
+creating Y_pred/n/chem1302/202308/fa15/2474/8ab7.pkl: 
+0 -31.351351351351354
+0.5 -5.000000000000004
+0.75 14.5945945945946
+0.625 -0.9459459459459474
+0.6875 4.18918918918918
+0.65625 6.486486486486487
+0.640625 0.8108108108108025
+0.6328125 -0.9459459459459474
+0.63671875 5.810810810810807
+0.634765625 5.405405405405395
+0.6337890625 29.594594594594593
+0.63330078125 -2.0270270270270285
+0.633544921875 -3.7837837837837784
+0.6336669921875 12.567567567567561
+0.63360595703125 9.32432432432433
+0.640625 0.8108108108108025
+Elapsed time: 876.2112 seconds
+creating Y_pred/n/chem1311/202308/fa15/2474/8ab7.pkl: 
+0 -46.7741935483871
+0.5 -17.956989247311828
+0.75 31.236559139784937
+0.625 10.967741935483865
+0.5625 65.3225806451613
+0.53125 -11.18279569892474
+0.546875 -32.31182795698925
+0.5546875 16.88172043010754
+0.55078125 -18.870967741935484
+0.552734375 -17.52688172043011
+0.5537109375 -35.64516129032258
+0.55419921875 -2.4193548387096753
+0.554443359375 -41.4516129032258
+0.5545654296875 -4.892473118279572
+0.55462646484375 -12.258064516129041
+0.55419921875 2.4193548387096753
+Elapsed time: 863.4619 seconds
+creating Y_pred/n/chem1312/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.1117 seconds
+creating Y_pred/n/chem1407/202308/fa15/2474/8ab7.pkl: 
+0 -3.125
+0.5 -12.5
+0.75 -12.5
+0.875 -12.5
+0.9375 -12.5
+0.96875 -12.5
+0.984375 -12.5
+0.9921875 -12.5
+0.99609375 -12.5
+0.998046875 7931.874999999999
+0.9970703125 -12.5
+0.99755859375 -12.5
+0.997802734375 7000.624999999999
+0.9976806640625 -12.5
+0.99774169921875 -12.5
+0 3.125
+Elapsed time: 864.2888 seconds
+creating Y_pred/n/chem1411/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.3639 seconds
+creating Y_pred/n/chem1412/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.8981 seconds
+creating Y_pred/n/comm1311/202308/fa15/2474/8ab7.pkl: 
+0 -65.08042895442358
+0.5 -11.05898123324397
+0.75 99.47721179624665
+0.625 13.257372654155496
+0.5625 -1.1394101876675555
+0.59375 27.42627345844504
+0.578125 27.98927613941018
+0.5703125 -7.0509383378016155
+0.57421875 -1.0455764075066987
+0.576171875 5.9785522788203815
+0.5751953125 19.758713136729213
+0.57470703125 7.13136729222521
+0.574462890625 17.171581769437005
+0.5743408203125 -4.383378016085793
+0.57440185546875 15.415549597855227
+0.57421875 1.0455764075066987
+Elapsed time: 867.2419 seconds
+creating Y_pred/n/comm1315/202308/fa15/2474/8ab7.pkl: 
+0 -42.47104247104247
+0.5 -18.976833976833984
+0.75 87.35521235521236
+0.625 39.652509652509636
+0.5625 6.891891891891899
+0.53125 6.756756756756754
+0.515625 9.555984555984566
+0.5078125 11.447876447876437
+0.50390625 39.633204633204635
+0.501953125 -63.841698841698836
+0.5029296875 -33.4942084942085
+0.50341796875 4.092664092664111
+0.503173828125 36.94980694980694
+0.5030517578125 -0.6949806949806958
+0.50311279296875 17.992277992278005
+0.5030517578125 0.6949806949806958
+Elapsed time: 865.1421 seconds
+creating Y_pred/n/comm2302/202308/fa15/2474/8ab7.pkl: 
+0 -70.22388059701493
+0.5 -38.80597014925373
+0.75 11.940298507462677
+0.625 -65.44776119402985
+0.6875 -64.17910447761194
+0.71875 -59.4776119402985
+0.734375 -55.223880597014926
+0.7421875 -65.67164179104478
+0.74609375 1.4925373134328401
+0.744140625 -65.44776119402985
+0.7451171875 -47.76119402985075
+0.74560546875 -64.25373134328358
+0.745849609375 -12.313432835820892
+0.7459716796875 0.746268656716409
+0.74591064453125 -66.71641791044776
+0.7459716796875 0.746268656716409
+Elapsed time: 864.1983 seconds
+creating Y_pred/n/crij1301/202308/fa15/2474/8ab7.pkl: 
+0 -9.476744186046515
+0.5 -21.86046511627907
+0.75 129.59302325581393
+0.625 11.33720930232558
+0.5625 142.38372093023256
+0.53125 -26.56976744186047
+0.546875 141.22093023255812
+0.5390625 46.395348837209305
+0.53515625 11.220930232558146
+0.533203125 -18.837209302325586
+0.5341796875 -16.686046511627907
+0.53466796875 -17.151162790697672
+0.534912109375 -27.209302325581397
+0.5350341796875 -24.476744186046506
+0.53509521484375 -11.511627906976752
+0 9.476744186046515
+Elapsed time: 870.2009 seconds
+creating Y_pred/n/dram1310/202308/fa15/2474/8ab7.pkl: 
+0 -64.81481481481481
+0.5 -26.481481481481474
+0.75 -1.1111111111111183
+0.875 86.4814814814815
+0.8125 -33.79629629629629
+0.84375 17.59259259259258
+0.828125 58.98148148148148
+0.8203125 -31.1111111111111
+0.82421875 4.166666666666674
+0.822265625 -11.944444444444446
+0.8232421875 81.38888888888889
+0.82275390625 -28.055555555555557
+0.822998046875 12.870370370370377
+0.8228759765625 -20.185185185185183
+0.82293701171875 112.5
+0.75 1.1111111111111183
+Elapsed time: 863.6035 seconds
+creating Y_pred/n/dram2361/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -30.555555555555557
+0.9375 252.22222222222223
+0.90625 -10.555555555555552
+0.921875 229.99999999999997
+0.9140625 258.33333333333337
+0.91015625 -100.0
+0.912109375 -18.333333333333336
+0.9130859375 540.0
+0.91259765625 312.7777777777777
+0.912353515625 18.333333333333336
+0.9122314453125 27.222222222222214
+0.91217041015625 -100.0
+0.90625 10.555555555555552
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 862.4691 seconds
+creating Y_pred/n/dram4304/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.2673 seconds
+creating Y_pred/n/easc2310/202308/fa15/2474/8ab7.pkl: 
+0 -43.75
+0.5 -43.75
+0.75 -43.75
+0.875 -43.75
+0.9375 0.0
+0.9375 0.0
+Elapsed time: 714.3524 seconds
+creating Y_pred/n/econ1301/202308/fa15/2474/8ab7.pkl: 
+0 541.6666666666667
+-0.5 -100.0
+-0.25 -100.0
+-0.125 -100.0
+-0.0625 -100.0
+-0.03125 -100.0
+-0.015625 -100.0
+-0.0078125 -100.0
+-0.00390625 -100.0
+-0.001953125 -100.0
+-0.0009765625 -100.0
+-0.00048828125 -100.0
+-0.000244140625 -100.0
+-0.0001220703125 -100.0
+-6.103515625e-05 -100.0
+-0.5 100.0
+Elapsed time: 862.1216 seconds
+creating Y_pred/n/econ2301/202308/fa15/2474/8ab7.pkl: 
+0 -89.2
+0.5 -63.6
+0.75 -34.599999999999994
+0.875 40.599999999999994
+0.8125 2.8000000000000025
+0.78125 33.80000000000001
+0.765625 5.400000000000005
+0.7578125 9.200000000000008
+0.75390625 13.400000000000013
+0.751953125 -39.4
+0.7529296875 -19.400000000000006
+0.75341796875 21.199999999999996
+0.753173828125 27.200000000000003
+0.7530517578125 46.599999999999994
+0.75299072265625 -43.8
+0.8125 2.8000000000000025
+Elapsed time: 862.5767 seconds
+creating Y_pred/n/engl1301/202308/fa15/2474/8ab7.pkl: 
+0 -11.505288852725803
+0.5 47.758340113913754
+0.25 16.74938974776241
+0.125 -1.3710333604556424
+0.1875 5.191212367778686
+0.15625 3.921887713588279
+0.140625 1.0740439381611067
+0.1328125 8.01464605370219
+0.12890625 0.10984540276646193
+0.12890625 0.10984540276646193
+Elapsed time: 770.3934 seconds
+creating Y_pred/n/engl1302/202308/fa15/2474/8ab7.pkl: 
+0 -73.25581395348837
+0.5 -28.54651162790698
+0.75 54.127906976744185
+0.625 -19.534883720930228
+0.6875 23.77906976744186
+0.65625 -26.279069767441865
+0.671875 -5.46511627906977
+0.6796875 -58.6046511627907
+0.68359375 43.31395348837211
+0.681640625 3.8372093023255838
+0.6806640625 -27.848837209302324
+0.68115234375 5.988372093023253
+0.680908203125 145.93023255813952
+0.6807861328125 56.51162790697675
+0.68072509765625 -29.767441860465116
+0.681640625 3.8372093023255838
+Elapsed time: 862.5866 seconds
+creating Y_pred/n/engl2307/202308/fa15/2474/8ab7.pkl: Elapsed time: 6.8302 seconds
+creating Y_pred/n/engl2320/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 68.12499999999999
+0.625 -25.624999999999996
+0.6875 103.75000000000001
+0.65625 -44.375
+0.671875 -44.375
+0.6796875 -76.875
+0.68359375 -54.6875
+0.685546875 -19.687500000000004
+0.6865234375 297.1875
+0.68603515625 -44.375
+0.686279296875 37.18749999999999
+0.6861572265625 -44.375
+0.68621826171875 -79.375
+0.685546875 19.687500000000004
+Elapsed time: 861.3785 seconds
+creating Y_pred/n/engl2321/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.4378 seconds
+creating Y_pred/n/engl2326/202308/fa15/2474/8ab7.pkl: Elapsed time: 6.9589 seconds
+creating Y_pred/n/engl2340/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.6533 seconds
+creating Y_pred/n/engl2350/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.1248 seconds
+creating Y_pred/n/engl2360/202308/fa15/2474/8ab7.pkl: 
+0 -50.0
+0.5 9.499999999999996
+0.25 -50.0
+0.375 -40.0
+0.4375 -27.500000000000004
+0.46875 -35.5
+0.484375 -37.0
+0.4921875 -48.0
+0.49609375 -50.0
+0.498046875 -50.0
+0.4990234375 -47.5
+0.49951171875 -37.0
+0.499755859375 -46.50000000000001
+0.4998779296875 -44.00000000000001
+0.49993896484375 -11.5
+0.5 9.499999999999996
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 862.7003 seconds
+creating Y_pred/n/engl2362/202308/fa15/2474/8ab7.pkl: Elapsed time: 6.8711 seconds
+creating Y_pred/n/engl2364/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.1981 seconds
+creating Y_pred/n/engl2366/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.3553 seconds
+creating Y_pred/n/engl2368/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.3465 seconds
+creating Y_pred/n/engr2303/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.1007 seconds
+creating Y_pred/n/envs1302/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5516 seconds
+creating Y_pred/n/fina1360/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.2759 seconds
+creating Y_pred/n/geog1303/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 241.87500000000003
+0.25 -44.375
+0.375 -74.0625
+0.4375 -59.68750000000001
+0.46875 -37.5
+0.484375 -69.6875
+0.4921875 112.18750000000001
+0.48828125 -0.6249999999999978
+0.490234375 -100.0
+0.4912109375 34.06249999999999
+0.49072265625 -100.0
+0.490966796875 -15.625
+0.4910888671875 -47.5
+0.49114990234375 75.0
+0.48828125 0.6249999999999978
+Elapsed time: 862.4048 seconds
+creating Y_pred/n/geog1320/202308/fa15/2474/8ab7.pkl: Elapsed time: 10.3850 seconds
+creating Y_pred/n/geog1451/202308/fa15/2474/8ab7.pkl: Elapsed time: 9.5504 seconds
+creating Y_pred/n/geog2301/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5873 seconds
+creating Y_pred/n/geol1403/202308/fa15/2474/8ab7.pkl: 
+0 -44.175824175824175
+0.5 -49.45054945054945
+0.75 14.230769230769225
+0.625 -49.23076923076922
+0.6875 -35.21978021978022
+0.71875 -22.47252747252747
+0.734375 -35.0
+0.7421875 -44.94505494505494
+0.74609375 -22.967032967032974
+0.748046875 50.60439560439563
+0.7470703125 -9.56043956043956
+0.74755859375 -3.076923076923077
+0.747802734375 29.61538461538462
+0.7476806640625 -15.109890109890111
+0.74774169921875 84.17582417582416
+0.74755859375 3.076923076923077
+Elapsed time: 865.6337 seconds
+creating Y_pred/n/geol1404/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 185.0
+0.25 -75.0
+0.375 -85.0
+0.4375 -5.000000000000004
+0.46875 -90.0
+0.484375 -80.0
+0.4921875 -65.0
+0.49609375 105.50000000000001
+0.494140625 5.500000000000016
+0.4931640625 185.0
+0.49267578125 -85.0
+0.492919921875 231.25
+0.4927978515625 -65.0
+0.49285888671875 -85.0
+0.4375 5.000000000000004
+Elapsed time: 864.2705 seconds
+creating Y_pred/n/geol1407/202308/fa15/2474/8ab7.pkl: 
+0 -70.0
+0.5 -23.250000000000004
+0.75 -28.625
+0.875 72.62499999999999
+0.8125 -3.6250000000000115
+0.84375 23.750000000000004
+0.828125 -34.5
+0.8359375 44.75
+0.83203125 18.124999999999993
+0.830078125 259.625
+0.8291015625 29.125
+0.82861328125 9.250000000000004
+0.828369140625 -0.8750000000000036
+0.8284912109375 9.749999999999993
+0.82843017578125 -14.749999999999996
+0.828369140625 0.8750000000000036
+Elapsed time: 870.7425 seconds
+creating Y_pred/n/geol1408/202308/fa15/2474/8ab7.pkl: 
+0 -78.04878048780488
+0.5 -26.585365853658537
+0.75 54.146341463414636
+0.625 0.0
+0.625 0.0
+Elapsed time: 699.4858 seconds
+creating Y_pred/n/govt2305/202308/fa15/2474/8ab7.pkl: 
+0 -61.33757961783439
+0.5 -50.732484076433124
+0.75 67.19745222929936
+0.625 12.292993630573257
+0.5625 -43.28025477707007
+0.59375 -33.18471337579617
+0.609375 -10.636942675159233
+0.6171875 -30.796178343949045
+0.62109375 -32.64331210191082
+0.623046875 41.59235668789809
+0.6220703125 -16.719745222929937
+0.62255859375 29.012738853503194
+0.622314453125 -0.09554140127389088
+0.622314453125 0.09554140127389088
+Elapsed time: 836.5864 seconds
+creating Y_pred/n/govt2306/202308/fa15/2474/8ab7.pkl: 
+0 -60.0
+0.5 13.489096573208737
+0.25 -44.299065420560744
+0.375 -44.75077881619938
+0.4375 -21.41744548286605
+0.46875 -16.137071651090352
+0.484375 -23.161993769470403
+0.4921875 11.947040498442373
+0.48828125 -22.024922118380065
+0.490234375 -8.09968847352025
+0.4912109375 1.9003115264797588
+0.49072265625 -8.255451713395633
+0.490966796875 -19.345794392523374
+0.4910888671875 -13.629283489096577
+0.49114990234375 -11.526479750778817
+0.4912109375 1.9003115264797588
+Elapsed time: 869.2127 seconds
+creating Y_pred/n/hist1301/202308/fa15/2474/8ab7.pkl: 
+0 -32.89682539682539
+0.5 -17.420634920634924
+0.75 101.23015873015872
+0.625 30.34391534391534
+0.5625 -7.367724867724879
+0.59375 9.206349206349218
+0.578125 -3.783068783068788
+0.5859375 34.24603174603173
+0.58203125 2.037037037037037
+0.580078125 -2.1957671957671954
+0.5810546875 4.589947089947088
+0.58056640625 -2.288359788359784
+0.580810546875 0.44973544973545554
+0.5806884765625 -5.952380952380953
+0.58074951171875 3.187830687830684
+0.580810546875 0.44973544973545554
+Elapsed time: 866.0094 seconds
+creating Y_pred/n/hist1302/202308/fa15/2474/8ab7.pkl: 
+0 -91.93548387096774
+0.5 -91.93548387096774
+0.75 221.20967741935488
+0.625 -48.629032258064505
+0.6875 40.48387096774193
+0.65625 75.80645161290323
+0.640625 32.500000000000014
+0.6328125 -68.30645161290323
+0.63671875 8.467741935483875
+0.634765625 -8.709677419354833
+0.6357421875 -9.596774193548397
+0.63623046875 -49.516129032258064
+0.636474609375 12.096774193548377
+0.6363525390625 -65.7258064516129
+0.63641357421875 21.370967741935477
+0.63671875 8.467741935483875
+Elapsed time: 866.2480 seconds
+creating Y_pred/n/hist2321/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 0.0
+0.5 0.0
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 due to no true nor predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+Elapsed time: 668.5460 seconds
+creating Y_pred/n/hist2322/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 -100.0
+0.984375 -100.0
+0.9921875 -100.0
+0.99609375 -100.0
+0.998046875 11398.75
+0.9970703125 -100.0
+0.99755859375 -100.0
+0.997802734375 -100.0
+0.9979248046875 -100.0
+0.99798583984375 9027.5
+0 100.0
+Elapsed time: 867.1924 seconds
+creating Y_pred/n/huma1315/202308/fa15/2474/8ab7.pkl: 
+0 -62.74999999999999
+0.5 -70.0
+0.75 -18.499999999999993
+0.875 150.0
+0.8125 -7.499999999999996
+0.84375 28.249999999999996
+0.828125 377.25
+0.8203125 -4.250000000000009
+0.82421875 -14.749999999999996
+0.826171875 -11.250000000000004
+0.8271484375 0.24999999999999467
+0.82666015625 -3.0000000000000027
+0.826904296875 -2.500000000000002
+0.8270263671875 -16.500000000000004
+0.82708740234375 24.250000000000014
+0.8271484375 0.24999999999999467
+Elapsed time: 864.3855 seconds
+creating Y_pred/n/kine2315/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.6432 seconds
+creating Y_pred/n/math1314/202308/fa15/2474/8ab7.pkl: 
+0 -36.265151515151516
+0.5 73.25757575757576
+0.25 -20.28030303030304
+0.375 -1.3712121212121176
+0.4375 8.030303030303031
+0.40625 26.356060606060616
+0.390625 -0.6818181818181834
+0.3984375 -5.977272727272731
+0.40234375 8.537878787878794
+0.400390625 4.530303030303018
+0.3994140625 11.946969696969711
+0.39892578125 32.3030303030303
+0.398681640625 -2.8257575757575704
+0.3988037109375 9.757575757575765
+0.39874267578125 11.250000000000004
+0.390625 0.6818181818181834
+Elapsed time: 872.2294 seconds
+creating Y_pred/n/math1316/202308/fa15/2474/8ab7.pkl: 
+0 -84.61538461538461
+0.5 -84.61538461538461
+0.75 -54.61538461538461
+0.875 114.61538461538461
+0.8125 -17.307692307692314
+0.84375 219.23076923076925
+0.828125 55.19230769230769
+0.8203125 54.23076923076924
+0.81640625 127.11538461538461
+0.814453125 -5.769230769230771
+0.8154296875 -6.346153846153846
+0.81591796875 -19.615384615384624
+0.816162109375 -24.423076923076927
+0.8162841796875 -26.730769230769226
+0.81634521484375 -28.653846153846153
+0.814453125 5.769230769230771
+Elapsed time: 864.2363 seconds
+creating Y_pred/n/math1324/202308/fa15/2474/8ab7.pkl: 
+0 -19.851694915254235
+0.5 27.66949152542373
+0.25 5.889830508474581
+0.125 -39.936440677966104
+0.1875 -32.66949152542372
+0.21875 -28.940677966101703
+0.234375 -1.6949152542372836
+0.2421875 -26.271186440677962
+0.24609375 -1.1228813559322037
+0.248046875 -1.2711864406779627
+0.2490234375 -40.65677966101694
+0.24951171875 -41.52542372881356
+0.249755859375 -40.21186440677966
+0.2498779296875 -48.728813559322035
+0.24993896484375 -19.300847457627125
+0.24609375 1.1228813559322037
+Elapsed time: 865.8713 seconds
+creating Y_pred/n/math1332/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 -100.0
+0.875 -100.0
+0.9375 -100.0
+0.96875 114.28571428571428
+0.953125 -100.0
+0.9609375 -100.0
+0.96484375 -100.0
+0.966796875 -100.0
+0.9677734375 -100.0
+0.96826171875 -100.0
+0.968505859375 -100.0
+0.9686279296875 -100.0
+0.96868896484375 -100.0
+0 100.0
+Elapsed time: 861.0265 seconds
+creating Y_pred/n/math1342/202308/fa15/2474/8ab7.pkl: 
+0 -55.45226130653267
+0.5 2.2110552763819014
+0.25 -54.89949748743719
+0.375 -20.97989949748744
+0.4375 -9.67336683417085
+0.46875 -36.63316582914573
+0.484375 -19.89949748743718
+0.4921875 -41.256281407035175
+0.49609375 5.5276381909547645
+0.494140625 -6.683417085427146
+0.4951171875 19.02010050251255
+0.49462890625 -6.2562814070351696
+0.494873046875 -9.145728643216078
+0.4949951171875 -14.874371859296476
+0.49505615234375 3.4924623115577758
+0.5 2.2110552763819014
+Elapsed time: 863.1207 seconds
+creating Y_pred/n/math2412/202308/fa15/2474/8ab7.pkl: 
+0 -49.06441717791411
+0.5 25.03067484662578
+0.25 -32.79141104294479
+0.375 -10.276073619631898
+0.4375 -1.1656441717791455
+0.46875 37.622699386503065
+0.453125 -11.365030674846633
+0.4609375 52.34662576687117
+0.45703125 -5.199386503067482
+0.458984375 2.208588957055202
+0.4580078125 2.2699386503067354
+0.45751953125 -4.095092024539881
+0.457763671875 10.291411042944798
+0.4576416015625 -11.625766871165633
+0.45770263671875 -2.42331288343558
+0.4375 1.1656441717791455
+Elapsed time: 862.6023 seconds
+creating Y_pred/n/math2413/202308/fa15/2474/8ab7.pkl: 
+0 -52.09459459459459
+0.5 -9.121621621621623
+0.75 47.97297297297298
+0.625 15.135135135135137
+0.5625 7.027027027027022
+0.53125 12.567567567567561
+0.515625 8.175675675675675
+0.5078125 12.702702702702705
+0.50390625 -27.77027027027027
+0.505859375 9.864864864864863
+0.5048828125 2.0270270270270174
+0.50439453125 -1.6891891891891886
+0.504638671875 -1.2837837837837873
+0.5047607421875 6.013513513513513
+0.50469970703125 18.44594594594595
+0.504638671875 1.2837837837837873
+Elapsed time: 863.5961 seconds
+creating Y_pred/n/musi1303/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.7419 seconds
+creating Y_pred/n/musi1310/202308/fa15/2474/8ab7.pkl: 
+0 -90.2439024390244
+0.5 51.21951219512195
+0.25 9.390243902439032
+0.125 -63.41463414634146
+0.1875 -24.634146341463413
+0.21875 -78.53658536585367
+0.234375 -62.19512195121951
+0.2421875 -86.46341463414635
+0.24609375 -43.78048780487804
+0.248046875 -84.32926829268293
+0.2490234375 -74.63414634146342
+0.24951171875 -66.21951219512195
+0.249755859375 -84.51219512195122
+0.2498779296875 -84.6951219512195
+0.24993896484375 -51.768292682926834
+0.25 9.390243902439032
+Elapsed time: 871.4509 seconds
+creating Y_pred/n/musi1311/202308/fa15/2474/8ab7.pkl: 
+0 -11.19565217391304
+0.5 -41.41304347826087
+0.75 29.891304347826097
+0.625 -23.913043478260864
+0.6875 -9.45652173913044
+0.71875 -0.43478260869566077
+0.734375 75.76086956521738
+0.7265625 -2.500000000000002
+0.73046875 -4.565217391304355
+0.732421875 -7.282608695652182
+0.7333984375 -21.304347826086957
+0.73388671875 -19.67391304347825
+0.734130859375 0.21739130434783593
+0.7340087890625 32.17391304347825
+0.73394775390625 -5.543478260869561
+0.734130859375 0.21739130434783593
+Elapsed time: 867.7364 seconds
+creating Y_pred/n/musi2350/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.0948 seconds
+creating Y_pred/n/musi3325/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.1908 seconds
+creating Y_pred/n/phil1301/202308/fa15/2474/8ab7.pkl: 
+0 -14.166666666666671
+0.5 22.777777777777786
+0.25 -77.22222222222223
+0.375 27.152777777777782
+0.3125 -35.763888888888886
+0.34375 -6.597222222222221
+0.359375 -15.069444444444446
+0.3671875 39.44444444444446
+0.36328125 -14.513888888888893
+0.365234375 -70.34722222222223
+0.3662109375 -33.194444444444436
+0.36669921875 -45.138888888888886
+0.366943359375 46.24999999999999
+0.3668212890625 6.458333333333344
+0.36676025390625 -19.305555555555554
+0.3668212890625 6.458333333333344
+Elapsed time: 861.8492 seconds
+creating Y_pred/n/phil1304/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.2108 seconds
+creating Y_pred/n/phil2303/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -100.0
+0.75 46.66666666666668
+0.625 -100.0
+0.6875 -100.0
+0.71875 -70.95238095238095
+0.734375 -100.0
+0.7421875 -100.0
+0.74609375 -71.19047619047619
+0.748046875 -79.52380952380953
+0.7490234375 -68.33333333333333
+0.74951171875 -100.0
+0.749755859375 -70.0
+0.7498779296875 -100.0
+0.74993896484375 66.19047619047618
+0.75 46.66666666666668
+Elapsed time: 862.2238 seconds
+creating Y_pred/n/phil3301/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5322 seconds
+creating Y_pred/n/phys1302/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5372 seconds
+creating Y_pred/n/phys1401/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.0492 seconds
+creating Y_pred/n/phys1402/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5628 seconds
+creating Y_pred/n/phys1403/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.1236 seconds
+creating Y_pred/n/phys1410/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.1335 seconds
+creating Y_pred/n/phys1411/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.5513 seconds
+creating Y_pred/n/phys2425/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 -61.31578947368421
+0.75 -67.36842105263158
+0.875 351.5789473684211
+0.8125 59.210526315789465
+0.78125 100.26315789473684
+0.765625 -0.2631578947368429
+0.7734375 18.947368421052644
+0.76953125 102.63157894736841
+0.767578125 84.21052631578947
+0.7666015625 -69.21052631578948
+0.76708984375 -5.263157894736848
+0.767333984375 162.6315789473684
+0.7672119140625 11.578947368421044
+0.76715087890625 13.94736842105262
+0.765625 0.2631578947368429
+Elapsed time: 863.1784 seconds
+creating Y_pred/n/phys2426/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.4116 seconds
+creating Y_pred/n/psyc2301/202308/fa15/2474/8ab7.pkl: 
+0 -57.421203438395416
+0.5 15.988538681948427
+0.25 -15.229226361031511
+0.375 11.618911174785108
+0.3125 6.418338108882504
+0.28125 -29.398280802292266
+0.296875 -21.0458452722063
+0.3046875 12.191977077363902
+0.30078125 -28.78223495702006
+0.302734375 -11.962750716332382
+0.3037109375 -21.83381088825215
+0.30419921875 -1.5042979942693435
+0.304443359375 -18.252148997134665
+0.3045654296875 -23.295128939828082
+0.30462646484375 -18.75358166189112
+0.30419921875 1.5042979942693435
+Elapsed time: 869.7751 seconds
+creating Y_pred/n/soci1301/202308/fa15/2474/8ab7.pkl: 
+0 -78.33333333333333
+0.5 -15.000000000000002
+0.75 47.83333333333333
+0.625 -8.999999999999996
+0.6875 -70.75
+0.71875 -26.249999999999996
+0.734375 -43.08333333333334
+0.7421875 -36.916666666666664
+0.74609375 -34.83333333333333
+0.748046875 -12.0
+0.7490234375 10.999999999999988
+0.74853515625 -69.5
+0.748779296875 59.66666666666667
+0.7486572265625 -16.08333333333333
+0.74871826171875 -6.91666666666666
+0.74871826171875 6.91666666666666
+Elapsed time: 863.3601 seconds
+creating Y_pred/n/soci1306/202308/fa15/2474/8ab7.pkl: 
+0 -100.0
+0.5 99.44444444444444
+0.25 -100.0
+0.375 32.77777777777777
+0.3125 -100.0
+0.34375 -49.44444444444444
+0.359375 -100.0
+0.3671875 -72.22222222222221
+0.37109375 -100.0
+0.373046875 -48.33333333333333
+0.3740234375 -100.0
+0.37451171875 -100.0
+0.374755859375 -14.444444444444438
+0.3748779296875 -100.0
+0.37493896484375 12.222222222222223
+0.37493896484375 12.222222222222223
+Elapsed time: 865.1370 seconds
+creating Y_pred/n/soci2303/202308/fa15/2474/8ab7.pkl: Elapsed time: 7.4663 seconds
+creating Y_pred/n/univ0200/202308/fa15/2474/8ab7.pkl: 
+0 -20.03937007874016
+0.5 -25.94488188976378
+0.75 52.95275590551181
+0.625 8.937007874015745
+0.5625 2.8346456692913247
+0.53125 8.622047244094478
+0.515625 79.17322834645671
+0.5078125 -2.4803149606299257
+0.51171875 -20.433070866141733
+0.513671875 -5.118110236220474
+0.5146484375 -16.181102362204726
+0.51513671875 -12.3228346456693
+0.515380859375 -20.314960629921252
+0.5155029296875 -13.307086614173237
+0.51556396484375 -2.5196850393700787
+0.5078125 2.4803149606299257
+Elapsed time: 861.8866 seconds
+creating Y_pred/n/univ0204/202308/fa15/2474/8ab7.pkl: 
+0 -44.360465116279066
+0.5 -3.817829457364341
+0.75 342.2480620155039
+0.625 64.41860465116278
+0.5625 46.35658914728682
+0.53125 0.7558139534883601
+0.515625 -6.37596899224806
+0.5234375 -21.899224806201545
+0.52734375 -1.996124031007751
+0.529296875 14.554263565891468
+0.5283203125 29.72868217054263
+0.52783203125 2.9651162790697683
+0.527587890625 37.77131782945735
+0.5274658203125 34.399224806201545
+0.52740478515625 28.023255813953483
+0.53125 0.7558139534883601
+Elapsed time: 861.8747 seconds
+creating Y_pred/n/univ0301/202308/fa15/2474/8ab7.pkl: 
+0 -35.13559322033899
+0.5 30.050847457627118
+0.25 -16.8135593220339
+0.375 -18.91525423728814
+0.4375 0.9491525423728886
+0.40625 -68.10169491525424
+0.421875 4.4237288135593245
+0.4140625 -0.16949152542372614
+0.41796875 12.66101694915256
+0.416015625 12.525423728813557
+0.4150390625 3.8305084745762663
+0.41455078125 -0.8135593220338855
+0.414794921875 -13.254237288135595
+0.4149169921875 -9.135593220338977
+0.41497802734375 -10.457627118644075
+0.4140625 0.16949152542372614
+Elapsed time: 874.7164 seconds
+creating Y_pred/n/univ0314/202308/fa15/2474/8ab7.pkl: 
+0 -72.79569892473118
+0.5 -17.311827956989244
+0.75 31.774193548387085
+0.625 -4.0322580645161255
+0.6875 -16.075268817204304
+0.71875 0.8064516129032251
+0.703125 67.04301075268818
+0.6953125 55.376344086021504
+0.69140625 14.623655913978496
+0.689453125 -13.763440860215049
+0.6904296875 129.94623655913978
+0.68994140625 41.61290322580644
+0.689697265625 47.90322580645163
+0.6895751953125 1.1290322580645107
+0.68951416015625 37.473118279569896
+0.71875 0.8064516129032251
+Elapsed time: 873.1219 seconds
+creating Y_pred/n/univ0324/202308/fa15/2474/8ab7.pkl: Elapsed time: 8.7656 seconds
+creating Y_pred/n/univ0332/202308/fa15/2474/8ab7.pkl: Elapsed time: 9.6796 seconds
+creating Y_pred/n/univ0342/202308/fa15/2474/8ab7.pkl: 
+0 -83.33333333333334
+0.5 -48.020833333333336
+0.75 -3.9583333333333304
+0.875 210.52083333333337
+0.8125 141.35416666666666
+0.78125 91.35416666666664
+0.765625 4.895833333333344
+0.7578125 -2.9166666666666674
+0.76171875 37.083333333333336
+0.759765625 13.22916666666667
+0.7587890625 80.0
+0.75830078125 19.999999999999996
+0.758056640625 28.85416666666667
+0.7579345703125 -6.562499999999993
+0.75799560546875 -8.437499999999998
+0.7578125 2.9166666666666674
+Elapsed time: 863.5816 seconds
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/_allcrse/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/agec2317/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/ansc1319/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/arts1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/arts1303/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/arts1304/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/arts3331/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/biol1305/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/biol1406/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/biol1407/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/biol2401/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/biol2402/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/busi1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/busi1307/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1111/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1112/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1302/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1311/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1312/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1407/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1411/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/chem1412/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/comm1311/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/comm1315/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/comm2302/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/crij1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/dram1310/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/dram2361/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/dram4304/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/easc2310/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/econ1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/econ2301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl1302/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2307/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2320/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2321/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2326/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2340/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2350/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2360/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2362/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2364/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2366/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engl2368/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/engr2303/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/envs1302/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/fina1360/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geog1303/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geog1320/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geog1451/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geog2301/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geol1403/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geol1404/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geol1407/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/geol1408/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/govt2305/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/govt2306/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/hist1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/hist1302/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/hist2321/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/hist2322/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/huma1315/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/kine2315/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math1314/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math1316/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math1324/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math1332/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math1342/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math2412/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/math2413/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/musi1303/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/musi1310/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/musi1311/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/musi2350/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/musi3325/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phil1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phil1304/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phil2303/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phil3301/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1302/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1401/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1402/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1403/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1410/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys1411/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys2425/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/phys2426/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/psyc2301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/soci1301/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/soci1306/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/soci2303/202308/fa15/2474/8ab7.pkl: FAILED
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/univ0200/202308/fa15/2474/8ab7.pkl: success
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/141/Y_pred/n/univ0204/202308/fa15/2474/8ab7.pkl: success
