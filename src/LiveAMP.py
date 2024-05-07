@@ -54,17 +54,17 @@ class LogLoss(Metric):
 ################## AMP ##################
 crse_codes = [
     '_allcrse',
-    # 'agec2317',
-    # # 'ansc1119',
-    # 'ansc1319',
-    # # 'anth2302',
-    # # 'anth2351',
-    # 'arts1301',
-    # 'arts1303',
+    'agec2317',
+    'ansc1119',
+    'ansc1319',
+    'anth2302',
+    'anth2351',
+    'arts1301',
+    'arts1303',
     # 'arts1304',
     # 'arts3331',
     # 'biol1305',
-    'biol1406',
+    # 'biol1406',
     # 'biol1407',
     # 'biol2401',
     # 'biol2402',
@@ -173,10 +173,8 @@ class AMP(MyBaseClass):
 
     def __post_init__(self):
         super().__post_init__()
-        if self.cycle_day is None:
-            self.cycle_day = (Term(term_code=202408).cycle_date-pd.Timestamp.now()).days+1
+        self.cycle_day = (Term(term_code=202408).cycle_date-pd.Timestamp.now()).days+1 if self.cycle_day is None else self.cycle_day
         self.root_path /= rjust(self.cycle_day,3,0)
-
 
     def get_X(self):
         def func():
@@ -184,7 +182,7 @@ class AMP(MyBaseClass):
             terms = {cycle_day: {pred_code:
                     Term(term_code=pred_code, cycle_day=cycle_day, overwrite=self.overwrite, show=self.show).get_reg().get_raw()
                 for pred_code in self.pred_codes} for cycle_day in [0, self.cycle_day]}
-            ren = {'term_code':'pred_code', 'term_desc':'pred_desc'}
+            ren = {'term_code':'pred_code', 'term_desc':'pred_desc', 'credit_hr':'enrolled'}
             R = pd.concat([T.raw.rename(columns=ren) for pred_code, T in terms[self.cycle_day].items()]).copy().dropna(axis=1, how='all').reset_index(drop=True).prep()
             repl = {'ae':0, 'n1':1, 'n2':2, 'n3':3, 'n4':4, 'r1':1, 'r2':2, 'r3':3, 'r4':4}
             R['hs_qrtl'] = pd.cut(R['hs_pctl'], bins=[-1,25,50,75,90,101], labels=[4,3,2,1,0], right=False).combine_first(R['apdc_code'].map(repl))
@@ -282,14 +280,14 @@ class AMP(MyBaseClass):
                     .rename(columns=ren)
                     .assign(crse_code=lambda X: X['crse_code'] + ('_cur' if cycle_day > 0 else ''))
                     .set_index(['pidm','levl_code','styp_code','pred_code','crse_code'])
-                    [['credit_hr']]
+                    [['enrolled']]
                     .fillna(0)
                 for cycle_day, dct in terms.items() for pred_code, T in dct.items()]).copy().fillna(0).prep()
-            Y.loc[Y.eval("crse_code!='_allcrse_cur' & credit_hr>0")] = 1
+            Y.loc[Y.eval("crse_code!='_allcrse_cur' & enrolled>0")] = 1
             self.Y = Y.rsindex(['pidm','pred_code','crse_code'])
-            Z = self.X[[]].join(self.Y)#, how='inner')
+            Z = self.X[[]].join(self.Y)
             agg = lambda y: y.groupby(['styp_code','pred_code','crse_code']).sum().query(f"styp_code in ('n','r','t') and pred_code!={self.proj_code} and not crse_code.str.contains('cur')")
-            self.mlt = agg(Y) / agg(Z)
+            self.mlt = (agg(Y) / agg(Z)).dropna().squeeze().rename('mlt')
         return self.get(func, "X.pkl")
 
 
@@ -312,7 +310,7 @@ class AMP(MyBaseClass):
             imp.mice(iterations, variable_parameters=variable_parameters)
             self.X_proc = [
                 imp.complete_data(k)
-                .addlevels({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
+                .addlevel({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
                 .prep(bool=True, cat=True)
             for k in range(imp.dataset_count())]
             del self.X
@@ -321,292 +319,76 @@ class AMP(MyBaseClass):
 
     def get_Y(self):
         def func():
+            clf_dct = self.param['clf'][2] | {'task':'classification', 'verbose':0}#, 'log_type': 'all'}
+            min_calibrate = clf_dct.pop('min_calibrate')
+            time_calibrate = clf_dct.pop('time_calibrate')
+            max_calibrate = time_calibrate // clf_dct['time_budget']
+
             cols = uniquify(['_allcrse_cur', self.crse_code+'_cur', self.crse_code])
             Y = self.Y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
-            if self.X_proc[0].query(f"pred_code=={self.train_code}").join(Y)[self.crse_code].sum() < 10:
+            if self.crse_code not in Y or self.X_proc[0].query(f"pred_code=={self.train_code}").join(Y)[self.crse_code].sum() < 10:
                 return 'fail'
-            Z = pd.concat(self.X_proc).join(Y).fillna({c:0 for c in cols}).addlevels({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True)
-            # Z = (
-            #     pd.concat([X.join(Y) for X in self.X_proc])
-            #     .fillna({c:0 for c in cols})
-            #     .addlevels({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]})
-            #     .prep(bool=True, cat=True)
-            # )
-            # clf_dct = self.param['clf'][2].copy() | {'split_type':'stratified', 'task':'classification', 'verbose':0, 'log_file_name': self.path.with_suffix('.log')}
-            # n_calibrations = clf_dct.pop('n_calibrations')
-            # clf_dct['log_file_name'].parent.mkdir(exist_ok=True, parents=True)
-
-            # def train(Z, mask, weight=0, dct=clf_dct):
-            #     clf = fl.AutoML(**dct)
-            #     X = Z.copy()
-            #     y = X.pop(self.crse_code)
-            #     # clf.X = X
-            #     # mask = X.eval(f"pred_code=={self.train_code}")
-            #     with warnings.catch_warnings(action='ignore'):
-            #         clf.fit(
-            #             X[mask],
-            #             y[mask],
-            #             sample_weight=1+(2*y[mask]-1)*weight,
-            #             **dct)
-            #         clf.Y = y.rename('actual').to_frame().assign(
-            #             proba=clf.predict_proba(X)[:,1],
-            #             # predicted=clf.predict(clf.X),
-            #             ).prep(bool=True).copy()
-            #     return clf
-
-            # print()
-            # weight = 0
-            # weight_hist = {weight: np.inf}
-            # z = Z.query(f"pred_code=={self.train_code}").copy()
-            # t = z.query(f"sim==0").groupby([self.crse_code,'__coll_code','__remote'], observed=True)
-            # mask = z.reset_index()['index'].isin(t.sample(frac=0.7).reset_index()['index']).values
-            # for i in range(n_calibrations):
-            #     clf = train(z, mask, weight, clf_dct|{'time_budget':15})
-            #     y = clf.Y[~mask].sum()
-            #     y['err'] = y['proba'] / y['actual'] - 1
-            #     y.to_frame().T.disp(10)
-            #     weight_hist[weight] = abs(y['err'])
-            #     print(weight, y['err'])
-            #     if abs(y['err']) < 0.001:
-            #         break
-            #     # weight += (2*(np.mean(y['err'])<0)-1) / (2**(i+1))
-            #     weight = np.clip(weight - y['err'], -1, 1)
-
-                # y['err'] = np.where(y['actual']<10, pd.NA, y['proba'] / y['actual'] - 1)
-                # y.disp(5)
-                # mape = np.mean(np.abs(y['err'])) * 100
-                # weight_hist[weight] = mape
-                # print(weight, np.mean(y['err']) * 100, mape)
-                # if mape < 0.25:
-                #     break
-                # # weight += (2*(np.mean(y['err'])<0)-1) / (2**(i+1))
-                # weight = np.clip(weight - np.mean(y['err']), -1, 1)
-            # weight = min(weight_hist, key=weight_hist.get)
-            # print(weight, weight_hist[weight])
-
-            clf_dct = self.param['clf'][2] | {'task':'classification', 'verbose':0, 'log_type': 'all'}
+            Z = pd.concat(self.X_proc).join(Y).fillna({c:0 for c in cols}).addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True)
             X = Z.query(f"pred_code=={self.train_code}").copy()
-            t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code','__remote'], observed=True)
+            t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
             y = X.pop(self.crse_code)
-            self.weight = 0
-            self.hist = dict()
-            self.err = 0
-            for i in range(20):
-                self.weight = np.clip(self.weight - self.err, -1, 1)
-                mask = X.reset_index()['index'].isin(t.sample(frac=0.75).reset_index()['index']).values
+            del self.X_proc
+            del self.Y
+
+            def train(wgt, iter=''):
+                mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
                 dct = clf_dct | {
                     'X_train':X[mask],
                     'y_train':y[mask],
                     'X_val':X[~mask],
                     'y_val':y[~mask],
-                    'sample_weight':1+(2*y[mask]-1)*self.weight,
-                    'sample_weight_val':1+(2*y[~mask]-1)*self.weight,
-                    'log_file_name': self.path.with_stem(f"{self.path.stem}_{i}").with_suffix('.log'),
+                    'sample_weight':1+(2*y[mask]-1)*wgt,
+                    'sample_weight_val':1+(2*y[~mask]-1)*wgt,
+                    'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
                 }
                 mkdir(dct['log_file_name'].parent)
-                self.clf = fl.AutoML(**dct)
-                self.clf.fit(**dct)
-                self.train_score = self.clf.best_result['val_loss'] * 100
+                clf = fl.AutoML(**dct)
+                clf.fit(**dct)
                 X_all = Z.copy()
-                self.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=self.clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
-                
-                S = self.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
+                clf.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
+                return clf
+
+            wgt = 0
+            err = 0
+            best_wgt = wgt
+            best_rmse = np.inf
+            self.hist = dict()
+            print()
+            for i in range(max_calibrate):
+                wgt = np.clip(wgt - err*(0.95**i), -1, 1)
+                clf = train(wgt)
+                S = clf.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
                 S['proba'] *= S['actual'] > 0
-                self.err = S['proba'].sum() / S['actual'].sum() - 1
-                self.hist[weight] = self.err
-                L = 5
-                self.std = np.std(list(self.hist.values())[-L:])
-                print(i, self.weight, self.err, self.std)
-                S.disp(10)
-                if len(self.hist) >= L and self.std < 0.005:
+                S['err'] = S['proba'] - S['actual']
+                err = S['err'].sum() / S['actual'].sum()
+
+                self.hist[wgt] = err
+                W = np.array(list(self.hist.keys  ())[-min_calibrate:])
+                E = np.array(list(self.hist.values())[-min_calibrate:])
+                rmse = np.sqrt(np.mean(E**2))
+                if min_calibrate <= len(E) and rmse < best_rmse:
+                    best_wgt = W.mean()
+                    best_rmse = rmse
+                print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
+                if best_rmse < 0.00001:
                     break
-            
-
-            
-
-            # self.clf = dict()
-            # X = Z.query(f"pred_code=={self.train_code}").copy()
-            # t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code','__remote'], observed=True)
-            # # mask = X.reset_index()['index'].isin(t.sample(frac=0.75).reset_index()['index']).values
-            # y = X.pop(self.crse_code)
-            # weight = 0
-            # for i, z in Z.groupby('sim'):
-            # # for z in Z:
-            #     a = Z.query(f"pred_code=={self.train_code}").copy()
-            #     # trn = a.groupby([self.crse_code,'__coll_code','__remote'], observed=True).sample(frac=0.7)#.reset_index()['index']
-            #     # tst = a[~a.isin(trn)]
-
-            #     b = a.groupby([self.crse_code,'__coll_code','__remote'], observed=True).sample(frac=0.7)#.reset_index()['index']
-            #     mask = a.isin(b)#.values
-
-            #     clf = fl.AutoML(**dct)
-            #     X = Z.copy()
-            #     y = X.pop(self.crse_code)
-            #     # clf.X = X
-            #     # mask = X.eval(f"pred_code=={self.train_code}")
-            #     with warnings.catch_warnings(action='ignore'):
-            #         clf.fit(
-            #             X[mask],
-            #             y[mask],
-            #             sample_weight=1+(2*y[mask]-1)*weight,
-            #             **dct)
-            #         clf.Y = y.rename('actual').to_frame().assign(
-            #             proba=clf.predict_proba(X)[:,1],
-            #             # predicted=clf.predict(clf.X),
-            #             ).prep(bool=True).copy()
-
-            #     # mask = a.reset_index()['index'].isin(b).values
-            #     # tst = a[~a.isin(b)]
-
-
-            #     # mask = a.reset_index()['index'].isin(b).values
-                
-            #     # t = z.query(f"sim==0").groupby([self.crse_code,'__coll_code','__remote'], observed=True)
-            #     # mask = z.reset_index()['index'].isin(t.sample(frac=0.7).reset_index()['index']).values
-
-
-                # mask = z.eval(f"pred_code=={self.train_code}")
-                # clf = train(z, mask, weight)
-            # self.weight = weight
-            # self.train_score = self.clf.best_result['val_loss'] * 100
-            # S = self.Y.groupby(['crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim']).apply(lambda y: pd.Series({
-            #     'actual': y['actual'].sum(),
-            #     # 'predicted': y['predicted'].sum(),
-            #     'predicted': y['proba'].sum(),
-            #     'train_score': self.train_score,
-            #     'test_score': log_loss(y['actual'], y['proba'], labels=[False,True], sample_weight=1+(2*y['actual']-1)*self.weight) * 100,
-            #     # 'test_score': (1 - f1_score(y['actual'], y['predicted'], sample_weight=1+(2*y['actual']-1)*clf.weight))*100,
-            #     'weight': self.weight,
-            # })).prep()
-            # S.disp(5)
-            # proj_mask = S.eval(f"pred_code==@self.proj_code")
-            # proj_col = f'{self.proj_code}_projection'
-            # S[proj_col] = S.loc[proj_mask, 'predicted'].squeeze()
-            # S.disp(5)
-            # S = S[~proj_mask].join(self.mlt.query(f"crse_code==@self.crse_code").squeeze().rename('mlt'))
-            # S.disp(5)
-            # for k in ['predicted','actual',proj_col]:
-            #     S[k] *= S['mlt']
-            # S.disp(5)
-            # alpha = 1
-            # S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-            # S['error'] = S['predicted'] - S['actual']
-            # S['error_pct'] = S['error'] / S['actual'] * 100
-            # # return S[[proj_col,'overall_score','error_pct','error','predicted','actual','test_score','train_score']]
-            # self.summary = S[[proj_col,'overall_score','error_pct','error','predicted','actual','test_score','train_score','weight']]
-
-
-
-
-            # clf.summary = self.summarize(clf)
-            # self.clf[i] = clf
-            #     # self.clf.append(clf)
-            # for k in ['Y', 'summary']:
-            #     # self[k] = pd.concat([getattr(clf, k) for clf in self.clf])
-            #     self[k] = pd.concat([clf.__dict__.pop(k) for clf in self.clf.values()])
-            # self.clf = {i: clf._trained_estimator for i, clf in self.clf.items()}
-                
-            # grp = [k for k in self.summary.index.names if k!= 'sim']
-            # self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
-            # self.rslt[' 50%'].disp(100)
-            # del self.X_proc
+            self.weight = best_wgt
+            clf_dct['time_budget'] *= 20
+            self.clf = train(best_wgt)
+            self.Y = clf.Y
+            self.train_score = clf.best_result['val_loss'] * 100
+            self.summarize()
+            self.clf = clf._trained_estimator
             # del self.mlt
         return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
 
-    # def get_Y(self):
-    #     def func():
-    #         cols = uniquify(['_allcrse_cur', self.crse_code+'_cur', self.crse_code])
-    #         Y = self.Y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
-    #         if self.X_proc[0].query(f"pred_code=={self.train_code}").join(Y)[self.crse_code].sum() < 10:
-    #             return 'fail'
-    #         Z = [
-    #             X.join(Y)
-    #             .fillna({c:0 for c in cols})
-    #             .addlevels({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]})
-    #             .prep(bool=True, cat=True)
-    #             for X in self.X_proc]
-    #         clf_dct = self.param['clf'][2].copy() | {'split_type':'stratified', 'task':'classification', 'verbose':0, 'log_file_name': self.path.with_suffix('.log')}
-    #         n_calibrations = clf_dct.pop('n_calibrations')
-    #         clf_dct['log_file_name'].parent.mkdir(exist_ok=True, parents=True)
 
-    #         def train(Z, mask, weight=0, dct=clf_dct):
-    #             clf = fl.AutoML(**dct)
-    #             X = Z.copy()
-    #             y = X.pop(self.crse_code)
-    #             # clf.X = X
-    #             # mask = X.eval(f"pred_code=={self.train_code}")
-    #             with warnings.catch_warnings(action='ignore'):
-    #                 clf.fit(
-    #                     X[mask],
-    #                     y[mask],
-    #                     sample_weight=1+(2*y[mask]-1)*weight,
-    #                     **dct)
-    #                 clf.Y = y.rename('actual').to_frame().assign(
-    #                     proba=clf.predict_proba(X)[:,1],
-    #                     # predicted=clf.predict(clf.X),
-    #                     ).prep(bool=True).copy()
-    #             return clf
-
-    #         print()
-    #         weight = 0
-    #         weight_hist = {weight: np.inf}
-    #         for i in range(n_calibrations):
-    #             z = Z[0].query(f"pred_code=={self.train_code}")
-    #             t = z.groupby([self.crse_code,'__coll_code','__remote'], observed=True).sample(frac=0.7)
-
-
-    #             z = Z[i%len(Z)].query(f"pred_code=={self.train_code}")
-    #             t = z.groupby([self.crse_code,'__coll_code','__remote'], observed=True).sample(frac=0.7)
-    #             mask = z.assign(mask=z.index.isin(t.index)).pop('mask')
-    #             clf = train(z, mask, weight, clf_dct|{'time_budget':15})
-    #             y = clf.Y[~mask].sum()
-
-    #             # clf = train(Z[i%len(Z)], weight, clf_dct|{'time_budget':15})
-    #             # y = clf.Y[~mask].groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
-    #             # y['proba'] *= (y['actual'] > 0)
-    #             err = y['proba'].sum() / y['actual'].sum() - 1
-    #             print(y, err)
-    #             weight_hist[weight] = abs(err)
-    #             print(weight, err)
-    #             if abs(err) < 0.001:
-    #                 break
-    #             # weight += (2*(np.mean(y['err'])<0)-1) / (2**(i+1))
-    #             weight = np.clip(weight - err, -1, 1)
-
-    #             # y['err'] = np.where(y['actual']<10, pd.NA, y['proba'] / y['actual'] - 1)
-    #             # y.disp(5)
-    #             # mape = np.mean(np.abs(y['err'])) * 100
-    #             # weight_hist[weight] = mape
-    #             # print(weight, np.mean(y['err']) * 100, mape)
-    #             # if mape < 0.25:
-    #             #     break
-    #             # # weight += (2*(np.mean(y['err'])<0)-1) / (2**(i+1))
-    #             # weight = np.clip(weight - np.mean(y['err']), -1, 1)
-    #         weight = min(weight_hist, key=weight_hist.get)
-    #         print(weight, weight_hist[weight])
-
-    #         self.clf = []
-    #         for z in Z:
-    #             mask = z.eval(f"pred_code=={self.train_code}")
-    #             clf = train(z, mask, weight)
-    #             clf.weight = weight
-    #             clf.train_score = clf.best_result['val_loss'] * 100
-    #             clf.summary = self.summarize(clf)
-    #             self.clf.append(clf)
-    #         for k in ['Y', 'summary']:
-    #             # self[k] = pd.concat([getattr(clf, k) for clf in self.clf])
-    #             self[k] = pd.concat([clf.__dict__.pop(k) for clf in self.clf])
-    #         self.clf = [clf._trained_estimator for clf in self.clf]
-                
-    #         grp = [k for k in self.summary.index.names if k!= 'sim']
-    #         self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
-    #         self.rslt[' 50%'].disp(100)
-    #         del self.X_proc
-    #         del self.mlt
-    #     return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
-
-
-    def summarize(self, clf):
+    def summarize(self):
         S = self.Y.groupby(['crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim']).apply(lambda y: pd.Series({
             'actual': y['actual'].sum(),
             # 'predicted': y['predicted'].sum(),
@@ -620,67 +402,20 @@ class AMP(MyBaseClass):
         S = (
             S[~proj_mask]
             .join(S[proj_mask]['predicted'].droplevel('pred_code').rename(proj_col))
-            .join(self.mlt.squeeze().rename('mlt'))
+            .join(self.mlt)
+            .sort_index()
         )
         for k in ['predicted','actual',proj_col]:
             S[k] *= S['mlt']
+        S[proj_col+'_pct_change'] = (S[proj_col] / S.groupby(S.index.names.difference({'pred_code'})).transform('last')['actual'] - 1) * 100
         alpha = 1
         S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
         S['error'] = S['predicted'] - S['actual']
         S['error_pct'] = S['error'] / S['actual'] * 100
-        return S[[proj_col,'overall_score','error_pct','error','predicted','actual','test_score','train_score']]
-
-
-
-        # S = clf.Y.groupby(['crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim']).apply(lambda y: pd.Series({
-        #     'actual': y['actual'].sum(),
-        #     # 'predicted': y['predicted'].sum(),
-        #     'predicted': y['proba'].sum(),
-        #     'train_score': clf.train_score,
-        #     'test_score': log_loss(y['actual'], y['proba'], labels=[False,True], sample_weight=1+(2*y['actual']-1)*clf.weight) * 100,
-        #     # 'test_score': (1 - f1_score(y['actual'], y['predicted'], sample_weight=1+(2*y['actual']-1)*clf.weight))*100,
-        #     'weight': clf.weight,
-        # })).prep()
-        # proj_mask = S.eval(f"pred_code==@self.proj_code")
-        # proj_col = f'{self.proj_code}_projection'
-        # S[proj_col] = S.loc[proj_mask, 'predicted'].squeeze()
-        # S = S[~proj_mask].join(self.mlt.query(f"crse_code==@self.crse_code").squeeze().rename('mlt'))
-        # for k in ['predicted','actual',proj_col]:
-        #     S[k] *= S['mlt']
-        # alpha = 1
-        # S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-        # S['error'] = S['predicted'] - S['actual']
-        # S['error_pct'] = S['error'] / S['actual'] * 100
-        # # return S[[proj_col,'overall_score','error_pct','error','predicted','actual','test_score','train_score']]
-        # return S[[proj_col,'overall_score','error_pct','error','predicted','actual','test_score','train_score','weight']]
-
-
-def get_stack(cycle_day=(Term(term_code=202408).cycle_date-pd.Timestamp.now()).days+1):
-    dct = dict()
-    append = lambda k, v: dct.setdefault(k,[]).append(v)
-    path = AMP(cycle_day=cycle_day).root_path
-    for A in (path / 'Y').iterdir():
-        for B in A.iterdir():
-            for C in B.iterdir():
-                for D in C.iterdir():
-                    for E in D.iterdir():
-                        for F in E.iterdir():
-                            if F.suffix == '.pkl':
-                                # A = MyBaseClass().load(F)
-                                A = read(F)
-                                try:
-                                    for k in ['Y', 'summary']:
-                                        append(k, A[k])
-                                    for k, v in A['rslt'].items():
-                                        append(k, v)
-                                    # print('success')
-                                except:
-                                    print(F, 'FAILED')
-                                    # print('FAILED')
-    dct = {k: pd.concat(v).prep() for k, v in dct.items()}
-    write(path / 'stack.pkl', dct, overwrite=True)
-    print(path / 'stack.pkl')
-    return dct
+        self.summary = S.query('actual>=10')[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
+        grp = [k for k in self.summary.index.names if k!= 'sim']
+        self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
+        self.rslt[' 50%'].disp(100)
 
 param_grds = {
     'trf': {
@@ -697,14 +432,14 @@ param_grds = {
         'fafsa_app': 'drop',
         'finaid_accepted': 'drop',
         'gap_score': 'passthrough',
-        'gender': 'passthrough',
+        # 'gender': 'passthrough',
         'hs_qrtl': 'passthrough',
-        'international': 'passthrough',
+        # 'international': 'passthrough',
         'lgcy': 'passthrough',
         'math': 'passthrough',
         'oriented': 'passthrough',
         'pred_code': 'drop',
-        **{f'race_{r}': 'passthrough' for r in ['american_indian','asian','black','pacific','white','hispanic']},
+        # **{f'race_{r}': 'passthrough' for r in ['american_indian','asian','black','pacific','white','hispanic']},
         'reading': 'passthrough',
         'remote': 'passthrough',
         'resd': 'passthrough',
@@ -725,19 +460,14 @@ param_grds = {
     },
     'clf': {
         'seed': 42,
-        # 'metric': F_beta(1),
-        # 'metric': 'f1',
         'metric': 'log_loss',
         'early_stop': True,
-        'time_budget': 30,
-        # 'time_budget': 5,
+        'time_budget': 10,
         'estimator_list': [['lgbm','xgboost']],#,'catboost','histgb','extra_tree','xgb_limitdepth','rf','lrl1','lrl2','kneighbor'
         # 'ensemble': [False, True],
         'ensemble': False,
-        # 'eval_method': 'cv',
-        # 'n_splits': 5,
-        # 'n_calibrations':15,
-        # 'n_calibrations':12,
+        'min_calibrate': 10,
+        'time_calibrate': 8*60,
     },
 }
 
@@ -751,43 +481,55 @@ for key, val in param_grds.items():
         lst = [[(c,t,["__"+c]) for c,t in trf.items() if t not in ['drop', None, '']] for trf in lst]
     param_dcts[key] = [[hasher(k), formatter(k), k] for k in lst]
 
-overwrite = [
-    # 'adm',
-    # 'flg',
-    # 'raw',
-    # 'reg',
-    # 'X',
-    # 'X_proc',
-    # 'Y',
-]
 
-def run_amp(cycle_day=None):
-    for styp_code in ['n']:
-        for crse_code in crse_codes:
-            for train_code in [202108, 202208, 202308]:
-            # for train_code in [202308]:
-                for param in cartesian(param_dcts):
-                    self = AMP(
-                        styp_code=styp_code,
-                        crse_code=crse_code,
-                        train_code=train_code,
-                        param=param,
-                        overwrite=overwrite,
-                        cycle_day=cycle_day,
-                    )
-                    self.get_Y()
-    # return get_stack(self.cycle_day)
+def run_amp(cycle_days=None, styp_codes=None, train_codes=None, overwrite=None):
+    for kwargs in cartesian({
+        'cycle_day': cycle_days,
+        'styp_code': styp_codes,
+        'crse_code': crse_codes,
+        'train_code': train_codes,
+        'param': cartesian(param_dcts),
+        'overwrite': [listify(overwrite)],
+        }):
+            self = AMP(**kwargs)
+            # self.get_Y()
     return self
 
+
+def get_stack(cycle_day, ext=None):
+    self = AMP(cycle_day=cycle_day)
+    def func():
+        self.stack = dict()
+        append = lambda k, v: self.stack.setdefault(k,[]).append(v)
+        for fn in (self.root_path / 'Y').rglob('*.pkl'):
+            A = AMP().load(fn, force=True)
+            # A.mlt = self.mlt.copy()
+            # A.summarize()
+            # A.dump(fn)
+            for k in ['Y', 'summary']:
+                append(k, A[k])
+            for k, v in A['rslt'].items():
+                append(k, v)
+        self.stack = {k: pd.concat(v).prep() for k, v in self.stack.items()}
+        self.report = (
+            self.stack[' 50%']
+            .query("trf_hash=='fa15'")
+            .reset_index()
+            .drop(columns=['trf_hash','imp_hash','clf_hash'])
+            .sort_values(['crse_code','levl_code','styp_code','train_code','pred_code'], ascending=[True,True,True,False,False])
+            .round(2)
+            .prep()
+        )
+        self.report.to_csv(self.root_path / f'AMP{ext}.csv', index=False)
+    return self.get(func, f"stack.pkl", "X")
 
 
 if __name__ == "__main__":
     print(pd.Timestamp.now())
     @pd_ext
     def disp(df, max_rows=4, max_cols=200, **kwargs):
-        # display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
-        # print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
-        print(df.head(max_rows).to_markdown(tablefmt='psql'))
+        print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
+
     from IPython.utils.io import Tee
     with contextlib.closing(Tee('/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/log.txt', "w", channel="stdout")) as outputstream:
-        run_amp(134)
+        run_amp(137)

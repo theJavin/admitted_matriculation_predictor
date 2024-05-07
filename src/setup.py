@@ -36,7 +36,7 @@ def cartesian(dct, sort=False, **kwargs):
     """Creates the Cartesian product of a dictionary with list-like values"""
     dct = mysort(dct, **kwargs) if sort else dct
     dct = {key: listify(val, sort, **kwargs) for key, val in dct.items()}
-    # dct = {key: uniquify(val, sort, **kwargs) for key, val in dct.items()}
+    dct = {key: val for key, val in dct.items() if len(val) > 0}
     return [dict(zip(dct.keys(), x)) for x in it.product(*dct.values())]
 
 def uniquify(X, sort=False, **kwargs):
@@ -114,16 +114,28 @@ def pd_ext(func):
                 Y = func(Y, *args, **kwargs)
             except:
                 Y = Y.apply(func, *args, **kwargs)
-        # return Y.squeeze() if isinstance(X, pd.Series) else Y
-        return Y
+        try:
+            assert isinstance(X, pd.Series)
+            return Y.iloc[:,0]
+        except:
+            return Y
     wrapper.__name__ = func.__name__
     for cls in [pd.DataFrame, pd.Series]:
-        setattr(cls, wrapper.__name__, wrapper)
+        if not hasattr(cls, wrapper.__name__):
+            setattr(cls, wrapper.__name__, wrapper)
     return wrapper
 
 @pd_ext
 def disp(df, max_rows=1, max_cols=200, **kwargs):
-    display(HTML(pd.DataFrame(df).to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+    display(HTML(df.to_html(max_rows=max_rows, max_cols=max_cols, **kwargs)))
+
+@pd_ext
+def query(df, *args, **kwargs):
+    return df.query(*args, **kwargs)
+
+@pd_ext
+def eval(df, *args, **kwargs):
+    return df.eval(*args, **kwargs)
 
 @pd_ext
 def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
@@ -136,11 +148,11 @@ def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
             try:
                 ser = pd.to_numeric(ser, downcast='integer')
             except ValueError:
-                pass
-    if pd.api.types.is_integer_dtype(ser):
-        ser = ser.astype('Int64')
-    if pd.api.types.is_string_dtype(ser):
-        ser = ser.str.lower().replace('', pd.NA)
+                ser = ser.str.lower().replace('', pd.NA)
+    if pd.api.types.is_numeric_dtype(ser):
+        ser = pd.to_numeric(ser, downcast='integer')
+        if pd.api.types.is_integer_dtype(ser):
+            ser = ser.astype('Int64')
     if bool:
         vals = set(ser.dropna().unique())
         for L in [['false','true'], [0,1], ['n','y']]:
@@ -159,24 +171,19 @@ def prep(X, cap='casefold', bool=False, cat=False):
         return type(X)(prep(x, cap) for x in X)
     elif isinstance(X, dict):
         return {prep(k, cap): prep(v, cap) for k, v in X.items()}
+    elif isinstance(X, pd.Series):
+        assert 1==2
     elif isinstance(X, pd.DataFrame):
         g = lambda x: prep(x, cap).replace(' ','_').replace('-','_') if isinstance(x, str) else x
         return X.rename(columns=g).rename_axis(index=g).convert(bool=bool, cat=cat)
         # X = X.rename(columns=g).rename_axis(index=g)
         # idx = pd.MultiIndex.from_frame(X[[]].reset_index().convert(bool=bool, cat=cat))
         # return X.convert(bool=bool, cat=cat).set_index(idx).rename_axis(X.index.names)
-    elif isinstance(X, pd.Series):
-        assert 1==2
     else:
         return X
 
-# @pd_ext
-# def addlevels(df, level, val):
-#     df[level] = val
-#     return df.prep().set_index(level, append=True)
-
 @pd_ext
-def addlevels(df, dct):
+def addlevel(df, dct):
     return df.assign(**dct).prep().set_index(list(dct.keys()), append=True)
 
 @pd_ext
@@ -297,10 +304,13 @@ class MyBaseClass():
                 l = len(self.overwrite)
                 self.overwrite |= {y for x in self.overwrite for y in setify(self.dependence[x] if x in self.dependence else {})}
 
-    def load(self, path, overwrite=False):
+    def load(self, path, overwrite=False, force=False):
         dct = read(path, overwrite)
         if dct is not None:
-            self.__dict__ = dct | self.__dict__
+            if force:
+                self.__dict__ = self.__dict__ | dct
+            else:
+                self.__dict__ = dct | self.__dict__
             return self
 
     def dump(self, path, overwrite=True):
@@ -375,5 +385,5 @@ class Oracle(MyBaseClass):
 
     def dtypes(self, qry):
         dt = self.execute(SQL(qry).qry().head(10)).dtypes
-        dt.display()
+        dt.disp()
         return dt
