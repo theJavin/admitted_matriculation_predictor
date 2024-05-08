@@ -97,11 +97,11 @@ class pctl():
     def __call__(self, x):
         return np.quantile(x, self.p/100)
 
-def IQR(x):
-    return pctl(75)(x)-pctl(25)(x)
+# class IQR():
+#     return pctl(75)(x)-pctl(25)(x)
 
-def ran(x):
-    return pctl(100)(x)-pctl(0)(x)
+# def ran(x):
+#     return pctl(100)(x)-pctl(0)(x)
 
 ##################### pandas helpers #####################
 def pd_ext(func):

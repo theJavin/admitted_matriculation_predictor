@@ -61,100 +61,100 @@ crse_codes = [
     'anth2351',
     'arts1301',
     'arts1303',
-    # 'arts1304',
-    # 'arts3331',
-    # 'biol1305',
-    # 'biol1406',
-    # 'biol1407',
-    # 'biol2401',
-    # 'biol2402',
-    # 'busi1301',
-    # 'busi1307',
-    # 'chem1111',
-    # 'chem1112',
-    # 'chem1302',
-    # 'chem1311',
-    # 'chem1312',
-    # 'chem1407',
-    # 'chem1411',
-    # 'chem1412',
-    # 'comm1311',
-    # 'comm1315',
-    # 'comm2302',
-    # 'crij1301',
-    # 'dram1310',
-    # 'dram2361',
-    # 'dram4304',
-    # 'easc2310',
-    # 'econ1301',
-    # 'econ2301',
-    # 'engl1301',
-    # 'engl1302',
-    # 'engl2307',
-    # 'engl2320',
-    # 'engl2321',
-    # 'engl2326',
-    # 'engl2340',
-    # 'engl2350',
-    # 'engl2360',
-    # 'engl2362',
-    # 'engl2364',
-    # 'engl2366',
-    # 'engl2368',
-    # 'engr2303',
-    # 'envs1302',
-    # 'fina1360',
-    # 'geog1303',
-    # 'geog1320',
-    # 'geog1451',
-    # 'geog2301',
-    # 'geol1403',
-    # 'geol1404',
-    # 'geol1407',
-    # 'geol1408',
-    # 'govt2305',
-    # 'govt2306',
-    # 'hist1301',
-    # 'hist1302',
-    # 'hist2321',
-    # 'hist2322',
-    # 'huma1315',
-    # 'kine2315',
-    # 'math1314',
-    # 'math1316',
-    # 'math1324',
-    # 'math1332',
-    # 'math1342',
-    # 'math2412',
-    # 'math2413',
-    # 'musi1303',
-    # 'musi1310',
-    # 'musi1311',
-    # 'musi2350',
-    # 'musi3325',
-    # 'phil1301',
-    # 'phil1304',
-    # 'phil2303',
-    # 'phil3301',
-    # 'phys1302',
-    # 'phys1401',
-    # 'phys1402',
-    # 'phys1403',
-    # 'phys1410',
-    # 'phys1411',
-    # 'phys2425',
-    # 'phys2426',
-    # 'psyc2301',
-    # 'soci1301',
-    # 'soci1306',
-    # 'soci2303',
-    # 'univ0200',
-    # 'univ0204',
-    # 'univ0301',
-    # 'univ0314',
-    # 'univ0324',
-    # 'univ0332',
-    # 'univ0342',
+    'arts1304',
+    'arts3331',
+    'biol1305',
+    'biol1406',
+    'biol1407',
+    'biol2401',
+    'biol2402',
+    'busi1301',
+    'busi1307',
+    'chem1111',
+    'chem1112',
+    'chem1302',
+    'chem1311',
+    'chem1312',
+    'chem1407',
+    'chem1411',
+    'chem1412',
+    'comm1311',
+    'comm1315',
+    'comm2302',
+    'crij1301',
+    'dram1310',
+    'dram2361',
+    'dram4304',
+    'easc2310',
+    'econ1301',
+    'econ2301',
+    'engl1301',
+    'engl1302',
+    'engl2307',
+    'engl2320',
+    'engl2321',
+    'engl2326',
+    'engl2340',
+    'engl2350',
+    'engl2360',
+    'engl2362',
+    'engl2364',
+    'engl2366',
+    'engl2368',
+    'engr2303',
+    'envs1302',
+    'fina1360',
+    'geog1303',
+    'geog1320',
+    'geog1451',
+    'geog2301',
+    'geol1403',
+    'geol1404',
+    'geol1407',
+    'geol1408',
+    'govt2305',
+    'govt2306',
+    'hist1301',
+    'hist1302',
+    'hist2321',
+    'hist2322',
+    'huma1315',
+    'kine2315',
+    'math1314',
+    'math1316',
+    'math1324',
+    'math1332',
+    'math1342',
+    'math2412',
+    'math2413',
+    'musi1303',
+    'musi1310',
+    'musi1311',
+    'musi2350',
+    'musi3325',
+    'phil1301',
+    'phil1304',
+    'phil2303',
+    'phil3301',
+    'phys1302',
+    'phys1401',
+    'phys1402',
+    'phys1403',
+    'phys1410',
+    'phys1411',
+    'phys2425',
+    'phys2426',
+    'psyc2301',
+    'soci1301',
+    'soci1306',
+    'soci2303',
+    'univ0200',
+    'univ0204',
+    'univ0301',
+    'univ0314',
+    'univ0324',
+    'univ0332',
+    'univ0342',
 ]
 
 @dataclasses.dataclass
@@ -165,7 +165,7 @@ class AMP(MyBaseClass):
     pred_codes: tuple = (202108, 202208, 202308, 202408)
     crse_code : str = '_allcrse'
     styp_code : str = 'n'
-    stats: tuple = (pctl(0), pctl(25), pctl(50), pctl(75), pctl(100))
+    stats: tuple = (pctl(0), pctl(25), pctl(50), pctl(75), pctl(100), )
     show: set = dataclasses.field(default_factory=set)
     param: dict = dataclasses.field(default_factory=dict)    
     root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt"
@@ -275,7 +275,7 @@ class AMP(MyBaseClass):
             ]
             self.X = X.join(M).reset_index().set_index(attr, drop=False).rename(columns=lambda x:'__'+x).prep(bool=True)
 
-            Y = pd.concat([
+            y_end = pd.concat([
                     T.reg
                     .rename(columns=ren)
                     .assign(crse_code=lambda X: X['crse_code'] + ('_cur' if cycle_day > 0 else ''))
@@ -283,11 +283,19 @@ class AMP(MyBaseClass):
                     [['enrolled']]
                     .fillna(0)
                 for cycle_day, dct in terms.items() for pred_code, T in dct.items()]).copy().fillna(0).prep()
-            Y.loc[Y.eval("crse_code!='_allcrse_cur' & enrolled>0")] = 1
-            self.Y = Y.rsindex(['pidm','pred_code','crse_code'])
-            Z = self.X[[]].join(self.Y)
+            y_end.loc[y_end.eval("crse_code!='_allcrse_cur' & enrolled>0")] = 1
+            self.y = y_end.rsindex(['pidm','pred_code','crse_code'])
+            y_cur = self.X[[]].join(self.y)
             agg = lambda y: y.groupby(['styp_code','pred_code','crse_code']).sum().query(f"styp_code in ('n','r','t') and pred_code!={self.proj_code} and not crse_code.str.contains('cur')")
-            self.mlt = (agg(Y) / agg(Z)).dropna().squeeze().rename('mlt')
+            # N = agg(y_end)
+            # D = agg(y_cur)
+            self.mlt = agg(y_end).join(agg(y_cur), how='outer', lsuffix='_end', rsuffix='_cur').fillna(0)
+            self.mlt['mlt'] = np.where(self.mlt.min(axis=1)>0, self.mlt['enrolled_end'] / self.mlt['enrolled_cur'], pd.NA)
+            
+            # self.mlt_num = agg(y_end)
+            # self.mlt_den = agg(y_cur)
+            # # self.mlt = (self.mlt_num / self.mlt_den).dropna().squeeze().rename('mlt')
+            # self.mlt = (agg(y_end) / agg(y_cur)).dropna().squeeze().rename('mlt')
         return self.get(func, "X.pkl")
 
 
@@ -308,11 +316,11 @@ class AMP(MyBaseClass):
                 variable_parameters = None
             imp = mf.ImputationKernel(X_trf, **imp_dct)
             imp.mice(iterations, variable_parameters=variable_parameters)
-            self.X_proc = [
-                imp.complete_data(k)
-                .addlevel({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
-                .prep(bool=True, cat=True)
-            for k in range(imp.dataset_count())]
+            self.X_proc = pd.concat([
+                    imp.complete_data(k)
+                    .addlevel({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
+                    .prep(bool=True, cat=True)
+                for k in range(imp.dataset_count())])
             del self.X
         return self.get(func, f"X_proc/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}.pkl", "X")
 
@@ -325,65 +333,69 @@ class AMP(MyBaseClass):
             max_calibrate = time_calibrate // clf_dct['time_budget']
 
             cols = uniquify(['_allcrse_cur', self.crse_code+'_cur', self.crse_code])
-            Y = self.Y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
-            if self.crse_code not in Y or self.X_proc[0].query(f"pred_code=={self.train_code}").join(Y)[self.crse_code].sum() < 10:
-                return 'fail'
-            Z = pd.concat(self.X_proc).join(Y).fillna({c:0 for c in cols}).addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True)
-            X = Z.query(f"pred_code=={self.train_code}").copy()
-            t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
-            y = X.pop(self.crse_code)
-            del self.X_proc
-            del self.Y
+            y = self.y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
+            Z = self.X_proc.join(y).fillna({c:0 for c in cols}).addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True)
 
-            def train(wgt, iter=''):
-                mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
-                dct = clf_dct | {
-                    'X_train':X[mask],
-                    'y_train':y[mask],
-                    'X_val':X[~mask],
-                    'y_val':y[~mask],
-                    'sample_weight':1+(2*y[mask]-1)*wgt,
-                    'sample_weight_val':1+(2*y[~mask]-1)*wgt,
-                    'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
-                }
-                mkdir(dct['log_file_name'].parent)
-                clf = fl.AutoML(**dct)
-                clf.fit(**dct)
-                X_all = Z.copy()
-                clf.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
-                return clf
+            if self.crse_code not in Z or Z.query(f"pred_code=={self.train_code} & sim==0")[self.crse_code].sum() < 10:
+                self.Y = Z[self.crse_code].rename('actual').to_frame().assign(proba=0.0).copy()
+                self.weight = 0
+                self.train_score = np.inf
+            else:
+                X = Z.query(f"pred_code=={self.train_code}").copy()
+                t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
+                y = X.pop(self.crse_code)
+                del self.X_proc
+                del self.y
+                
+                def train(wgt, iter=''):
+                    mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
+                    dct = clf_dct | {
+                        'X_train':X[mask],
+                        'y_train':y[mask],
+                        'X_val':X[~mask],
+                        'y_val':y[~mask],
+                        'sample_weight':1+(2*y[mask]-1)*wgt,
+                        'sample_weight_val':1+(2*y[~mask]-1)*wgt,
+                        'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
+                    }
+                    mkdir(dct['log_file_name'].parent)
+                    clf = fl.AutoML(**dct)
+                    clf.fit(**dct)
+                    X_all = Z.copy()
+                    clf.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
+                    return clf
 
-            wgt = 0
-            err = 0
-            best_wgt = wgt
-            best_rmse = np.inf
-            self.hist = dict()
-            print()
-            for i in range(max_calibrate):
-                wgt = np.clip(wgt - err*(0.95**i), -1, 1)
-                clf = train(wgt)
-                S = clf.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
-                S['proba'] *= S['actual'] > 0
-                S['err'] = S['proba'] - S['actual']
-                err = S['err'].sum() / S['actual'].sum()
+                wgt = 0
+                err = 0
+                best_wgt = wgt
+                best_rmse = np.inf
+                self.hist = dict()
+                print()
+                for i in range(max_calibrate):
+                    wgt = np.clip(wgt - err*(0.95**i), -1, 1)
+                    clf = train(wgt)
+                    S = clf.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
+                    S['proba'] *= S['actual'] > 0
+                    S['err'] = S['proba'] - S['actual']
+                    err = S['err'].sum() / S['actual'].sum()
 
-                self.hist[wgt] = err
-                W = np.array(list(self.hist.keys  ())[-min_calibrate:])
-                E = np.array(list(self.hist.values())[-min_calibrate:])
-                rmse = np.sqrt(np.mean(E**2))
-                if min_calibrate <= len(E) and rmse < best_rmse:
-                    best_wgt = W.mean()
-                    best_rmse = rmse
-                print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
-                if best_rmse < 0.00001:
-                    break
-            self.weight = best_wgt
-            clf_dct['time_budget'] *= 20
-            self.clf = train(best_wgt)
-            self.Y = clf.Y
-            self.train_score = clf.best_result['val_loss'] * 100
+                    self.hist[wgt] = err
+                    W = np.array(list(self.hist.keys  ())[-min_calibrate:])
+                    E = np.array(list(self.hist.values())[-min_calibrate:])
+                    rmse = np.sqrt(np.mean(E**2))
+                    if min_calibrate <= len(E) and rmse < best_rmse:
+                        best_wgt = W.mean()
+                        best_rmse = rmse
+                    print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
+                    if best_rmse < 0.00001:
+                        break
+                self.weight = best_wgt
+                clf_dct['time_budget'] *= 20
+                self.clf = train(best_wgt)
+                self.Y = clf.Y
+                self.train_score = clf.best_result['val_loss'] * 100
+                self.clf = clf._trained_estimator
             self.summarize()
-            self.clf = clf._trained_estimator
             # del self.mlt
         return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
 
@@ -412,7 +424,8 @@ class AMP(MyBaseClass):
         S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
         S['error'] = S['predicted'] - S['actual']
         S['error_pct'] = S['error'] / S['actual'] * 100
-        self.summary = S.query('actual>=10')[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
+        # self.summary = S.query('actual>=10')[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
+        self.summary = S[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
         grp = [k for k in self.summary.index.names if k!= 'sim']
         self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
         self.rslt[' 50%'].disp(100)
@@ -432,14 +445,14 @@ param_grds = {
         'fafsa_app': 'drop',
         'finaid_accepted': 'drop',
         'gap_score': 'passthrough',
-        # 'gender': 'passthrough',
+        'gender': 'passthrough',
         'hs_qrtl': 'passthrough',
-        # 'international': 'passthrough',
+        'international': 'passthrough',
         'lgcy': 'passthrough',
         'math': 'passthrough',
         'oriented': 'passthrough',
         'pred_code': 'drop',
-        # **{f'race_{r}': 'passthrough' for r in ['american_indian','asian','black','pacific','white','hispanic']},
+        **{f'race_{r}': 'passthrough' for r in ['american_indian','asian','black','pacific','white','hispanic']},
         'reading': 'passthrough',
         'remote': 'passthrough',
         'resd': 'passthrough',
@@ -482,7 +495,7 @@ for key, val in param_grds.items():
     param_dcts[key] = [[hasher(k), formatter(k), k] for k in lst]
 
 
-def run_amp(cycle_days=None, styp_codes=None, train_codes=None, overwrite=None):
+def run_amp(cycle_days=None, styp_codes=['n'], train_codes=[202108,202208,202308], overwrite=None):
     for kwargs in cartesian({
         'cycle_day': cycle_days,
         'styp_code': styp_codes,
@@ -492,7 +505,12 @@ def run_amp(cycle_days=None, styp_codes=None, train_codes=None, overwrite=None):
         'overwrite': [listify(overwrite)],
         }):
             self = AMP(**kwargs)
-            # self.get_Y()
+            # self.get_X()
+            # self.mlt.disp()
+            # assert 1==2
+            # self.get_X_proc()
+            
+            self.get_Y()
     return self
 
 
@@ -526,10 +544,12 @@ def get_stack(cycle_day, ext=None):
 
 if __name__ == "__main__":
     print(pd.Timestamp.now())
+    delattr(pd.Series, 'disp')
+    delattr(pd.DataFrame, 'disp')
     @pd_ext
     def disp(df, max_rows=4, max_cols=200, **kwargs):
-        print(df.head(max_rows).reset_index().to_markdown(tablefmt='psql'))
+        print(df.reset_index().drop(columns='index', errors='ignore').head(max_rows).to_markdown(tablefmt='psql'))
 
     from IPython.utils.io import Tee
     with contextlib.closing(Tee('/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/log.txt', "w", channel="stdout")) as outputstream:
-        run_amp(137)
+        run_amp(131)
