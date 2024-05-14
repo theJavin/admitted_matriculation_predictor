@@ -3,6 +3,7 @@ import hashlib, miceforest as mf, flaml as fl
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PowerTransformer
 from sklearn.compose import ColumnTransformer
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss, fbeta_score, f1_score
 from sklearn import set_config
 set_config(transform_output="pandas")
@@ -52,138 +53,144 @@ class LogLoss(Metric):
         return log_loss(y_true, y_pred, **kwargs)
 
 ################## AMP ##################
+# removed_no_    'anth2351','arts1304','arts3331','biol1305',
+
 crse_codes = [
-    '_allcrse',
-    'agec2317',
-    'ansc1119',
+    # '_allcrse',
+    # 'agec2317',
+    # 'ansc1119',
     'ansc1319',
-    'anth2302',
-    'anth2351',
-    'arts1301',
-    'arts1303',
-    'arts1304',
-    'arts3331',
-    'biol1305',
-    'biol1406',
-    'biol1407',
-    'biol2401',
-    'biol2402',
-    'busi1301',
-    'busi1307',
-    'chem1111',
-    'chem1112',
-    'chem1302',
-    'chem1311',
-    'chem1312',
-    'chem1407',
-    'chem1411',
-    'chem1412',
-    'comm1311',
-    'comm1315',
-    'comm2302',
-    'crij1301',
-    'dram1310',
-    'dram2361',
-    'dram4304',
-    'easc2310',
-    'econ1301',
-    'econ2301',
-    'engl1301',
-    'engl1302',
-    'engl2307',
-    'engl2320',
-    'engl2321',
-    'engl2326',
-    'engl2340',
-    'engl2350',
-    'engl2360',
-    'engl2362',
-    'engl2364',
-    'engl2366',
-    'engl2368',
-    'engr2303',
-    'envs1302',
-    'fina1360',
-    'geog1303',
-    'geog1320',
-    'geog1451',
-    'geog2301',
-    'geol1403',
-    'geol1404',
-    'geol1407',
-    'geol1408',
-    'govt2305',
-    'govt2306',
-    'hist1301',
-    'hist1302',
-    'hist2321',
-    'hist2322',
-    'huma1315',
-    'kine2315',
-    'math1314',
-    'math1316',
-    'math1324',
-    'math1332',
-    'math1342',
-    'math2412',
-    'math2413',
-    'musi1303',
-    'musi1310',
-    'musi1311',
-    'musi2350',
-    'musi3325',
-    'phil1301',
-    'phil1304',
-    'phil2303',
-    'phil3301',
-    'phys1302',
-    'phys1401',
-    'phys1402',
-    'phys1403',
-    'phys1410',
-    'phys1411',
-    'phys2425',
-    'phys2426',
-    'psyc2301',
-    'soci1301',
-    'soci1306',
-    'soci2303',
-    'univ0200',
-    'univ0204',
-    'univ0301',
-    'univ0314',
-    'univ0324',
-    'univ0332',
-    'univ0342',
+    # 'anth2302',
+    # 'anth2351',
+    # 'arts1301',
+    # 'arts1303',
+    # 'arts1304',
+    # 'arts3331',
+    # 'biol1305',
+    # 'biol1406',
+    # 'biol1407',
+    # 'biol2401',
+    # 'biol2402',
+    # 'busi1301',
+    # 'busi1307',
+    # 'chem1111',
+    # 'chem1112',
+    # 'chem1302',
+    # 'chem1311',
+    # 'chem1312',
+    # 'chem1407',
+    # 'chem1411',
+    # 'chem1412',
+    # 'comm1311',
+    # 'comm1315',
+    # 'comm2302',
+    # 'crij1301',
+    # 'dram1310',
+    # 'dram2361',
+    # 'dram4304',
+    # 'easc2310',
+    # 'econ1301',
+    # 'econ2301',
+    # 'engl1301',
+    # 'engl1302',
+    # 'engl2307',
+    # 'engl2320',
+    # 'engl2321',
+    # 'engl2326',
+    # 'engl2340',
+    # 'engl2350',
+    # 'engl2360',
+    # 'engl2362',
+    # 'engl2364',
+    # 'engl2366',
+    # 'engl2368',
+    # 'engr2303',
+    # 'envs1302',
+    # 'fina1360',
+    # 'geog1303',
+    # 'geog1320',
+    # 'geog1451',
+    # 'geog2301',
+    # 'geol1403',
+    # 'geol1404',
+    # 'geol1407',
+    # 'geol1408',
+    # 'govt2305',
+    # 'govt2306',
+    # 'hist1301',
+    # 'hist1302',
+    # 'hist2321',
+    # 'hist2322',
+    # 'huma1315',
+    # 'kine2315',
+    # 'math1314',
+    # 'math1316',
+    # 'math1324',
+    # 'math1332',
+    # 'math1342',
+    # 'math2412',
+    # 'math2413',
+    # 'musi1303',
+    # 'musi1310',
+    # 'musi1311',
+    # 'musi2350',
+    # 'musi3325',
+    # 'phil1301',
+    # 'phil1304',
+    # 'phil2303',
+    # 'phil3301',
+    # 'phys1302',
+    # 'phys1401',
+    # 'phys1402',
+    # 'phys1403',
+    # 'phys1410',
+    # 'phys1411',
+    # 'phys2425',
+    # 'phys2426',
+    # 'psyc2301',
+    # 'soci1301',
+    # 'soci1306',
+    # 'soci2303',
+    # 'univ0200',
+    # 'univ0204',
+    # 'univ0301',
+    # 'univ0314',
+    # 'univ0324',
+    # 'univ0332',
+    # 'univ0342',
 ]
 
 @dataclasses.dataclass
 class AMP(MyBaseClass):
-    cycle_day : int = None
+    cycle_day : int = 0
     proj_code : int = 202408
-    train_code: int = 202308
+    # train_code: int = 202408
     pred_codes: tuple = (202108, 202208, 202308, 202408)
     crse_code : str = '_allcrse'
     styp_code : str = 'n'
     stats: tuple = (pctl(0), pctl(25), pctl(50), pctl(75), pctl(100), )
     show: set = dataclasses.field(default_factory=set)
     param: dict = dataclasses.field(default_factory=dict)    
-    root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt"
+    root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt2"
     dependence: dict = dataclasses.field(default_factory=lambda: {'adm':'raw', 'flg':'raw', 'raw':'X', 'reg':'X', 'X':'X_proc', 'X_proc':'Y'})
 
     def __post_init__(self):
         super().__post_init__()
-        self.cycle_day = (Term(term_code=202408).cycle_date-pd.Timestamp.now()).days+1 if self.cycle_day is None else self.cycle_day
+        T = Term(term_code=self.proj_code, cycle_day=self.cycle_day)
+        self.cycle_day, self.cycle_date = T.cycle_day, T.cycle_date
         self.root_path /= rjust(self.cycle_day,3,0)
 
+    def get_terms(self):
+            return [{pred_code:
+                    Term(term_code=pred_code, cycle_day=cycle_day, overwrite=self.overwrite, show=self.show).get_reg().get_raw()
+                for pred_code in self.pred_codes} for cycle_day in [0, self.cycle_day]]
+    
     def get_X(self):
         def func():
             print()
-            terms = {cycle_day: {pred_code:
-                    Term(term_code=pred_code, cycle_day=cycle_day, overwrite=self.overwrite, show=self.show).get_reg().get_raw()
-                for pred_code in self.pred_codes} for cycle_day in [0, self.cycle_day]}
-            ren = {'term_code':'pred_code', 'term_desc':'pred_desc', 'credit_hr':'enrolled'}
-            R = pd.concat([T.raw.rename(columns=ren) for pred_code, T in terms[self.cycle_day].items()]).copy().dropna(axis=1, how='all').reset_index(drop=True).prep()
+            terms = self.get_terms()
+            ren = {'term_code':'pred_code', 'term_desc':'pred_desc', 'index':'idx'}
+            R = pd.concat([T.raw.rename(columns=ren) for pred_code, T in terms[1].items()]).copy().dropna(axis=1, how='all').reset_index(drop=True).prep()
             repl = {'ae':0, 'n1':1, 'n2':2, 'n3':3, 'n4':4, 'r1':1, 'r2':2, 'r3':3, 'r4':4}
             R['hs_qrtl'] = pd.cut(R['hs_pctl'], bins=[-1,25,50,75,90,101], labels=[4,3,2,1,0], right=False).combine_first(R['apdc_code'].map(repl))
             R['remote'] = R['camp_code'] != 's'
@@ -249,7 +256,7 @@ class AMP(MyBaseClass):
 
             code_desc = lambda x: [x+'_code', x+'_desc']
             attr = [
-                'index',
+                'idx',
                 'pidm',
                 *code_desc('pred'),
                 *code_desc('apdc'),
@@ -273,29 +280,43 @@ class AMP(MyBaseClass):
                 'distance',
                 'hs_qrtl',
             ]
-            self.X = X.join(M).reset_index().set_index(attr, drop=False).rename(columns=lambda x:'__'+x).prep(bool=True)
+            self.X = (
+                X.join(M)
+                .sample(frac=1, random_state=42)
+                .reset_index().rename(columns=ren).set_index(attr, drop=False)
+                .rename(columns=lambda x:'__'+x)
+                .prep(bool=True)
+            )
 
-            y_end = pd.concat([
+            Y = [pd.concat([
                     T.reg
                     .rename(columns=ren)
-                    .assign(crse_code=lambda X: X['crse_code'] + ('_cur' if cycle_day > 0 else ''))
                     .set_index(['pidm','levl_code','styp_code','pred_code','crse_code'])
-                    [['enrolled']]
+                    ['credit_hr']
                     .fillna(0)
-                for cycle_day, dct in terms.items() for pred_code, T in dct.items()]).copy().fillna(0).prep()
-            y_end.loc[y_end.eval("crse_code!='_allcrse_cur' & enrolled>0")] = 1
-            self.y = y_end.rsindex(['pidm','pred_code','crse_code'])
-            y_cur = self.X[[]].join(self.y)
-            agg = lambda y: y.groupby(['styp_code','pred_code','crse_code']).sum().query(f"styp_code in ('n','r','t') and pred_code!={self.proj_code} and not crse_code.str.contains('cur')")
-            # N = agg(y_end)
-            # D = agg(y_cur)
-            self.mlt = agg(y_end).join(agg(y_cur), how='outer', lsuffix='_end', rsuffix='_cur').fillna(0)
-            self.mlt['mlt'] = np.where(self.mlt.min(axis=1)>0, self.mlt['enrolled_end'] / self.mlt['enrolled_cur'], pd.NA)
-            
-            # self.mlt_num = agg(y_end)
-            # self.mlt_den = agg(y_cur)
-            # # self.mlt = (self.mlt_num / self.mlt_den).dropna().squeeze().rename('mlt')
-            # self.mlt = (agg(y_end) / agg(y_cur)).dropna().squeeze().rename('mlt')
+                    .query('credit_hr>0')
+                for pred_code, T in dct.items()]) for dct in terms]
+            self.y = {'credit': Y[1].query("crse_code=='_allcrse'").droplevel(['levl_code','styp_code','crse_code']).copy()}
+            Y = [(y>0).rename('enrolled') for y in Y]
+            self.y['census'] = Y[0].copy()
+            Y = [y.droplevel(['levl_code','styp_code']) for y in Y]
+            g = lambda y: self.X[[]].join(y, how='inner').copy()
+            self.y['admit'] = g(Y[0])
+            self.y['regstr'] = g(Y[1])
+            self.y = {k:v.squeeze().rename(k) for k,v in self.y.items()}
+            self.y['actual'] = self.y['admit'].copy().rename('actual')
+            agg = lambda y: y.groupby(['styp_code','pred_code','crse_code']).sum().query(f"styp_code in ('n','r','t')")
+            self.mlt = (
+                agg(self.y['regstr']).to_frame()
+                .join(agg(self.y['admit']), how='outer')
+                .join(agg(self.y['census']), how='outer')
+                .fillna(0)
+            )
+            self.mlt['regstr_pct'] = self.mlt['regstr'] / self.mlt['census'] * 100
+            self.mlt['admit_pct' ] = self.mlt['admit' ] / self.mlt['census'] * 100
+            # self.mlt['mlt'       ] = self.mlt['census'] / self.mlt['admit' ]
+            self.mlt['mlt'] = 100 / self.mlt['admit_pct']
+            self.mlt[np.isnan(self.mlt) | np.isinf(self.mlt)] = pd.NA
         return self.get(func, "X.pkl")
 
 
@@ -321,114 +342,411 @@ class AMP(MyBaseClass):
                     .addlevel({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
                     .prep(bool=True, cat=True)
                 for k in range(imp.dataset_count())])
-            del self.X
+            for k in ['X']:
+                del self[k]
         return self.get(func, f"X_proc/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}.pkl", "X")
+
+
+    # def get_Y(self):
+    #     def func():
+    #         clf_dct = self.param['clf'][2] | {'task':'classification', 'verbose':0}#, 'log_type': 'all'}
+    #         max_iter = clf_dct.pop('max_iter')
+
+    #         cols = uniquify(['_allcrse_cur', self.crse_code+'_cur', self.crse_code])
+    #         y = self.y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
+    #         Z = (
+    #             self.X_proc
+    #             .join(y)
+    #             .fillna({c:0 for c in cols})
+    #             .addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]})
+    #             .rsindex(['index','crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
+    #             .prep(bool=True, cat=True)
+    #         )
+    #         if self.crse_code not in Z:
+    #             Z[self.crse_code] = False
+    #         if Z.query(f"pred_code=={self.train_code} & sim==0")[self.crse_code].sum() < 10:
+    #             self.Y = Z[self.crse_code].rename('actual').to_frame().assign(proba=0.0).copy()
+    #             self.weight = 0
+    #             self.train_score = 0
+    #         else:
+    #             X = Z.query(f"pred_code=={self.train_code}").copy()
+    #             t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
+    #             y = X.pop(self.crse_code)
+    #             # mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
+    #             def train(wgt, iter=''):
+    #                 mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
+    #                 dct = clf_dct | {
+    #                     'X_train':X[mask],
+    #                     'y_train':y[mask],
+    #                     'X_val':X[~mask],
+    #                     'y_val':y[~mask],
+    #                     'sample_weight':1+(2*y[mask]-1)*wgt,
+    #                     'sample_weight_val':1+(2*y[~mask]-1)*wgt,
+    #                     'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
+    #                 }
+    #                 mkdir(dct['log_file_name'].parent)
+    #                 clf = fl.AutoML(**dct)
+    #                 clf.fit(**dct)
+    #                 X_all = Z.copy()
+    #                 clf.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
+    #                 return clf
+
+    #             def score(clf):
+    #                 # return log_loss(clf.Y['actual'], clf.Y['proba'])
+    #                 S = clf.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
+    #                 S['proba'] *= S['actual'] > 0
+    #                 return S['proba'].sum() / S['actual'].sum() - 1
+    #                 # S['err'] = S['proba'] - S['actual']
+    #                 # return S['err'].sum() / S['actual'].sum()
+                
+    #             # def minimizer():
+    #             #     res = sp.optimize.minimize_scalar(lambda wgt: abs(score(train(wgt))), bounds=(-1,1), options={'xatol':1e-8, 'maxiter':max_iter})
+    #             #     print(res)
+    #             #     return res.x
+
+    #             def minimizer(anneal=1):
+    #                 min_iter = 5
+    #                 wgt = 0
+    #                 err = 0
+    #                 best_wgt = wgt
+    #                 best_rmse = np.inf
+    #                 self.hist = dict()
+    #                 for i in range(max_iter):
+    #                     wgt = np.clip(wgt - err*(anneal**i), -1, 1)
+    #                     err = score(train(wgt))
+    #                     self.hist[wgt] = err
+    #                     W = np.array(list(self.hist.keys  ())[-min_iter:])
+    #                     E = np.array(list(self.hist.values())[-min_iter:])
+    #                     rmse = np.sqrt(np.mean(E**2))
+    #                     if min_iter <= len(E) and rmse < best_rmse:
+    #                         best_wgt = W.mean()
+    #                         best_rmse = rmse
+    #                     print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
+    #                     if best_rmse < 0.00001:
+    #                         break
+    #                 clf = train(best_wgt)
+    #                 print(f"best_wgt={best_wgt: .5f} with error={score(clf): .5f}")
+    #                 return best_wgt
+
+    #             print('minimizing')
+    #             with Timer():
+    #                 self.weight = minimizer()
+
+    #             clf_dct['time_budget'] *= 10
+    #             clf = train(self.weight)
+    #             self.Y = clf.Y
+    #             self.train_score = clf.best_result['val_loss'] * 100
+    #             self.clf = clf._trained_estimator
+    #         for k in ['X','y','mlt','X_proc']:
+    #             del self[k]
+    #     return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+
+    # def get_Y(self):
+    #     def func():
+    #         clf_dct = self.param['clf'][2] | {'task':'classification', 'verbose':0}#, 'log_type': 'all'}
+    #         max_iter = clf_dct.pop('max_iter')
+    #         # y = self.y.query(f"crse_code.isin([{self.crse_code}_cur', {self.crse_code}])").unstack().droplevel(0,1)
+    #         # y = self.y_adm.query(f"crse_code=='{self.crse_code}'").unstack()
+    #         g = lambda y: y.query(f"crse_code=='{self.crse_code}'").droplevel('crse_code')
+    #         # y = {k:y.query(f"crse_code=='{self.crse_code}'").droplevel('crse_code') for k,y in self.y.items()}
+    #         # y = self.y.query(f"crse_code=='{self.crse_code}'").droplevel('crse_code')
+    #         Z = (
+    #             self.X_proc
+    #             # .join(  self.y['credit']) .fillna({'credit':0})
+    #             # .join(g(self.y['regstr'])).fillna({'regstr':False})
+    #             .join(g(self.y['actual'])).fillna({'actual':False})
+    #             .addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]})
+    #             # .rsindex(['index','crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
+    #             .prep(bool=True, cat=True)
+    #         )
+    #         # Z.disp(2)
+    #         # assert 1==2
+    #         self.weight = 0
+    #         self.train_score = 0
+    #         # if self.crse_code not in Z:
+    #         #     Z[self.crse_code] = False
+    #         # if Z.query(f"pred_code=={self.train_code} & sim==0")[self.crse_code].sum() < 10:
+    #         if Z.query(f"pred_code=={self.train_code} & sim==0")['actual'].sum() < 10:
+    #             self.Y = Z['actual'].to_frame().assign(proba=0.0).copy()
+    #         else:
+    #             # X = Z.query(f"pred_code=={self.train_code}").copy()
+    #             # t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
+    #             # y = X.pop(self.crse_code)
+    #             # mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
+    #             # X = Z.query(f"pred_code!={self.proj_code}").copy()
+    #             # y = X.pop(self.crse_code)
+    #             # mask = X.eval(f"pred_code=={self.train_code}")
+
+    #             def train(Z, wgt=0, iter=''):
+    #                 mask = Z.eval(f"pred_code=={self.train_code}")
+    #                 X = Z.copy()
+    #                 y = X.pop('actual')
+    #                 dct = clf_dct | {
+    #                     'X_train':X[mask],
+    #                     'y_train':y[mask],
+    #                     # 'eval_method':'cv',
+    #                     # 'n_splits':5,
+    #                     # 'split_type':'stratified',
+    #                     'X_val':X,
+    #                     'y_val':y,
+    #                     'sample_weight':1+(2*y[mask]-1)*wgt,
+    #                     'sample_weight_val':1+(2*y-1)*wgt,
+    #                     'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
+    #                 }
+    #                 mkdir(dct['log_file_name'].parent)
+    #                 self.clf = fl.AutoML(**dct)
+    #                 self.clf.fit(**dct)
+    #                 self.Y = Z.filter(['regstr','actual']).assign(proba=self.clf.predict_proba(X)[:,1]).prep(bool=True).copy()
+    #                 # self.Y = X[self.crse_code+'_cur'].rename('current').to_frame().assign(actual=y, proba=self.clf.predict_proba(X)[:,1]).prep(bool=True).copy()
+                    
+    #                 # y.rename('actual').to_frame().assign(proba=self.clf.predict_proba(X)[:,1]).prep(bool=True).copy()
+
+
+    #             def score(wgt):
+    #                 Z_trn = Z.query(f"pred_code!={self.proj_code}").copy()
+    #                 train(Z_trn, wgt)
+    #                 S = self.Y.groupby('pred_code').sum()
+    #                 S['proba'] *= S['actual'] > 0
+    #                 S['err'] = S['proba'] - S['actual']
+    #                 S['err_pct'] = (S['err'] / S['actual']) * 100
+    #                 S.disp(5)
+    #                 # err = S['proba'].sum() / S['actual'].sum() - 1
+    #                 # err = np.sqrt(np.mean(S['err']**2)) + S['err'].sum()**2
+    #                 # err = np.mean(np.abs(S['err'])) + np.abs(np.sum(S['err']))
+    #                 # err = np.mean(np.abs(S['err'])) + 10*np.abs(np.sum(S['err']))
+    #                 # err = (S['err'].sum())**2
+    #                 err = np.sum(S['err']**2)
+    #                 print(wgt, err)
+    #                 return err
+    #                 # return clf.best_result['val_loss']
+    #                 # return log_loss(clf.Y['actual'], clf.Y['proba'])
+    #                 # S['err'] = S['proba'] - S['actual']
+    #                 # return S['err'].sum() / S['actual'].sum()
+
+    #             def minimizer():
+    #                 res = sp.optimize.shgo(score, bounds=[(-1,1)], sampling_method='sobol')#, workers=-1)
+    #                 print(res)
+    #                 return res.x
+                
+    #             # def minimizer():
+    #             #     res = sp.optimize.minimize_scalar(lambda wgt: abs(score(wgt)), bounds=(-1,1), options={'xatol':1e-8, 'maxiter':max_iter})
+    #             #     print(res)
+    #             #     return res.x
+
+    #             # def minimizer(anneal=1):
+    #             #     min_iter = 5
+    #             #     wgt = 0
+    #             #     err = 0
+    #             #     best_wgt = wgt
+    #             #     best_rmse = np.inf
+    #             #     self.hist = dict()
+    #             #     for i in range(max_iter):
+    #             #         wgt = np.clip(wgt - err*(anneal**i), -1, 1)
+    #             #         err = score(train(wgt))
+    #             #         self.hist[wgt] = err
+    #             #         W = np.array(list(self.hist.keys  ())[-min_iter:])
+    #             #         E = np.array(list(self.hist.values())[-min_iter:])
+    #             #         rmse = np.sqrt(np.mean(E**2))
+    #             #         if min_iter <= len(E) and rmse < best_rmse:
+    #             #             best_wgt = W.mean()
+    #             #             best_rmse = rmse
+    #             #         print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
+    #             #         if best_rmse < 0.00001:
+    #             #             break
+    #             #     clf = train(best_wgt)
+    #             #     print(f"best_wgt={best_wgt: .5f} with error={score(clf): .5f}")
+    #             #     return best_wgt
+
+    #             # def minimizer():
+    #             #     min_iter = 5
+    #             #     max_iter = 20
+    #             #     wgt = 0
+    #             #     dct = dict()
+    #             #     for i in range(max_iter):
+    #             #         err = score(wgt)
+    #             #         dct[wgt] = abs(err)
+    #             #         print(i, wgt, err)
+    #             #         wgt += (2*(err<0)-1) / 2**(i+1)
+    #             #     best_wgt = min(dct, key=dct.get)
+    #             #     print(best_wgt, dct[best_wgt])
+    #             #     return best_wgt
+
+
+    #             print('minimizing')
+    #             with Timer():
+    #                 self.weight = minimizer()
+                
+    #             clf_dct['time_budget'] *= 5
+    #             train(Z, self.weight)
+    #             # X = Z.copy()
+    #             # y = X.pop(self.crse_code)
+    #             # self.Y = y.rename('actual').to_frame().assign(proba=self.clf.predict_proba(X)[:,1]).prep(bool=True).copy()
+    #             # self.Y = Z[self.crse_code].rename('actual').to_frame().assign(proba=clf.predict_proba(X)[:,1]).prep(bool=True).copy()
+    #             # self.Y = y.rename('actual').to_frame().assign(proba=clf.predict(X)).prep(bool=True).copy()
+    #             # self.Y = clf.Y
+    #             self.train_score = self.clf.best_result['val_loss'] * 100
+    #             self.clf = self.clf._trained_estimator
+    #         for k in ['X','y','mlt','X_proc']:
+    #             del self[k]
+    #     return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+
 
 
     def get_Y(self):
         def func():
-            clf_dct = self.param['clf'][2] | {'task':'classification', 'verbose':0}#, 'log_type': 'all'}
-            min_calibrate = clf_dct.pop('min_calibrate')
-            time_calibrate = clf_dct.pop('time_calibrate')
-            max_calibrate = time_calibrate // clf_dct['time_budget']
+            g = lambda y: y.query(f"crse_code=='{self.crse_code}'").droplevel('crse_code')
+            Z = (
+                self.X_proc
+                .join(  self.y['credit']) .fillna({'credit':0})
+                .join(g(self.y['regstr'])).fillna({'regstr':False})
+                .join(g(self.y['actual'])).fillna({'actual':False})
+                # .addlevel({'crse_code':self.crse_code, 'clf_hash':self.param['clf'][0]})
+                # .addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]})
+                # .prep(bool=True, cat=True)
+            )
 
-            cols = uniquify(['_allcrse_cur', self.crse_code+'_cur', self.crse_code])
-            y = self.y.query(f"crse_code.isin({cols})").unstack().droplevel(0,1)
-            Z = self.X_proc.join(y).fillna({c:0 for c in cols}).addlevel({'crse_code':self.crse_code, 'train_code':self.train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True)
-
-            if self.crse_code not in Z or Z.query(f"pred_code=={self.train_code} & sim==0")[self.crse_code].sum() < 10:
-                self.Y = Z[self.crse_code].rename('actual').to_frame().assign(proba=0.0).copy()
-                self.weight = 0
-                self.train_score = np.inf
-            else:
-                X = Z.query(f"pred_code=={self.train_code}").copy()
-                t = X.query(f"sim==0").groupby([self.crse_code,'__coll_code'], observed=True)
-                y = X.pop(self.crse_code)
-                del self.X_proc
-                del self.y
-                
-                def train(wgt, iter=''):
-                    mask = X.reset_index()['index'].isin(t.sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']).values
-                    dct = clf_dct | {
-                        'X_train':X[mask],
-                        'y_train':y[mask],
-                        'X_val':X[~mask],
-                        'y_val':y[~mask],
-                        'sample_weight':1+(2*y[mask]-1)*wgt,
-                        'sample_weight_val':1+(2*y[~mask]-1)*wgt,
-                        'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
+            self.clf = dict()
+            # self.train_score = dict()
+            self.Y = dict()
+            for train_code in self.pred_codes:
+                X = Z.query(f"pred_code!={train_code}").copy() if train_code == self.proj_code else Z.query(f"pred_code=={train_code}").copy()
+                X = X.groupby(['pred_code','sim']).filter(lambda x:x['actual'].sum()>0)
+                if len(X) == 0:
+                    print('not enough')
+                    proba = 0
+                    train_score = pd.NA
+                else:
+                    dct = self.param['clf'][2]
+                    G = X.query(f"sim==0").groupby(['pred_code','actual','__coll_code'], observed=True).ngroup().rename('grp').to_frame().rsindex('idx')
+                    idx = G.groupby('grp').sample(frac=0.75, random_state=dct['seed']).index
+                    msk = X.eval('idx.isin(@idx)')
+                    y = X.pop('actual')
+                    dct |= {
+                        'X_train':X[msk],
+                        'y_train':y[msk],
+                        'X_val':X[~msk],
+                        'y_val':y[~msk],
+                        'task':'classification',
+                        'verbose':0,
                     }
-                    mkdir(dct['log_file_name'].parent)
                     clf = fl.AutoML(**dct)
                     clf.fit(**dct)
-                    X_all = Z.copy()
-                    clf.Y = X_all.pop(self.crse_code).rename('actual').to_frame().assign(proba=clf.predict_proba(X_all)[:,1]).prep(bool=True).copy()
-                    return clf
+                    proba = clf.predict_proba(Z.drop(columns='actual'))[:,1]
+                    train_score = clf.best_result['val_loss'] * 100
+                    # self.train_score[train_code] = self.clf.best_result['val_loss'] * 100
+                    self.clf[train_code] = clf._trained_estimator
+                self.Y[train_code] = Z[['actual']].assign(proba=proba, train_score=train_score).addlevel({'crse_code':self.crse_code, 'train_code':train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True, cat=True).copy()
+            self.Y = pd.concat(self.Y.values())
 
-                wgt = 0
-                err = 0
-                best_wgt = wgt
-                best_rmse = np.inf
-                self.hist = dict()
-                print()
-                for i in range(max_calibrate):
-                    wgt = np.clip(wgt - err*(0.95**i), -1, 1)
-                    clf = train(wgt)
-                    S = clf.Y.groupby('pred_code').sum().query(f"pred_code!={self.proj_code}")
-                    S['proba'] *= S['actual'] > 0
-                    S['err'] = S['proba'] - S['actual']
-                    err = S['err'].sum() / S['actual'].sum()
-
-                    self.hist[wgt] = err
-                    W = np.array(list(self.hist.keys  ())[-min_calibrate:])
-                    E = np.array(list(self.hist.values())[-min_calibrate:])
-                    rmse = np.sqrt(np.mean(E**2))
-                    if min_calibrate <= len(E) and rmse < best_rmse:
-                        best_wgt = W.mean()
-                        best_rmse = rmse
-                    print(rjust(i,3), f'wgt={wgt: .12f}', f'best_wgt={best_wgt: .12f}', f'err={err: .12f}', f'rmse={rmse:.12f}', f'best_rmse={best_rmse:.12f}')
-                    if best_rmse < 0.00001:
-                        break
-                self.weight = best_wgt
-                clf_dct['time_budget'] *= 20
-                self.clf = train(best_wgt)
-                self.Y = clf.Y
-                self.train_score = clf.best_result['val_loss'] * 100
-                self.clf = clf._trained_estimator
-            self.summarize()
-            # del self.mlt
-        return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+            
 
 
-    def summarize(self):
-        S = self.Y.groupby(['crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim']).apply(lambda y: pd.Series({
-            'actual': y['actual'].sum(),
-            # 'predicted': y['predicted'].sum(),
-            'predicted': y['proba'].sum(),
-            'train_score': self.train_score,
-            'test_score': log_loss(y['actual'], y['proba'], labels=[False,True], sample_weight=1+(2*y['actual']-1)*self.weight) * 100,
-            'weight': self.weight,
-        })).prep()
-        proj_mask = S.eval(f"pred_code==@self.proj_code")
-        proj_col = f'{self.proj_code}_projection'
-        S = (
-            S[~proj_mask]
-            .join(S[proj_mask]['predicted'].droplevel('pred_code').rename(proj_col))
-            .join(self.mlt)
-            .sort_index()
-        )
-        for k in ['predicted','actual',proj_col]:
-            S[k] *= S['mlt']
-        S[proj_col+'_pct_change'] = (S[proj_col] / S.groupby(S.index.names.difference({'pred_code'})).transform('last')['actual'] - 1) * 100
-        alpha = 1
-        S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-        S['error'] = S['predicted'] - S['actual']
-        S['error_pct'] = S['error'] / S['actual'] * 100
-        # self.summary = S.query('actual>=10')[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
-        self.summary = S[[proj_col,proj_col+'_pct_change','predicted','actual','error','error_pct','mlt','overall_score','test_score','train_score','weight']].dropna()
-        grp = [k for k in self.summary.index.names if k!= 'sim']
-        self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
-        self.rslt[' 50%'].disp(100)
+
+            # Z.groupby(['pred_code',])
+            # # T = Z.query(f"pred_code!={self.proj_code} & sim==0").groupby('pred_code')['actual'].sum().query('actual>=10').index.tolist()
+            # if len(T) > 0:
+            #     T.append(self.proj_code)
+            #     Z = Z.query(f"pred_code.isin({T})").copy()
+            #     X = Z.query(f"pred_code!={self.proj_code}").copy()
+            #     idx = X.query(f"sim==0").groupby(['actual','__coll_code'], observed=True).sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']
+            #     msk = X.reset_index()['index'].isin(idx).values
+            #     y = X.pop('actual')
+
+
+                # X = Z.copy()
+                # y = X.pop('actual')
+                # X_mdl = Z.query(f"pred_code!={self.proj_code}").copy()
+                # trn_idx = X_mdl.query(f"sim==0").groupby(['actual','__coll_code'], observed=True).sample(frac=0.75, random_state=clf_dct['seed']).reset_index()['index']
+                # trn_msk = X_mdl.reset_index()['index'].isin(trn_idx).values
+                # y_mdl = X_mdl.pop('actual')
+                # dct = clf_dct | {
+                #     'X_train':X[msk],
+                #     'y_train':y[msk],
+                #     # 'eval_method':'cv',
+                #     # 'n_splits':5,
+                #     # 'split_type':'stratified',
+                #     'X_val':X[~msk],
+                #     'y_val':y[~msk],
+                #     # 'sample_weight':1+(2*y[mask]-1)*wgt,
+                #     # 'sample_weight_val':1+(2*y-1)*wgt,
+                #     # 'log_file_name': self.path.with_stem(f"{self.path.stem}{iter}").with_suffix('.log'),
+                # }
+                # # mkdir(dct['log_file_name'].parent)
+                # self.clf = fl.AutoML(**dct)
+                # self.clf.fit(**dct)
+                # self.Y = Z[['actual']].assign(proba=self.clf.predict_proba(Z.drop(columns='actual'))[:,1]).prep(bool=True).copy()
+                # self.train_score = self.clf.best_result['val_loss'] * 100
+                # self.clf = self.clf._trained_estimator
+            for k in ['X','y','mlt','X_proc']:
+                del self[k]
+        return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+        # return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", "X_proc")
+
+
+
+    def get_summary(self):
+        def func():
+            if 'Y' in self:
+                grp = ['index','crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim']
+                # grp = ['index','crse_code','levl_code','styp_code','pred_code','trf_hash','imp_hash','clf_hash','sim']
+                self.Y = self.Y.rsindex(grp)
+                grp.remove('index')
+                S = self.Y.groupby(grp).apply(lambda y: pd.Series({
+                    # 'regstr': y['regstr'].sum(),
+                    # 'actual': y['actual'].sum(),
+                    # 'predicted': y['predicted'].sum(),
+                    'predicted': y['proba'].sum(),
+                    'train_score': y['train_score'].mean(),
+                    'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+                    # 'test_score': log_loss(y['actual'], y['proba'], labels=[False,True], sample_weight=1+(2*y['actual']-1)*self.weight) * 100,
+                    # 'weight': self.weight,
+                }))
+                # S['predicted'] *= S['actual'] > 0
+                proj_mask = S.eval(f"pred_code==@self.proj_code")
+                proj_cur = f'{self.proj_code}_projection'
+                proj_chg = proj_cur+'_pct_change'
+                S = (
+                    S[~proj_mask]
+                    .join(S[proj_mask]['predicted'].droplevel('pred_code').rename(proj_cur))
+                    .join(self.mlt)#, rsuffix='_y')
+                    .sort_index()
+                ).prep().fillna(0)
+                S.disp(100)
+                S['predicted'] *= S['census'] > 0
+                S.disp(100)
+                # for k in ['actual','predicted',proj_col]:
+                for k in ['predicted',proj_cur]:
+                    S[k] *= S['mlt']
+                S.disp(100)
+                S.loc[S.eval('predicted==0'), 'predicted':proj_cur] = pd.NA
+                S.disp(100)
+                S[proj_chg] = (S[proj_cur] / S.groupby(S.index.names.difference({'pred_code'})).transform('last')['census'] - 1) * 100
+                alpha = 1
+                S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+                S['error'] = S['predicted'] - S['census']
+                S['error_pct'] = S['error'] / S['census'] * 100
+                # S.loc[S.eval('predicted==0'), 'predicted':] = pd.NA
+                S.loc[S.eval('predicted==0'), 'predicted':proj_chg] = pd.NA
+                S.disp(100)
+                self.summary = S[[proj_cur,proj_chg,'regstr','admit','census','predicted','error','error_pct','overall_score','test_score','train_score','mlt','regstr_pct','admit_pct']].prep()#.fillna(0)
+                # self.summary = S[[proj_col,proj_col+'_pct_change','regstr','admit','census','predicted','error','error_pct','overall_score','test_score','train_score','weight','mlt','regstr_pct','admit_pct']].prep()#.fillna(0)
+
+                # S[proj_col+'_pct_change'] = (S[proj_col] / S.groupby(S.index.names.difference({'pred_code'})).transform('last')['actual'] - 1) * 100
+                # alpha = 1
+                # S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+                # S['error'] = S['predicted'] - S['actual']
+                # S['error_pct'] = S['error'] / S['actual'] * 100
+                # S.loc[S.eval('predicted==0'), 'predicted':] = pd.NA
+                # self.summary = S[[proj_col,proj_col+'_pct_change','current','actual','predicted','error','error_pct','mlt','overall_score','test_score','train_score','weight']].prep()#.fillna(0)
+                # self.summary.disp(4)
+                grp.remove('sim')
+                self.rslt = {str(stat): self.summary.groupby(grp).agg(stat) for stat in self.stats}
+                self.rslt[' 50%'].disp(100)
+            for k in ['X','y','mlt','X_proc','clf','Y']:
+                del self[k]
+        return self.get(func, f"summary/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", ["Y","X"])
+        # return self.get(func, f"summary/{self.styp_code}/{self.crse_code}/{self.train_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl", ["Y","X"])
+
 
 param_grds = {
     'trf': {
@@ -474,13 +792,17 @@ param_grds = {
     'clf': {
         'seed': 42,
         'metric': 'log_loss',
+        # 'metric': 'accuracy',
+        # 'metric': 'f1',
         'early_stop': True,
-        'time_budget': 10,
-        'estimator_list': [['lgbm','xgboost']],#,'catboost','histgb','extra_tree','xgb_limitdepth','rf','lrl1','lrl2','kneighbor'
+        'time_budget': 2,
+        'estimator_list': [['lgbm','xgboost','catboost','histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
         # 'ensemble': [False, True],
         'ensemble': False,
-        'min_calibrate': 10,
-        'time_calibrate': 8*60,
+        # 'min_calibrate': 10,
+        # 'time_calibrate': 8*60,
+        # 'max_iter': 21,
+        # 'max_iter': 40,
     },
 }
 
@@ -495,38 +817,36 @@ for key, val in param_grds.items():
     param_dcts[key] = [[hasher(k), formatter(k), k] for k in lst]
 
 
-def run_amp(cycle_days=None, styp_codes=['n'], train_codes=[202108,202208,202308], overwrite=None):
-    for kwargs in cartesian({
-        'cycle_day': cycle_days,
-        'styp_code': styp_codes,
-        'crse_code': crse_codes,
-        'train_code': train_codes,
-        'param': cartesian(param_dcts),
-        'overwrite': [listify(overwrite)],
-        }):
-            self = AMP(**kwargs)
-            # self.get_X()
-            # self.mlt.disp()
-            # assert 1==2
-            # self.get_X_proc()
-            
-            self.get_Y()
+# def run_amp(cycle_day, styp_codes=['n'], train_codes=[202108,202208,202308], overwrite=None):
+def run_amp(cycle_day, styp_codes=['n'], overwrite=None):
+    # T = Term(cycle_day=cycle_day, term_code=202408)
+    # assert T.cycle_day == cycle_day, f'Given cycle_day does not fall on Friday ... suggest changing to {T.cycle_day}'
+    # for kwargs in cartesian({'cycle_day': cycle_day, 'styp_code': styp_codes, 'crse_code': crse_codes, 'train_code': train_codes, 'param': cartesian(param_dcts), 'overwrite': [listify(overwrite)]}):
+    for kwargs in cartesian({'cycle_day': cycle_day, 'styp_code': styp_codes, 'crse_code': crse_codes, 'param': cartesian(param_dcts), 'overwrite': [listify(overwrite)]}):
+        self = AMP(**kwargs)
+        self.get_X()
+        self.get_X_proc()
+        self.get_summary()
+    # print(self.cycle_day, f'AMP_{self.cycle_date.date()}')
+    # get_stack(self.cycle_day)#, self.cycle_date.date())
     return self
 
 
-def get_stack(cycle_day, ext=None):
-    self = AMP(cycle_day=cycle_day)
+def get_stack(cycle_day, ext='', **kwargs):
+    self = AMP(cycle_day=cycle_day, **kwargs)
     def func():
         self.stack = dict()
-        append = lambda k, v: self.stack.setdefault(k,[]).append(v)
-        for fn in (self.root_path / 'Y').rglob('*.pkl'):
-            A = AMP().load(fn, force=True)
-            # A.mlt = self.mlt.copy()
-            # A.summarize()
-            # A.dump(fn)
+        append = lambda k, v: self.stack.setdefault(k, []).append(v)
+        for fn in (self.root_path / 'summary').rglob('*.pkl'):
+            print(fn)
+            self.load(fn, force=True)
+            self.load(str(fn).replace('summary','Y'))
+        #     # A.mlt = self.mlt.copy()
+        #     # A.summarize()
+        #     # A.dump(fn)
             for k in ['Y', 'summary']:
-                append(k, A[k])
-            for k, v in A['rslt'].items():
+                append(k, self[k])
+            for k, v in self.rslt.items():
                 append(k, v)
         self.stack = {k: pd.concat(v).prep() for k, v in self.stack.items()}
         self.report = (
@@ -534,11 +854,12 @@ def get_stack(cycle_day, ext=None):
             .query("trf_hash=='fa15'")
             .reset_index()
             .drop(columns=['trf_hash','imp_hash','clf_hash'])
-            .sort_values(['crse_code','levl_code','styp_code','train_code','pred_code'], ascending=[True,True,True,False,False])
+            # .sort_values(['crse_code','levl_code','styp_code','train_code','pred_code'], ascending=[True,True,True,False,False])
+            .sort_values(['crse_code','levl_code','styp_code','pred_code'], ascending=[True,True,True,False])
             .round(2)
             .prep()
         )
-        self.report.to_csv(self.root_path / f'AMP{ext}.csv', index=False)
+        self.report.to_csv(self.root_path / f'AMP_{self.cycle_date.date()}.csv', index=False)
     return self.get(func, f"stack.pkl", "X")
 
 
@@ -552,4 +873,6 @@ if __name__ == "__main__":
 
     from IPython.utils.io import Tee
     with contextlib.closing(Tee('/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/log.txt', "w", channel="stdout")) as outputstream:
-        run_amp(131)
+        # for cycle_day in range(133, 200, 7):
+            # run_amp(cycle_day)
+        run_amp(126)

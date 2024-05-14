@@ -1,5 +1,5 @@
 import os, sys, warnings, time, datetime, contextlib, io, dataclasses, pathlib, shutil, dill, dotenv, itertools as it
-import oracledb, numpy as np, pandas as pd, matplotlib.pyplot as plt
+import oracledb, numpy as np, scipy as sp, pandas as pd, matplotlib.pyplot as plt
 from IPython.display import display, HTML, clear_output
 from copy import deepcopy
 from codetiming import Timer
@@ -231,6 +231,15 @@ def impute(df, col, val=None, grp=None):
     return (df if grp is None else df.groupby(grp))[col].transform(lambda x: x.fillna(func(x)))
 
 ##################### file helpers #####################
+def getsizeof(x):
+    if isinstance(x, dict):
+        dct = {k: getsizeof(v) for k,v in x.items()}
+        pd.Series(dct).rename('b').sort_values(ascending=False).disp(None)
+    # elif hasattr(x, '__dict__'):
+    #     getsizeof(x.__dict__)
+    else:
+        return sys.getsizeof(x)
+
 def delete(path):
     path = pathlib.Path(path)
     if path.is_dir():
@@ -298,11 +307,11 @@ class MyBaseClass():
     def __post_init__(self):
         if 'root_path' in self:
             self.root_path = pathlib.Path(self.root_path)
-        if 'overwrite' in self and 'dependence' in self:
-            l = 0
-            while l < len(self.overwrite):
-                l = len(self.overwrite)
-                self.overwrite |= {y for x in self.overwrite for y in setify(self.dependence[x] if x in self.dependence else {})}
+        self.overwrite = setify(self.overwrite)
+        l = 0
+        while l < len(self.overwrite):
+            l = len(self.overwrite)
+            self.overwrite |= {y for x in self.overwrite for y in setify(self.dependence[x] if x in self.dependence else {})}
 
     def load(self, path, overwrite=False, force=False):
         dct = read(path, overwrite)
