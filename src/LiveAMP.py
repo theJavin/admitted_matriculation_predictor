@@ -342,7 +342,7 @@ class AMP(MyBaseClass):
                 else:
                     G = X_model.query(f"sim==0").groupby(['pred_code','actual'], observed=True).ngroup().rename('grp').to_frame().rsindex('idx')
                     y_model = X_model.pop('actual')
-                    for i in range(100):
+                    for i in range(10000):
                         idx = G.groupby('grp').sample(frac=0.75, random_state=i).index
                         msk = X_model.eval('idx.isin(@idx)')
                         if y_model[msk].any() & y_model[~msk].any():
@@ -366,8 +366,10 @@ class AMP(MyBaseClass):
                 self.Y[train_code] = Z[['actual']].assign(pred=pred, proba=proba).addlevel({'crse_code':self.crse_code, 'train_code':train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True).copy()
             self.Y = pd.concat(self.Y.values())
             self.train_score = pd.Series(self.train_score, name='train_score').rename_axis('pred_code')
-        return self.get(func, f"Y/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
-                        pre="X_proc", drop=["terms","X","y","mlt","X_proc"])
+        return self.get(func,
+                        f"Y/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
+                        pre="X_proc",
+                        drop=["terms","X","y","mlt","X_proc"])
 
 
     def get_summary(self):
@@ -382,7 +384,7 @@ class AMP(MyBaseClass):
             proj_rgstr = f'{self.proj_code}_current'
             proj_pred = f'{self.proj_code}_projection'
             proj_chg = f'{self.proj_code}_change_pct'
-            qry = f"pred_code=='{self.proj_code}'"
+            qry = f"pred_code=={self.proj_code}"
             S = (
                 S.query('not '+qry)
                 .join(S.query(qry)['predicted'].droplevel('pred_code').rename(proj_pred))
