@@ -59,12 +59,12 @@ where A.stvterm_code = B.sobptrm_term_code and B.sobptrm_ptrm_code='1'"""
         self.appl_term_descs = [t['term_desc'] for t in T]
         self.term_desc = T[0]['term_desc']
         self.census_date = T[0]['census_date']
-        delta = 7-(self.census_date.day_of_week-4)%7
-        self.end_date = self.census_date + pd.Timedelta(days=delta) # Friday after census
+        delta = 7-(self.census_date.day_of_week-2)%7
+        self.end_date = self.census_date + pd.Timedelta(days=delta) # Wednesday after census
         self.cycle_date = self.end_date - pd.Timedelta(days=self.cycle_day)
         # print(self.end_date.day_name(), self.end_date.date())
         # print(self.cycle_date.day_name(), self.cycle_date.date(), self.cycle_day)
-        assert self.end_date.day_of_week == self.cycle_date.day_of_week == 4 and delta > 0 and delta <= 7
+        assert self.end_date.day_of_week == self.cycle_date.day_of_week == 2 and delta > 0 and delta <= 7
         self.stem = f"{rjust(self.cycle_day,3,0)}/{self.term_code}"
         self.flg_col = {
             'perm': [
@@ -181,7 +181,7 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
                     f"A.*",
                     # f"case\n{tab}when max(case when A.cycle_day >= {self.cycle_day} then A.cycle_date end) over (partition by A.pidm, A.appl_no) = A.cycle_date then 1\n{tab}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
                     f"case\n{tab}when min(case when A.cycle_day >= {self.cycle_day} then A.cycle_day end) over (partition by A.pidm, A.appl_no) = A.cycle_day then 1\n{tab}end as r1",  # finds most recent daily snapshot BEFORE cycle_day
-                    f"case\n{tab}when sum(case when A.cycle_day <  {self.cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= least({self.cycle_day}, sysdate-{dt(self.cycle_date)}) / 2 then 1\n{tab}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
+                    f"case\n{tab}when sum(case when A.cycle_day <  {self.cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= least({self.cycle_day}, trunc(sysdate)-{dt(self.cycle_date)}) / 2 then 1\n{tab}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
                     # f"case\n{tab}when sum(case when A.cycle_day <  {self.cycle_day} then 1 else 0 end) over (partition by A.pidm, A.appl_no) >= {self.cycle_day}/2 then 1\n{tab}when sysdate - {dt(self.cycle_date)} < 5 then 1\n{tab}end as r2",  # check if appears on >= 50% of daily snapshots AFTER cycle_day
                 ], ',\n')
 
@@ -328,4 +328,4 @@ group by A.cycle_day, A.term_code, A.pidm, A.levl_code, A.styp_code"""
             )
             assert (df.groupby(['pidm','term_code']).size() == 1).all()
             self.raw = df
-        return self.get(func, f"raw/{self.stem}.parq", ["dst","adm","flg"])
+        return self.get(func, f"raw/{self.stem}.parq", pre=["dst","adm","flg"])

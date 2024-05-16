@@ -326,7 +326,7 @@ class MyBaseClass():
         write(path, self.__dict__, overwrite)
         return self
 
-    def get(self, func, fn, depends=[], path=None):
+    def get(self, func, fn, pre=[], drop=[], path=None):
         nm = fn.split('/')[0].split('.')[0]
         overwrite = nm in self.overwrite
         path = (self.root_path if path is None else path) / fn
@@ -338,12 +338,14 @@ class MyBaseClass():
         else:
             self[nm] = read(path, overwrite)
         if nm not in self or self[nm] is None:
-            for k in uniquify(depends):
+            for k in uniquify(pre):
                 getattr(self, 'get_'+k)()
             with Timer():
                 print('creating', fn, end=": ")
                 self.path = path
                 if func() != 'fail':
+                    for k in uniquify(drop):
+                        del self[k]
                     if path.suffix == '.pkl':
                         self.dump(path)
                     else:
