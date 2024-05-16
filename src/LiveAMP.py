@@ -253,7 +253,7 @@ class AMP(MyBaseClass):
                 X[k] = X.impute(k, *listify(v))
             M = X.isnull().rename(columns=lambda x:x+'_missing')
 
-            attr = ['idx','id','pidm',*code_desc('levl'),*code_desc('styp'),*code_desc('pred')]
+            attr = ['idx','id','pidm','levl_code','styp_code','pred_code']
             X = X.join(M).sample(frac=1).reset_index().rename(columns=ren).set_index(attr, drop=False).prep(bool=True)
             self.pii = X[[]].copy()
             anon = lambda df: df.rindex(['id','pidm'], drop=True).copy()
