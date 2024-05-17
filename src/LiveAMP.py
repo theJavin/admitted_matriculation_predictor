@@ -55,107 +55,107 @@ class LogLoss(Metric):
 ################## AMP ##################
 crse_codes = [
     '_allcrse',
-    'agec2317',
-    'ansc1119',
-    'ansc1319',
-    'anth2302',
-    'anth2351',
-    'arts1301',
-    'arts1303',
-    'arts1304',
-    'arts3331',
-    'biol1305',
-    'biol1406',
-    'biol1407',
-    'biol2401',
-    'biol2402',
-    'busi1301',
-    'busi1307',
-    'chem1111',
-    'chem1112',
-    'chem1302',
-    'chem1311',
-    'chem1312',
-    'chem1407',
-    'chem1411',
-    'chem1412',
-    'comm1311',
-    'comm1315',
-    'comm2302',
-    'crij1301',
-    'dram1310',
-    'dram2361',
-    'dram4304',
-    'easc2310',
-    'econ1301',
-    'econ2301',
-    'engl1301',
-    'engl1302',
-    'engl2307',
-    'engl2320',
-    'engl2321',
-    'engl2326',
-    'engl2340',
-    'engl2350',
-    'engl2360',
-    'engl2362',
-    'engl2364',
-    'engl2366',
-    'engl2368',
-    'engr2303',
-    'envs1302',
-    'fina1360',
-    'geog1303',
-    'geog1320',
-    'geog1451',
-    'geog2301',
-    'geol1403',
-    'geol1404',
-    'geol1407',
-    'geol1408',
-    'govt2305',
-    'govt2306',
-    'hist1301',
-    'hist1302',
-    'hist2321',
-    'hist2322',
-    'huma1315',
-    'kine2315',
-    'math1314',
-    'math1316',
-    'math1324',
-    'math1332',
-    'math1342',
-    'math2412',
-    'math2413',
-    'musi1303',
-    'musi1310',
-    'musi1311',
-    'musi2350',
-    'musi3325',
-    'phil1301',
-    'phil1304',
-    'phil2303',
-    'phil3301',
-    'phys1302',
-    'phys1401',
-    'phys1402',
-    'phys1403',
-    'phys1410',
-    'phys1411',
-    'phys2425',
-    'phys2426',
-    'psyc2301',
-    'soci1301',
-    'soci1306',
-    'soci2303',
-    'univ0200',
-    'univ0204',
-    'univ0301',
-    'univ0314',
-    'univ0324',
-    'univ0332',
-    'univ0342',
+    # 'agec2317',
+    # 'ansc1119',
+    # 'ansc1319',
+    # 'anth2302',
+    # 'anth2351',
+    # 'arts1301',
+    # 'arts1303',
+    # 'arts1304',
+    # 'arts3331',
+    # 'biol1305',
+    # 'biol1406',
+    # 'biol1407',
+    # 'biol2401',
+    # 'biol2402',
+    # 'busi1301',
+    # 'busi1307',
+    # 'chem1111',
+    # 'chem1112',
+    # 'chem1302',
+    # 'chem1311',
+    # 'chem1312',
+    # 'chem1407',
+    # 'chem1411',
+    # 'chem1412',
+    # 'comm1311',
+    # 'comm1315',
+    # 'comm2302',
+    # 'crij1301',
+    # 'dram1310',
+    # 'dram2361',
+    # 'dram4304',
+    # 'easc2310',
+    # 'econ1301',
+    # 'econ2301',
+    # 'engl1301',
+    # 'engl1302',
+    # 'engl2307',
+    # 'engl2320',
+    # 'engl2321',
+    # 'engl2326',
+    # 'engl2340',
+    # 'engl2350',
+    # 'engl2360',
+    # 'engl2362',
+    # 'engl2364',
+    # 'engl2366',
+    # 'engl2368',
+    # 'engr2303',
+    # 'envs1302',
+    # 'fina1360',
+    # 'geog1303',
+    # 'geog1320',
+    # 'geog1451',
+    # 'geog2301',
+    # 'geol1403',
+    # 'geol1404',
+    # 'geol1407',
+    # 'geol1408',
+    # 'govt2305',
+    # 'govt2306',
+    # 'hist1301',
+    # 'hist1302',
+    # 'hist2321',
+    # 'hist2322',
+    # 'huma1315',
+    # 'kine2315',
+    # 'math1314',
+    # 'math1316',
+    # 'math1324',
+    # 'math1332',
+    # 'math1342',
+    # 'math2412',
+    # 'math2413',
+    # 'musi1303',
+    # 'musi1310',
+    # 'musi1311',
+    # 'musi2350',
+    # 'musi3325',
+    # 'phil1301',
+    # 'phil1304',
+    # 'phil2303',
+    # 'phil3301',
+    # 'phys1302',
+    # 'phys1401',
+    # 'phys1402',
+    # 'phys1403',
+    # 'phys1410',
+    # 'phys1411',
+    # 'phys2425',
+    # 'phys2426',
+    # 'psyc2301',
+    # 'soci1301',
+    # 'soci1306',
+    # 'soci2303',
+    # 'univ0200',
+    # 'univ0204',
+    # 'univ0301',
+    # 'univ0314',
+    # 'univ0324',
+    # 'univ0332',
+    # 'univ0342',
 ]
 
 
@@ -169,7 +169,7 @@ class AMP(MyBaseClass):
     stats: tuple = (pctl(0), pctl(25), pctl(50), pctl(75), pctl(100), )
     show: set = dataclasses.field(default_factory=set)
     param: dict = dataclasses.field(default_factory=dict)    
-    root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt2"
+    root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt3"
     dependence: dict = dataclasses.field(default_factory=lambda: {'adm':'raw', 'flg':'raw', 'raw':'X', 'reg':'X', 'X':'X_proc', 'X_proc':'Y'})
 
     def __post_init__(self):
@@ -329,7 +329,6 @@ class AMP(MyBaseClass):
             if 'registration' in dct and dct.pop('registration'):
                 Z = Z.join(self.y['credit']).join(g(self.y['regstr']))
             Z = Z.join(g(self.y['admit'].rename('actual'))).fillna({self.crse_code:False, 'regstr':False, 'credit':0}).prep(bool=True, cat=True)
-
             self.clf = dict()
             self.Y = dict()
             self.train_score = dict()
@@ -382,35 +381,51 @@ class AMP(MyBaseClass):
             grp = uniquify([nm,'crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
             Z = self.X.join(self.Y, how='inner').reset_index()
             S = Z.groupby(grp).apply(lambda y: pd.Series({
-                'actual': y['actual'].sum(),
-                'predicted': y['proba'].sum(),
+                'pred_code_actual': y['actual'].sum(),
+                'pred_code_predicted': y['proba'].sum(),
                 'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
             }), include_groups=False).join(self.train_score)
             proj_rgstr = f'{self.proj_code}_current'
             proj_pred = f'{self.proj_code}_projection'
+            proj_prior = f'{self.proj_code-100}_actual'
             proj_chg = f'{self.proj_code}_change_pct'
             qry = f"pred_code=={self.proj_code}"
             S = (
                 S.query('not '+qry)
-                .join(S.query(qry)['predicted'].droplevel('pred_code').rename(proj_pred))
-                .join(S.query(qry)['actual'].droplevel('pred_code').rename(proj_rgstr))
+                .join(S.query(qry)['pred_code_predicted'].droplevel('pred_code').rename(proj_pred))
+                .join(S.query(qry)['pred_code_actual'   ].droplevel('pred_code').rename(proj_rgstr))
                 .join(self.mlt['mlt'])
-                .sort_index()
-            ).prep().fillna(0)
-            S['predicted'] *= S['actual'] > 0
-            for k in ['actual','predicted',proj_pred]:
+            ).astype('Float64').fillna(0)
+            # S = (
+            #           S.query(f"pred_code!={self.proj_code}")
+            #     .join(S.query(f"pred_code=={self.proj_code}") ['predicted'].droplevel('pred_code').rename(proj_pred))
+            #     .join(S.query(f"pred_code=={self.proj_code}")    ['actual'].droplevel('pred_code').rename(proj_rgstr))
+            #     # .join(S.query(f"pred_code=={self.proj_code-100}")['actual'].droplevel('pred_code').rename(proj_prior))
+            #     .join(self.mlt['mlt'])
+            # ).astype('Float64').fillna(0)
+            S['pred_code_predicted'] *= S['pred_code_actual'] > 0
+            S.loc[S.eval('pred_code_predicted==0'), 'pred_code_predicted':proj_pred] = pd.NA
+            for k in ['pred_code_actual','pred_code_predicted',proj_pred]:
                 S[k] *= S['mlt']
-            S.loc[S.eval('predicted==0'), 'predicted':proj_pred] = pd.NA
-            S[proj_chg] = (S[proj_pred] / S.groupby(S.index.names.difference({'pred_code'})).transform('last')['actual'] - 1) * 100
+            S[proj_prior] = S.query(f"pred_code=={self.proj_code-100}")['pred_code_actual'].mean()
+            S[proj_chg] = (S[proj_pred] / S[proj_prior] - 1) * 100
             alpha = 1
             S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-            S['error'] = S['predicted'] - S['actual']
-            S['error_pct'] = S['error'] / S['actual'] * 100
-            S = S[[proj_rgstr,proj_pred,proj_chg,'actual','predicted','error','error_pct','overall_score','test_score','train_score','mlt']].reset_index()
+            S['pred_code_error'] = S['pred_code_predicted'] - S['pred_code_actual']
+            S['pred_code_error_pct'] = S['pred_code_error'] / S['pred_code_actual'] * 100
+            S[np.isinf(S)|np.isnan(S)] = pd.NA
+            S = (
+                S[[proj_prior,proj_rgstr,proj_pred,proj_chg,'pred_code_actual','pred_code_predicted','pred_code_error','pred_code_error_pct','overall_score','test_score','train_score','mlt']]
+                .reset_index().sort_values(['crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,False,False,True,True,True])
+                .prep()
+            )
             S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
-            grp.remove('sim')
-            with warnings.catch_warnings(action='ignore'):
-                self[f"rslt_{nm}"] = {'summary': S.prep()} | {str(stat): S.drop(columns='sim').groupby(grp).agg(stat).prep().sort_index(ascending=False) for stat in self.stats}
+            grp.remove('sim')            
+            # with warnings.catch_warnings(action='ignore'):
+            self[f"rslt_{nm}"] = {
+                'summary': S,
+                **{str(stat): S.drop(columns='sim').groupby(grp, sort=False).agg(stat).prep() for stat in self.stats},
+            }
         return self.get(func, f"rslt_{nm}/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
                         pre=["Y","X"], drop=["terms","X","y","mlt","X_proc","clf","Y"])
 
@@ -482,49 +497,49 @@ def run_amp(cycle_day, styp_codes=['n'], overwrite=['stack']):
     for kwargs in cartesian({'cycle_day': cycle_day, 'styp_code': styp_codes, 'crse_code': sorted(crse_codes, reverse=True), 'param': cartesian(param_dcts), 'overwrite': [listify(overwrite)]}):
         self = AMP(**kwargs)
         self.get_result()
-        self.get_X()
         if self.crse_code == '_allcrse':
             attr = [
-                'coll_desc',
-                'dept_desc',
-                'majr_desc',
-                'camp_desc',
-                'stat_desc',
-                'cnty_desc',
-                'gender',
-                *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
-                'waiver',
-                'hs_qrtl',
-                'international',
-                'resd_desc',
-                'lgcy',
-                'lgcy_desc',
-                'admt_desc',
-                'math',
-                'reading',
-                'writing',
-                'ssb',
-                'oriented',
+                # 'coll_desc',
+                # 'dept_desc',
+                # 'majr_desc',
+                # 'camp_desc',
+                # 'stat_desc',
+                # 'cnty_desc',
+                # 'gender',
+                # *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
+                # 'waiver',
+                # 'hs_qrtl',
+                # 'international',
+                # 'resd_desc',
+                # 'lgcy',
+                # 'lgcy_desc',
+                # 'admt_desc',
+                # 'math',
+                # 'reading',
+                # 'writing',
+                # 'ssb',
+                # 'oriented',
             ]
             for nm in attr:
                 self.get_result(nm)
     def func():
+        write_csv = lambda nm: self[nm].to_csv(self.root_path / f'AMP_{nm}_{self.cycle_date.date()}.csv', index=False)
         self.stack = dict()
-        append = lambda k, v: self.stack.setdefault(k, []).append(v.copy())
-        for fn in (self.root_path / 'rslt_crse_code').rglob('*.pkl'):
+        append = lambda k, crse_code, df: self.stack.setdefault(k, dict()).setdefault(crse_code, df.copy())
+        for fn in sorted((self.root_path / 'rslt_crse_code').rglob('*.pkl')):
             self.load(fn, force=True)
             self.load(str(fn).replace('rslt_crse_code','Y'), force=True)
+            # print(self.crse_code)
             for k in ['Y']:
-                append(k, self[k])
+                append(k, self.crse_code, self[k])
             for k, v in self.rslt_crse_code.items():
-                append(k, v)
-        self.stack = {k: pd.concat(v).reset_index().sort_values(['crse_code','levl_code','styp_code','train_code','pred_code'], ascending=[True,True,True,False,False]).prep() for k, v in self.stack.items()}
-        Y = self.stack['Y'].query("crse_code=='_allcrse'").groupby('idx')[['actual','proba']].mean()
+                append(k, self.crse_code, v)
+        self.summary = pd.concat(self.stack[' 50%'].values()).droplevel(['trf_hash','imp_hash','clf_hash']).round(2).prep()
+        write_csv('summary')
+        Y = self.stack['Y']['_allcrse'].groupby('idx')[['actual','proba']].mean()
         self.details = self.get_pii().join(self.X).join(Y, how='inner').prep(bool=True).reset_index()
-        self.summary = self.stack[' 50%'].drop(columns=['trf_hash','imp_hash','clf_hash']).round(2).prep()
-        for nm in ['details','summary']:
-            self[nm].to_csv(self.root_path / f'AMP_{nm}_{self.cycle_date.date()}.csv', index=False)
-    return self.get(func, f"stack.pkl", drop=["terms","X","y","mlt","X_proc","clf","Y","summary","rslt"])
+        write_csv('details')
+    # return self.get(func, f"stack.pkl", pre="X", drop=["terms","X","y","mlt","X_proc","clf","Y","rslt_crse_code"])
 
 
 if __name__ == "__main__":
