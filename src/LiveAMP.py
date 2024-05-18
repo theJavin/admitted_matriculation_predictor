@@ -481,7 +481,7 @@ param_grds = {
         'seed': seed,
         'metric': 'log_loss',
         'early_stop': True,
-        'time_budget': 2,
+        'time_budget': 150,
         # 'time_budget': np.arange(10,500,10),
         # 'time_budget': [*np.arange(1,21),*np.arange(20,101,10),*np.arange(100,201,20),*np.arange(200,401,50)],
         # 'time_budget': 120,
@@ -505,10 +505,10 @@ for key, val in param_grds.items():
 def run_amp(cycle_day, styp_codes=['n'], overwrite=['stack']):
     for kwargs in cartesian({'cycle_day': cycle_day, 'styp_code': styp_codes, 'crse_code': sorted(crse_codes, reverse=True), 'param': cartesian(param_dcts), 'overwrite': [listify(overwrite)]}):
         self = AMP(**kwargs)
-        print(self.param['clf'][0], 'time_budget ', self.param['clf'][2]['time_budget'])
         self.get_result()
         self.get_Y()
-        print(self.clf[202408].estimator)
+        if self.proj_code in self.clf:
+            print(self.param['clf'][0], 'time_budget ', self.param['clf'][2]['time_budget'], self.clf[self.proj_code].estimator)
         self['rslt_crse_code'][' 50%'].disp(1000)
         if self.crse_code == '_allcrse':
             attr = [
