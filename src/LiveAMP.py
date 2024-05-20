@@ -269,7 +269,7 @@ class AMP(MyBaseClass):
             aggy = lambda y: y.query(qry).groupby(['pred_code','levl_code','styp_code','variable','value']).size()
             aggx = lambda x: aggy(x[self.aggregations].melt(ignore_index=False))
             def get_df(dct):
-                Y = pd.DataFrame(dct, sort=False).fillna(0).prep()
+                Y = pd.concat(dct, axis=1).prep().fillna(0)
                 Y['mlt'] = Y['final'] / Y['admitted']
                 Y[np.isinf(Y)] = pd.NA
                 return Y.rename(columns=lambda x: "pred_code_"+x)
