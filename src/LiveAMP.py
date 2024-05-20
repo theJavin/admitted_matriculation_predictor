@@ -3,56 +3,14 @@ import hashlib, miceforest as mf, flaml as fl
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PowerTransformer
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import accuracy_score, log_loss, fbeta_score, f1_score
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, log_loss#, fbeta_score, f1_score
+# from sklearn.model_selection import train_test_split
 from sklearn import set_config
 set_config(transform_output="pandas")
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
-
-################## Metrics that work for FLAML and sklearn ##################
-class Metric(MyBaseClass):
-    """Parent class for metrics that work with FLAML and sklearn"""
-    def __str__(self):
-        return self.__repr__()
-    def __lt__(self, other):
-        return str(self) < str(other)
-    def __call__(self, X_val, y_val, estimator, labels, X_train, y_train, weight_val=None, weight_train=None, *args):
-        """for FLAML"""
-        start = time.time()
-        y_pred = estimator.predict(X_val)
-        pred_time = (time.time() - start) / len(X_val)
-        val_loss = self.score(y_val, y_pred, labels=labels, sample_weight=weight_val)
-        y_pred = estimator.predict(X_train)
-        train_loss = self.score(y_train, y_pred, labels=labels, sample_weight=weight_train)
-        return val_loss, {
-            "val_loss": val_loss,
-            "train_loss": train_loss,
-            "pred_time": pred_time,
-        }
-
-class F_beta(Metric):
-    """Implements F_beta for FLAML https://scikit-learn.org/stable/modules/generated/sklearn.metrics.fbeta_score.html"""
-    def __init__(self, beta):
-        self.beta = float(beta)
-    def __repr__(self):
-        return f"F_{self.beta:.2f}"
-    def score(self, y_true, y_pred, **kwargs):
-        return 1 - fbeta_score(y_true, y_pred, beta=self.beta, **kwargs)
-
-class Accuracy(Metric):
-    def __repr__(self):
-        return "accuracy"
-    def score(self, y_true, y_pred, **kwargs):
-        return 1 - accuracy_score(y_true, y_pred, **kwargs)
-
-class LogLoss(Metric):
-    def __repr__(self):
-        return "log loss"
-    def score(self, y_true, y_pred, **kwargs):
-        return log_loss(y_true, y_pred, **kwargs)
-
-################## AMP ##################
+seed = 42
 code_desc = lambda x: [x+'_code', x+'_desc']
+
 crse_codes = [
     '_allcrse',
     'agec2317',
@@ -165,13 +123,34 @@ class AMP(MyBaseClass):
     pred_codes: tuple = (202108, 202208, 202308, 202408)
     crse_code : str = '_allcrse'
     styp_code : str = 'n'
-    attributes: tuple = ('gender','lgcy',)
     # stats: tuple = [pctl(0), pctl(25), pctl(50), pctl(75), pctl(100)]
-    stats: tuple = pctl(50)
+    stats: tuple = ('mean',)
     show: set = dataclasses.field(default_factory=set)
     param: dict = dataclasses.field(default_factory=dict)    
     root_path: str = f"/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt"
     dependence: dict = dataclasses.field(default_factory=lambda: {'adm':'raw', 'flg':'raw', 'raw':'X', 'reg':'X', 'X':'X_proc', 'X_proc':'Y'})
+    aggregations: tuple = (
+        'coll_desc',
+        'dept_desc',
+        'majr_desc',
+        'camp_desc',
+        'stat_desc',
+        'cnty_desc',
+        'gender',
+        *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
+        'waiver',
+        'hs_qrtl',
+        'international',
+        'resd_desc',
+        'lgcy',
+        'lgcy_desc',
+        'admt_desc',
+        'math',
+        'reading',
+        'writing',
+        'ssb',
+        'oriented',
+    )
 
     def __post_init__(self):
         super().__post_init__()
@@ -190,8 +169,8 @@ class AMP(MyBaseClass):
 
     def get_X(self):
         def func():
-            ren = {'term_code':'pred_code', 'term_desc':'pred_desc', 'crse_code':'variable'}
-            idx = ['id','pidm','pred_code','levl_code','styp_code','variable']
+            ren = {'term_code':'pred_code', 'term_desc':'pred_desc', 'crse_code':'value'}
+            idx = ['id','pidm','pred_code','levl_code','styp_code','variable','value']
             def get_raw(dct):
                 R = pd.concat([T.raw.rename(columns=ren) for pred_code, T in dct.items()]).copy().dropna(axis=1, how='all').reset_index(drop=True).prep()
                 R['pidm'] = encrypt(R['pidm'])
@@ -262,19 +241,19 @@ class AMP(MyBaseClass):
 
             with warnings.catch_warnings(action='ignore'):
                 X = [get_raw(dct) for dct in self.terms]
+            self.aggregations = sorted(c for c in X[0].select_dtypes(['string','boolean']).columns if "_missing" not in c and "_code" not in c)
 
             Y = [pd.concat([
                     T.reg
                     .rename(columns=ren)
-                    .assign(pidm=lambda x: encrypt(x['pidm']))
+                    .assign(pidm=lambda x: encrypt(x['pidm']), variable='crse_code')
                     .fillna({'credit_hr':0})
                     .query('credit_hr>0')
                     .prep(bool=True)
                     .sindex(idx)[['credit_hr']]
                     # .sindex(idx)[['variable','credit_hr']]
                 for pred_code, T in dct.items()]) for dct in self.terms]
-
-            E = [y.query("variable=='_allcrse'")['credit_hr'] for y in Y]  # only rows for _allcrse
+            E = [y.query("value=='_allcrse'").droplevel(['variable','value']).squeeze() for y in Y]  # only rows for _allcrse
             E[0] = E[0].rename('final').to_frame()
             E[1] = E[1].rename('current').to_frame()
 
@@ -285,17 +264,15 @@ class AMP(MyBaseClass):
             X[1] = X[1].droplevel(col).join(E[1], how='outer')  # copy current credit_hr from E[1] to X[1]
             X[1] = X[1].join(E[0].droplevel(col), how='outer')  # copy final credit_hr from E[0] to X[1]
             # X[0] = X[0].join(E[1].droplevel(col), how='outer')  # copy current credit_hr from E[1] to X[0]
-            Y = [y.droplevel(col).join(e[[]])[['variable']].assign(value=True) for y,e in zip(Y,E)]  # copy levl_code & stype_code from E to Y
-            
-            qry = f"levl_code == 'ug' & styp_code in ('n','r','t') & pred_code!={self.proj_code}"
+            Y = [y[[]].droplevel(col).join(e[[]]) for y,e in zip(Y,E)]  # copy levl_code & stype_code from E to Y
+            qry = f"levl_code == 'ug' & styp_code in ('n','r','t')"
             aggy = lambda y: y.query(qry).groupby(['pred_code','levl_code','styp_code','variable','value']).size()
-            aggx = lambda x: aggy(x[listify(self.attributes)].melt(ignore_index=False))
-
+            aggx = lambda x: aggy(x[self.aggregations].melt(ignore_index=False))
             def get_df(dct):
-                Y = pd.DataFrame(dct).fillna(0).prep()
+                Y = pd.DataFrame(dct, sort=False).fillna(0).prep()
                 Y['mlt'] = Y['final'] / Y['admitted']
                 Y[np.isinf(Y)] = pd.NA
-                return Y
+                return Y.rename(columns=lambda x: "pred_code_"+x)
 
             AY = get_df({
                 'current': aggy(Y[1]),
@@ -308,9 +285,9 @@ class AMP(MyBaseClass):
                 'final': aggx(X[0].query("final.notnull()")),
             })
             self.mlt = pd.concat([AY,AX])
-            self.X = X[1].query(qry)
-            self.y = Y[0]#.set_index('variable', append=True)
-        return self.get(func, "X.pkl", pre="terms", drop=["terms","pii"])
+            self.X = X[1].assign(credit_hr=X[1]['current'].fillna(0)).drop(columns=['current','final']).query(qry)
+            self.y = [y.rsindex(['pidm','pred_code','value']) for y in Y]
+        return self.get(func, "X.pkl", pre="terms", drop=["terms"])
 
 
     def get_X_proc(self):
@@ -339,24 +316,16 @@ class AMP(MyBaseClass):
         return self.get(func, f"X_proc/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}.pkl", pre="X", drop=["terms","X"])
 
 
-    def qry(self, y, value):
-        return y.query(f"variable=='{value}'").droplevel('variable')
-
     def get_Y(self):
         def func():
             dct = self.param['clf'][2].copy()
-            Z = self.X_proc.copy()
-            g = lambda y: self.qry(y, self.crse_code)
-            # g = lambda y: y.query(f"variable=='{self.crse_code}'").droplevel('variable')
-
-            if 'registration' in dct and dct.pop('registration'):
-                Z = Z.join(self.credit).join(g(self.y['current']))
-            Z = (Z
-                .join(g(self.y['admit'].rename('actual')))
-                .fillna({'credit':0, 'current':False, 'actual':False})
-                # .fillna({self.crse_code:False, 'current':False, 'credit':0})
+            g = lambda y, nm: y.query(f"value=='{self.crse_code}'").droplevel('value').assign(**{nm:True})
+            Z = (
+                self.X_proc
+                .join(g(self.y[1],'registered'))
+                .join(g(self.y[0],'actual'))
                 .prep(bool=True, cat=True)
-                .sort_index()
+                .fillna({'registered':False,'actual':False})
             )
             self.clf = dict()
             self.Y = dict()
@@ -364,13 +333,12 @@ class AMP(MyBaseClass):
             for train_code in self.pred_codes:
             # for train_code in [self.proj_code]:
                 print(f"...{train_code}", end="")
-                strat = ['actual','__act_equiv_missing','idx']
+                strat = ['actual','__act_equiv_missing','pidm']
                 grp = ['pred_code','sim']
                 qry = f"pred_code=={train_code}" if train_code != self.proj_code else f"pred_code!={train_code}"
                 X_model = Z.query(qry).sort_values(strat, ascending=False).copy()
-                X_model['msk'] = (X_model.groupby(grp).cumcount() % 5 > 0)
-                # X_model = X_model.groupby(grp).filter(lambda x: (x['msk'] & x['actual']).any())
-                X_model = X_model.groupby(grp).filter(lambda x: x['actual'].sum()>=5)
+                X_model['msk'] = X_model.groupby(grp).cumcount() % 5 > 0
+                X_model = X_model.groupby(grp).filter(lambda x: x['actual'].sum() >= 5)
                 if len(X_model) == 0:
                     # print(train_code, 'not enough')
                     pred = False
@@ -400,7 +368,7 @@ class AMP(MyBaseClass):
         return self.get(func,
                         f"Y/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
                         pre=["X","X_proc"],
-                        drop=["terms","X","y","credit","mlt","X_proc"])
+                        drop=["terms","X","y","mlt","X_proc"])
 
 
     def get_result(self, variable='crse_code'):
@@ -413,28 +381,24 @@ class AMP(MyBaseClass):
             prior_current = f'{self.proj_code-100}_current'
             prior_final = f'{self.proj_code-100}_final'
             proj_change = f'{self.proj_code}_change_pct'
-            # grp = uniquify([nm,'crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
             grp = uniquify([variable,'levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
             S = (
                 self.X
                 .join(self.Y, how='inner')
-                # .reset_index()
                 .groupby(grp).apply(lambda y: pd.Series({
-                        # 'pred_code_final': y['actual'].sum(),
                         'pred_code_predict': y['proba'].sum(),
                         'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
                     }), include_groups=False)
                 .join(self.train_score)
-                .join(self.qry(self.mlt, variable).rename_axis(index={'value':variable}).rename(columns=lambda x: "pred_code_"+x))
-                # .join(self.mlt.rename(columns=lambda x: "pred_code_"+x))
+                .join(self.mlt.query(f"variable=='{variable}'").droplevel('variable').rename_axis(index={'value':variable}))
             )
             alpha = 1
             S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
             qry = lambda q: S.query(f"pred_code=={q}").droplevel('pred_code')
             S = (S
                 .join(qry(self.proj_code-100)['pred_code_current'].rename(prior_current))
-                .join(qry(self.proj_code    )['pred_code_current'].rename(proj_current))
                 .join(qry(self.proj_code-100)['pred_code_final'  ].rename(prior_final))
+                .join(qry(self.proj_code    )['pred_code_current'].rename(proj_current))
                 .join(qry(self.proj_code    )['pred_code_predict'].rename(proj_predict))
                 .query(f"pred_code!={self.proj_code}")
                 .astype('Float64').fillna(0)
@@ -446,8 +410,6 @@ class AMP(MyBaseClass):
             S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
             S['pred_code_error'] = S['pred_code_predict'] - S['pred_code_final']
             S['pred_code_error_pct'] = S['pred_code_error'] / S['pred_code_final'] * 100
-            # S.loc[S.eval('pred_code_predict==0'), ['pred_code_predict','pred_code_error','pred_code_error_pct',proj_predict,proj_change,'train_score','test_score','overall_score']] = pd.NA
-            # S[np.isinf(S)|np.isnan(S)] = pd.NA
             S = (
                 S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'pred_code_final','pred_code_predict','pred_code_error','pred_code_error_pct','pred_code_mlt','train_score','test_score','overall_score']]
                 .reset_index()
@@ -458,79 +420,15 @@ class AMP(MyBaseClass):
             grp.remove('sim')
             with warnings.catch_warnings(action='ignore'):
                 self[nm] = {'summary': S} | {str(stat): S.drop(columns='sim').groupby(grp, sort=False).agg(stat).prep() for stat in listify(self.stats)}
-            self[nm][' 50%'].disp(40)
+            self[nm]['mean'].disp(40)
         return self.get(func, f"{nm}/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
-                        pre=["Y","X"], drop=["terms","X","y","credit","mlt","X_proc","clf","Y"])
+                        pre=["Y","X"], drop=["terms","X","y","mlt","X_proc","clf","Y"])
 
 
-    # def get_result(self, nm='crse_code'):
-    #     def func():
-    #         if 'Y' not in self:
-    #             return
-    #         proj_current = f'{self.proj_code}_current'
-    #         proj_predict = f'{self.proj_code}_predict'
-    #         prior_current = f'{self.proj_code-100}_current'
-    #         prior_final = f'{self.proj_code-100}_final'
-    #         proj_change = f'{self.proj_code}_change_pct'
-    #         grp = uniquify([nm,'crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash','sim'])
-    #         S = (
-    #             self.X
-    #             .join(self.Y, how='inner')
-    #             # .reset_index()
-    #             .groupby(grp).apply(lambda y: pd.Series({
-    #                     'pred_code_current': y['actual'].sum(),
-    #                     'pred_code_predict': y['proba'].sum(),
-    #                     'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
-    #                 }), include_groups=False)
-    #             .join(self.train_score)
-    #             .join(self.mlt['mlt'])
-    #         )
-    #         alpha = 1
-    #         S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-    #         S['pred_code_final'] = S['mlt'] * S['pred_code_current']
-    #         S['pred_code_predict'] *= S['mlt'] * S['pred_code_final'] > 0
-    #         qry = lambda q: S.query(f"pred_code=={q}").droplevel('pred_code')
-    #         S = (S
-    #             .join(qry(self.proj_code-100)['pred_code_current'].rename(prior_current))
-    #             .join(qry(self.proj_code    )['pred_code_current'].rename(proj_current))
-    #             .join(qry(self.proj_code-100)['pred_code_final'  ].rename(prior_final))
-    #             .join(qry(self.proj_code    )['pred_code_predict'].rename(proj_predict))
-    #             .query(f"pred_code!={self.proj_code}")
-    #             .astype('Float64').fillna(0)
-    #         )
-    #         S['pred_code_predict'] *= S['pred_code_final'] > 0
-    #         S.loc[S.eval('pred_code_predict==0'), ['pred_code_predict',proj_predict,'train_score','test_score','overall_score']] = pd.NA
-    #         for k in ['pred_code_predict',proj_predict]:
-    #             S[k] *= S['pred_code_mlt']
-    #         S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
-    #         S['pred_code_error'] = S['pred_code_predict'] - S['pred_code_final']
-    #         S['pred_code_error_pct'] = S['pred_code_error'] / S['pred_code_final'] * 100
-    #         # S.loc[S.eval('pred_code_predict==0'), ['pred_code_predict','pred_code_error','pred_code_error_pct',proj_predict,proj_change,'train_score','test_score','overall_score']] = pd.NA
-    #         # S[np.isinf(S)|np.isnan(S)] = pd.NA
-    #         S = (
-    #             S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'pred_code_final','pred_code_predict','pred_code_error','pred_code_error_pct','pred_code_mlt','train_score','test_score','overall_score']]
-    #             .reset_index()
-    #             .sort_values([nm,'crse_code','levl_code','styp_code','train_code','pred_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,True,False,False,True,True,True])
-    #             .prep()
-    #         )
-    #         S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
-    #         grp.remove('sim')            
-    #         # with warnings.catch_warnings(action='ignore'):
-    #         self[f"rslt_{nm}"] = {
-    #             'summary': S,
-    #             **{str(stat): S.drop(columns='sim').groupby(grp, sort=False).agg(stat).prep() for stat in listify(self.stats)},
-    #         }
-    #         self[f"rslt_{nm}"][' 50%'].disp(1000)
-    #     return self.get(func, f"rslt_{nm}/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
-    #                     pre=["Y","X"], drop=["terms","X","y","mlt","X_proc","clf","Y"])
-
-
-seed = 42
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 param_grds = {
     'trf': {
         'act_equiv': 'passthrough',
-        # 'act_equiv_missing': 'passthrough',
         'act_equiv_missing': 'passthrough',
         'admt_code': 'drop',
         'apdc_day': 'passthrough',
@@ -559,8 +457,7 @@ param_grds = {
         'styp_code': 'drop',
         'waiver': 'passthrough',
         'writing': 'passthrough',
-        'current': 'passthrough',
-        'final': 'drop',
+        'credit_hr': 'passthrough',
     },
     'imp': {
         'random_state': seed,
@@ -570,7 +467,6 @@ param_grds = {
         # 'tune': [False, True],
     },
     'clf': {
-        'registration': True,
         'seed': seed,
         'metric': 'log_loss',
         'early_stop': True,
@@ -580,7 +476,8 @@ param_grds = {
         # 'time_budget': [*np.arange(1,20),*np.arange(20,100,10),*np.arange(100,200,25),*np.arange(200,401,50)],
         # 'time_budget': 120,
         # 'estimator_list': [['lgbm','histgb']],#'xgboost']],#'catboost']],#'histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
-        'estimator_list': [['xgboost']],#'xgboost']],#'catboost']],#'histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
+        # 'estimator_list': [['xgboost']],#'xgboost']],#'catboost']],#'histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
+        'estimator_list': [['xgboost']],#'catboost']],#'histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
         # 'estimator_list': [['xgboost']],#'histgb','extra_tree','xgb_limitdepth','rf']],#'lrl1','lrl2','kneighbor'
         # 'ensemble': [False, True],
         'ensemble': False,
@@ -604,33 +501,11 @@ def run_amp(cycle_day, styp_codes=['n'], overwrite=[]):
         self = AMP(**kwargs)
         self.get_result()
         self.get_Y()
-        # if self.proj_code in self.clf:
-        #     print(self.param['clf'][0], self.param['trf'][1], 'time_budget', self.param['clf'][2]['time_budget'], self.clf[self.proj_code].estimator)
+        if self.proj_code in self.clf:
+            print(self.param['clf'][0], 'time_budget', self.param['clf'][2]['time_budget'], self.clf[self.proj_code].estimator)
         if self.crse_code == '_allcrse':
-            attr = [
-                'coll_desc',
-                'dept_desc',
-                'majr_desc',
-                'camp_desc',
-                'stat_desc',
-                'cnty_desc',
-                'gender',
-                *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
-                'waiver',
-                'hs_qrtl',
-                'international',
-                'resd_desc',
-                'lgcy',
-                'lgcy_desc',
-                'admt_desc',
-                'math',
-                'reading',
-                'writing',
-                'ssb',
-                'oriented',
-            ]
-            for nm in attr:
-                self.get_result(nm)
+            for variable in self.aggregations:
+                self.get_result(variable)
     def func():
         write_csv = lambda nm: self[nm].to_csv(self.root_path / f'AMP_{nm}_{self.cycle_date.date()}.csv')
         self.stack = dict()
@@ -643,13 +518,12 @@ def run_amp(cycle_day, styp_codes=['n'], overwrite=[]):
                 append(k, self.crse_code, self[k])
             for k, v in self.rslt_crse_code.items():
                 append(k, self.crse_code, v)
-        self.summary = pd.concat(self.stack[' 50%'].values()).droplevel(['trf_hash','imp_hash','clf_hash']).round(2).prep()
+        self.summary = pd.concat(self.stack['mean'].values()).droplevel(['trf_hash','imp_hash','clf_hash']).round(2).prep()
         write_csv('summary')
-        Y = self.stack['Y']['_allcrse'].groupby('idx')[['actual','proba']].mean()
-        self.details = self.get_pii().join(self.X).join(Y, how='inner').prep(bool=True)
+        Y = self.stack['Y']['_allcrse'].groupby(['pidm','pred_code']).agg(actual=('actual','mean'), proba_mean=('proba','mean'), proba_stdev=('proba','std'))
+        self.details = self.X.join(Y).prep(bool=True)
         write_csv('details')
     return self.get(func, f"stack.pkl", pre="X", drop=["terms","X","y","mlt","X_proc","clf","Y","rslt_crse_code"])
-    # return self
 
 
 if __name__ == "__main__":
