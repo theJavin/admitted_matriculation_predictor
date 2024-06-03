@@ -329,7 +329,7 @@ class AMP(MyBaseClass):
                 .fillna({'registered':False,'actual':False})
                 .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
                 .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
-                .assign(msk = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
+                .assign(mask = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
             )
             self.clf = dict()
             self.Y = dict()
@@ -351,21 +351,21 @@ class AMP(MyBaseClass):
                     proba = 0.0
                     self.train_score[train_code] = pd.NA
                 else:
-                    msk = X_model.pop('msk')
                     y_model = X_model.pop('actual')
+                    mask = X_model.pop('mask')
                     dct |= {
-                        'X_train':X_model[msk],
-                        'y_train':y_model[msk],
-                        'X_val':X_model[~msk],
-                        'y_val':y_model[~msk],
+                        'X_train':X_model[mask],
+                        'y_train':y_model[mask],
+                        'X_val':X_model[~mask],
+                        'y_val':y_model[~mask],
                         'task':'classification',
                         'verbose':0,
                     }
                     clf = fl.AutoML(**dct)
                     with warnings.catch_warnings(action='ignore'):
                         clf.fit(**dct)
-                    pred = clf.predict(Z.drop(columns='actual'))
-                    proba = clf.predict_proba(Z.drop(columns='actual'))[:,1]
+                    pred = clf.predict(Z.drop(columns=['actual','mask']))
+                    proba = clf.predict_proba(Z.drop(columns=['actual','mask']))[:,1]
                     self.clf[train_code] = clf._trained_estimator
                     self.train_score[train_code] = clf.best_result['val_loss'] * 100
                 self.Y[train_code] = Z[['actual']].assign(pred=pred, proba=proba).addlevel({'crse_code':self.crse_code, 'train_code':train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True).copy()
