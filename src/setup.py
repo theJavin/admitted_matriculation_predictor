@@ -1,7 +1,7 @@
 import os, sys, warnings, time, datetime, contextlib, io, dataclasses, pathlib, shutil, dill, dotenv, itertools as it
 import oracledb, numpy as np, scipy as sp, pandas as pd, matplotlib.pyplot as plt
 from IPython.display import display, HTML, clear_output
-from copy import deepcopy
+from copy import copy, deepcopy
 from codetiming import Timer
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
 dotenv.load_dotenv()
@@ -45,22 +45,9 @@ def uniquify(X, sort=False, **kwargs):
     return mysort(X, **kwargs) if sort else X
 
 def intersection(*args, sort=False, **kwargs):
-    L = [listify(x) for x in listify(args)]
+    L = [listify(x) for x in args]
     y = [x for x in L[0] if x in set(L[0]).intersection(*L)]
     return mysort(y, **kwargs) if sort else y
-
-def nest(path, dct=dict(), val=None):
-    path = listify(path.values() if isinstance(path, dict) else path)
-    k = path.pop(-1)
-    a = dct
-    for p in path:
-        a.setdefault(p, dict())
-        a = a[p]
-    if val is None:
-        return a[k] if k in a else None
-    else:
-        a[k] = val
-        return dct
 
 ##################### string helpers #####################
 def rjust(x, width, fillchar=' '):
@@ -182,9 +169,6 @@ def prep(X, cap='casefold', bool=False, cat=False):
     elif isinstance(X, pd.DataFrame):
         g = lambda x: prep(x, cap).replace(' ','_').replace('-','_') if isinstance(x, str) else x
         return X.rename(columns=g).rename_axis(index=g).convert(bool=bool, cat=cat)
-        # X = X.rename(columns=g).rename_axis(index=g)
-        # idx = pd.MultiIndex.from_frame(X[[]].reset_index().convert(bool=bool, cat=cat))
-        # return X.convert(bool=bool, cat=cat).set_index(idx).rename_axis(X.index.names)
     else:
         return X
 
@@ -241,8 +225,6 @@ def getsizeof(x):
     if isinstance(x, dict):
         dct = {k: getsizeof(v) for k,v in x.items()}
         pd.Series(dct).rename('b').sort_values(ascending=False).disp(None)
-    # elif hasattr(x, '__dict__'):
-    #     getsizeof(x.__dict__)
     else:
         return sys.getsizeof(x)
 
@@ -326,16 +308,23 @@ class MyBaseClass():
                 self.__dict__ = self.__dict__ | dct
             else:
                 self.__dict__ = dct | self.__dict__
+            for k, v in self.__dict__.items():
+                if isinstance(v, str) and ('file' in k.lower() or 'path' in k.lower()):
+                    self[k] = pathlib.Path(v)
             return self
 
     def dump(self, path, overwrite=True):
-        write(path, self.__dict__, overwrite)
+        dct = copy(self.__dict__)
+        for k, v in dct.items():
+            if isinstance(v, pathlib.PosixPath):
+                dct[k] = str(v)
+        write(path, dct, overwrite)
         return self
 
-    def get(self, func, fn, pre=[], drop=[], path=None):
-        nm = fn.split('/')[0].split('.')[0]
+    def get(self, func, fn, subpath='', pre=[], drop=[]):
+        nm = fn.split('/')[0].split('\\')[0].split('.')[0]
         overwrite = nm in self.overwrite
-        path = (self.root_path if path is None else path) / fn
+        path = self.root_path / subpath / fn
         if nm in self:
             if overwrite:
                 del self[nm]
@@ -348,14 +337,18 @@ class MyBaseClass():
                 getattr(self, 'get_'+k)()
             with Timer():
                 print('creating', fn, end=": ")
-                self.path = path
-                if func() != 'fail':
-                    for k in uniquify(drop):
-                        del self[k]
-                    if path.suffix == '.pkl':
-                        self.dump(path)
-                    else:
-                        write(path, self[nm])
+                # self.path = path
+                # if func() != 'fail':
+                # for k,v in self.__dict__.items():
+                #     if isinstance(v, pathlib.PosixPath):
+                #         drop.append(k)
+                func()
+                for k in uniquify(drop):
+                    del self[k]
+                if path.suffix == '.pkl':
+                    self.dump(path)
+                else:
+                    write(path, self[nm])
         return self
 
 
