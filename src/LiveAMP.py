@@ -327,6 +327,9 @@ class AMP(MyBaseClass):
                 .join(g(self.y[0],'actual'))
                 .prep(bool=True, cat=True)
                 .fillna({'registered':False,'actual':False})
+                .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
+                .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
+                .assign(msk = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
             )
             self.clf = dict()
             self.Y = dict()
@@ -334,13 +337,14 @@ class AMP(MyBaseClass):
             for train_code in self.pred_codes:
             # for train_code in [self.proj_code]:
                 print(f"...{train_code}", end="")
-                X_model = (Z
-                    .query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code")
-                    .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
-                    .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
-                    .assign(msk = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
-                    .copy()
-                )
+                X_model = Z.query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code").copy()
+                # X_model = (Z
+                #     .query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code")
+                #     .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
+                #     .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
+                #     .assign(msk = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
+                #     .copy()
+                # )
                 if len(X_model) == 0:
                     # print(train_code, 'not enough')
                     pred = False
