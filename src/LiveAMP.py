@@ -313,15 +313,8 @@ class AMP(MyBaseClass):
                     .addlevel({'trf_hash':self.param['trf'][0], 'imp_hash':self.param['imp'][0], 'sim':k})
                     .prep(bool=True, cat=True)
                 for k in range(imp.dataset_count())])
-        return self.get(func, fn=f"X_proc/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}.pkl",
-                        pre="X", drop=["terms","X"])
-
-
-    def get_Y(self):
-        def func():
-            dct = self.param['clf'][2].copy()
             g = lambda y, nm: y.query(f"value=='{self.crse_code}'").droplevel('value').assign(**{nm:True})
-            Z = (
+            self.Z = (
                 self.X_proc
                 .join(g(self.y[1],'registered'))
                 .join(g(self.y[0],'actual'))
@@ -331,20 +324,31 @@ class AMP(MyBaseClass):
                 .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
                 .assign(mask = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
             )
+        return self.get(func, fn=f"X_proc/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}.pkl",
+                        pre="X", drop=["terms","X"])
+
+
+    def get_Y(self):
+        def func():
+            # dct = self.param['clf'][2].copy()
+            # g = lambda y, nm: y.query(f"value=='{self.crse_code}'").droplevel('value').assign(**{nm:True})
+            # Z = (
+            #     self.X_proc
+            #     .join(g(self.y[1],'registered'))
+            #     .join(g(self.y[0],'actual'))
+            #     .prep(bool=True, cat=True)
+            #     .fillna({'registered':False,'actual':False})
+            #     .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
+            #     .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
+            #     .assign(mask = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
+            # )
             self.clf = dict()
             self.Y = dict()
             self.train_score = dict()
             for train_code in self.pred_codes:
             # for train_code in [self.proj_code]:
                 print(f"...{train_code}", end="")
-                X_model = Z.query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code").copy()
-                # X_model = (Z
-                #     .query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code")
-                #     .sort_values(['actual','__act_equiv_missing','pidm'], ascending=False)
-                #     .groupby(['pred_code','sim']).filter(lambda x: x['actual'].sum() >= 5)
-                #     .assign(msk = lambda x: x.groupby(['pred_code','sim']).cumcount() % 5 > 0)
-                #     .copy()
-                # )
+                X_model = self.Z.query("pred_code==@train_code" if train_code != self.proj_code else "pred_code!=@train_code").copy()
                 if len(X_model) == 0:
                     # print(train_code, 'not enough')
                     pred = False
@@ -353,7 +357,7 @@ class AMP(MyBaseClass):
                 else:
                     y_model = X_model.pop('actual')
                     mask = X_model.pop('mask')
-                    dct |= {
+                    dct = self.param['clf'][2] | {
                         'X_train':X_model[mask],
                         'y_train':y_model[mask],
                         'X_val':X_model[~mask],
@@ -364,11 +368,11 @@ class AMP(MyBaseClass):
                     clf = fl.AutoML(**dct)
                     with warnings.catch_warnings(action='ignore'):
                         clf.fit(**dct)
-                    pred = clf.predict(Z.drop(columns=['actual','mask']))
-                    proba = clf.predict_proba(Z.drop(columns=['actual','mask']))[:,1]
+                    pred = clf.predict(self.Z.drop(columns=['actual','mask']))
+                    proba = clf.predict_proba(self.Z.drop(columns=['actual','mask']))[:,1]
                     self.clf[train_code] = clf._trained_estimator
                     self.train_score[train_code] = clf.best_result['val_loss'] * 100
-                self.Y[train_code] = Z[['actual']].assign(pred=pred, proba=proba).addlevel({'crse_code':self.crse_code, 'train_code':train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True).copy()
+                self.Y[train_code] = self.Z[['actual']].assign(pred=pred, proba=proba).addlevel({'crse_code':self.crse_code, 'train_code':train_code, 'clf_hash':self.param['clf'][0]}).prep(bool=True).copy()
             self.Y = pd.concat(self.Y.values())
             self.train_score = pd.Series(self.train_score, name='train_score').rename_axis('train_code')
         return self.get(func, fn=f"Y/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
@@ -476,7 +480,7 @@ param_grds = {
         'metric': 'log_loss',
         'early_stop': True,
         'time_budget': 2,
-        'time_budget': 120,
+        # 'time_budget': 120,
         # 'time_budget': np.arange(10,500,10),
         # 'time_budget': [*np.arange(1,20),*np.arange(20,100,10),*np.arange(100,200,25),*np.arange(200,401,50)],
         # 'time_budget': 120,
