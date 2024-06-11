@@ -49,6 +49,12 @@ def intersection(*args, sort=False, **kwargs):
     y = [x for x in L[0] if x in set(L[0]).intersection(*L)]
     return mysort(y, **kwargs) if sort else y
 
+def drop(lst, *drp):
+    lst = listify(lst).copy()
+    for d in drp:
+        if d in lst:
+            lst.remove(d)
+    return lst
 ##################### string helpers #####################
 def rjust(x, width, fillchar=' '):
     return str(x).rjust(width,str(fillchar))

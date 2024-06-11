@@ -1,3 +1,57 @@
+2024-06-10 00:27:28.507043
+creating terms.pkl: 
+creating reg/098/202108.parq: Elapsed time: 2.0369 seconds
+creating adm/098/202108.parq: Elapsed time: 25.1790 seconds
+creating flg/098/202108.parq: 202108 flags cycle day 98 >= 98 on 2021-06-02 00:00:00
+202106 flags cycle day 98 >= 98 on 2021-06-02 00:00:00
+Elapsed time: 1.0773 seconds
+creating raw/098/202108.parq: Elapsed time: 0.4205 seconds
+creating reg/098/202208.parq: Elapsed time: 1.9051 seconds
+creating adm/098/202208.parq: Elapsed time: 30.9390 seconds
+creating flg/098/202208.parq: 202208 flags cycle day 98 >= 98 on 2022-06-01 00:00:00
+202206 flags cycle day 98 >= 98 on 2022-06-01 00:00:00
+Elapsed time: 1.1858 seconds
+creating raw/098/202208.parq: Elapsed time: 0.4612 seconds
+creating reg/098/202308.parq: Elapsed time: 1.8667 seconds
+creating adm/098/202308.parq: Elapsed time: 29.1031 seconds
+creating flg/098/202308.parq: 202308 flags cycle day 98 >= 98 on 2023-06-07 00:00:00
+202306 flags cycle day 98 >= 98 on 2023-06-07 00:00:00
+Elapsed time: 1.3363 seconds
+creating raw/098/202308.parq: Elapsed time: 0.4720 seconds
+creating reg/098/202408.parq: Elapsed time: 2.9726 seconds
+creating adm/098/202408.parq: Elapsed time: 17.0410 seconds
+creating flg/098/202408.parq: 202408 flags cycle day 98 >= 98 on 2024-06-05 00:00:00
+202406 flags cycle day 98 >= 98 on 2024-06-05 00:00:00
+Elapsed time: 1.0782 seconds
+creating raw/098/202408.parq: Elapsed time: 0.5768 seconds
+creating reg/000/202108.parq: Elapsed time: 3.9748 seconds
+creating adm/000/202108.parq: Elapsed time: 22.7433 seconds
+creating flg/000/202108.parq: 202108 flags cycle day 0 >= 0 on 2021-09-08 00:00:00
+202106 flags cycle day 15 >= 0 on 2021-08-24 00:00:00
+Elapsed time: 1.1602 seconds
+creating raw/000/202108.parq: Elapsed time: 0.4980 seconds
+creating reg/000/202208.parq: Elapsed time: 2.3422 seconds
+creating adm/000/202208.parq: Elapsed time: 22.8893 seconds
+creating flg/000/202208.parq: 202208 flags cycle day 0 >= 0 on 2022-09-07 00:00:00
+202206 flags cycle day 0 >= 0 on 2022-09-07 00:00:00
+Elapsed time: 1.3080 seconds
+creating raw/000/202208.parq: Elapsed time: 0.5366 seconds
+creating reg/000/202308.parq: Elapsed time: 4.5645 seconds
+creating adm/000/202308.parq: Elapsed time: 18.8466 seconds
+creating flg/000/202308.parq: 202308 flags cycle day 0 >= 0 on 2023-09-13 00:00:00
+202306 flags cycle day 0 >= 0 on 2023-09-13 00:00:00
+Elapsed time: 1.3864 seconds
+creating raw/000/202308.parq: Elapsed time: 0.5113 seconds
+creating reg/000/202408.parq: Elapsed time: 4.3806 seconds
+creating adm/000/202408.parq: Elapsed time: 10.8012 seconds
+creating flg/000/202408.parq: 202408 flags cycle day 98 >= 0 on 2024-06-05 00:00:00
+202406 flags cycle day 98 >= 0 on 2024-06-05 00:00:00
+Elapsed time: 1.2650 seconds
+creating raw/000/202408.parq: Elapsed time: 0.0215 seconds
+Elapsed time: 232.5876 seconds
+creating X.pkl: Elapsed time: 29.6829 seconds
+creating X_proc/n/2d76/77d7.pkl: Elapsed time: 182.5638 seconds
+2024-06-10 00:38:58.761482
 creating y_pred/n/_anycrse/2d76/77d7/fb12.pkl: 202108:done, 202208:done, 202308:done, 202408:done, Elapsed time: 486.3769 seconds
 creating y_pred/n/agec2317/2d76/77d7/fb12.pkl: 202108:done, 202208:done, 202308:done, 202408:done, Elapsed time: 485.9572 seconds
 creating y_pred/n/ansc1119/2d76/77d7/fb12.pkl: 202108:fail, 202208:fail, 202308:done, 202408:done, Elapsed time: 242.0488 seconds
