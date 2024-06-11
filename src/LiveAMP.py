@@ -508,107 +508,147 @@ class AMP(MyBaseClass):
                         pre="X_proc", drop=["terms","X","y_true","Z","agg","X_trf","X_proc"])
 
 
+    # def get_result(self):
+    #     def func():
+    #         Z = self.X_proc.reset_index().merge(self.y_pred.reset_index(), how='outer')
+    #         def g(variable):
+    #             grp = [variable,'term_code','levl_code','styp_code','train_code','sim','trf_hash','imp_hash','clf_hash']
+    #             S = (Z
+    #                 .groupby(grp).apply(lambda y: pd.Series({
+    #                         'code_predict': y['proba'].sum(),
+    #                         'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+    #                     }), include_groups=False)
+    #                 .join(self.train_score)
+    #                 .join(self.agg)
+    #             )
+    #             alpha = 1
+    #             S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+    #             qry = lambda q: S.query("term_code==@q").droplevel('term_code')
+    #             S = (S
+    #                 .join(qry(self.proj_code-100)['term_code_current'].rename(prior_current))
+    #                 .join(qry(self.proj_code-100)['term_code_final'  ].rename(prior_final))
+    #                 .join(qry(self.proj_code    )['term_code_current'].rename(proj_current))
+    #                 .join(qry(self.proj_code    )['term_code_predict'].rename(proj_predict))
+    #                 .query("term_code!=@self.proj_code")
+    #                 .astype('Float64').fillna(0)
+    #             )
+    #             S['term_code_predict'] *= S['term_code_final'] > 0
+    #             S.loc[S.eval('term_code_predict==0'), ['term_code_predict',proj_predict,'train_score','test_score','overall_score']] = pd.NA
+    #             for k in ['term_code_predict',proj_predict]:
+    #                 S[k] *= S['term_code_mlt']
+    #             S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
+    #             S['term_code_error'] = S['term_code_predict'] - S['term_code_final']
+    #             S['term_code_error_pct'] = S['term_code_error'] / S['term_code_final'] * 100
+    #             S = (
+    #                 S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'term_code_final','term_code_predict','term_code_error','term_code_error_pct','term_code_mlt','train_score','test_score','overall_score']]
+    #                 .reset_index()
+    #                 .sort_values([variable,'levl_code','styp_code','term_code','train_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,False,False,True,True,True])
+    #                 .prep()
+    #             )
+    #             S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
+    #         # if self.Y.shape[0] == 0:
+    #         #     return
+    #         # proj_current = f'{self.proj_code}_current'
+    #         # proj_predict = f'{self.proj_code}_predict'
+    #         # prior_current = f'{self.proj_code-100}_current'
+    #         # prior_final = f'{self.proj_code-100}_final'
+    #         # proj_change = f'{self.proj_code}_change_pct'
+    #         # Z = self.X.join(self.Y, how='inner')
+
+
+
+    #         self.result = dict()
+
+
+    #         for variable in self.aggregations if self.crse_code == '_anycrse' else ['crse_code']:
+    #             A = self.agg.query(f"variable==@variable")
+    #             mask = A.eval(f"term_code!={self.proj_code}")
+    #             B = A[mask]
+    #             C = A[~mask].drop(columns='mlt').join(B['mlt'].rename(index={k:self.proj_code for k in self.term_codes}))
+    #             M = pd.concat([B,C])
+
+    #             # print(variable)
+    #             grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
+    #             S = (Z
+    #                 .groupby(grp).apply(lambda y: pd.Series({
+    #                         'term_code_predict': y['proba'].sum(),
+    #                         'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+    #                     }), include_groups=False)
+    #                 .join(self.train_score)
+    #                 .join(self.mlt.query("variable==@variable").droplevel('variable').rename_axis(index={'value':variable}))
+    #             )
+    #             alpha = 1
+    #             S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+    #             qry = lambda q: S.query("term_code==@q").droplevel('term_code')
+    #             S = (S
+    #                 .join(qry(self.proj_code-100)['term_code_current'].rename(prior_current))
+    #                 .join(qry(self.proj_code-100)['term_code_final'  ].rename(prior_final))
+    #                 .join(qry(self.proj_code    )['term_code_current'].rename(proj_current))
+    #                 .join(qry(self.proj_code    )['term_code_predict'].rename(proj_predict))
+    #                 .query("term_code!=@self.proj_code")
+    #                 .astype('Float64').fillna(0)
+    #             )
+    #             S['term_code_predict'] *= S['term_code_final'] > 0
+    #             S.loc[S.eval('term_code_predict==0'), ['term_code_predict',proj_predict,'train_score','test_score','overall_score']] = pd.NA
+    #             for k in ['term_code_predict',proj_predict]:
+    #                 S[k] *= S['term_code_mlt']
+    #             S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
+    #             S['term_code_error'] = S['term_code_predict'] - S['term_code_final']
+    #             S['term_code_error_pct'] = S['term_code_error'] / S['term_code_final'] * 100
+    #             S = (
+    #                 S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'term_code_final','term_code_predict','term_code_error','term_code_error_pct','term_code_mlt','train_score','test_score','overall_score']]
+    #                 .reset_index()
+    #                 .sort_values([variable,'levl_code','styp_code','term_code','train_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,False,False,True,True,True])
+    #                 .prep()
+    #             )
+    #             S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
+    #             grp.remove('sim')
+    #             with warnings.catch_warnings(action='ignore'):
+    #                 self.result[variable] = {'summary': S} | {str(stat): S.drop(columns='sim').groupby(grp, sort=False).agg(stat).prep() for stat in listify(self.stats)}
+    #         self.result['crse_code']['mean'].disp(40)
+    #     return self.get(func, fn=f"result/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
+    #                     pre=["Y","X"], drop=["terms","X","y","mlt","X_trf","X_proc","clf","Y","train_score"])
+
+
+
     def get_result(self):
         def func():
-            Z = self.X_proc.reset_index().merge(self.y_pred.reset_index(), how='outer')
-            def g(variable):
-                grp = [variable,'term_code','levl_code','styp_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-                S = (Z
-                    .groupby(grp).apply(lambda y: pd.Series({
-                            'code_predict': y['proba'].sum(),
-                            'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
-                        }), include_groups=False)
-                    .join(self.train_score)
-                    .join(self.agg)
-                )
-                alpha = 1
-                S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-                qry = lambda q: S.query("term_code==@q").droplevel('term_code')
-                S = (S
-                    .join(qry(self.proj_code-100)['term_code_current'].rename(prior_current))
-                    .join(qry(self.proj_code-100)['term_code_final'  ].rename(prior_final))
-                    .join(qry(self.proj_code    )['term_code_current'].rename(proj_current))
-                    .join(qry(self.proj_code    )['term_code_predict'].rename(proj_predict))
-                    .query("term_code!=@self.proj_code")
-                    .astype('Float64').fillna(0)
-                )
-                S['term_code_predict'] *= S['term_code_final'] > 0
-                S.loc[S.eval('term_code_predict==0'), ['term_code_predict',proj_predict,'train_score','test_score','overall_score']] = pd.NA
-                for k in ['term_code_predict',proj_predict]:
-                    S[k] *= S['term_code_mlt']
-                S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
-                S['term_code_error'] = S['term_code_predict'] - S['term_code_final']
-                S['term_code_error_pct'] = S['term_code_error'] / S['term_code_final'] * 100
-                S = (
-                    S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'term_code_final','term_code_predict','term_code_error','term_code_error_pct','term_code_mlt','train_score','test_score','overall_score']]
-                    .reset_index()
-                    .sort_values([variable,'levl_code','styp_code','term_code','train_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,False,False,True,True,True])
-                    .prep()
-                )
-                S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
-            # if self.Y.shape[0] == 0:
-            #     return
-            # proj_current = f'{self.proj_code}_current'
-            # proj_predict = f'{self.proj_code}_predict'
-            # prior_current = f'{self.proj_code-100}_current'
-            # prior_final = f'{self.proj_code-100}_final'
-            # proj_change = f'{self.proj_code}_change_pct'
-            # Z = self.X.join(self.Y, how='inner')
-
-
-
-            self.result = dict()
-
-
-            for variable in self.aggregations if self.crse_code == '_anycrse' else ['crse_code']:
-                A = self.agg.query(f"variable==@variable")
-                mask = A.eval(f"term_code!={self.proj_code}")
-                B = A[mask]
-                C = A[~mask].drop(columns='mlt').join(B['mlt'].rename(index={k:self.proj_code for k in self.term_codes}))
-                M = pd.concat([B,C])
-
-                # print(variable)
-                grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-                S = (Z
-                    .groupby(grp).apply(lambda y: pd.Series({
-                            'term_code_predict': y['proba'].sum(),
-                            'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
-                        }), include_groups=False)
-                    .join(self.train_score)
-                    .join(self.mlt.query("variable==@variable").droplevel('variable').rename_axis(index={'value':variable}))
-                )
-                alpha = 1
-                S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-                qry = lambda q: S.query("term_code==@q").droplevel('term_code')
-                S = (S
-                    .join(qry(self.proj_code-100)['term_code_current'].rename(prior_current))
-                    .join(qry(self.proj_code-100)['term_code_final'  ].rename(prior_final))
-                    .join(qry(self.proj_code    )['term_code_current'].rename(proj_current))
-                    .join(qry(self.proj_code    )['term_code_predict'].rename(proj_predict))
-                    .query("term_code!=@self.proj_code")
-                    .astype('Float64').fillna(0)
-                )
-                S['term_code_predict'] *= S['term_code_final'] > 0
-                S.loc[S.eval('term_code_predict==0'), ['term_code_predict',proj_predict,'train_score','test_score','overall_score']] = pd.NA
-                for k in ['term_code_predict',proj_predict]:
-                    S[k] *= S['term_code_mlt']
-                S[proj_change] = (S[proj_predict] / S[prior_final] - 1) * 100
-                S['term_code_error'] = S['term_code_predict'] - S['term_code_final']
-                S['term_code_error_pct'] = S['term_code_error'] / S['term_code_final'] * 100
-                S = (
-                    S[[prior_current,proj_current,prior_final,proj_predict,proj_change,'term_code_final','term_code_predict','term_code_error','term_code_error_pct','term_code_mlt','train_score','test_score','overall_score']]
-                    .reset_index()
-                    .sort_values([variable,'levl_code','styp_code','term_code','train_code','trf_hash','imp_hash','clf_hash'], ascending=[True,True,True,False,False,True,True,True])
-                    .prep()
-                )
-                S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
-                grp.remove('sim')
-                with warnings.catch_warnings(action='ignore'):
-                    self.result[variable] = {'summary': S} | {str(stat): S.drop(columns='sim').groupby(grp, sort=False).agg(stat).prep() for stat in listify(self.stats)}
-            self.result['crse_code']['mean'].disp(40)
-        return self.get(func, fn=f"result/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl",
-                        pre=["Y","X"], drop=["terms","X","y","mlt","X_trf","X_proc","clf","Y","train_score"])
-
+            self.results = dict()
+            self.Y_pred = pd.concat([read(fn).get('y_pred', pd.DataFrame()) for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl'))]).prep().reset_index()
+            with pd.ExcelWriter(self.root_path / f'AMP_{self.cycle_date.date()}.xlsx', mode='w', engine='openpyxl') as writer:
+                for variable in self.aggregations:
+                    grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
+                    S = (self.Y_pred.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()")
+                        .merge(self.X[variable if variable!="crse_code" else []].reset_index())
+                        .groupby(grp).apply(lambda y: pd.Series({
+                                'predict': y['proba'].sum(),
+                                'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+                            }), include_groups=False)
+                        .join(self.train_score)
+                        .join(self.agg.loc[variable].rename_axis(index={'value':variable}))
+                    )
+                    P = S['actual'].rename('prior').reset_index()
+                    P['term_code'] += 100
+                    S = S.reset_index().merge(P, 'left')
+                    alpha = 1
+                    S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+                    S['predict'] *= S['mlt']
+                    S['predict_error'] = S['predict'] - S['actual']
+                    S['predict_error_pct'] = S['predict_error'] / S['actual'] * 100
+                    S['predict_change'] = S['predict'] - S['prior']
+                    S['predict_change_pct'] = S['predict_change'] / S['prior'] * 100
+                    S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
+                    S = (S
+                        .prep()
+                        .sort_values(grp, ascending=[True,True,True,False,False,True,True,True,True])
+                        .set_index(grp)
+                        [['admit','enroll','predict','prior','predict_change','predict_change_pct','actual','predict_error','predict_error_pct','overall_score','test_score','train_score','mlt']]
+                    )
+                    grp.remove('sim')
+                    M = S.groupby(grp, sort=False).mean().prep()
+                    M.to_excel(writer, sheet_name=variable)
+                    self.results[variable] = {'summary':S, 'mean':M}
+        return self.get(func, f"results.pkl", pre=["y_pred","X_proc"])
 
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 param_grds = {
@@ -683,40 +723,78 @@ for key, val in param_grds.items():
 param_lst = cartesian(param_dct)
 
 def run_amp(cycle_day, styp_codes=['n'], overwrite=[]):
-    self = AMP(cycle_day=cycle_day)
-    self.get_X()
-    for kwargs in cartesian({'cycle_day': cycle_day, 'styp_code': styp_codes, 'crse_code': intersection(crse_codes, self.y_true.reset_index()['variable'], sort=True), 'param': param_lst, 'overwrite': [listify(overwrite)]}):
+    for kwargs in cartesian({'cycle_day':cycle_day, 'styp_code':styp_codes, 'crse_code':intersection(crse_codes, self.y_true.reset_index()['variable'], sort=True, reversed=True), 'param':param_lst, 'overwrite':[listify(overwrite)]}):
         self = AMP(**kwargs)
-        # self.get_result()
         self.get_y_pred()
-        # self.get_X()
         # if self.proj_code in self.clf:
         #     print(self.param['clf'][0], 'time_budget', self.param['clf'][2]['time_budget'], self.clf[self.proj_code].estimator)
-    return self
-    def func():
-        self.get_X()
-        stack = {'Y': dict()}
-        for fn in sorted((self.root_path / 'result').rglob('*.pkl')):
-            self.load(fn, force=True)
-            self.load(str(fn).replace('result','Y'), force=True)
-            stack['Y'][self.crse_code] = self.Y
-            for key, val in self.result.items():
-                for stat, df in val.items():
-                    stack.setdefault(key, dict()).setdefault(stat, dict())[self.crse_code] = df
-        Y = stack['Y']['_allcrse'].groupby(['pidm','term_code']).agg(actual=('actual','mean'), proba_mean=('proba','mean'), proba_stdev=('proba','std'))
-        self.stack = {'Z': self.X.join(Y).prep(bool=True)}
-        self.stack['Z'].to_csv(self.root_path / f'AMP_details_{self.cycle_date.date()}.csv')
-        with pd.ExcelWriter(self.root_path / f'AMP_{self.cycle_date.date()}.xlsx', mode='w', engine='openpyxl') as writer:
-            for key, val in stack.items():
-                if key == 'Y':
-                    self.stack[key] = pd.concat(val.values())
-                    continue
-                if key == 'crse_code':
-                    self.stack[key] = {stat: pd.concat(dct.values()) for stat, dct in val.items()}
-                else:
-                    self.stack[key] = {stat: dct['_allcrse'] for stat, dct in val.items()}
-                self.stack[key]['mean'].droplevel(['trf_hash','imp_hash','clf_hash']).round(2).prep().to_excel(writer, sheet_name=k)
-    return self.get(func, f"stack.pkl", drop=["terms","X","y","mlt","X_trf","X_proc","clf","Y","train_score","result"])
+    self.get_results()
+    # def func():
+    #     self.results = dict()
+    #     self.Y_pred = pd.concat([read(fn).get('y_pred', pd.DataFrame()) for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl'))]).prep().reset_index()
+    #     # def g(variable):
+    #     with pd.ExcelWriter(self.root_path / f'AMP_{self.cycle_date.date()}.xlsx', mode='w', engine='openpyxl') as writer:
+    #         for variable in self.aggregations:
+    #             grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
+    #             S = (self.Y_pred.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()")
+    #                 .merge(self.X[variable if variable!="crse_code" else []].reset_index())
+    #                 .groupby(grp).apply(lambda y: pd.Series({
+    #                         'predict': y['proba'].sum(),
+    #                         'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+    #                     }), include_groups=False)
+    #                 .join(self.train_score)
+    #                 .join(self.agg.loc[variable].rename_axis(index={'value':variable}))
+    #             )
+    #             P = S['actual'].rename('prior').reset_index()
+    #             P['term_code'] += 100
+    #             S = S.reset_index().merge(P, 'left')
+    #             alpha = 1
+    #             S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+    #             S['predict'] *= S['mlt']
+    #             S['predict_error'] = S['predict'] - S['actual']
+    #             S['predict_error_pct'] = S['predict_error'] / S['actual'] * 100
+    #             S['predict_change'] = S['predict'] - S['prior']
+    #             S['predict_change_pct'] = S['predict_change'] / S['prior'] * 100
+    #             S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
+    #             S = (S
+    #                 .prep()
+    #                 .sort_values(grp, ascending=[True,True,True,False,False,True,True,True,True])
+    #                 .set_index(grp)
+    #                 [['admit','enroll','predict','prior','predict_change','predict_change_pct','actual','predict_error','predict_error_pct','overall_score','test_score','train_score','mlt']]
+    #             )
+    #             grp.remove('sim')
+    #             M = S.groupby(grp, sort=False).mean().prep()
+    #             M.to_excel(writer, sheet_name=variable)
+    #             self.results[variable] = {'summary':S, 'mean':M}
+    # return self.get(func, f"results.pkl", pre="X")
+# drop=["terms","X","y","mlt","X_trf","X_proc","clf","Y","train_score","result"])
+    
+    
+    # return self
+    # def func():
+    #     self.get_X()
+    #     stack = {'Y': dict()}
+    #     for fn in sorted((self.root_path / 'result').rglob('*.pkl')):
+    #         self.load(fn, force=True)
+    #         self.load(str(fn).replace('result','Y'), force=True)
+    #         stack['Y'][self.crse_code] = self.Y
+    #         for key, val in self.result.items():
+    #             for stat, df in val.items():
+    #                 stack.setdefault(key, dict()).setdefault(stat, dict())[self.crse_code] = df
+    #     Y = stack['Y']['_allcrse'].groupby(['pidm','term_code']).agg(actual=('actual','mean'), proba_mean=('proba','mean'), proba_stdev=('proba','std'))
+    #     self.stack = {'Z': self.X.join(Y).prep(bool=True)}
+    #     self.stack['Z'].to_csv(self.root_path / f'AMP_details_{self.cycle_date.date()}.csv')
+    #     with pd.ExcelWriter(self.root_path / f'AMP_{self.cycle_date.date()}.xlsx', mode='w', engine='openpyxl') as writer:
+    #         for key, val in stack.items():
+    #             if key == 'Y':
+    #                 self.stack[key] = pd.concat(val.values())
+    #                 continue
+    #             if key == 'crse_code':
+    #                 self.stack[key] = {stat: pd.concat(dct.values()) for stat, dct in val.items()}
+    #             else:
+    #                 self.stack[key] = {stat: dct['_allcrse'] for stat, dct in val.items()}
+    #             self.stack[key]['mean'].droplevel(['trf_hash','imp_hash','clf_hash']).round(2).prep().to_excel(writer, sheet_name=k)
+    # return self.get(func, f"stack.pkl", drop=["terms","X","y","mlt","X_trf","X_proc","clf","Y","train_score","result"])
 
 
 if __name__ == "__main__":
