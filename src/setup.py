@@ -128,32 +128,6 @@ def vc(df, by, dropna=False, digits=1, **kwargs):
 def addlevel(df, dct):
     return df.assign(**dct).prep().set_index(list(dct.keys()), append=True)
 
-# @pd_ext
-# def query(df, *args, **kwargs):
-#     return df.query(*args, **kwargs)
-
-# @pd_ext
-# def eval(df, *args, **kwargs):
-#     return df.eval(*args, **kwargs)
-
-# @pd_ext
-# def grpby(df, by, **kwargs):
-#     return df.groupby(intersection(by, df.reset_index().columns), **kwargs)
-
-# @pd_ext
-# def rindex(df, level=None, bare=False, **kwargs):
-#     level = level if level is None else intersection(level, df.index.names)
-#     df = df.reset_index(level, **kwargs)
-#     return df.reset_index(drop=True) if bare else df
-
-# @pd_ext
-# def sindex(df, level, **kwargs):
-#     return df.set_index(intersection(level, df.columns), **kwargs)
-
-# @pd_ext
-# def rsindex(df, level, **kwargs):
-#     return df.rindex(level, True).sindex(level, **kwargs)
-
 @pd_ext
 def rsindex(df, level):
     X = df.reset_index(intersection(level, df.index.names)).reset_index(drop=True)
@@ -391,3 +365,29 @@ class Oracle(MyBaseClass):
         dt = self.execute(SQL(qry).qry().head(10)).dtypes
         dt.disp()
         return dt
+    
+# @pd_ext
+# def query(df, *args, **kwargs):
+#     return df.query(*args, **kwargs)
+
+# @pd_ext
+# def eval(df, *args, **kwargs):
+#     return df.eval(*args, **kwargs)
+
+# @pd_ext
+# def grpby(df, by, **kwargs):
+#     return df.groupby(intersection(by, df.reset_index().columns), **kwargs)
+
+# @pd_ext
+# def rindex(df, level=None, bare=False, **kwargs):
+#     level = level if level is None else intersection(level, df.index.names)
+#     df = df.reset_index(level, **kwargs)
+#     return df.reset_index(drop=True) if bare else df
+
+# @pd_ext
+# def sindex(df, level, **kwargs):
+#     return df.set_index(intersection(level, df.columns), **kwargs)
+
+# @pd_ext
+# def rsindex(df, level, **kwargs):
+#     return df.rindex(level, True).sindex(level, **kwargs)

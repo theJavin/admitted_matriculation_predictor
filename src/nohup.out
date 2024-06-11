@@ -1,64 +1,73 @@
-2024-06-11 14:25:08.286480
-creating X.pkl: Elapsed time: 3.2133 seconds
-Traceback (most recent call last):
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 516, in <module>
-    run_amp(*sys.argv[1:])
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 500, in run_amp
-    self = AMP(cycle_day=cycle_day).get_X()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 295, in get_X
-    return self.get(func, pre="terms", drop="terms", fn="X.pkl")
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/setup.py", line 338, in get
-    func()
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 219, in func
-    X = {key: get_raw(dct).set_index(idx) for key, dct in self.terms.items()}
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 219, in <dictcomp>
-    X = {key: get_raw(dct).set_index(idx) for key, dct in self.terms.items()}
-              ^^^^^^^^^^^^
-  File "/home/scook/institutional_data_analytics/admitted_matriculation_projection/admitted_matriculation_predictor/src/LiveAMP.py", line 195, in get_raw
-    X = R.drop(columns=majr).merge(S, on='majr_code', how='left').prep(bool=True)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/frame.py", line 10819, in merge
-    return merge(
-           ^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 184, in merge
-    return op.get_result(copy=copy)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 888, in get_result
-    result = self._reindex_and_concat(
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 879, in _reindex_and_concat
-    result = concat([left, right], axis=1, copy=copy)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/reshape/concat.py", line 395, in concat
-    return op.get_result()
-           ^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/reshape/concat.py", line 684, in get_result
-    new_data = concatenate_managers(
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/internals/concat.py", line 132, in concatenate_managers
-    return mgrs[0].concat_horizontal(mgrs, axes)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 1806, in concat_horizontal
-    nb = blk.slice_block_columns(slice(None))
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 331, in slice_block_columns
-    new_values = self._slice(slc)
-                 ^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 2519, in _slice
-    return self.values[slicer]
-           ~~~~~~~~~~~^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/arrays/_mixins.py", line 297, in __getitem__
-    result = self._from_backing_data(result)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/arrays/numpy_.py", line 141, in _from_backing_data
-    return type(self)(arr)
-           ^^^^^^^^^^^^^^^
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/arrays/string_.py", line 364, in __init__
-    self._validate()
-  File "/home/scook/miniconda3/envs/my3.11/lib/python3.11/site-packages/pandas/core/arrays/string_.py", line 369, in _validate
-    if len(self._ndarray) and not lib.is_string_array(self._ndarray, skipna=True):
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
+2024-06-11 14:36:03.847704
+creating terms.pkl: 
+creating reg/098/202108.parq: Elapsed time: 1.4607 seconds
+creating adm/098/202108.parq: Elapsed time: 16.5548 seconds
+creating flg/098/202108.parq: 202108 flags cycle day 98 >= 98 on 2021-06-02 00:00:00
+202106 flags cycle day 98 >= 98 on 2021-06-02 00:00:00
+Elapsed time: 1.0733 seconds
+creating raw/098/202108.parq: Elapsed time: 0.4194 seconds
+creating reg/098/202208.parq: Elapsed time: 1.4600 seconds
+creating adm/098/202208.parq: Elapsed time: 15.8859 seconds
+creating flg/098/202208.parq: 202208 flags cycle day 98 >= 98 on 2022-06-01 00:00:00
+202206 flags cycle day 98 >= 98 on 2022-06-01 00:00:00
+Elapsed time: 1.2442 seconds
+creating raw/098/202208.parq: Elapsed time: 0.5138 seconds
+creating reg/098/202308.parq: Elapsed time: 1.5401 seconds
+creating adm/098/202308.parq: Elapsed time: 18.0476 seconds
+creating flg/098/202308.parq: 202308 flags cycle day 98 >= 98 on 2023-06-07 00:00:00
+202306 flags cycle day 98 >= 98 on 2023-06-07 00:00:00
+Elapsed time: 1.3255 seconds
+creating raw/098/202308.parq: Elapsed time: 0.4707 seconds
+creating reg/098/202408.parq: Elapsed time: 1.7256 seconds
+creating adm/098/202408.parq: Elapsed time: 11.3151 seconds
+creating flg/098/202408.parq: 202408 flags cycle day 98 >= 98 on 2024-06-05 00:00:00
+202406 flags cycle day 98 >= 98 on 2024-06-05 00:00:00
+Elapsed time: 1.1180 seconds
+creating raw/098/202408.parq: Elapsed time: 0.6568 seconds
+creating reg/000/202108.parq: Elapsed time: 1.9457 seconds
+creating adm/000/202108.parq: Elapsed time: 14.9550 seconds
+creating flg/000/202108.parq: 202108 flags cycle day 0 >= 0 on 2021-09-08 00:00:00
+202106 flags cycle day 15 >= 0 on 2021-08-24 00:00:00
+Elapsed time: 1.1707 seconds
+creating raw/000/202108.parq: Elapsed time: 0.5083 seconds
+creating reg/000/202208.parq: Elapsed time: 1.9849 seconds
+creating adm/000/202208.parq: Elapsed time: 14.4201 seconds
+creating flg/000/202208.parq: 202208 flags cycle day 0 >= 0 on 2022-09-07 00:00:00
+202206 flags cycle day 0 >= 0 on 2022-09-07 00:00:00
+Elapsed time: 1.3011 seconds
+creating raw/000/202208.parq: Elapsed time: 0.5781 seconds
+creating reg/000/202308.parq: Elapsed time: 2.0458 seconds
+creating adm/000/202308.parq: Elapsed time: 16.1821 seconds
+creating flg/000/202308.parq: 202308 flags cycle day 0 >= 0 on 2023-09-13 00:00:00
+202306 flags cycle day 0 >= 0 on 2023-09-13 00:00:00
+Elapsed time: 1.3984 seconds
+creating raw/000/202308.parq: Elapsed time: 0.5760 seconds
+creating reg/000/202408.parq: Elapsed time: 1.8187 seconds
+creating adm/000/202408.parq: Elapsed time: 9.7349 seconds
+creating flg/000/202408.parq: 202408 flags cycle day 98 >= 0 on 2024-06-05 00:00:00
+202406 flags cycle day 98 >= 0 on 2024-06-05 00:00:00
+Elapsed time: 1.1010 seconds
+creating raw/000/202408.parq: Elapsed time: 0.0213 seconds
+Elapsed time: 162.7751 seconds
+creating X.pkl: Elapsed time: 31.8383 seconds
+creating X_proc/n/2d76/8c7b.pkl: Elapsed time: 12.9126 seconds
+creating y_pred/n/biol1406/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 9.3310 seconds
+creating X_proc/t/2d76/8c7b.pkl: Elapsed time: 10.0709 seconds
+creating y_pred/t/biol1406/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 8.4115 seconds
+creating y_pred/n/biol1305/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2437 seconds
+creating y_pred/t/biol1305/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1122 seconds
+creating y_pred/n/arts1303/2d76/8c7b/bb31.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 7.0146 seconds
+creating y_pred/t/arts1303/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.2051 seconds
+creating y_pred/n/arts1301/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 9.2584 seconds
+creating y_pred/t/arts1301/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.2200 seconds
+creating y_pred/n/anth2302/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2339 seconds
+creating y_pred/t/anth2302/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1111 seconds
+creating y_pred/n/ansc1319/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.5736 seconds
+creating y_pred/t/ansc1319/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.2936 seconds
+creating y_pred/n/ansc1119/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.5703 seconds
+creating y_pred/t/ansc1119/2d76/8c7b/bb31.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 4.2347 seconds
+creating y_pred/n/agec2317/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 9.0371 seconds
+creating y_pred/t/agec2317/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 9.3034 seconds
+creating y_pred/n/_anycrse/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 9.3221 seconds
+creating y_pred/t/_anycrse/2d76/8c7b/bb31.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 8.3974 seconds
+creating results.pkl: Elapsed time: 27.4533 seconds

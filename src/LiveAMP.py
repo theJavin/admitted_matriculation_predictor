@@ -486,6 +486,6 @@ if __name__ == "__main__":
         print()
         print(df.reset_index().drop(columns='index', errors='ignore').head(max_rows).to_markdown(tablefmt='psql'))
 
-    sys.stdout = sys.stderr  # unbuffer output - emulates -u
+    # sys.stdout = sys.stderr  # unbuffer output - emulates -u
     print(pd.Timestamp.now())
     run_amp(*sys.argv[1:])
