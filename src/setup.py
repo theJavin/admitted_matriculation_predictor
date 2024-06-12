@@ -294,7 +294,7 @@ class MyBaseClass():
         write(path, dct, overwrite)
         return self
 
-    def get(self, func, fn, subpath='', pre=[], drop=[]):
+    def get(self, func=lambda x:x, fn='temp.pkl', subpath='', pre=[], drop=[]):
         nm = fn.split('/')[0].split('\\')[0].split('.')[0]
         overwrite = nm in self.overwrite
         path = self.root_path / subpath / fn

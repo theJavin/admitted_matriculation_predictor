@@ -11,106 +11,106 @@ code_desc = lambda x: [x+'_code', x+'_desc']
 crse_codes = [
     '_anycrse',
     'agec2317',
-    'ansc1119',
-    'ansc1319',
-    'anth2302',
-    'anth2351',
-    'arts1301',
-    'arts1303',
-    'arts1304',
-    'arts3331',
-    'biol1305',
-    'biol1406',
-    'biol1407',
-    'biol2401',
-    'biol2402',
-    'busi1301',
-    'busi1307',
-    'chem1111',
-    'chem1112',
-    'chem1302',
-    'chem1311',
-    'chem1312',
-    'chem1407',
-    'chem1411',
-    'chem1412',
-    'comm1311',
-    'comm1315',
-    'comm2302',
-    'crij1301',
-    'dram1310',
-    'dram2361',
-    'dram4304',
-    'easc2310',
-    'econ1301',
-    'econ2301',
-    'engl1301',
-    'engl1302',
-    'engl2307',
-    'engl2320',
-    'engl2321',
-    'engl2326',
-    'engl2340',
-    'engl2350',
-    'engl2360',
-    'engl2362',
-    'engl2364',
-    'engl2366',
-    'engl2368',
-    'engr2303',
-    'envs1302',
-    'fina1360',
-    'geog1303',
-    'geog1320',
-    'geog1451',
-    'geog2301',
-    'geol1403',
-    'geol1404',
-    'geol1407',
-    'geol1408',
-    'govt2305',
-    'govt2306',
-    'hist1301',
-    'hist1302',
-    'hist2321',
-    'hist2322',
-    'huma1315',
-    'kine2315',
+    # 'ansc1119',
+    # 'ansc1319',
+    # 'anth2302',
+    # 'anth2351',
+    # 'arts1301',
+    # 'arts1303',
+    # 'arts1304',
+    # 'arts3331',
+    # 'biol1305',
+    # 'biol1406',
+    # 'biol1407',
+    # 'biol2401',
+    # 'biol2402',
+    # 'busi1301',
+    # 'busi1307',
+    # 'chem1111',
+    # 'chem1112',
+    # 'chem1302',
+    # 'chem1311',
+    # 'chem1312',
+    # 'chem1407',
+    # 'chem1411',
+    # 'chem1412',
+    # 'comm1311',
+    # 'comm1315',
+    # 'comm2302',
+    # 'crij1301',
+    # 'dram1310',
+    # 'dram2361',
+    # 'dram4304',
+    # 'easc2310',
+    # 'econ1301',
+    # 'econ2301',
+    # 'engl1301',
+    # 'engl1302',
+    # 'engl2307',
+    # 'engl2320',
+    # 'engl2321',
+    # 'engl2326',
+    # 'engl2340',
+    # 'engl2350',
+    # 'engl2360',
+    # 'engl2362',
+    # 'engl2364',
+    # 'engl2366',
+    # 'engl2368',
+    # 'engr2303',
+    # 'envs1302',
+    # 'fina1360',
+    # 'geog1303',
+    # 'geog1320',
+    # 'geog1451',
+    # 'geog2301',
+    # 'geol1403',
+    # 'geol1404',
+    # 'geol1407',
+    # 'geol1408',
+    # 'govt2305',
+    # 'govt2306',
+    # 'hist1301',
+    # 'hist1302',
+    # 'hist2321',
+    # 'hist2322',
+    # 'huma1315',
+    # 'kine2315',
     'math1314',
-    'math1316',
-    'math1324',
-    'math1332',
-    'math1342',
-    'math2412',
-    'math2413',
-    'musi1303',
-    'musi1310',
-    'musi1311',
-    'musi2350',
-    'musi3325',
-    'phil1301',
-    'phil1304',
-    'phil2303',
-    'phil3301',
-    'phys1302',
-    'phys1401',
-    'phys1402',
-    'phys1403',
-    'phys1410',
-    'phys1411',
-    'phys2425',
-    'phys2426',
-    'psyc2301',
-    'soci1301',
-    'soci1306',
-    'soci2303',
-    'univ0200',
-    'univ0204',
-    'univ0301',
-    'univ0314',
-    'univ0324',
-    'univ0332',
-    'univ0342',
+    # 'math1316',
+    # 'math1324',
+    # 'math1332',
+    # 'math1342',
+    # 'math2412',
+    # 'math2413',
+    # 'musi1303',
+    # 'musi1310',
+    # 'musi1311',
+    # 'musi2350',
+    # 'musi3325',
+    # 'phil1301',
+    # 'phil1304',
+    # 'phil2303',
+    # 'phil3301',
+    # 'phys1302',
+    # 'phys1401',
+    # 'phys1402',
+    # 'phys1403',
+    # 'phys1410',
+    # 'phys1411',
+    # 'phys2425',
+    # 'phys2426',
+    # 'psyc2301',
+    # 'soci1301',
+    # 'soci1306',
+    # 'soci2303',
+    # 'univ0200',
+    # 'univ0204',
+    # 'univ0301',
+    # 'univ0314',
+    # 'univ0324',
+    # 'univ0332',
+    # 'univ0342',
 ]
 
 @dataclasses.dataclass
@@ -128,23 +128,23 @@ class AMP(MyBaseClass):
     aggregations: tuple = (
         'crse_code',
         'coll_desc',
-        'dept_desc',
-        'majr_desc',
-        'camp_desc',
+        # 'dept_desc',
+        # 'majr_desc',
+        # 'camp_desc',
         # # 'stat_desc',
         # # 'cnty_desc',
-        'gender',
-        *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
+        # 'gender',
+        # *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
         # 'waiver',
-        'hs_qrtl',
+        # 'hs_qrtl',
         'international',
         # 'resd_desc',
         # 'lgcy',
-        'lgcy_desc',
+        # 'lgcy_desc',
         # # 'admt_desc',
-        'math',
-        'reading',
-        'writing',
+        # 'math',
+        # 'reading',
+        # 'writing',
         # # 'ssb',
         # 'oriented',
     )
@@ -348,59 +348,69 @@ class AMP(MyBaseClass):
                 else:
                     print('fail', end="  ")
             if y:
-                self.y_pred = pd.concat(y.values()).rsindex(['crse_code','term_code','pidm','train_code','sim','trf_hash','imp_hash','clf_hash'])
-                self.train_score = pd.Series(train_score, name='train_score').rename_axis('train_code')
-            
+                self.y_pred = pd.concat(y.values()).rsindex(['crse_code','pidm','term_code','train_code','sim','trf_hash','imp_hash','clf_hash'])
+                self.train_score = pd.Series(train_score, name='train_score').rename_axis('train_code').addlevel({
+                    'crse_code':self.crse_code, 'levl_code':'ug', 'styp_code':self.styp_code})
         return self.get(func, pre="X_proc", drop=["terms","X","y_true","Z","agg","X_trf","X_proc"],
                         fn=f"y_pred/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl")
 
 
-    def get_results(self):
+    def get_y_stack(self):
         def func():
-            self.Y_pred = pd.concat([read(fn).get('y_pred', pd.DataFrame()) for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl'))]).prep().reset_index()
-            self.results = dict()
-            for variable in listify(self.aggregations):
-                grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-                S = (self.Y_pred.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()")
-                    .merge(self.X[variable if variable!="crse_code" else []].reset_index(),'left')
-                    .groupby(grp).apply(lambda y: pd.Series({
-                            'predict': y['proba'].sum(),
-                            'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
-                        }), include_groups=False)
-                    .reset_index()
-                    .merge(self.train_score.reset_index(),'left')
-                    .merge(self.agg.loc[variable].reset_index().rename(columns={'value':variable}).prep(bool=True),'left')
-                )
-                P = S.rename(columns={'actual':'prior'})[[*grp,'prior']].copy()
-                P['term_code'] += 100
-                S = S.merge(P,'left')
-                alpha = 1
-                S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
-                S['predict'] *= S['mlt']
-                S['predict_error'] = S['predict'] - S['actual']
-                S['predict_error_pct'] = S['predict_error'] / S['actual'] * 100
-                S['predict_change'] = S['predict'] - S['prior']
-                S['predict_change_pct'] = S['predict_change'] / S['prior'] * 100
-                S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
-                S = (S
-                    .prep()
-                    .sort_values(grp, ascending=[True,True,True,False,False,True,True,True,True])
-                    .set_index(grp)
-                    [['admit','enroll','predict','prior','predict_change','predict_change_pct','actual','predict_error','predict_error_pct','overall_score','test_score','train_score','mlt']]
-                )
-                grp.remove('sim')
-                self.results[variable] = {'summary':S} | {str(stat):S.groupby(grp,sort=False).agg(stat).prep() for stat in listify(self.stats)}
-        return self.get(func, pre=["y_pred","X"], fn="results.pkl")
+            stack = lambda key: pd.concat([read(fn).get(key, None) for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl'))])#.reset_index()
+            self.train_score = stack('train_score')
+            self.y_stack = stack('y_pred')
+            self.y_stack['proba'] = self.y_stack['proba'].astype('Float32')
+        return self.get(func, pre="y_pred", fn=f"y_stack.pkl", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"])
+
+
+    def get_result(self, variable):
+        del self['result']
+        def func():
+            grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
+            S = (self.y_stack.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()").reset_index()
+                .merge(self.X[variable if variable!="crse_code" else []].reset_index(),'left')
+                .groupby(grp).apply(lambda y: pd.Series({
+                        'predict': y['proba'].sum(),
+                        'test_score': log_loss(y['actual'], y['proba'], labels=[False,True]) * 100,
+                    }), include_groups=False)
+                .reset_index()
+                .merge(self.train_score.reset_index(),'left')
+                .merge(self.agg.loc[variable].reset_index().rename(columns={'value':variable}).prep(bool=True),'left')
+            )
+            P = S.rename(columns={'actual':'prior'})[[*grp,'prior']].copy()
+            P['term_code'] += 100
+            S = S.merge(P,'left')
+            alpha = 1
+            S['test_score'] *= S['actual']>0
+            S['overall_score'] = (S['train_score'] + alpha * S['test_score']) / (1 + alpha)
+            S['predict'] *= S['mlt']
+            S['predict_error'] = S['predict'] - S['actual']
+            S['predict_error_pct'] = S['predict_error'] / S['actual'] * 100
+            S['predict_change'] = S['predict'] - S['prior']
+            S['predict_change_pct'] = S['predict_change'] / S['prior'] * 100
+            S['train_code'] = S['train_code'].astype('string').replace(str(self.proj_code), 'all')
+            S = (S
+                .prep()
+                .sort_values(grp, ascending=[True,True,True,False,False,True,True,True,True])
+                .set_index(grp)
+                [['admit','enroll','predict','prior','predict_change','predict_change_pct','actual','predict_error','predict_error_pct','overall_score','test_score','train_score','mlt']]
+            )
+            grp.remove('sim')
+            self.result = {'summary':S} | {str(stat):S.groupby(grp,sort=False).agg(stat).prep() for stat in listify(self.stats)}
+        return self.get(func, pre=["y_stack","X"],
+                        fn=f"result/{variable}.pkl",
+                        drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf","y_stack","train_score"],
+                        )
 
 
     def get_report(self):
-        self.get_results()
+        self.results = {variable: self.get_result(variable).result for variable in listify(self.aggregations)}
         with pd.ExcelWriter(self.root_path / f'AMP_{self.cycle_date.date()}.xlsx', mode='w', engine='openpyxl') as writer:
             for variable, dct in self.results.items():
                 # dct['mean'].to_excel(writer, sheet_name=variable)
                 dct[' 50%'].to_excel(writer, sheet_name=variable)
         return self
-
 
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
 param_grds = {
@@ -485,6 +495,6 @@ if __name__ == "__main__":
         print()
         print(df.reset_index().drop(columns='index', errors='ignore').head(max_rows).to_markdown(tablefmt='psql'))
 
-    # sys.stdout = sys.stderr  # unbuffer output - emulates -u
+    sys.stdout = sys.stderr  # unbuffer output - emulates -u
     print(pd.Timestamp.now())
     run_amp(*sys.argv[1:])
