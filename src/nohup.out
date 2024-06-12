@@ -1,2 +1,11 @@
-2024-06-12 17:32:13.377357
+2024-06-12 17:36:16.042767
 creating terms.pkl: 
+Elapsed time: 16.2875 seconds
+creating X.pkl: Elapsed time: 31.7864 seconds
+creating X_proc/n/2d76/77d7.pkl: Elapsed time: 166.3581 seconds
+creating y_pred/n/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 486.7822 seconds
+creating X_proc/r/2d76/77d7.pkl: Elapsed time: 62.0953 seconds
+creating y_pred/r/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 368.5348 seconds
+creating X_proc/t/2d76/77d7.pkl: Elapsed time: 103.7149 seconds
+creating y_pred/t/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 481.2165 seconds
+creating y_pred/n/agec2317/2d76/77d7/fb12.pkl: 202108...done  202208...
