@@ -1,11 +1,572 @@
-2024-06-12 17:36:16.042767
+2024-06-15 16:52:14.718111
 creating terms.pkl: 
-Elapsed time: 16.2875 seconds
-creating X.pkl: Elapsed time: 31.7864 seconds
-creating X_proc/n/2d76/77d7.pkl: Elapsed time: 166.3581 seconds
-creating y_pred/n/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 486.7822 seconds
-creating X_proc/r/2d76/77d7.pkl: Elapsed time: 62.0953 seconds
-creating y_pred/r/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 368.5348 seconds
-creating X_proc/t/2d76/77d7.pkl: Elapsed time: 103.7149 seconds
-creating y_pred/t/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 481.2165 seconds
-creating y_pred/n/agec2317/2d76/77d7/fb12.pkl: 202108...done  202208...
+Elapsed time: 16.1919 seconds
+creating X.pkl: Elapsed time: 31.6305 seconds
+creating X_proc/n/2d76/77d7.pkl: Elapsed time: 168.0435 seconds
+creating y_pred/n/univ0342/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 363.7210 seconds
+creating X_proc/r/2d76/77d7.pkl: Elapsed time: 61.2561 seconds
+creating y_pred/r/univ0342/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2154 seconds
+creating X_proc/t/2d76/77d7.pkl: fgbfdfdhgElapsed time: 99.7678 seconds
+creating y_pred/t/univ0342/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3975 seconds
+creating y_pred/n/univ0332/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.6830 seconds
+creating y_pred/r/univ0332/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1510 seconds
+creating y_pred/t/univ0332/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3898 seconds
+creating y_pred/n/univ0324/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 362.0607 seconds
+creating y_pred/r/univ0324/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1701 seconds
+creating y_pred/t/univ0324/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.4564 seconds
+creating y_pred/n/univ0314/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 363.5720 seconds
+creating y_pred/r/univ0314/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1510 seconds
+creating y_pred/t/univ0314/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3819 seconds
+creating y_pred/n/univ0301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.8354 seconds
+creating y_pred/r/univ0301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1512 seconds
+creating y_pred/t/univ0301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.4255 seconds
+creating y_pred/n/univ0204/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.5011 seconds
+creating y_pred/r/univ0204/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1485 seconds
+creating y_pred/t/univ0204/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.6885 seconds
+creating y_pred/n/univ0200/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0715 seconds
+creating y_pred/r/univ0200/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2157 seconds
+creating y_pred/t/univ0200/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.6932 seconds
+creating y_pred/n/soci2303/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 242.6266 seconds
+creating y_pred/r/soci2303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1528 seconds
+creating y_pred/t/soci2303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3876 seconds
+creating y_pred/n/soci1306/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9067 seconds
+creating y_pred/r/soci1306/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1482 seconds
+creating y_pred/t/soci1306/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.5893 seconds
+creating y_pred/n/soci1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.7912 seconds
+creating y_pred/r/soci1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1503 seconds
+creating y_pred/t/soci1301/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...done  202408...done  Elapsed time: 360.7230 seconds
+creating y_pred/n/psyc3307/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 487.8377 seconds
+creating y_pred/r/psyc3307/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.2522 seconds
+creating y_pred/t/psyc3307/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7663 seconds
+creating y_pred/n/psyc3303/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 242.8995 seconds
+creating y_pred/r/psyc3303/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.1611 seconds
+creating y_pred/t/psyc3303/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 477.6992 seconds
+creating y_pred/n/psyc2301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 485.9407 seconds
+creating y_pred/r/psyc2301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.0809 seconds
+creating y_pred/t/psyc2301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7618 seconds
+creating y_pred/n/phys2426/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7380 seconds
+creating y_pred/r/phys2426/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1512 seconds
+creating y_pred/t/phys2426/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3300 seconds
+creating y_pred/n/phys2425/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3835 seconds
+creating y_pred/r/phys2425/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1815 seconds
+creating y_pred/t/phys2425/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8149 seconds
+creating y_pred/n/phys1402/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.6744 seconds
+creating y_pred/r/phys1402/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2151 seconds
+creating y_pred/t/phys1402/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3457 seconds
+creating y_pred/n/phys1401/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 363.4017 seconds
+creating y_pred/r/phys1401/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2036 seconds
+creating y_pred/t/phys1401/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.2119 seconds
+creating y_pred/n/phys1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7173 seconds
+creating y_pred/r/phys1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1487 seconds
+creating y_pred/t/phys1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3299 seconds
+creating y_pred/n/phil3301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7078 seconds
+creating y_pred/r/phil3301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1489 seconds
+creating y_pred/t/phil3301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3278 seconds
+creating y_pred/n/phil2303/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0008 seconds
+creating y_pred/r/phil2303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1575 seconds
+creating y_pred/t/phil2303/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.1543 seconds
+creating y_pred/n/phil1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9396 seconds
+creating y_pred/r/phil1301/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.2188 seconds
+creating y_pred/t/phil1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7526 seconds
+creating y_pred/n/musi3325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7048 seconds
+creating y_pred/r/musi3325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1521 seconds
+creating y_pred/t/musi3325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3665 seconds
+creating y_pred/n/musi1311/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0477 seconds
+creating y_pred/r/musi1311/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2205 seconds
+creating y_pred/t/musi1311/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3306 seconds
+creating y_pred/n/musi1310/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8248 seconds
+creating y_pred/r/musi1310/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1500 seconds
+creating y_pred/t/musi1310/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.6123 seconds
+creating y_pred/n/math2413/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 487.2808 seconds
+creating y_pred/r/math2413/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1504 seconds
+creating y_pred/t/math2413/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 476.1554 seconds
+creating y_pred/n/math2412/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 485.8452 seconds
+creating y_pred/r/math2412/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.3248 seconds
+creating y_pred/t/math2412/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8208 seconds
+creating y_pred/n/math1342/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0538 seconds
+creating y_pred/r/math1342/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2007 seconds
+creating y_pred/t/math1342/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 479.8361 seconds
+creating y_pred/n/math1332/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9966 seconds
+creating y_pred/r/math1332/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1478 seconds
+creating y_pred/t/math1332/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3590 seconds
+creating y_pred/n/math1325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.9012 seconds
+creating y_pred/r/math1325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1543 seconds
+creating y_pred/t/math1325/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3294 seconds
+creating y_pred/n/math1324/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0498 seconds
+creating y_pred/r/math1324/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.2293 seconds
+creating y_pred/t/math1324/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7529 seconds
+creating y_pred/n/math1316/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3596 seconds
+creating y_pred/r/math1316/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1484 seconds
+creating y_pred/t/math1316/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7655 seconds
+creating y_pred/n/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8957 seconds
+creating y_pred/r/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 367.7427 seconds
+creating y_pred/t/math1314/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8290 seconds
+creating y_pred/n/kine2315/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 242.9506 seconds
+creating y_pred/r/kine2315/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1540 seconds
+creating y_pred/t/kine2315/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.1510 seconds
+creating y_pred/n/kine1338/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.2293 seconds
+creating y_pred/r/kine1338/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.4088 seconds
+creating y_pred/t/kine1338/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8872 seconds
+creating y_pred/n/kine1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0376 seconds
+creating y_pred/r/kine1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1466 seconds
+creating y_pred/t/kine1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.3982 seconds
+creating y_pred/n/huma1315/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.5443 seconds
+creating y_pred/r/huma1315/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2039 seconds
+creating y_pred/t/huma1315/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.6530 seconds
+creating y_pred/n/hist2322/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 363.6446 seconds
+creating y_pred/r/hist2322/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1489 seconds
+creating y_pred/t/hist2322/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.7015 seconds
+creating y_pred/n/hist2321/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 486.8146 seconds
+creating y_pred/r/hist2321/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1706 seconds
+creating y_pred/t/hist2321/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...done  202408...done  Elapsed time: 360.6343 seconds
+creating y_pred/n/hist1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.1301 seconds
+creating y_pred/r/hist1302/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.2290 seconds
+creating y_pred/t/hist1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7285 seconds
+creating y_pred/n/hist1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8700 seconds
+creating y_pred/r/hist1301/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.0856 seconds
+creating y_pred/t/hist1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8144 seconds
+creating y_pred/n/govt2306/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.2359 seconds
+creating y_pred/r/govt2306/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.3057 seconds
+creating y_pred/t/govt2306/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.5925 seconds
+creating y_pred/n/govt2305/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 485.0189 seconds
+creating y_pred/r/govt2305/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.3072 seconds
+creating y_pred/t/govt2305/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7531 seconds
+creating y_pred/n/geol1408/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0537 seconds
+creating y_pred/r/geol1408/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1491 seconds
+creating y_pred/t/geol1408/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3815 seconds
+creating y_pred/n/geol1407/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 363.2966 seconds
+creating y_pred/r/geol1407/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1504 seconds
+creating y_pred/t/geol1407/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.7395 seconds
+creating y_pred/n/geol1404/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.9629 seconds
+creating y_pred/r/geol1404/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1545 seconds
+creating y_pred/t/geol1404/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.7065 seconds
+creating y_pred/n/geol1403/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.7369 seconds
+creating y_pred/r/geol1403/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...done  202408...done  Elapsed time: 360.1477 seconds
+creating y_pred/t/geol1403/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7583 seconds
+creating y_pred/n/geog2301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.9314 seconds
+creating y_pred/r/geog2301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1512 seconds
+creating y_pred/t/geog2301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3303 seconds
+creating y_pred/n/geog1451/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 243.4162 seconds
+creating y_pred/r/geog1451/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1503 seconds
+creating y_pred/t/geog1451/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3332 seconds
+creating y_pred/n/geog1320/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7226 seconds
+creating y_pred/r/geog1320/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1553 seconds
+creating y_pred/t/geog1320/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3320 seconds
+creating y_pred/n/geog1303/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8428 seconds
+creating y_pred/r/geog1303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1491 seconds
+creating y_pred/t/geog1303/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8319 seconds
+creating y_pred/n/fina1360/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 366.3816 seconds
+creating y_pred/r/fina1360/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1497 seconds
+creating y_pred/t/fina1360/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3834 seconds
+creating y_pred/n/envs1302/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 242.8713 seconds
+creating y_pred/r/envs1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1529 seconds
+creating y_pred/t/envs1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3916 seconds
+creating y_pred/n/engr1211/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3432 seconds
+creating y_pred/r/engr1211/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1503 seconds
+creating y_pred/t/engr1211/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7673 seconds
+creating y_pred/n/engl2368/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 242.8242 seconds
+creating y_pred/r/engl2368/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1504 seconds
+creating y_pred/t/engl2368/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3816 seconds
+creating y_pred/n/engl2366/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.6357 seconds
+creating y_pred/r/engl2366/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1504 seconds
+creating y_pred/t/engl2366/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3779 seconds
+creating y_pred/n/engl2364/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7118 seconds
+creating y_pred/r/engl2364/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1482 seconds
+creating y_pred/t/engl2364/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.4765 seconds
+creating y_pred/n/engl2360/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 242.3312 seconds
+creating y_pred/r/engl2360/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1462 seconds
+creating y_pred/t/engl2360/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.6047 seconds
+creating y_pred/n/engl2350/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7316 seconds
+creating y_pred/r/engl2350/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1460 seconds
+creating y_pred/t/engl2350/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.5697 seconds
+creating y_pred/n/engl2340/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 242.8521 seconds
+creating y_pred/r/engl2340/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2133 seconds
+creating y_pred/t/engl2340/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.5358 seconds
+creating y_pred/n/engl2320/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8125 seconds
+creating y_pred/r/engl2320/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 239.8995 seconds
+creating y_pred/t/engl2320/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8182 seconds
+creating y_pred/n/engl2307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.6396 seconds
+creating y_pred/r/engl2307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1475 seconds
+creating y_pred/t/engl2307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3797 seconds
+creating y_pred/n/engl1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9830 seconds
+creating y_pred/r/engl1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.0954 seconds
+creating y_pred/t/engl1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8623 seconds
+creating y_pred/n/engl1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.0890 seconds
+creating y_pred/r/engl1301/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...done  202408...done  Elapsed time: 360.2664 seconds
+creating y_pred/t/engl1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 478.9628 seconds
+creating y_pred/n/econ2301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 485.5840 seconds
+creating y_pred/r/econ2301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.2423 seconds
+creating y_pred/t/econ2301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8013 seconds
+creating y_pred/n/econ1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0941 seconds
+creating y_pred/r/econ1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2392 seconds
+creating y_pred/t/econ1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3722 seconds
+creating y_pred/n/easc2310/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3771 seconds
+creating y_pred/r/easc2310/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2005 seconds
+creating y_pred/t/easc2310/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.5518 seconds
+creating y_pred/n/dram2361/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...done  202408...done  Elapsed time: 360.2852 seconds
+creating y_pred/r/dram2361/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1513 seconds
+creating y_pred/t/dram2361/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3891 seconds
+creating y_pred/n/dram1310/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9634 seconds
+creating y_pred/r/dram1310/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1493 seconds
+creating y_pred/t/dram1310/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.4421 seconds
+creating y_pred/n/crij1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.1730 seconds
+creating y_pred/r/crij1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1990 seconds
+creating y_pred/t/crij1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 481.0440 seconds
+creating y_pred/n/comm2302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.7341 seconds
+creating y_pred/r/comm2302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1467 seconds
+creating y_pred/t/comm2302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.6850 seconds
+creating y_pred/n/comm1315/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.8879 seconds
+creating y_pred/r/comm1315/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1668 seconds
+creating y_pred/t/comm1315/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 481.2744 seconds
+creating y_pred/n/comm1311/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.1706 seconds
+creating y_pred/r/comm1311/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.4436 seconds
+creating y_pred/t/comm1311/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8539 seconds
+creating y_pred/n/chem1412/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7262 seconds
+creating y_pred/r/chem1412/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1494 seconds
+creating y_pred/t/chem1412/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3262 seconds
+creating y_pred/n/chem1411/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 242.7022 seconds
+creating y_pred/r/chem1411/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1528 seconds
+creating y_pred/t/chem1411/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.5735 seconds
+creating y_pred/n/chem1407/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0201 seconds
+creating y_pred/r/chem1407/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2319 seconds
+creating y_pred/t/chem1407/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 479.5344 seconds
+creating y_pred/n/chem1312/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7311 seconds
+creating y_pred/r/chem1312/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1500 seconds
+creating y_pred/t/chem1312/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.5615 seconds
+creating y_pred/n/chem1311/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 363.2974 seconds
+creating y_pred/r/chem1311/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 359.9627 seconds
+creating y_pred/t/chem1311/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.6762 seconds
+creating y_pred/n/chem1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.2539 seconds
+creating y_pred/r/chem1302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1588 seconds
+creating y_pred/t/chem1302/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.6667 seconds
+creating y_pred/n/chem1112/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.7046 seconds
+creating y_pred/r/chem1112/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1494 seconds
+creating y_pred/t/chem1112/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.5569 seconds
+creating y_pred/n/chem1111/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 362.6083 seconds
+creating y_pred/r/chem1111/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.2071 seconds
+creating y_pred/t/chem1111/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 360.6252 seconds
+creating y_pred/n/busi1307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 242.8970 seconds
+creating y_pred/r/busi1307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1485 seconds
+creating y_pred/t/busi1307/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.3095 seconds
+creating y_pred/n/busi1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.1826 seconds
+creating y_pred/r/busi1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.2268 seconds
+creating y_pred/t/busi1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 479.4233 seconds
+creating y_pred/n/biol2402/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.2507 seconds
+creating y_pred/r/biol2402/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1739 seconds
+creating y_pred/t/biol2402/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 473.2363 seconds
+creating y_pred/n/biol2401/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3740 seconds
+creating y_pred/r/biol2401/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...fail  202408...done  Elapsed time: 240.2304 seconds
+creating y_pred/t/biol2401/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.7873 seconds
+creating y_pred/n/biol1407/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.0243 seconds
+creating y_pred/r/biol1407/2d76/77d7/fb12.pkl: 202108...done  202208...fail  202308...fail  202408...done  Elapsed time: 240.2893 seconds
+creating y_pred/t/biol1407/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 481.1831 seconds
+creating y_pred/n/biol1406/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.5167 seconds
+creating y_pred/r/biol1406/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...fail  202408...done  Elapsed time: 360.2868 seconds
+creating y_pred/t/biol1406/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8557 seconds
+creating y_pred/n/biol1305/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.8794 seconds
+creating y_pred/r/biol1305/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1518 seconds
+creating y_pred/t/biol1305/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3266 seconds
+creating y_pred/n/arts1303/2d76/77d7/fb12.pkl: 202108...fail  202208...done  202308...done  202408...done  Elapsed time: 362.8643 seconds
+creating y_pred/r/arts1303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1485 seconds
+creating y_pred/t/arts1303/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.3525 seconds
+creating y_pred/n/arts1301/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 483.9515 seconds
+creating y_pred/r/arts1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1492 seconds
+creating y_pred/t/arts1301/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.6001 seconds
+creating y_pred/n/anth2302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 1.6501 seconds
+creating y_pred/r/anth2302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.2017 seconds
+creating y_pred/t/anth2302/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.3245 seconds
+creating y_pred/n/ansc1319/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 243.0705 seconds
+creating y_pred/r/ansc1319/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1490 seconds
+creating y_pred/t/ansc1319/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 241.0185 seconds
+creating y_pred/n/ansc1119/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 242.9865 seconds
+creating y_pred/r/ansc1119/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...fail  202408...fail  Elapsed time: 0.1494 seconds
+creating y_pred/t/ansc1119/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.3825 seconds
+creating y_pred/n/agec2317/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.3563 seconds
+creating y_pred/r/agec2317/2d76/77d7/fb12.pkl: 202108...fail  202208...fail  202308...done  202408...done  Elapsed time: 240.1850 seconds
+creating y_pred/t/agec2317/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.8067 seconds
+creating y_pred/n/_anycrse/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 484.6867 seconds
+creating y_pred/r/_anycrse/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.2640 seconds
+creating y_pred/t/_anycrse/2d76/77d7/fb12.pkl: 202108...done  202208...done  202308...done  202408...done  Elapsed time: 480.5592 seconds
+2024-06-16 13:19:23.175180
+creating y_stack.pkl: /home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/_anycrse/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/agec2317/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/ansc1119/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/ansc1319/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/anth2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/arts1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/arts1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/biol1305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/biol1406/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/biol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/biol2401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/biol2402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/busi1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/busi1307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1111/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1112/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1312/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1411/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/chem1412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/comm1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/comm1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/comm2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/crij1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/dram1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/dram2361/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/easc2310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/econ1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/econ2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2340/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2350/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2364/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2366/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engl2368/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/engr1211/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/envs1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/fina1360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geog1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geog1320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geog1451/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geog2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geol1403/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geol1404/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/geol1408/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/govt2305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/govt2306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/hist1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/hist1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/hist2321/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/hist2322/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/huma1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/kine1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/kine1338/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/kine2315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1316/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math1342/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math2412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/math2413/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/musi1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/musi1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/musi3325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phil1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phil2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phil3301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phys1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phys1401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phys1402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phys2425/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/phys2426/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/psyc2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/psyc3303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/psyc3307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/soci1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/soci1306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/soci2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0200/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0204/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/n/univ0342/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/_anycrse/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/agec2317/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/ansc1119/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/ansc1319/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/anth2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/arts1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/arts1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/biol1305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/biol1406/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/biol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/biol2401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/biol2402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/busi1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/busi1307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1111/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1112/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1312/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1411/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/chem1412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/comm1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/comm1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/comm2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/crij1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/dram1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/dram2361/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/easc2310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/econ1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/econ2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2340/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2350/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2364/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2366/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engl2368/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/engr1211/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/envs1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/fina1360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geog1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geog1320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geog1451/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geog2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geol1403/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geol1404/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/geol1408/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/govt2305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/govt2306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/hist1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/hist1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/hist2321/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/hist2322/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/huma1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/kine1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/kine1338/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/kine2315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1316/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math1342/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math2412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/math2413/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/musi1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/musi1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/musi3325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phil1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phil2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phil3301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phys1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phys1401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phys1402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phys2425/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/phys2426/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/psyc2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/psyc3303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/psyc3307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/soci1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/soci1306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/soci2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0200/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0204/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/r/univ0342/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/_anycrse/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/agec2317/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/ansc1119/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/ansc1319/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/anth2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/arts1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/arts1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/biol1305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/biol1406/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/biol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/biol2401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/biol2402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/busi1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/busi1307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1111/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1112/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1312/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1411/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/chem1412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/comm1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/comm1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/comm2302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/crij1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/dram1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/dram2361/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/easc2310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/econ1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/econ2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2340/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2350/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2364/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2366/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engl2368/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/engr1211/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/envs1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/fina1360/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geog1303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geog1320/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geog1451/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geog2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geol1403/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geol1404/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geol1407/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/geol1408/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/govt2305/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/govt2306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/hist1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/hist1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/hist2321/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/hist2322/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/huma1315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/kine1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/kine1338/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/kine2315/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1316/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math1342/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math2412/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/math2413/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/musi1310/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/musi1311/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/musi3325/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phil1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phil2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phil3301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phys1302/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phys1401/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phys1402/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phys2425/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/phys2426/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/psyc2301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/psyc3303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/psyc3307/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/soci1301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/soci1306/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/soci2303/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0200/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0204/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0301/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0314/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0324/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0332/2d76/77d7/fb12.pkl
+/home/scook/institutional_data_analytics/admitted_matriculation_projection/resources/rslt/091/y_pred/t/univ0342/2d76/77d7/fb12.pkl

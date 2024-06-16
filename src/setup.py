@@ -4,6 +4,7 @@ from IPython.display import display, HTML, clear_output
 from copy import copy, deepcopy
 from codetiming import Timer
 warnings.filterwarnings("ignore", message="Could not infer format, so each element will be parsed individually, falling back to `dateutil`")
+warnings.filterwarnings("ignore", message="The behavior of DataFrame concatenation with empty or all-NA entries is deprecated.")
 dotenv.load_dotenv()
 seed = 42
 tab = '    '
@@ -133,22 +134,47 @@ def rsindex(df, level):
     X = df.reset_index(intersection(level, df.index.names)).reset_index(drop=True)
     return X.set_index(intersection(level, X.columns))
 
+# @pd_ext
+# def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
+#     assert isinstance(ser, pd.Series)
+#     if pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
+#         ser = ser.astype('string')
+#         try:
+#             ser = pd.to_datetime(ser)
+#         except ValueError:
+#             try:
+#                 ser = pd.to_numeric(ser, downcast='integer')
+#             except ValueError:
+#                 ser = ser.str.lower().replace('', pd.NA)
+#     if pd.api.types.is_numeric_dtype(ser):
+#         ser = pd.to_numeric(ser, downcast='integer')
+#         if pd.api.types.is_integer_dtype(ser):
+#             ser = ser.astype('Int64')
+#     if bool:
+#         vals = set(ser.dropna().unique())
+#         for L in [['false','true'], [0,1], ['n','y']]:
+#             if vals.issubset(L):
+#                 ser = (ser == L[1]).astype('boolean').fillna(False)
+#     if cat and pd.api.types.is_string_dtype(ser):
+#         ser = ser.astype('category')
+#     with warnings.catch_warnings(action='ignore'):
+#         return ser.convert_dtypes(dtype_backend)
+
 @pd_ext
 def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
     assert isinstance(ser, pd.Series)
-    if pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
-        ser = ser.astype('string')
-        try:
-            ser = pd.to_datetime(ser)
-        except ValueError:
-            try:
-                ser = pd.to_numeric(ser, downcast='integer')
-            except ValueError:
-                ser = ser.str.lower().replace('', pd.NA)
     if pd.api.types.is_numeric_dtype(ser):
         ser = pd.to_numeric(ser, downcast='integer')
-        if pd.api.types.is_integer_dtype(ser):
-            ser = ser.astype('Int64')
+    elif pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
+        try:
+            ser = pd.to_datetime(ser.astype('string'))
+        except:
+            try:
+                ser = pd.to_numeric(ser, downcast='integer')
+            except:
+                ser = ser.astype('string').str.lower().replace('', pd.NA)
+    if pd.api.types.is_integer_dtype(ser):
+        ser = ser.astype('Int64')
     if bool:
         vals = set(ser.dropna().unique())
         for L in [['false','true'], [0,1], ['n','y']]:
@@ -156,8 +182,8 @@ def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
                 ser = (ser == L[1]).astype('boolean').fillna(False)
     if cat and pd.api.types.is_string_dtype(ser):
         ser = ser.astype('category')
-    with warnings.catch_warnings(action='ignore'):
-        return ser.convert_dtypes(dtype_backend)
+    return ser.convert_dtypes(dtype_backend)
+
 
 @pd_ext
 def prep(X, cap='casefold', bool=False, cat=False):
