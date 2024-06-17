@@ -414,24 +414,33 @@ class AMP(MyBaseClass):
                         fn=f"y_pred/{self.styp_code}/{self.crse_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl")
 
 
-    def get_y_stack(self):
-        def func():
-            Y = []
-            for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl')):
-                print(fn)
-                dct = read(fn)
-                for train_code, y in dct['y_pred'].items():
-                    Y.append(y.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code], **{key+'_hash': val[0] for key, val in dct['param'].items()}).prep())
-                del dct
-            self.y_stack = pd.concat(Y).prep()
-        return self.get(func, pre="y_pred", fn=f"y_stack.pkl", subpath="y_pred", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"])
+    # def get_y_stack(self):
+    #     def func():
+    #         Y = []
+    #         for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl')):
+    #             print(fn)
+    #             dct = read(fn)
+    #             for train_code, y in dct['y_pred'].items():
+    #                 Y.append(y.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code], **{key+'_hash': val[0] for key, val in dct['param'].items()}).prep())
+    #             del dct
+    #         self.y_stack = pd.concat(Y).prep()
+    #     return self.get(func, pre="y_pred", fn=f"y_stack.pkl", subpath="y_pred", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"])
 
 
     def get_result(self, variable):
         del self['result']
         def func():
             grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-            Y = self.y_stack.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()")
+            L = []
+            for path in self.root_path.rglob("*" if variable=="crse_code" else "_anycrse"):
+                # "crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()"
+                for fn in path.rglob('*.pkl'):
+                    dct = read(fn)
+                    for train_code, y in dct['y_pred'].items():
+                        L.append(y.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code], **{key+'_hash': val[0] for key, val in dct['param'].items()}).prep())
+                    del dct
+            Y = pd.concat(L).prep()
+            # Y = self.y_stack.query("crse_code=='_anycrse'" if variable!="crse_code" else "crse_code.notnull()")
             X = self.X[variable if variable!="crse_code" else []].reset_index()
             # A = self.agg.loc[variable].reset_index().rename(columns={'value':variable}).prep(bool=True)
             A = self.agg.loc[variable].reset_index().rename(columns={'value':variable}).prep(bool=True)#.set_index(grp)#.rename_axis(index={'value':variable})
@@ -466,7 +475,8 @@ class AMP(MyBaseClass):
             grp.remove('sim')
             self.result = {'summary':S} | {str(stat):S.groupby(grp,sort=False).agg(stat).prep() for stat in listify(self.stats)}
             # self.result[' 50%'].disp(100)
-        return self.get(func, pre=["y_stack","X"], fn=f"result/{variable}.pkl", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf","y_stack"])
+        return self.get(func, pre="X", fn=f"result/{variable}.pkl", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"])
+        # return self.get(func, pre=["y_stack","X"], fn=f"result/{variable}.pkl", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf","y_stack"])
 
 
     def get_report(self):
