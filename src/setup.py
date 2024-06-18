@@ -162,17 +162,21 @@ def rsindex(df, level):
 
 @pd_ext
 def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
-    assert isinstance(ser, pd.Series)
+    if ser.dtype == 'geometry':
+        return ser
+    ser = ser.convert_dtypes(dtype_backend)
+    if pd.api.types.is_bool_dtype(ser) or pd.api.types.is_datetime64_any_dtype(ser):
+        return ser
     if pd.api.types.is_numeric_dtype(ser):
         ser = pd.to_numeric(ser, downcast='integer')
-    elif pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
+    if pd.api.types.is_string_dtype(ser) or pd.api.types.is_object_dtype(ser):
         try:
-            ser = pd.to_datetime(ser.astype('string'))
+            ser = pd.to_datetime(ser)
         except:
             try:
                 ser = pd.to_numeric(ser, downcast='integer')
             except:
-                ser = ser.astype('string').str.lower().replace('', pd.NA)
+                ser = ser.str.lower().replace('', pd.NA)
     if pd.api.types.is_integer_dtype(ser):
         ser = ser.astype('Int64')
     if bool:
@@ -182,7 +186,7 @@ def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
                 ser = (ser == L[1]).astype('boolean').fillna(False)
     if cat and pd.api.types.is_string_dtype(ser):
         ser = ser.astype('category')
-    return ser.convert_dtypes(dtype_backend)
+    return ser
 
 
 @pd_ext
