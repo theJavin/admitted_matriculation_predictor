@@ -162,6 +162,7 @@ def rsindex(df, level):
 
 @pd_ext
 def convert(ser, bool=False, cat=False, dtype_backend='numpy_nullable'):
+    assert isinstance(ser, pd.Series)
     if ser.dtype == 'geometry':
         return ser
     ser = ser.convert_dtypes(dtype_backend)

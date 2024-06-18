@@ -138,25 +138,25 @@ class AMP(MyBaseClass):
     aggregations: tuple = (
         'crse_code',
         'coll_desc',
-        # 'dept_desc',
-        # 'majr_desc',
-        # 'camp_desc',
-        # # # # 'stat_desc',
-        # # # # 'cnty_desc',
-        # 'gender',
-        # *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
-        # 'waiver',
-        # 'hs_qrtl',
-        # 'international',
-        # 'resd_desc',
+        'dept_desc',
+        'majr_desc',
+        'camp_desc',
+        # # # 'stat_desc',
+        # # # 'cnty_desc',
+        'gender',
+        *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
+        'waiver',
+        'hs_qrtl',
+        'international',
+        'resd_desc',
         'lgcy',
-        # 'lgcy_desc',
-        # # # # 'admt_desc',
-        # 'math',
-        # 'reading',
-        # 'writing',
-        # # # # 'ssb',
-        # 'oriented',
+        'lgcy_desc',
+        # # # 'admt_desc',
+        'math',
+        'reading',
+        'writing',
+        # # # 'ssb',
+        'oriented',
     )
 
     def __post_init__(self):
@@ -362,13 +362,13 @@ class AMP(MyBaseClass):
                     predict = pd.NA
                     proba = pd.NA
                     self.train_score[train_code] = pd.NA
+                self.y_pred[train_code] = Z.assign(predict=predict,proba=proba).prep(bool=True).reset_index()[['pidm','term_code','sim','actual','predict','proba']]
                 # self.y_pred[train_code] = (Z
                 #     .assign(predict=predict,proba=proba)
                 #     # .astype({'predict':'float', 'proba':'boolean'})
                 #     .reset_index()
                 #     [['pidm','term_code','sim','actual','predict','proba']]
                 #     .prep(bool=True))
-                self.y_pred[train_code] = Z.assign(predict=predict,proba=proba).prep(bool=True).reset_index()[['pidm','term_code','sim','actual','predict','proba']]
                 # self.y_pred[train_code] = Z.assign(predict=predict,proba=proba).astype({'predict':'boolean', 'proba':'float', 'train_score':'float'}).prep(bool=True)[['pidm','term_code','sim','actual','predict','proba']].prep(bool=True)
                 # y[train_code] = Z.rsindex(['term_code','pidm'])['actual'].assign(pred=pred, proba=proba, train_score=train_score, train_code=train_code)
                 # y[train_code] = Z.reset_index()[['term_code','pidm','actual']].assign(pred=pred, proba=proba, train_code=train_code)
@@ -486,7 +486,7 @@ class AMP(MyBaseClass):
                 .prep()
                 .sort_values(grp, ascending=[True,True,True,False,False,True])
                 .set_index(grp)
-                [['admit','enroll','actual','prior','predict','change','change_pct','error','error_pct','overall_score','test_score','train_score','mlt']]
+                [['admit','enroll','actual','prior','predict','change','change_pct','error','error_pct','train_score','test_score','overall_score','mlt']]
             )
             grp.remove('sim')
             self.result = {'summary':S} | {str(stat):S.groupby(grp,sort=False).agg(stat).prep() for stat in listify(self.stats)}
@@ -500,6 +500,39 @@ class AMP(MyBaseClass):
         A = listify(self.aggregations)
         self.get_result(A[0])
         with pd.ExcelWriter(self.root_path / f"result/{self.hash_path}/AMP_{self.cycle_date.date()}.xlsx", mode="w", engine="openpyxl") as writer:
+            # df = pd.DataFrame({f"Admitted Matriculation Projections (AMP) for {self.cycle_date.date()}":[
+            df = pd.DataFrame({'':[
+                f"Admitted Matriculation Projections (AMP) for {self.cycle_date.date()}",
+                f"AMP is a machine learning algorithm (XGBoost) to forecast the number, characteristics, and likely course enrollments of incoming Fall cohort based on their application information and status in pre-semester processes (orientation, course registration, financial aid, etc).",
+                f"Broadly, for each student admitted for the upcoming fall (2024), AMP identifies similar students from prior fall cohorts (2021-23) and traces which courses they eventually took (if any).",
+                f"More precisely, for each (incoming student, course) pair, AMP assigns a probability that the student will take that course based on students from prior years.",
+                f"These student-level predictions are aggregated/filtered at many levels (course, department, college, race/ethnicity, gender, origin, preparedness, etc) on different sheets in this workbook.",
+                f"AMP serves primarily as a planning tool so leaders (deans, dept heads, housing, etc) can proactively allocate appropriate resources (instructors, sections, labs, etc) in advance.",
+                f"AMP predictions should be used with caution in combination with the knowledge and expertise of human leaders - it is far from perfect."
+                f"",
+                f"AMP is based on EM's Flags report & IDA's daily admissions/registration snapshots.",
+                f"AMP learns from PAST experiences captured in these 3 data souces only. It does not know about recent changes or anything not captured in these 3 limited datasets."
+                f"EM's Flags report pulls from admission applications and may NOT reflect changes made later (ex: change major/dept/college).",
+                f"",
+                f"term_desc = term to be predicted,   train_desc = term(s) to be trained on",
+                f"MOST USERS ONLY NEED SUMMARY ON LEFT-HAND SIDE OF ANY SHEET which reflects term_desc=2024fall (prediction for forthcoming term) and train_desc=all (model trained on all available prior years: 21fl, 22fl, 23fl)",
+                f"Some power users might value detailed results on right-hand side",
+                f"",
+                f"admit = # admitted on this day of term_desc",
+                f"enroll = # enrolled on this day of term_desc",
+                f"actual = # enrolled on census day of term_desc",
+                f"prior = # enrolled on census day 1 year prior to term_desc",
+                f"predict = # AMP predicts will be enrolled on census day if term_desc",
+                f"change = predict - prior",
+                f"change_pct = change / prior * 100",
+                f"error = predict - actual",
+                f"error_pct = error / actual * 100",
+                f"train_score = log_loss metric during model training",
+                f"test_score = log_loss metric during model validation",
+                f"overall_score = mean of train & test scores",
+                f"mlt = future applications multiplier",
+                ]}).to_excel(writer, sheet_name='instructions', index=False)
+
             for variable in A:
                 R = self.get_result(variable).result[' 50%']
                 rnd = ['admit','enroll','actual','prior','predict','change','error'] 
@@ -513,25 +546,21 @@ class AMP(MyBaseClass):
                     .round(2)
                     .prep()
                 )
-                grp = [variable,'levl_desc','styp_desc']
-                feat = ['enroll','prior','predict','change','change_pct']
-                S = R.query(f"term_code=={self.proj_code} & train_desc=='all'")[grp+feat]
+                col = [variable,'levl_desc','styp_desc','term_desc','train_desc','admit','enroll','actual','prior','predict','change','change_pct','error','error_pct','overall_score','test_score','train_score','mlt']
+                S = R.query(f"term_code=={self.proj_code} & train_desc=='all'")[col].drop(columns=['term_desc','train_desc','admit','actual','error','error_pct','overall_score','test_score','train_score','mlt'])
                 S.to_excel(writer, sheet_name=variable, index=False)
-                
-        #         # S = R.query(f"term_code=={self.proj_code} & train_desc=='all'")[[variable,'styp_desc','enroll','prior','predict','change','change_pct']]
-        #         grp = [*grp,'term_desc','train_desc']
-        #         feat = ['admit',*feat,'error','error_pct','overall_score','test_score','train_score','mlt']
-        #         R[grp+feat].to_excel(writer, sheet_name=variable, index=False, startcol=S.shape[1]+2)#, startrow=0)
-        #         sheet = writer.sheets[variable]
-        #         sheet.freeze_panes = "A2"
-        #         sheet.auto_filter.ref = sheet.dimensions
-        #         for k, column in enumerate(sheet.columns):
-        #             width = 3+max(len(str(cell.value)) for cell in column)
-        #             sheet.column_dimensions[get_column_letter(k+1)].width = width
-        #         for cell in sheet[1]:
-        #             cell.alignment = Alignment(horizontal="left")
+                R[col].to_excel(writer, sheet_name=variable, index=False, startcol=S.shape[1]+4)
+                sheet = writer.sheets[variable]
+                sheet.freeze_panes = "A2"
+                sheet.auto_filter.ref = sheet.dimensions
+                for k, column in enumerate(sheet.columns):
+                    width = 3+max(len(str(cell.value)) for cell in column)
+                    sheet.column_dimensions[get_column_letter(k+1)].width = width
+                for cell in sheet[1]:
+                    cell.alignment = Alignment(horizontal="left")
 
-        # print('DONE!')
+
+        print('DONE!')
         return self
 
 pwrtrf = make_pipeline(StandardScaler(), PowerTransformer())
@@ -569,10 +598,10 @@ param_grds = {
     },
     'imp': {
         'random_state': seed,
-        # 'datasets': 10,
-        # 'iterations': 10,
-        'datasets': 3,
-        'iterations': 2,
+        'datasets': 10,
+        'iterations': 10,
+        # 'datasets': 3,
+        # 'iterations': 2,
         'tune': False,
         # 'tune': [False, True],
     },
@@ -580,8 +609,8 @@ param_grds = {
         'seed': seed,
         'metric': 'log_loss',
         'early_stop': True,
-        'time_budget': 1,
-        # 'time_budget': 120,
+        # 'time_budget': 1,
+        'time_budget': 120,
         'estimator_list': [['xgboost']],
         'ensemble': False,
         # 'ensemble': [False, True],
@@ -590,7 +619,7 @@ param_grds = {
 
 
 formatter = lambda x: str(x).replace('\n','').replace(' ','')
-# hasher = lambda x, d=2: hashlib.shake_128(formatter(x).encode()).hexdigest(d)
+# hasher = lambda x, d=2: hashlib.shake_256(formatter(x).encode()).hexdigest(d)
 hasher = lambda x, d=2: int.from_bytes(hashlib.shake_256(formatter(x).encode()).digest(d))
 param_dct = dict()
 for key, val in param_grds.items():
@@ -607,7 +636,6 @@ def run_amp(cycle_day, *styp_codes):
     self = AMP(cycle_day=cycle_day).get_X()
     for kwargs in cartesian({'crse_code':intersection(crse_codes, self.y_true.reset_index()['value'], sort=True, reverse=True), 'cycle_day':cycle_day, 'styp_code':styp_codes, 'param':param_lst}):
         self = AMP(**kwargs).get_y_pred()
-    # self.get_y_stack()
     self.get_report()
     return self
 
