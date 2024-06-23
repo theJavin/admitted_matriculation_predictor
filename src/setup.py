@@ -245,6 +245,17 @@ def mkdir(path, overwrite=False):
         delete(path)
     path.mkdir(exist_ok=True, parents=True)
 
+def format_xlsx(sheet, freeze_cols=0, freeze_rows=1):
+    from openpyxl.styles import Alignment
+    from openpyxl.utils import get_column_letter
+    sheet.freeze_panes = f"{get_column_letter(freeze_cols+1)}{freeze_rows+1}"
+    sheet.auto_filter.ref = sheet.dimensions
+    for k, column in enumerate(sheet.columns):
+        width = 3+max(len(str(cell.value)) for cell in column)
+        sheet.column_dimensions[get_column_letter(k+1)].width = width
+    for cell in sheet[1]:
+        cell.alignment = Alignment(horizontal="left")
+
 def write(path, obj, overwrite=False, **kwargs):
     path = pathlib.Path(path)
     if overwrite:

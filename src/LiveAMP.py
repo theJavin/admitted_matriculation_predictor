@@ -3,7 +3,7 @@ import hashlib, miceforest as mf, flaml as fl
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PowerTransformer
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.metrics import log_loss
 from sklearn import set_config
 set_config(transform_output="pandas")
 code_desc = lambda x: [x+'_code', x+'_desc']
@@ -57,6 +57,7 @@ crse_codes = [
     'engl2364',
     'engl2366',
     'engl2368',
+    'engr1211',
     'engr2303',
     'envs1302',
     'fina1360',
@@ -75,6 +76,8 @@ crse_codes = [
     'hist2321',
     'hist2322',
     'huma1315',
+    'kine1301',
+    'kine1338',
     'kine2315',
     'math1314',
     'math1316',
@@ -102,7 +105,8 @@ crse_codes = [
     'phys2425',
     'phys2426',
     'psyc2301',
-    
+    'psyc3303',
+    'psyc3307',
     'soci1301',
     'soci1306',
     'soci2303',
@@ -113,14 +117,6 @@ crse_codes = [
     'univ0324',
     'univ0332',
     'univ0342',
-
-    'psyc3303',
-    'psyc3307',
-    'kine1301',
-    'kine1338',
-    'musi1310',
-    'musi1303',
-    'engr1211',
 ]
 
 @dataclasses.dataclass
@@ -141,8 +137,6 @@ class AMP(MyBaseClass):
         'dept_desc',
         'majr_desc',
         'camp_desc',
-        # # # 'stat_desc',
-        # # # 'cnty_desc',
         'gender',
         *[f'race_{r}' for r in ['american_indian','asian','black','pacific','white','hispanic']],
         'waiver',
@@ -151,18 +145,16 @@ class AMP(MyBaseClass):
         'resd_desc',
         'lgcy',
         'lgcy_desc',
-        # # # 'admt_desc',
         'math',
         'reading',
         'writing',
-        # # # 'ssb',
         'oriented',
     )
 
     def __post_init__(self):
         super().__post_init__()
         self.root_path /= rjust(self.cycle_day,3,0)
-        self.hash_path = join([str(v[0]) for v in self.param.values()], '/')
+        self.hash_str = join([str(v[0]) for v in self.param.values()], '/')
 
 
     def get_terms(self):
@@ -317,7 +309,7 @@ class AMP(MyBaseClass):
                     .addlevel({'sim':k})
                     .prep(bool=True, cat=True)
                 for k in range(imp.dataset_count())])
-        return self.get(func, pre="X", fn=f"X_proc/{self.hash_path.rsplit('/',1)[0]}/{self.styp_code}.pkl")
+        return self.get(func, pre="X", fn=f"X_proc/{self.hash_str.rsplit('/',1)[0]}/{self.styp_code}.pkl")
 
 
     def get_y_pred(self):
@@ -331,11 +323,10 @@ class AMP(MyBaseClass):
             )
             X = Z.drop(columns=['actual','mask']).copy()
             Z_model = Z.groupby(['term_code','sim']).filter(lambda z: z['actual'].sum()>=5)
-            # self.clf = dict()
+            self.clf = dict()
             self.y_pred = dict()
             self.train_score = dict()
             for train_code in self.term_codes:
-            # for train_code in [self.proj_code]:
                 print(train_code, end="...")
                 X_model = Z_model.query("term_code==@train_code" if train_code != self.proj_code else "term_code!=@train_code").copy()
                 y_model = X_model.pop('actual')
@@ -355,7 +346,7 @@ class AMP(MyBaseClass):
                     predict = clf.predict(X)
                     proba = clf.predict_proba(X)[:,1]
                     self.train_score[train_code] = clf.best_result['val_loss'] * 100
-                    # self.clf[train_code] = clf._trained_estimator
+                    self.clf[train_code] = clf._trained_estimator
                     print('done', end="  ")
                 else:
                     print('fail', end="  ")
@@ -363,101 +354,27 @@ class AMP(MyBaseClass):
                     proba = pd.NA
                     self.train_score[train_code] = pd.NA
                 self.y_pred[train_code] = Z.assign(predict=predict,proba=proba).prep(bool=True).reset_index()[['pidm','term_code','sim','actual','predict','proba']]
-                # self.y_pred[train_code] = (Z
-                #     .assign(predict=predict,proba=proba)
-                #     # .astype({'predict':'float', 'proba':'boolean'})
-                #     .reset_index()
-                #     [['pidm','term_code','sim','actual','predict','proba']]
-                #     .prep(bool=True))
-                # self.y_pred[train_code] = Z.assign(predict=predict,proba=proba).astype({'predict':'boolean', 'proba':'float', 'train_score':'float'}).prep(bool=True)[['pidm','term_code','sim','actual','predict','proba']].prep(bool=True)
-                # y[train_code] = Z.rsindex(['term_code','pidm'])['actual'].assign(pred=pred, proba=proba, train_score=train_score, train_code=train_code)
-                # y[train_code] = Z.reset_index()[['term_code','pidm','actual']].assign(pred=pred, proba=proba, train_code=train_code)
-                # y[train_code] = Z[['actual']].assign(pred=pred, proba=proba, train_score=score, train_code=train_code, crse_code=self.crse_code, clf_hash=self.param['clf'][0])#.prep(bool=True)
-                # y[train_code] = Z[['actual']].assign(pred=pred, proba=proba, train_code=train_code, crse_code=self.crse_code, clf_hash=self.param['clf'][0]).prep(bool=True)
-                # train_score[train_code] = score
-            # self.y_pred = pd.concat(y.values()).prep(bool=True)
-            # self.y_pred = pd.concat(y.values()).prep(bool=True).rsindex(['crse_code','pidm','term_code','train_code','sim','trf_hash','imp_hash','clf_hash'])
-            # self.y_pred = pd.concat(y.values()).prep(bool=True).rsindex(['crse_code','pidm','term_code','train_code','sim','trf_hash','imp_hash','clf_hash'])
-            # print(self.y_pred.shape)
-            # self.y_pred.dtypes.disp(100)
-            
-            # y = pd.concat(y.values()).prep(bool=True).reset_index()#.rsindex(['crse_code','pidm','id','levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash'])
-            # self.train_score = y.groupby(['crse_code','levl_code','styp_code','train_code','trf_hash','imp_hash','clf_hash'])['train_score'].mean().reset_index()
-            # self.y_pred = y[['crse_code','pidm','term_code','train_code','sim','trf_hash','imp_hash','clf_hash','actual','pred','proba']].copy()
-            # self.y_pred = y.drop(columns=['id','levl_code','styp_code','train_score'])
-
-            # self.train_score = y.pop('train_score').groupby(['crse_code','levl_code','styp_code','train_code','trf_hash','imp_hash','clf_hash']).mean()
-            # self.y_pred = y.droplevel(['id','levl_code','styp_code'])
-            
-            # self.train_score.disp(100)
-            # assert 1==2
-            
-            # self.train_score = y.pop('train_score').droplevel(['pidm','id','term_code','sim'])
-            
-            
-            # droplevel(['pidm','id',])
-            # y.disp()
-            # y.rsindex(['crse_code','pidm','id','levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']).disp()
-            # assert 1==2
-                                                               
-            # #                                                    term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-            # # s = y.pop
-            
-            
-            # self.y_pred = pd.concat(y.values())
-            # self.y_pred.disp()
-            # # .rsindex(['crse_code','pidm','term_code','train_code','sim','trf_hash','imp_hash','clf_hash'])
-            # self.y_pred.pop('train_score').groupby(['crse_code','train_code','trf_hash','imp_hash','clf_hash']).var().disp(100)
-            # assert 1==2
-            # .droplevel(['pidm'])#,'term_code','sim'])
-            # self.train_score = self.y_pred.pop('train_score').droplevel(['pidm'])#,'term_code','sim'])
-            # self.train_score.disp
-            # self.train_score = pd.Series(train_score, name='train_score').rename_axis('train_code').addlevel({
-            #     'crse_code':self.crse_code, 'levl_code':'ug', 'styp_code':self.styp_code})
         return self.get(func, pre="X_proc", drop=["terms","X","y_true","Z","agg","X_trf","X_proc"],
-                        # fn=f"y_pred/{self.crse_code}/{self.styp_code}/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}.pkl")
-                        # fn=f"y_pred/{self.param['trf'][0]}/{self.param['imp'][0]}/{self.param['clf'][0]}/{self.crse_code}/{self.styp_code}.pkl")
-                        fn=f"y_pred/{self.hash_path}/{self.crse_code}/{self.styp_code}.pkl")
+                        fn=f"y_pred/{self.hash_str}/{self.crse_code}/{self.styp_code}.pkl")
 
 
-    # def get_y_stack(self):
-    #     def func():
-    #         L = []
-    #         for fn in sorted((self.root_path / 'y_pred').rglob('*.pkl')):
-    #             # print(fn)
-    #             dct = read(fn)
-    #             for train_code, y_pred in dct['y_pred'].items():
-    #                 y = (y_pred.assign(
-    #                         crse_code=dct['crse_code'],
-    #                         train_code=train_code,
-    #                         train_score=dct['train_score'][train_code],
-    #                         **{key+'_hash': val[0] for key, val in dct['param'].items()})
-    #                     # .astype({'predict':'float', 'proba':'boolean', 'train_score':'float'})
-    #                     # .prep(bool=True)
-    #                 )
-    #                 # y = y.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code], **{key+'_hash': val[0] for key, val in dct['param'].items()}).prep()
-    #                 # y.dtypes.disp(100)
-    #                 L.append(y)
-    #             del dct
-    #         self.y_stack = pd.concat(L).prep(bool=True)
-    #         # self.y_stack = pd.concat(Y).astype({'predict':'boolean', 'proba':'float', 'train_score':'float'}).prep(bool=True)
-    #     return self.get(func, pre="y_pred", fn=f"y_stack.pkl", subpath="result", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"])
+    def get_stack(self, crse_code="_anycrse"):
+        L = []
+        for fn in (self.root_path / "y_pred").rglob("*.pkl"):
+            if all(x in str(fn) for x in [self.hash_str, crse_code]):
+                dct = read(fn)
+                for train_code, y_pred in dct['y_pred'].items():
+                    y = y_pred.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code])
+                    L.append(y)
+                del dct
+        return pd.concat(L).prep(bool=True)
 
 
     def get_result(self, variable):
         del self['result']
         def func():
-            # grp = [variable,'levl_code','styp_code','term_code','train_code','sim','trf_hash','imp_hash','clf_hash']
-            grp = [variable,'levl_code','styp_code','term_code','train_code','sim']
-            L = []
-            for fn in (self.root_path / "y_pred").rglob("*.pkl"):
-                if all(str(x) in str(fn) for x in [v[0] for v in self.param.values()]+["" if variable=="crse_code" else "_anycrse"]):
-                    dct = read(fn)
-                    for train_code, y_pred in dct['y_pred'].items():
-                        y = y_pred.assign(crse_code=dct['crse_code'], train_code=train_code, train_score=dct['train_score'][train_code])
-                        L.append(y)
-                    del dct
-            Y = pd.concat(L).prep(bool=True)
+            grp = [variable,'levl_code','styp_code','term_code','train_code','sim'] #,'trf_hash','imp_hash','clf_hash']
+            Y = self.get_stack("" if variable=="crse_code" else "_anycrse")
             X = self.X[variable if variable!="crse_code" else []].reset_index()
             A = self.agg.loc[variable].reset_index().rename(columns={'value':variable}).prep(bool=True)
             S = (Y.merge(X,'left').groupby(grp).apply(lambda y: pd.Series({
@@ -491,16 +408,14 @@ class AMP(MyBaseClass):
             grp.remove('sim')
             self.result = {'summary':S} | {str(stat):S.groupby(grp,sort=False).agg(stat).prep() for stat in listify(self.stats)}
             # self.result[' 50%'].disp(100)
-        return self.get(func, pre="X", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"], fn=f"result/{self.hash_path}/{variable}.pkl")
+        return self.get(func, pre="X", drop=["terms","X","y_true","Z","agg","X_trf","X_proc","y_pred","clf"], fn=f"result/{self.hash_str}/{variable}.pkl")
 
 
     def get_report(self):
-        from openpyxl.styles import Alignment
-        from openpyxl.utils import get_column_letter
+        path = str(self.root_path / f"result/{self.hash_str}/AMP_{self.cycle_date.date()}")
         A = listify(self.aggregations)
         self.get_result(A[0])
-        with pd.ExcelWriter(self.root_path / f"result/{self.hash_path}/AMP_{self.cycle_date.date()}.xlsx", mode="w", engine="openpyxl") as writer:
-            # df = pd.DataFrame({f"Admitted Matriculation Projections (AMP) for {self.cycle_date.date()}":[
+        with pd.ExcelWriter(path+".xlsx", mode="w", engine="openpyxl") as writer:
             df = pd.DataFrame({'':[
                 f"Admitted Matriculation Projections (AMP) for {self.cycle_date.date()}",
                 f"AMP is a machine learning algorithm (XGBoost) to forecast the number, characteristics, and likely course enrollments of incoming Fall cohort based on their application information and status in pre-semester processes (orientation, course registration, financial aid, etc).",
@@ -531,6 +446,9 @@ class AMP(MyBaseClass):
                 f"test_score = log_loss metric during model validation",
                 f"overall_score = mean of train & test scores",
                 f"mlt = future applications multiplier",
+                f"",
+                f"DETAILS",
+                f"AMP predicts only for courses with enrollment >=5",
                 ]}).to_excel(writer, sheet_name='instructions', index=False)
 
             for variable in A:
@@ -550,15 +468,21 @@ class AMP(MyBaseClass):
                 S = R.query(f"term_code=={self.proj_code} & train_desc=='all'")[col].drop(columns=['term_desc','train_desc','admit','actual','error','error_pct','overall_score','test_score','train_score','mlt'])
                 S.to_excel(writer, sheet_name=variable, index=False)
                 R[col].to_excel(writer, sheet_name=variable, index=False, startcol=S.shape[1]+4)
-                sheet = writer.sheets[variable]
-                sheet.freeze_panes = "A2"
-                sheet.auto_filter.ref = sheet.dimensions
-                for k, column in enumerate(sheet.columns):
-                    width = 3+max(len(str(cell.value)) for cell in column)
-                    sheet.column_dimensions[get_column_letter(k+1)].width = width
-                for cell in sheet[1]:
-                    cell.alignment = Alignment(horizontal="left")
+                format_xlsx(writer.sheets[variable], freeze_cols=3)
 
+
+        self.get_X()
+        cols = [x for x in self.X.columns if '_missing' not in x]
+        X = self.X.reset_index(['admit','enroll','matric'])[[*cols,'enroll']]
+        Y = self.get_stack().query(f"train_code=={self.proj_code}").groupby(['pidm','term_code'])['proba'].agg(probability_mean='mean',probability_std='std') * 100
+        Z = X.join(Y).reset_index()
+        Z['pidm'] = decrypt(Z['pidm'])
+        Z['id'] = decrypt(Z['id'])
+        # with pd.ExcelWriter(path+"_details.xlsx", mode="w", engine="xlsxwriter") as writer:
+        with pd.ExcelWriter(path+"_details.xlsx", mode="w", engine="openpyxl") as writer:
+            variable = 'probability'
+            Z.sort_values(['term_code','pidm'], ascending=[False,True]).to_excel(writer, sheet_name=variable, index=False)
+            format_xlsx(writer.sheets[variable], freeze_cols=5)
 
         print('DONE!')
         return self
@@ -619,8 +543,8 @@ param_grds = {
 
 
 formatter = lambda x: str(x).replace('\n','').replace(' ','')
-# hasher = lambda x, d=2: hashlib.shake_256(formatter(x).encode()).hexdigest(d)
-hasher = lambda x, d=2: int.from_bytes(hashlib.shake_256(formatter(x).encode()).digest(d))
+hasher = lambda x, d=2: hashlib.shake_256(formatter(x).encode()).hexdigest(d)
+# hasher = lambda x, d=2: int.from_bytes(hashlib.shake_256(formatter(x).encode()).digest(d))
 param_dct = dict()
 for key, val in param_grds.items():
     lst = cartesian(val, sort=True, key=str)
